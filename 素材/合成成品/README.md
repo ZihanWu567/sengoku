@@ -2,7 +2,9 @@
 
 共 **96 张 1200 × 1200 无损 PNG**，按兵种分为 12 个文件夹，每个文件夹各有 8 种颜色。
 
-[查看全部 96 张总览](./全部96张总览.jpg)
+[一次下载全部 96 张成品 PNG（ZIP）](https://github.com/ZihanWu567/sengoku/archive/refs/heads/troop-cards-download.zip) · [查看全部 96 张总览](./全部96张总览.jpg)
+
+整包仅包含 96 张成品 PNG，按 12 个兵种分文件夹，不包含预览图、说明文件或其他压缩包。
 
 所有成品均以日本汉字显示部队名，统一使用 **Source Han Serif JP（源ノ明朝 JP）Bold，152 px，黑色**，按字形的实际边界在左侧上方标题栏水平、垂直居中。
 
