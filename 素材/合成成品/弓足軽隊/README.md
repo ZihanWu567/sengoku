@@ -2,6 +2,8 @@
 
 8 张 1200 × 1200 无损 PNG，按确认后的部队尺寸与位置叠加。
 
+上方标题采用日本汉字「弓足軽隊」，使用 [Source Han Serif JP（源ノ明朝 JP）Bold](https://github.com/adobe-fonts/source-han-serif/tree/release/SubsetOTF/JP) 字体，黑色，字号 152 px，按可见字形在左侧标题栏水平、垂直居中。
+
 [八色预览](./八色预览.jpg) · [下载本兵种八色 ZIP](../下载/弓足軽隊_八色.zip)
 
 | 底图 | 成品 |
