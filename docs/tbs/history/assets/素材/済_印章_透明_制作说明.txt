@@ -1,0 +1,8 @@
+工具：内置 image_gen，background-extraction 编辑；transparent_background=true。
+源图：C:/Users/HP/Desktop/战国资源/全球资源/战国乱武将/下载.png（未修改）
+成品：済_印章_透明.png
+尺寸与格式：1254 × 1254，RGBA PNG；alpha 范围 0～255，包含真正透明像素。
+注意：这是基于原图生成的透明版本，保留了「済」字、双圈与残破印泥风格；纹理细节并非逐像素复刻。
+
+最终提示词：
+Use case: background-extraction. Asset type: transparent PNG overlay for a Tabletop Simulator commander portrait. The supplied image is the edit target. Remove ONLY all of the white background, both outside the double ring and inside the ring and glyph holes; replace it with genuine alpha transparency. Preserve exactly the original Japanese kanji 「済」 glyph and all its strokes, same shape and position, red double circular border, composition, and naturally distressed rubber-stamp ink texture. Restore the red ink to clear high opacity so it can be composited over an image; retain natural edge antialiasing and worn transparent gaps. Keep the red ink's bright red color. Square canvas, whole circular stamp visible with a little transparent margin. Do not redraw, reinterpret, translate or change the glyph. No white plate, no checkerboard baked into pixels, no shadow, no background, no additional text or graphics.

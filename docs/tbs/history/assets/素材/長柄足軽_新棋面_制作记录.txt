@@ -1,0 +1,27 @@
+長柄足軽 新棋面底图 v1
+制作日期：2026-10-11
+工具：内置 image_gen（imagegen skill），两次图像编辑。未经裁切或其他像素后处理，原样复制到本工作区。
+参考图：C:/Users/HP/Desktop/战国资源/全球资源/铁炮足轻/枪足轻/長柄足轻(太田家本阵).png
+最终源文件：C:/Users/HP/.codex/generated_images/01a10b69-7ff2-7291-9352-5c7286004edc/exec-66ddd6c9-f7a8-42b4-ad9b-c9ad3ee1e277.png
+说明：参考人物与姿势的 AI 重绘，并非原始像素无损放大；未作为史实复原。文字均由游戏脚本绘制。
+实际生成的分区以图像为准：顶部约16%，中间約62%，底部约22%；设计与脚本按最终图像调整。
+
+初次提示词：
+Use case: precise-object-edit / game UI texture.
+Edit target: the provided old square Sengoku troop-counter artwork. Redesign it as a polished square tabletop wargame counter BACKGROUND TEXTURE, 1024 by 1024 pixels, flat straight-on artwork filling the entire square, opaque. This is a usable game texture, not a photograph, not a tilted card mockup.
+Keep the recognizable ashigaru subject: one Japanese foot soldier, black jingasa with small round gold ornament, muted sage-green clothing, black/brown lamellar armor, raising a very long wooden spear diagonally to the upper right. Preserve his overall identity and hand/weapon pose, redraw cleanly with refined dark ink outlines and restrained hand-painted Japanese historical illustration shading. He should occupy the central image band much more fully than in the original. Do not add people.
+EXACT COMPOSITION:
+- Top 18% (y=0..184): a perfectly empty flat deep forest-green header, approximately #263B32. It will receive scripted troop name and manpower later. No text, no symbols in this band.
+- Middle 56% (y=184..758): broad single uninterrupted illustration with warm ivory parchment background, subtle pale khaki brush haze. Soldier torso/head larger and centered slightly left, spear rises toward the top-right corner of this MIDDLE band. Keep his entire helmet and visible spear tip within this middle band; no intrusion into the blank header. Lower body may crop naturally at y=758.
+- Bottom 26% (y=758..1024): completely clear pale ivory footer, approximately #EEE6D0, no illustrations or text. A very subtle thin vertical divider at x=512 separates two equal statistic areas. The footer must leave uninterrupted empty space for scripted labels and large numbers.
+- An extremely thin 6-pixel muted dark-green outer keyline; subtle antique brass separator under header, clean horizontal divider at start of footer. Square corners and full bleed flat color to all edges. Avoid glossy bevels, cast shadows, raised buttons, filigree, excessive ornament.
+REMOVE ALL original letters, numbers, troop title, clan crest, clan text, vertical manpower column, torii symbol and straw-sandal symbol. Remove ALL original panel gridlines except the explicitly specified header and footer separation. No flag on the texture. No text or digits whatsoever; all typography will be real scripted UI.
+Color palette cohesive and quiet: forest green, warm ivory, aged ochre and ink charcoal. Crisp enough to remain attractive at 128 pixels; simple large shapes and a strong character silhouette. No photorealism, no anime glamour, no dramatic background.
+
+定向修订提示词：
+Edit this just-generated square game-counter background with ONLY these precise layout corrections. Preserve the soldier, face, clothing, armor, pose, ink illustration style, color palette, and all other design details.
+1. Make the top blank green header extend from 0% to exactly 18% of the full image height. It is an absolutely uninterrupted empty green rectangle for text. REMOVE the entire spear blade and any part of the spear crossing above its lower gold separator. The spear may be cropped cleanly by the header boundary; it MUST NOT appear in the green area. No icon, no spear, no text in the header.
+2. Make the clean ivory bottom statistics strip begin at exactly 74% of the full image height and extend to the bottom. Crop the lower illustration cleanly there. Keep its thin central divider and subtle horizontal gold edge. Both halves completely blank, no letters, numbers or pictures.
+3. Keep the full composition a square, 1024x1024 if possible, opaque, full bleed, thin outer forest-green keyline, no cast shadow or perspective.
+Do not add any typography whatsoever. These are blank reserved UI zones.
+

@@ -1,0 +1,1200 @@
+{
+  "base_main": "8c7aaa731f124eb693a23800402a65033806975f",
+  "download_branch_sha": "3e997ae9f742ccfdcb4ec729ed737bf980a2cb5c",
+  "protected_trees": {
+    "素材/底图": "f019854c0ee318224b0871563417269cc3aa7c92",
+    "素材/部队": "19f8e1c6c85746b11d555a5d56cd9a867ef75ce5",
+    "素材/合成成品": "a7b9299d00e41e2f00d89f5caf8f01e953445203",
+    "tools/photoshop": "aec33c4272ba7bab7f5e4421c1405679a313efbc"
+  },
+  "files": [
+    {
+      "path": "tools/photoshop/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "278a6191fc0b5f04c9481cbfec8fa4afdb792f51"
+    },
+    {
+      "path": "tools/photoshop/export-layers.jsx",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "62232e6bd79b746be7b5cc3386d28e79b192e52a"
+    },
+    {
+      "path": "tools/photoshop/export-layers.txt",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "62232e6bd79b746be7b5cc3386d28e79b192e52a"
+    },
+    {
+      "path": "素材/合成成品/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e576ed2750c2d912abdda758476ad59185c84ebc"
+    },
+    {
+      "path": "素材/合成成品/下载/南蛮大筒隊_八色.zip",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "22d218ace94ac659a942b9e1759c97a72b4da413"
+    },
+    {
+      "path": "素材/合成成品/下载/弓僧兵隊_八色.zip",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "21a8348c0085985f0c87d56acdec5f9eefc1cb7b"
+    },
+    {
+      "path": "素材/合成成品/下载/弓足軽隊_八色.zip",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "8d1c2c80a26eab45b7435566b2393833e62f1c48"
+    },
+    {
+      "path": "素材/合成成品/下载/槍武士隊_八色.zip",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "de8c65d0ef1070eef129ab18c223588987d33b02"
+    },
+    {
+      "path": "素材/合成成品/下载/槍足軽隊_八色.zip",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "49793c077597fbb8fd9ea0e91a4a95007155441c"
+    },
+    {
+      "path": "素材/合成成品/下载/赤備騎馬隊_八色.zip",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e59da136f0a079480ba2336e4320d750c102e162"
+    },
+    {
+      "path": "素材/合成成品/下载/近習騎馬隊_八色.zip",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "5ee933cde97fed38aef78036798c2ca285b43b32"
+    },
+    {
+      "path": "素材/合成成品/下载/鉄砲僧兵隊_八色.zip",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "094d19c42b081c1ffd083923deef9bfd23fce843"
+    },
+    {
+      "path": "素材/合成成品/下载/鉄砲足軽隊_八色.zip",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e0e1f4d6629d7b2ea9e6e78c8cb0a8557a659544"
+    },
+    {
+      "path": "素材/合成成品/下载/長柄足軽隊_八色.zip",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "1af157aa85b04111f3a7ed2f24801de783d0843f"
+    },
+    {
+      "path": "素材/合成成品/下载/騎馬武士隊_八色.zip",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "0490e0ad79f1933372be829ca5ce539753020b4f"
+    },
+    {
+      "path": "素材/合成成品/下载/騎馬鉄砲隊_八色.zip",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "f96b3de6da5c832f4d699f2e8360625f30338bef"
+    },
+    {
+      "path": "素材/合成成品/全部96张总览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "7c1a57dd253042550fde2574275b7f735684e0e8"
+    },
+    {
+      "path": "素材/合成成品/南蛮大筒隊/01_武田_紅_南蛮大筒隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "20a7c188b12966b1b0e84dd62f3e727d86ff4bc9"
+    },
+    {
+      "path": "素材/合成成品/南蛮大筒隊/02_北条_藍_南蛮大筒隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "980e4e448290677839815d64d5b1bcc85069c9a8"
+    },
+    {
+      "path": "素材/合成成品/南蛮大筒隊/03_上杉_白_南蛮大筒隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "07f8b0f82c87e57708279c16ff278e169b5b781c"
+    },
+    {
+      "path": "素材/合成成品/南蛮大筒隊/04_里見_緑_南蛮大筒隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "06058e9e5c7074541f68fc932c36843eea24c0e3"
+    },
+    {
+      "path": "素材/合成成品/南蛮大筒隊/05_今川_紫_南蛮大筒隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "c85a5375fa4f241c056b13b68b0013a4e9f49364"
+    },
+    {
+      "path": "素材/合成成品/南蛮大筒隊/06_佐竹_金_南蛮大筒隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "46b6ac4e706fe4c2b85f95cc410ef77db0570f6c"
+    },
+    {
+      "path": "素材/合成成品/南蛮大筒隊/08_備用_茶_南蛮大筒隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "6622baafb30cc2629ee3996058dfa961e8d689cd"
+    },
+    {
+      "path": "素材/合成成品/南蛮大筒隊/09_備用_青緑_南蛮大筒隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "953dbd709e5ac74293fc7dac27792102ce9c3445"
+    },
+    {
+      "path": "素材/合成成品/南蛮大筒隊/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e642c68e42cdefec84a283fa787bde1d64e76094"
+    },
+    {
+      "path": "素材/合成成品/南蛮大筒隊/八色预览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "9298e28340ba9a8552d01d7a6353d63d9049abbb"
+    },
+    {
+      "path": "素材/合成成品/弓僧兵隊/01_武田_紅_弓僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "36f2a3872db79256c237c23d0d3fe638cd65dcd5"
+    },
+    {
+      "path": "素材/合成成品/弓僧兵隊/02_北条_藍_弓僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "0dba345fd9534ab92d536358ebb7cd0b1742e66b"
+    },
+    {
+      "path": "素材/合成成品/弓僧兵隊/03_上杉_白_弓僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "8faa7bc9264d02757d8977da6ab259ad9f032870"
+    },
+    {
+      "path": "素材/合成成品/弓僧兵隊/04_里見_緑_弓僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "b11dd5e1e848cc18392986488981b23723c41441"
+    },
+    {
+      "path": "素材/合成成品/弓僧兵隊/05_今川_紫_弓僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "c9de2784ee5198bf9fd2763c88273bb134b37c46"
+    },
+    {
+      "path": "素材/合成成品/弓僧兵隊/06_佐竹_金_弓僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "2df4a42c4c763c85841a2025e682679b62b8a5fc"
+    },
+    {
+      "path": "素材/合成成品/弓僧兵隊/08_備用_茶_弓僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e939a951bf2349fa570cacc6428317bc22d7e9ef"
+    },
+    {
+      "path": "素材/合成成品/弓僧兵隊/09_備用_青緑_弓僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "f00ef333bf0d1c73fba5a1da934ac0bf58a9b83e"
+    },
+    {
+      "path": "素材/合成成品/弓僧兵隊/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "6e745abe329aa2b96bfd9716c32ac51da08dc6b5"
+    },
+    {
+      "path": "素材/合成成品/弓僧兵隊/八色预览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e6cec2f6fe4a01ff3ade3a0d64b8fe77fbc7acc9"
+    },
+    {
+      "path": "素材/合成成品/弓足軽隊/01_武田_紅_弓足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "b615456e89bfddf653eb4fbbdf1df190a68b7f8f"
+    },
+    {
+      "path": "素材/合成成品/弓足軽隊/02_北条_藍_弓足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "0f7fe6f70502477dd21ba69ce648e2d4ad6883f2"
+    },
+    {
+      "path": "素材/合成成品/弓足軽隊/03_上杉_白_弓足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "587d4720fade046ff7147d7d0962f481b533e279"
+    },
+    {
+      "path": "素材/合成成品/弓足軽隊/04_里見_緑_弓足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "2593528c5877e72b667fff81d1d5600b86759ddb"
+    },
+    {
+      "path": "素材/合成成品/弓足軽隊/05_今川_紫_弓足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "0f653284cc35e1b4e0f03b98f686d1630a917c71"
+    },
+    {
+      "path": "素材/合成成品/弓足軽隊/06_佐竹_金_弓足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "0877b13c58e1372c2a2abb7a540a0a69dca85c8e"
+    },
+    {
+      "path": "素材/合成成品/弓足軽隊/08_備用_茶_弓足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "f58ccd962f6b4691c0cb3313ed64e70386825cfb"
+    },
+    {
+      "path": "素材/合成成品/弓足軽隊/09_備用_青緑_弓足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "1af09e9833bc79d945149ec56017436ddb026966"
+    },
+    {
+      "path": "素材/合成成品/弓足軽隊/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "ff8732ddf7551c6df942d038eac2bf8b126614c4"
+    },
+    {
+      "path": "素材/合成成品/弓足軽隊/八色预览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "f32cbc6f8e0b549ee55e35881dc8f44995b36c18"
+    },
+    {
+      "path": "素材/合成成品/槍武士隊/01_武田_紅_槍武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "509c39525e8a9a35569f2ab27f782058d1c5f8b9"
+    },
+    {
+      "path": "素材/合成成品/槍武士隊/02_北条_藍_槍武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "2420e51684940d94b50f905474abbb18f25e9e0c"
+    },
+    {
+      "path": "素材/合成成品/槍武士隊/03_上杉_白_槍武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "15f50673ce47c096a617d6c1fd4cf411f806be36"
+    },
+    {
+      "path": "素材/合成成品/槍武士隊/04_里見_緑_槍武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "7742e5e25251b93921400338f8603102c9b4b091"
+    },
+    {
+      "path": "素材/合成成品/槍武士隊/05_今川_紫_槍武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "3d30f612656dd734facbfbeff346c11e3d0de6f5"
+    },
+    {
+      "path": "素材/合成成品/槍武士隊/06_佐竹_金_槍武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "34f2bc000941357385dfa5c759893a1fed0205ad"
+    },
+    {
+      "path": "素材/合成成品/槍武士隊/08_備用_茶_槍武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "670fd2cd95247a242d908efd237f3aaa65bad9b3"
+    },
+    {
+      "path": "素材/合成成品/槍武士隊/09_備用_青緑_槍武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "c9dbc51aac63fe43fc3fe19998524269ab4438ce"
+    },
+    {
+      "path": "素材/合成成品/槍武士隊/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e311e64d25d091d7a75093793a40c3230b4a1d85"
+    },
+    {
+      "path": "素材/合成成品/槍武士隊/八色预览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "9356b9f2cc3a737f47852a0d2105ba75984fa4fe"
+    },
+    {
+      "path": "素材/合成成品/槍足軽隊/01_武田_紅_槍足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "53ff43d6b57389ef360c9ebd8bb1b77dc02c70bc"
+    },
+    {
+      "path": "素材/合成成品/槍足軽隊/02_北条_藍_槍足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "8ffffb0065ce028a8824e6557e03c0e058500c35"
+    },
+    {
+      "path": "素材/合成成品/槍足軽隊/03_上杉_白_槍足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "8bf049de920cae7ae4b4d579ba4788aa22f37b46"
+    },
+    {
+      "path": "素材/合成成品/槍足軽隊/04_里見_緑_槍足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "cc16fac1803c17bd5ccc0abbe2d4ea881dda6cf9"
+    },
+    {
+      "path": "素材/合成成品/槍足軽隊/05_今川_紫_槍足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "46787df8fcce53c5b07937ec008ff2a39689bfb3"
+    },
+    {
+      "path": "素材/合成成品/槍足軽隊/06_佐竹_金_槍足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "ec9b9fb8166ddd6a919e7147fbba1d50ec86ca71"
+    },
+    {
+      "path": "素材/合成成品/槍足軽隊/08_備用_茶_槍足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "33328723c8d85e135f640a007a7f187b4a4be88b"
+    },
+    {
+      "path": "素材/合成成品/槍足軽隊/09_備用_青緑_槍足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "022764177b0fc7e95e53c84329bced374ba90413"
+    },
+    {
+      "path": "素材/合成成品/槍足軽隊/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "d0ed30116f612ec36a4e22a99042a08fe6b02cb2"
+    },
+    {
+      "path": "素材/合成成品/槍足軽隊/八色预览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "336dc7c0d5a6a853244369562f9513a724abe03d"
+    },
+    {
+      "path": "素材/合成成品/赤備騎馬隊/01_武田_紅_赤備騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "c9c45d3914491bec6c30a96f8ba3ba533d125a6a"
+    },
+    {
+      "path": "素材/合成成品/赤備騎馬隊/02_北条_藍_赤備騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "94cc6b03a1837e8056aa981b39153179b05776d0"
+    },
+    {
+      "path": "素材/合成成品/赤備騎馬隊/03_上杉_白_赤備騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "f2579544c4b1bc38d4f0dbdd177a01f4de5140c7"
+    },
+    {
+      "path": "素材/合成成品/赤備騎馬隊/04_里見_緑_赤備騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "380715b2079ca23a9727be7e97c5915b8a5eb462"
+    },
+    {
+      "path": "素材/合成成品/赤備騎馬隊/05_今川_紫_赤備騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "6d5922e70a4180fc5043330d4911b55035dbfde5"
+    },
+    {
+      "path": "素材/合成成品/赤備騎馬隊/06_佐竹_金_赤備騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "3f9186b76ec117c45ee4109348dcbdd04613735c"
+    },
+    {
+      "path": "素材/合成成品/赤備騎馬隊/08_備用_茶_赤備騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "cf8fbc439d764b7fd659234c12ec52746c669b88"
+    },
+    {
+      "path": "素材/合成成品/赤備騎馬隊/09_備用_青緑_赤備騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "7d367cbe507acd1e501f2382c43fcdc034cc98bf"
+    },
+    {
+      "path": "素材/合成成品/赤備騎馬隊/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "05e67878ad20f697d36a9b798aad28bf7ad8a305"
+    },
+    {
+      "path": "素材/合成成品/赤備騎馬隊/八色预览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "a850211b7ce46f187f1d56e5e60def2479b5cf88"
+    },
+    {
+      "path": "素材/合成成品/近習騎馬隊/01_武田_紅_近習騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "7a71abfba4027dde32256546104af9e5e5db8854"
+    },
+    {
+      "path": "素材/合成成品/近習騎馬隊/02_北条_藍_近習騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e6295a37b705f8f3e650c4f9e9e7a649e4def40a"
+    },
+    {
+      "path": "素材/合成成品/近習騎馬隊/03_上杉_白_近習騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "b205867e2e325c01f56f51be68a309d7afe5e3fa"
+    },
+    {
+      "path": "素材/合成成品/近習騎馬隊/04_里見_緑_近習騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "5f92c509c4c13fcb0c4536a4aad6cb8a6b0ed16b"
+    },
+    {
+      "path": "素材/合成成品/近習騎馬隊/05_今川_紫_近習騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "79e3ec99b73434538e7ea0ae0334a42ae0507ec1"
+    },
+    {
+      "path": "素材/合成成品/近習騎馬隊/06_佐竹_金_近習騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "c91c746379d786ea716c53d0c738b5c4694a129e"
+    },
+    {
+      "path": "素材/合成成品/近習騎馬隊/08_備用_茶_近習騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "73aa26052a3a2f1019369bab96170913db2a7e51"
+    },
+    {
+      "path": "素材/合成成品/近習騎馬隊/09_備用_青緑_近習騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "c0c5769be3b64dc18de5387e45fdd22085787308"
+    },
+    {
+      "path": "素材/合成成品/近習騎馬隊/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "8591649b0e72311fc9ca7ff0cd19794a669f1394"
+    },
+    {
+      "path": "素材/合成成品/近習騎馬隊/八色预览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "7138b8ded9a575a4b49095cfaa82b9092535cae8"
+    },
+    {
+      "path": "素材/合成成品/鉄砲僧兵隊/01_武田_紅_鉄砲僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e04088e599d531d3ed35a6d62fc4d964e50d704d"
+    },
+    {
+      "path": "素材/合成成品/鉄砲僧兵隊/02_北条_藍_鉄砲僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e9444d799ea82954f4f7e41de1a7c3f2834337ed"
+    },
+    {
+      "path": "素材/合成成品/鉄砲僧兵隊/03_上杉_白_鉄砲僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "6c4f14989a65a7dd2bdb02db150f7b9ffb5130c1"
+    },
+    {
+      "path": "素材/合成成品/鉄砲僧兵隊/04_里見_緑_鉄砲僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "b2474b118fd054b918c4bf5694b67988c69e6db2"
+    },
+    {
+      "path": "素材/合成成品/鉄砲僧兵隊/05_今川_紫_鉄砲僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "bc2afea323001028494353bf202e0fec00193ef8"
+    },
+    {
+      "path": "素材/合成成品/鉄砲僧兵隊/06_佐竹_金_鉄砲僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "aeece86e7a0deec2c19d9a6da66228d46aecf8a4"
+    },
+    {
+      "path": "素材/合成成品/鉄砲僧兵隊/08_備用_茶_鉄砲僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "7851c685410f07f3946a9667885346f82c999c5e"
+    },
+    {
+      "path": "素材/合成成品/鉄砲僧兵隊/09_備用_青緑_鉄砲僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e1e11942c6cbf1564badba234e5256c2ec955251"
+    },
+    {
+      "path": "素材/合成成品/鉄砲僧兵隊/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "280cc93535709089e9bc2891af3e519eb1cc4b93"
+    },
+    {
+      "path": "素材/合成成品/鉄砲僧兵隊/八色预览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "a694efa2b6acb196dd71fcbe746681389c8da387"
+    },
+    {
+      "path": "素材/合成成品/鉄砲足軽隊/01_武田_紅_鉄砲足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "07a0b46d5908bcd35c02aff5639e3ad5836012be"
+    },
+    {
+      "path": "素材/合成成品/鉄砲足軽隊/02_北条_藍_鉄砲足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e1f4fe133080075b594fa70c0073118bd9fe8023"
+    },
+    {
+      "path": "素材/合成成品/鉄砲足軽隊/03_上杉_白_鉄砲足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "024005fb5ba0bcb6c12eeca7a8dbd80c71ca2980"
+    },
+    {
+      "path": "素材/合成成品/鉄砲足軽隊/04_里見_緑_鉄砲足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "047c9ceb5d51469ed64c9805ddebeaa13bd5029f"
+    },
+    {
+      "path": "素材/合成成品/鉄砲足軽隊/05_今川_紫_鉄砲足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e9f3e7abe8b9f24e9251298a78722cc84bd31fb8"
+    },
+    {
+      "path": "素材/合成成品/鉄砲足軽隊/06_佐竹_金_鉄砲足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "72f46eb73dc391f975fbb023675d7834e9c451b4"
+    },
+    {
+      "path": "素材/合成成品/鉄砲足軽隊/08_備用_茶_鉄砲足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "5e58a1d9049f84251452d0753d626df6f05042e2"
+    },
+    {
+      "path": "素材/合成成品/鉄砲足軽隊/09_備用_青緑_鉄砲足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "87b36439f9de735ee5fa1ad06c487346c5da42a0"
+    },
+    {
+      "path": "素材/合成成品/鉄砲足軽隊/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "7ad07799aabdeafffc011f8f9eb9d99d5a31c808"
+    },
+    {
+      "path": "素材/合成成品/鉄砲足軽隊/八色预览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "67319ac2e6c81c0fcaec122536374103020c62c5"
+    },
+    {
+      "path": "素材/合成成品/長柄足軽隊/01_武田_紅_長柄足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "0ff6c99f68543b334bc1d1181d70e5d6c5e0f6d9"
+    },
+    {
+      "path": "素材/合成成品/長柄足軽隊/02_北条_藍_長柄足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "8eb78957956edc069390010fbcafae4e283f658a"
+    },
+    {
+      "path": "素材/合成成品/長柄足軽隊/03_上杉_白_長柄足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "25d8a0b34a130f9158730e224ab6c57cd7efa031"
+    },
+    {
+      "path": "素材/合成成品/長柄足軽隊/04_里見_緑_長柄足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "958ba3229d858ef26b30d71839959ddff8e30e3b"
+    },
+    {
+      "path": "素材/合成成品/長柄足軽隊/05_今川_紫_長柄足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "792d303f35b1cfc027552afc837aa4f1fba4da22"
+    },
+    {
+      "path": "素材/合成成品/長柄足軽隊/06_佐竹_金_長柄足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "1abada9f8959259b10f14a85b3f948db161c8971"
+    },
+    {
+      "path": "素材/合成成品/長柄足軽隊/08_備用_茶_長柄足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "c82c1b3e644c24c1f0966ec8e5bb56a1a70f7426"
+    },
+    {
+      "path": "素材/合成成品/長柄足軽隊/09_備用_青緑_長柄足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "3c946a00b2c0ffbe310520f19ec0ed6405f46ef8"
+    },
+    {
+      "path": "素材/合成成品/長柄足軽隊/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "45df4cfde661ec2b62bc21f91070eab60e8168cd"
+    },
+    {
+      "path": "素材/合成成品/長柄足軽隊/八色预览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "bca4f48297e6b3954b9f0d2a0d35600277dd8b6f"
+    },
+    {
+      "path": "素材/合成成品/騎馬武士隊/01_武田_紅_騎馬武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "496e07a315146e1cb3d844b9e661871ec0365397"
+    },
+    {
+      "path": "素材/合成成品/騎馬武士隊/02_北条_藍_騎馬武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "928bf33b49b76c3fe1d5804f1a668f67086c1f49"
+    },
+    {
+      "path": "素材/合成成品/騎馬武士隊/03_上杉_白_騎馬武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "b3e6415f8609a89671487de5b5656d91b6417d48"
+    },
+    {
+      "path": "素材/合成成品/騎馬武士隊/04_里見_緑_騎馬武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "bfd1505666e1ad2ff97ebbcfa667bbc16ac92220"
+    },
+    {
+      "path": "素材/合成成品/騎馬武士隊/05_今川_紫_騎馬武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "bb512bcb898565ecea666605855bfc874f143215"
+    },
+    {
+      "path": "素材/合成成品/騎馬武士隊/06_佐竹_金_騎馬武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "51abbb47058b25e0f0c94e8d5ce4ea96fde56e08"
+    },
+    {
+      "path": "素材/合成成品/騎馬武士隊/08_備用_茶_騎馬武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "75dad9c931b4f8f591cc40d80087646d61b497fe"
+    },
+    {
+      "path": "素材/合成成品/騎馬武士隊/09_備用_青緑_騎馬武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "25dfe2048546fbd36f615be49252430c009a61fb"
+    },
+    {
+      "path": "素材/合成成品/騎馬武士隊/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "2428b1102adfd921e424350bc5663840e093509a"
+    },
+    {
+      "path": "素材/合成成品/騎馬武士隊/八色预览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e12f7f8847dcb548804375c2444cbb45eeeb5dd2"
+    },
+    {
+      "path": "素材/合成成品/騎馬鉄砲隊/01_武田_紅_騎馬鉄砲隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "f1863e24e69e8efe04472c48ccef352356eb10d9"
+    },
+    {
+      "path": "素材/合成成品/騎馬鉄砲隊/02_北条_藍_騎馬鉄砲隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e5078094496f9bb09fcec86b658943db0f017f68"
+    },
+    {
+      "path": "素材/合成成品/騎馬鉄砲隊/03_上杉_白_騎馬鉄砲隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "a9a934175fd027beadea74918c7fe59ae29167b4"
+    },
+    {
+      "path": "素材/合成成品/騎馬鉄砲隊/04_里見_緑_騎馬鉄砲隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "ee87d4abc1094d2aa5a1dd1ac0e519168239989c"
+    },
+    {
+      "path": "素材/合成成品/騎馬鉄砲隊/05_今川_紫_騎馬鉄砲隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "16f509dc8bf063f95d9d4722cce1b775556be262"
+    },
+    {
+      "path": "素材/合成成品/騎馬鉄砲隊/06_佐竹_金_騎馬鉄砲隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "91543f07a25ebf51c0305a73d7496c5ee3b818f2"
+    },
+    {
+      "path": "素材/合成成品/騎馬鉄砲隊/08_備用_茶_騎馬鉄砲隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "76d24af4669d5738ff34eee95e7f05f9164c6c66"
+    },
+    {
+      "path": "素材/合成成品/騎馬鉄砲隊/09_備用_青緑_騎馬鉄砲隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "946f88067a22a84ff6bee9634d92a7f7f7948c9b"
+    },
+    {
+      "path": "素材/合成成品/騎馬鉄砲隊/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "b72df9b59817d94338aadbfbce9c7d2e885a3b0f"
+    },
+    {
+      "path": "素材/合成成品/騎馬鉄砲隊/八色预览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "5f9d3b80c69fb3174d722a8e8016aec39f63b406"
+    },
+    {
+      "path": "素材/底图/01_武田_紅_底图.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "2795039eb8d9ee82b25979886de084e16a7b4a78"
+    },
+    {
+      "path": "素材/底图/02_北条_藍_底图.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "71793f84f1f38f80ca7eb01df5855bfb3a0b409e"
+    },
+    {
+      "path": "素材/底图/03_上杉_白_底图.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "2e1e61f9f00e666443aacea144165e4c658da6f1"
+    },
+    {
+      "path": "素材/底图/04_里見_緑_底图.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "460c9b0dac3617386cb6b1abb8e19a36fc2fa8d9"
+    },
+    {
+      "path": "素材/底图/05_今川_紫_底图.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "f1b3676983d6d9970c7bd85e2efd578a21412d92"
+    },
+    {
+      "path": "素材/底图/06_佐竹_金_底图.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "daff076e108b1561ba6a851bcb3ffe78cd25771f"
+    },
+    {
+      "path": "素材/底图/08_備用_茶_底图.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "a36432056e3b8f1b84bf3b72bebc0cd7aef57fbb"
+    },
+    {
+      "path": "素材/底图/09_備用_青緑_底图.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "202e47f9c633275c8420f8d988a71394aa49130d"
+    },
+    {
+      "path": "素材/底图/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "b62249f91dd3d45f84a2f22524fbc3259c21dd1b"
+    },
+    {
+      "path": "素材/部队/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "ec6ed96d76175eadea3bf2d36d2b6022b154da77"
+    },
+    {
+      "path": "素材/部队/原图参考/南蛮大筒隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "5fbac0a55e62c07a118e93d4235d6516764d6aa6"
+    },
+    {
+      "path": "素材/部队/原图参考/弓僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "078befb59a7363f074560143a31a00d7ff53ad86"
+    },
+    {
+      "path": "素材/部队/原图参考/弓足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "145bddeebd0ee6adc84cbee5f0e11b25617f1f84"
+    },
+    {
+      "path": "素材/部队/原图参考/槍武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "ec898d3bda6f8f8fad0c4f26d9f6480d26f42a3a"
+    },
+    {
+      "path": "素材/部队/原图参考/槍足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "78842d406f37cd2ed5fd372ef516403a6313199f"
+    },
+    {
+      "path": "素材/部队/原图参考/赤備騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "704077146ecb98a4306e5fc2dbf592fb6465a270"
+    },
+    {
+      "path": "素材/部队/原图参考/鉄砲僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "334c315ab1b4d5f39e78b246625f91b3374c2e1a"
+    },
+    {
+      "path": "素材/部队/原图参考/鉄砲足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "eccdbdd562eb6e9be565713a552736fcdc95d80f"
+    },
+    {
+      "path": "素材/部队/原图参考/長柄足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "2f5a4c18cb4e812142bf5014520a5d5cbf501d42"
+    },
+    {
+      "path": "素材/部队/原图参考/馬廻衆.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "49b6d78f595b9dd9b06dbf3fe4654a4ecbfbb49a"
+    },
+    {
+      "path": "素材/部队/原图参考/騎馬武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "625704bb247d977a0848f331e693a3656ecf4af8"
+    },
+    {
+      "path": "素材/部队/原图参考/騎馬鉄砲隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "66defd7f4dcf6e8ac51ac17049105cb57e0a40c7"
+    },
+    {
+      "path": "素材/部队/原图对照.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "96b5b3d2cb44eb52d22f549b1cee96548c6b9241"
+    },
+    {
+      "path": "素材/部队/底图定位/南蛮大筒隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "23544a26e79fd991596e5181a35650ee74ce1c7c"
+    },
+    {
+      "path": "素材/部队/底图定位/弓僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "a349b52cc97714ee518b5840f4c19e637998ccfb"
+    },
+    {
+      "path": "素材/部队/底图定位/弓足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "1dbf148c99dbd1e79486cf8048478f24cb48a60d"
+    },
+    {
+      "path": "素材/部队/底图定位/槍武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "263868248e1d8ef685c9971cc5164f395ce95d58"
+    },
+    {
+      "path": "素材/部队/底图定位/槍足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "98747f1313d94afcfa7882c7e5c638c9b619a05f"
+    },
+    {
+      "path": "素材/部队/底图定位/赤備騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "eeab8540ae49ff25b19a76b568cf72a15b34396b"
+    },
+    {
+      "path": "素材/部队/底图定位/鉄砲僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "453da8f4cb24dae6288308d964297e260e941328"
+    },
+    {
+      "path": "素材/部队/底图定位/鉄砲足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "8261c7206a0c8f19d8543b95d7ae56963d0f1771"
+    },
+    {
+      "path": "素材/部队/底图定位/長柄足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "aba717a8310a3ce20678be2810c6cbccf9607a8d"
+    },
+    {
+      "path": "素材/部队/底图定位/馬廻衆.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "2c048ca4936bca9e36530b77dd1658ae4c81343c"
+    },
+    {
+      "path": "素材/部队/底图定位/騎馬武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "8f88f15ff8d6a6f38e6b1d8aa02c51051496a2a4"
+    },
+    {
+      "path": "素材/部队/底图定位/騎馬鉄砲隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "6b9cd3e51aee90893e46bd08fafbda36dd308d7d"
+    },
+    {
+      "path": "素材/部队/总览.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "db166e3c6ee1dd6bf282509d04bb4240e08f8e37"
+    },
+    {
+      "path": "素材/部队/部队素材_12种.zip",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "f6b99f5bcdb3898af6fc869f5729554712ab2717"
+    },
+    {
+      "path": "素材/部队/预览/南蛮大筒隊.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "d052a08b8f0d8d27d55869d3a74b49ad8ab553c5"
+    },
+    {
+      "path": "素材/部队/预览/弓僧兵隊.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "7bd746b014ca2a2fc78af0fb2208b00971125757"
+    },
+    {
+      "path": "素材/部队/预览/弓足軽隊.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "0fe7189510cb40401f311ff1b9a25279438bc313"
+    },
+    {
+      "path": "素材/部队/预览/槍武士隊.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "bb752419ab888baaf2d483efb164644d8005977f"
+    },
+    {
+      "path": "素材/部队/预览/槍足軽隊.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "5551c2f5222b7a9da20a0e4bfb3b8b4e4120ccdc"
+    },
+    {
+      "path": "素材/部队/预览/赤備騎馬隊.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "c59673c6cb5100fbeb52f4d038c95895f8f011b7"
+    },
+    {
+      "path": "素材/部队/预览/鉄砲僧兵隊.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "a5cfae89bfc9a12db89427f27752cd77e845942a"
+    },
+    {
+      "path": "素材/部队/预览/鉄砲足軽隊.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "f9c2eb84127855e33737eacb66846aed7dc59a41"
+    },
+    {
+      "path": "素材/部队/预览/長柄足軽隊.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "bab95d3561118c72d056b6a2ac7fe17aa5737d19"
+    },
+    {
+      "path": "素材/部队/预览/馬廻衆.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "770930e1ac728d56a86a19569510a4e6de551238"
+    },
+    {
+      "path": "素材/部队/预览/騎馬武士隊.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "56a24f5979b95e613bd4b5d9a39c6f58fc172599"
+    },
+    {
+      "path": "素材/部队/预览/騎馬鉄砲隊.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "04a301af3ab5d68e8c20c4bc85e791cb656891fb"
+    },
+    {
+      "path": "素材/部队/高清透明/南蛮大筒隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "b73c8a2b873a36a7d0f86cecb9c409b1d362461e"
+    },
+    {
+      "path": "素材/部队/高清透明/弓僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e13867ce667afd35c1e5ba98de5d5fe353c06d04"
+    },
+    {
+      "path": "素材/部队/高清透明/弓足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "e945e93cba349e89b28ba9d1a09081a9a721fcdd"
+    },
+    {
+      "path": "素材/部队/高清透明/槍武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "174d74be61308949742134d04c3bea03eb8d1336"
+    },
+    {
+      "path": "素材/部队/高清透明/槍足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "90ff760d08ceb5f0c7632d4b20bd1db09f441125"
+    },
+    {
+      "path": "素材/部队/高清透明/赤備騎馬隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "fd2c85f93f3964eea41123b32faa7868a989a478"
+    },
+    {
+      "path": "素材/部队/高清透明/鉄砲僧兵隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "523568a2715a0a9a2d1f3f29672cdddc9628de41"
+    },
+    {
+      "path": "素材/部队/高清透明/鉄砲足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "507f935ca107ed8235c9f3a690c10a13b615d8c7"
+    },
+    {
+      "path": "素材/部队/高清透明/長柄足軽隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "969e1d2475dfe5f09f608891c138e8364d6180a0"
+    },
+    {
+      "path": "素材/部队/高清透明/馬廻衆.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "eab15cc5b57bdf7fdf0d8caedee37f811e0ea79f"
+    },
+    {
+      "path": "素材/部队/高清透明/騎馬武士隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "c29ec61f0a0e9a64eeaaed94b26adb1c365c94f6"
+    },
+    {
+      "path": "素材/部队/高清透明/騎馬鉄砲隊.png",
+      "mode": "100644",
+      "type": "blob",
+      "git_blob_sha": "84144dcfc38f5bb0de280f95aedfe6da3a0eccde"
+    }
+  ]
+}

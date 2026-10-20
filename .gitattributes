@@ -1,0 +1,8 @@
+# Preserve imported Lua/release bytes and existing artwork; do not normalize them.
+# Imported files retain CRLF and existing trailing empty lines for source hashes.
+# Keep other whitespace checks enabled; these two features are intentional.
+tts/** -text whitespace=cr-at-eol,-blank-at-eof
+tests/tts/*.lua -text whitespace=cr-at-eol,-blank-at-eof
+docs/tbs/history/** -text whitespace=cr-at-eol,-blank-at-eof
+tools/tts/*.py text eol=lf
+tools/tts/*.ps1 text eol=lf

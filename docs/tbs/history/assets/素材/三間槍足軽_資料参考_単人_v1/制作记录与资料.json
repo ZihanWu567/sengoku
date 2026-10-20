@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-12",
+  "mode": "built-in image_gen",
+  "design": "New single figure built from research; no earlier troop image used as input. A second pass changes this newly generated draft to flat color.",
+  "requestedSize": [
+    1000,
+    1000
+  ],
+  "historicalFraming": "16世纪后半叶、未指定家族的三间长柄足轻之资料参考插画，非某套出土或传世装备的精确复刻。",
+  "artisticChoices": [
+    "靛蓝上衣、灰褐裤为本次配色选择，不对应统一军服。",
+    "单人斜向右上的持枪姿势为美术构图及可行人体姿势，并非史料证实的唯一标准动作。",
+    "长枪上段与枪头位于画外，保留长柄比例。"
+  ],
+  "sources": [
+    {
+      "title": "历史群像：战国长柄枪",
+      "url": "https://rekigun.net/original/visual/spear/index.html",
+      "basis": "三间长柄约5.4米；页面为借用上田市立博物馆藏品进行现代演示的介绍，不代表唯一历史持枪姿势。"
+    },
+    {
+      "title": "福冈市博物馆：刀与枪的装具",
+      "url": "https://museum.city.fukuoka.jp/sp/exhibition/528/",
+      "basis": "足轻长柄与武士持枪的区分；木杆、茎、固定和一般枪头结构。属于跨时期结构说明。"
+    },
+    {
+      "title": "埼玉县立历史与民俗博物馆教学资料，第8页",
+      "url": "https://saitama-rekimin.spec.ed.jp/wysiwyg/file/download/1/1157",
+      "basis": "足轻胴的两片胴、漆涂和蝶番/绳结合结构；《杂兵物语》为江户初期追述性质材料。"
+    },
+    {
+      "title": "名古屋刀剑博物馆：阵笠",
+      "url": "https://www.meihaku.jp/art-knowledge/about-jingasa/",
+      "basis": "足轻使用浅圆锥阵笠的说明；不照搬页面所示江户期全套藏品。"
+    },
+    {
+      "title": "风俗博物馆：室町男子物卖姿",
+      "url": "https://www.iz2.or.jp/fukushoku/f_disp.php?page_no=0000099",
+      "basis": "窄袖衣、括袴、脚绊与草鞋的同时代衣着参考，非足轻专用制服。"
+    }
+  ],
+  "passes": [
+    {
+      "type": "generate",
+      "prompt": "Use case: historical-scene, non-photoreal illustration.\nCreate a BRAND NEW original image from zero. No previous artwork, costume design, pose, faces, palettes or group composition should be reused. This is a new design based on the researched factual brief below.\nSUBJECT: ONE ordinary Japanese ashigaru long-pikeman of the later 16th-century Sengoku period, with a three-ken nagae yari (三間長柄槍, approximately 5.4 metres total). Unspecified clan. This is a rank-and-file infantryman, not a commander, not an elite samurai, and not a fantasy hero.\n\nVISUAL STYLE: non-realistic drawing with historically credible objects and natural human anatomy: a handsome museum-education / historical strategy-game illustration, clean fine dark linework and restrained flat opaque colors with two simple shadow tones. Clearly an illustration rather than a photograph, 3D render, oil painting or glossy realistic digital painting. Normal adult head-to-body proportions, understated facial features, no cute/chibi proportions, no comic grimace, no huge hands, no exaggerated muscles. Make clothing and equipment legible at tabletop-counter size. Avoid grain, photoreal skin texture, metallic glare, ornamental pattern overload.\n\nRESEARCHED DESIGN BRIEF:\n- A three-ken long pike is about 5.4m long: approximately 3.2–3.4 times an adult man's height. The length comes from the slender hardwood shaft, not an enormous blade. The ordinary straight spearhead would be small and plain, not a cross-headed spear, halberd, naginata, red-tasseled Chinese spear or fantasy polearm.\n- Plain low SHALLOW conical black/brown lacquered jingasa. It must sit naturally on the head and be secured with a modest chin cord. No gold disc, horns, crest, huge helmet, giant brim, ornate neck guard or face mask. Small practical cloth padding underneath is fine.\n- Simple black/dark-brown lacquered infantry cuirass: a practical front-and-back two-piece dou tied/hinged at the side, believable shoulder supports and a modest set of separate short kusazuri skirt plates at the waist. Keep the cuirass form coherent around the torso. No golden trim, rows of gold decorative studs, rich lacing, giant samurai shoulder armor or elaborate aristocratic helmet.\n- Plain muted indigo narrow-sleeved crossed-collar garment, with naturally folded plain gray-brown tied trousers/hakama suited to movement. Subtle off-white bindings only where needed. Cloth is unpatterned. These colors are an artistic choice, not a claimed clan uniform.\n- Modest forearm protection and simple shin guards/leg wraps are appropriate; hands remain human and clearly visible, not bulky armored gauntlets.\n- Straw waraji sandals with believable straw soles and cord ties on real feet, not leather boots, modern shoes, sock-like hooves or oversized rope decorations.\n- ONE plain sheathed short sidearm at the soldier's left waist, small understated guard, dark scabbard and modest handle. Follow one continuous rigid silhouette with only a slight natural curve. No paired ceremonial daisho, huge gold scabbard, curved hook, floating sheath or weapon crossing through the torso.\n\nPOSE AND LONG-PIKE COMPOSITION:\nSquare 1000 x 1000 canvas, transparent background. A SINGLE full-body soldier, occupying the lower-left / middle-left about 60–70% of width, oriented in three-quarter view to the right, calmly alert. Entire head, both hands and both feet visible.\nUse a grounded ready/carrying stance, one foot modestly ahead of the other, knees gently flexed, hips supported, torso nearly upright. No wide theatrical horse stance, jumping, fighting duel or implausible arm twist.\nBoth hands grasp the SAME long rigid shaft at well-separated positions, one near waist/hip level and the forward hand around chest/shoulder height. Finger and thumb wrap around the shaft, natural wrists, connected shoulder-elbow-wrist geometry. Elbows are plausibly bent without extreme strain. Do not duplicate limbs or obscure a malformed hand with a cuff.\nThe pike rises steeply DIAGONALLY TOWARD UPPER RIGHT, roughly 55–65 degrees from horizontal, as specifically requested by the user. The butt portion can appear near the lower left. The long shaft continues OUT THROUGH THE TOP edge of the square; the spearhead is far outside the frame, NOT visible. Do not shorten the pike just to fit its head in the picture. Show a slender ROUND wooden pole with an absolutely straight continuous axis through both hands, no faceted plank, curve, hook, tapering error, kink, separated rod, or giant diameter.\nKeep the shaft visually separate from the sidearm and understandable all the way from butt to top crop.\n\nOUTPUT REQUIREMENTS:\nONE isolated soldier only. Genuine alpha transparency outside soldier and pole. No rear soldiers, labels, diagrams, legend, numbers, paper texture, clouds, ground, scene, shadow blob, white rectangle, colored backdrop, UI, border, flag, clan crest or watermark. Clean anti-aliased edges without red/yellow fringe.\nBefore finalizing, visually resolve hands, elbows, shoulders, knees, ankle/foot weight bearing, helmet chin ties, cuirass connection, scabbard suspension and a single straight weapon axis.\n\nFactual sources used to construct this brief (do not put text from these in the picture):\n1. Rekishi Gunzo experimental demonstration using an Ueda City Museum-held Takeda three-ken pike: https://rekigun.net/original/visual/spear/index.html\n2. Fukuoka City Museum on yari structure and distinction between foot soldiers' nagae and samurai mochi-yari: https://museum.city.fukuoka.jp/sp/exhibition/528/\n3. Saitama Prefectural Museum educational material, page 8, infantry cuirass description: https://saitama-rekimin.spec.ed.jp/wysiwyg/file/download/1/1157\n4. Nagoya Sword Museum on practical shallow conical jingasa: https://www.meihaku.jp/art-knowledge/about-jingasa/\n5. Costume Museum on period plain narrow sleeves, tied trousers, leg wraps and straw sandals: https://www.iz2.or.jp/fukushoku/f_disp.php?page_no=0000099\nThis is a cautious composite historical reconstruction, not a copy of an Edo-period museum armor set or a claim of a universal infantry uniform.",
+      "generated": "C:/Users/HP/.codex/generated_images/01a10b69-7ff2-7291-9352-5c7286004edc/exec-2f34341b-3937-4a34-a8db-6c322ca26c7b.png"
+    },
+    {
+      "type": "style-transfer",
+      "prompt": "Use case: style-transfer.\nEdit the attached newly researched single Sengoku three-ken long-pike ashigaru. CHANGE THE RENDERING STYLE ONLY, preserving his anatomically credible adult proportions, exact stance, clothing forms, hands correctly touching the single straight shaft, straw sandals, armor skirt gaps and equipment identity.\n\nThe user explicitly wants a NON-REALISTIC DRAWING. The current image has too much realistic surface detail, metallic sheen and gradient shading.\nRENDER AS A CLEAN FLAT-COLOR HISTORICAL ILLUSTRATION:\n- Crisp controlled dark ink outlines, moderately weighted outer silhouette and fine interior contours.\n- Flat solid opaque color fills. ONLY one shadow-color shape per material, with hard deliberate edges.\n- Plain indigo cloth, muted gray-brown trousers, charcoal-black armor and hat, medium-brown wood, off-white ties, tan straw.\n- Simplified expressive but mature face, normal human head/hand/foot proportions. Keep it dignified and practical, never cute or caricatured.\n- Absolutely remove photoreal pores, mottling, scratches, rust speckles, fabric grain, glossy metal reflections, specular highlights, smoothly blended gradients, volumetric lighting and 3D rendering.\n- No shading that looks airbrushed or painted realistically. Think clear ink-and-flat-color figure from a well-drawn historical encyclopedia, rather than a realistic military painting or a cartoon mascot.\n- The previous gold-looking outline and shoulder fittings should become understated dark/brown edges and plain tied cord supports, with no new gold ornamentation. Do not change the armor construction.\n- Clothing stays unpatterned; do not add decorative flowers or heraldry.\n\nPreserve one normal adult man's full body, both hands gripping the pole, elbows/wrists/knees/feet in their exact coherent relationships. Keep one simple sidearm at his left waist. Keep the long wooden pole straight from its visible lower-left butt through BOTH hands and out of the top edge; its spearhead is correctly outside the image. No broken/kinked shaft or excessive thickening.\nKeep the same square composition and actual alpha transparency. Output 1000 x 1000 transparent PNG. ONE person only. No background, vignette, ground, drop shadow, paper, UI, border, writing, numbers, flag or watermark. No colored fringes along alpha edges.",
+      "generated": "C:/Users/HP/.codex/generated_images/01a10b69-7ff2-7291-9352-5c7286004edc/exec-7223e73d-0e55-48e0-be65-8cf1a809f1b7.png"
+    }
+  ]
+}

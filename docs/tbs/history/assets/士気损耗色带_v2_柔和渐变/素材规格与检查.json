@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-18",
+  "method": "Edited existing native SVG band design; 8x export, vertical gradient, no stroke or blur; RGB bleed only in alpha=0 pixels.",
+  "radiusAtDisplay": 4,
+  "insetAtDisplay": 0.75,
+  "checks": [
+    {
+      "file": "士気_琥珀.png",
+      "width": 1152,
+      "height": 192,
+      "edgeInk": 0,
+      "opaque": 204191,
+      "partial": 237,
+      "display": [
+        144,
+        24
+      ],
+      "stops": [
+        "#DEA237",
+        "#D39129",
+        "#C88420"
+      ]
+    },
+    {
+      "file": "士気_朱紅.png",
+      "width": 1152,
+      "height": 192,
+      "edgeInk": 0,
+      "opaque": 204191,
+      "partial": 237,
+      "display": [
+        144,
+        24
+      ],
+      "stops": [
+        "#D75945",
+        "#C94A3B",
+        "#B93B31"
+      ]
+    }
+  ]
+}

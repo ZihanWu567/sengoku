@@ -1,0 +1,206 @@
+{
+  "date": "2026-10-12",
+  "canvas": {
+    "width": 1200,
+    "height": 1200,
+    "transparent": true
+  },
+  "coordinateSystem": "All positions and font sizes below use a 300 × 300 design grid; multiply by 4 for PNG pixels. Centers refer to visible ink, not text baselines or TTS world coordinates.",
+  "font": "Source Han Serif JP",
+  "labels": [
+    {
+      "text": "兵数",
+      "size": 18,
+      "weight": 700,
+      "center": {
+        "x": 275,
+        "y": 63.625
+      },
+      "baseline": {
+        "x": 257,
+        "y": 70.625
+      },
+      "inkBounds": {
+        "x": 256,
+        "y": 54.625,
+        "width": 38,
+        "height": 18
+      },
+      "row": "count"
+    },
+    {
+      "text": "百人",
+      "size": 14,
+      "weight": 600,
+      "center": {
+        "x": 275,
+        "y": 121.625
+      },
+      "baseline": {
+        "x": 260.5,
+        "y": 126.625
+      },
+      "inkBounds": {
+        "x": 260.5,
+        "y": 114.625,
+        "width": 29,
+        "height": 14
+      },
+      "row": "count"
+    },
+    {
+      "text": "士気",
+      "size": 18,
+      "weight": 700,
+      "center": {
+        "x": 275,
+        "y": 155.5
+      },
+      "baseline": {
+        "x": 257,
+        "y": 162.5
+      },
+      "inkBounds": {
+        "x": 256,
+        "y": 146.5,
+        "width": 38,
+        "height": 18
+      },
+      "row": "morale"
+    },
+    {
+      "text": "移動",
+      "size": 18,
+      "weight": 700,
+      "center": {
+        "x": 275,
+        "y": 238.875
+      },
+      "baseline": {
+        "x": 257,
+        "y": 245.875
+      },
+      "inkBounds": {
+        "x": 256,
+        "y": 229.875,
+        "width": 38,
+        "height": 18
+      },
+      "row": "movement"
+    }
+  ],
+  "numbersForPreviewOnly": [
+    {
+      "text": "1",
+      "size": 44,
+      "weight": 700,
+      "center": {
+        "x": 275,
+        "y": 93.625
+      },
+      "baseline": {
+        "x": 262,
+        "y": 109.625
+      },
+      "inkBounds": {
+        "x": 265,
+        "y": 77.625,
+        "width": 20,
+        "height": 32
+      },
+      "row": "count",
+      "bandHeight": 33
+    },
+    {
+      "text": "6",
+      "size": 44,
+      "weight": 700,
+      "center": {
+        "x": 275,
+        "y": 187
+      },
+      "baseline": {
+        "x": 262,
+        "y": 202.5
+      },
+      "inkBounds": {
+        "x": 263,
+        "y": 170.5,
+        "width": 24,
+        "height": 33
+      },
+      "row": "morale",
+      "bandHeight": 33
+    },
+    {
+      "text": "4",
+      "size": 44,
+      "weight": 700,
+      "center": {
+        "x": 275,
+        "y": 270.375
+      },
+      "baseline": {
+        "x": 262,
+        "y": 285.875
+      },
+      "inkBounds": {
+        "x": 262,
+        "y": 253.875,
+        "width": 26,
+        "height": 33
+      },
+      "row": "movement",
+      "bandHeight": 33
+    }
+  ],
+  "rows": [
+    {
+      "id": "count",
+      "label": "兵数",
+      "top": 50,
+      "bottom": 133.25,
+      "number": "1",
+      "unit": "百人",
+      "gap": 4.5,
+      "groupBounds": {
+        "top": 54.625,
+        "bottom": 128.625,
+        "center": 91.625
+      }
+    },
+    {
+      "id": "morale",
+      "label": "士気",
+      "top": 133.25,
+      "bottom": 216.75,
+      "number": "6",
+      "gap": 6,
+      "groupBounds": {
+        "top": 146.5,
+        "bottom": 203.5,
+        "center": 175
+      }
+    },
+    {
+      "id": "movement",
+      "label": "移動",
+      "top": 216.75,
+      "bottom": 300,
+      "number": "4",
+      "gap": 6,
+      "groupBounds": {
+        "top": 229.875,
+        "bottom": 286.875,
+        "center": 258.375
+      }
+    }
+  ],
+  "numberBandHeight": 33,
+  "checks": {
+    "centerInk": 0,
+    "numberBandInk": 0,
+    "fontsLoaded": true
+  },
+  "notes": "Final PNG contains frame, dividers, facing triangle, 兵数/百人/士気/移動 only. No numbers, troop title, illustration, or background. Existing ten-color assets are not modified."
+}

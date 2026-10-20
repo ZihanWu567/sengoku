@@ -1,0 +1,222 @@
+{
+  "date": "2026-10-14",
+  "method": "Existing code-native canvas/font layout; no regenerated artwork.",
+  "font": "SourceHanSerifJP-Bold.otf",
+  "colors": {
+    "charcoal": "#303330",
+    "ivory": "#F3E9CC",
+    "front": "#F1E5BE",
+    "ink": "#29251F",
+    "seal": "#A83D30",
+    "rule": "#AFA88F"
+  },
+  "numberCoordinates": [
+    {
+      "field": "兵数",
+      "x": 1100,
+      "y": 374.5
+    },
+    {
+      "field": "士気",
+      "x": 1100,
+      "y": 748
+    },
+    {
+      "field": "移動",
+      "x": 1100,
+      "y": 1081.5
+    }
+  ],
+  "numberCanvas": 256,
+  "numberDisplaySize": 176,
+  "rail": {
+    "width": 200,
+    "height": 1200,
+    "left": 1000,
+    "top": 0
+  },
+  "labels": [
+    {
+      "text": "兵数",
+      "center": {
+        "x": 100,
+        "y": 254.5
+      },
+      "baseline": {
+        "x": 28,
+        "y": 282.5
+      }
+    },
+    {
+      "text": "百人",
+      "center": {
+        "x": 100,
+        "y": 486.5
+      },
+      "baseline": {
+        "x": 42,
+        "y": 506.5
+      }
+    },
+    {
+      "text": "士気",
+      "center": {
+        "x": 100,
+        "y": 622
+      },
+      "baseline": {
+        "x": 28,
+        "y": 650
+      }
+    },
+    {
+      "text": "移動",
+      "center": {
+        "x": 100,
+        "y": 955.5
+      },
+      "baseline": {
+        "x": 28,
+        "y": 983.5
+      }
+    }
+  ],
+  "actions": [
+    {
+      "back": false,
+      "acted": false,
+      "arrow": {
+        "left": 71,
+        "top": 19,
+        "right": 129,
+        "bottom": 72
+      },
+      "glyph": {
+        "text": "未",
+        "fontSize": 104,
+        "left": 50,
+        "top": 89.5,
+        "right": 150,
+        "bottom": 186.5
+      }
+    },
+    {
+      "back": false,
+      "acted": true,
+      "arrow": {
+        "left": 71,
+        "top": 19,
+        "right": 129,
+        "bottom": 72
+      },
+      "glyph": {
+        "text": "済",
+        "fontSize": 104,
+        "left": 49.5,
+        "top": 89,
+        "right": 150.5,
+        "bottom": 187
+      }
+    },
+    {
+      "back": true,
+      "acted": false,
+      "arrow": {
+        "left": 71,
+        "top": 19,
+        "right": 129,
+        "bottom": 72
+      },
+      "glyph": {
+        "text": "未",
+        "fontSize": 104,
+        "left": 50,
+        "top": 89.5,
+        "right": 150,
+        "bottom": 186.5
+      }
+    },
+    {
+      "back": true,
+      "acted": true,
+      "arrow": {
+        "left": 71,
+        "top": 19,
+        "right": 129,
+        "bottom": 72
+      },
+      "glyph": {
+        "text": "済",
+        "fontSize": 104,
+        "left": 49.5,
+        "top": 89,
+        "right": 150.5,
+        "bottom": 187
+      }
+    }
+  ],
+  "numbers": [
+    {
+      "digit": 0,
+      "alphaIdenticalToFront": true,
+      "edgeInkPixels": 0,
+      "visiblePixels": 12836
+    },
+    {
+      "digit": 1,
+      "alphaIdenticalToFront": true,
+      "edgeInkPixels": 0,
+      "visiblePixels": 8600
+    },
+    {
+      "digit": 2,
+      "alphaIdenticalToFront": true,
+      "edgeInkPixels": 0,
+      "visiblePixels": 10481
+    },
+    {
+      "digit": 3,
+      "alphaIdenticalToFront": true,
+      "edgeInkPixels": 0,
+      "visiblePixels": 10400
+    },
+    {
+      "digit": 4,
+      "alphaIdenticalToFront": true,
+      "edgeInkPixels": 0,
+      "visiblePixels": 10594
+    },
+    {
+      "digit": 5,
+      "alphaIdenticalToFront": true,
+      "edgeInkPixels": 0,
+      "visiblePixels": 10525
+    },
+    {
+      "digit": 6,
+      "alphaIdenticalToFront": true,
+      "edgeInkPixels": 0,
+      "visiblePixels": 11500
+    },
+    {
+      "digit": 7,
+      "alphaIdenticalToFront": true,
+      "edgeInkPixels": 0,
+      "visiblePixels": 7973
+    }
+  ],
+  "preview": {
+    "nearCounterWidth": 590,
+    "farCounterWidths": [
+      150,
+      100
+    ],
+    "files": [
+      "预览\\正面_未_示意.png",
+      "预览\\正面_済_示意.png",
+      "预览\\背面_未_示意.png",
+      "预览\\背面_済_示意.png"
+    ]
+  },
+  "tenColorBacks": 10
+}

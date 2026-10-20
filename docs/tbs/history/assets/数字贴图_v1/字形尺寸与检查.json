@@ -1,0 +1,285 @@
+{
+  "date": "2026-10-13",
+  "method": "Browser canvas text typesetting from existing font; no AI generated glyphs.",
+  "font": "SourceHanSerifJP-Bold.otf",
+  "fontLicense": "../部隊棋面底图_v1/字体/LICENSE.txt",
+  "color": "#29251F",
+  "canvas": {
+    "width": 256,
+    "height": 256,
+    "transparent": true
+  },
+  "sharedFontSize": 268.0628272251309,
+  "targetInkHeight": 200,
+  "displaySizeOn1200Counter": 176,
+  "coordinates": [
+    {
+      "digit": "1",
+      "name": "兵数",
+      "x": 1100,
+      "y": 374.5
+    },
+    {
+      "digit": "6",
+      "name": "士気",
+      "x": 1100,
+      "y": 748
+    },
+    {
+      "digit": "4",
+      "name": "移動",
+      "x": 1100,
+      "y": 1081.5
+    }
+  ],
+  "glyphs": [
+    {
+      "digit": "0",
+      "fontSize": 268.0628272251309,
+      "inkWidth": 134.0299940109253,
+      "inkHeight": 201.04501342773438,
+      "baseline": {
+        "x": 48.91969060897827,
+        "y": 224.3340606689453
+      },
+      "file": "PNG/0.png",
+      "rasterInkBounds": {
+        "left": 60,
+        "top": 28,
+        "right": 195,
+        "bottom": 227,
+        "width": 136,
+        "height": 200,
+        "center": {
+          "x": 128,
+          "y": 128
+        }
+      },
+      "transparentPixels": 52700,
+      "nontransparentPixels": 12836,
+      "edgeInkPixels": 0,
+      "hasAlpha": true,
+      "displayAt176": {
+        "inkWidth": 93.5,
+        "inkHeight": 137.5
+      }
+    },
+    {
+      "digit": "1",
+      "fontSize": 268.0628272251309,
+      "inkWidth": 117.27624130249023,
+      "inkHeight": 196.8565673828125,
+      "baseline": {
+        "x": 47.91969108581543,
+        "y": 225.42828369140625
+      },
+      "file": "PNG/1.png",
+      "rasterInkBounds": {
+        "left": 70,
+        "top": 31,
+        "right": 185,
+        "bottom": 225,
+        "width": 116,
+        "height": 195,
+        "center": {
+          "x": 128,
+          "y": 128.5
+        }
+      },
+      "transparentPixels": 56936,
+      "nontransparentPixels": 8600,
+      "edgeInkPixels": 0,
+      "hasAlpha": true,
+      "displayAt176": {
+        "inkWidth": 79.75,
+        "inkHeight": 134.0625
+      }
+    },
+    {
+      "digit": "2",
+      "fontSize": 268.0628272251309,
+      "inkWidth": 134.0299940109253,
+      "inkHeight": 196.8565673828125,
+      "baseline": {
+        "x": 47.91969060897827,
+        "y": 225.42828369140625
+      },
+      "file": "PNG/2.png",
+      "rasterInkBounds": {
+        "left": 63,
+        "top": 30,
+        "right": 192,
+        "bottom": 225,
+        "width": 130,
+        "height": 196,
+        "center": {
+          "x": 128,
+          "y": 128
+        }
+      },
+      "transparentPixels": 55055,
+      "nontransparentPixels": 10481,
+      "edgeInkPixels": 0,
+      "hasAlpha": true,
+      "displayAt176": {
+        "inkWidth": 89.375,
+        "inkHeight": 134.75
+      }
+    },
+    {
+      "digit": "3",
+      "fontSize": 268.0628272251309,
+      "inkWidth": 134.0299940109253,
+      "inkHeight": 201.04501342773438,
+      "baseline": {
+        "x": 48.91969060897827,
+        "y": 223.3340606689453
+      },
+      "file": "PNG/3.png",
+      "rasterInkBounds": {
+        "left": 62,
+        "top": 28,
+        "right": 193,
+        "bottom": 227,
+        "width": 132,
+        "height": 200,
+        "center": {
+          "x": 128,
+          "y": 128
+        }
+      },
+      "transparentPixels": 55136,
+      "nontransparentPixels": 10400,
+      "edgeInkPixels": 0,
+      "hasAlpha": true,
+      "displayAt176": {
+        "inkWidth": 90.75,
+        "inkHeight": 137.5
+      }
+    },
+    {
+      "digit": "4",
+      "fontSize": 268.0628272251309,
+      "inkWidth": 146.59531497955322,
+      "inkHeight": 201.04501342773438,
+      "baseline": {
+        "x": 48.51390504837036,
+        "y": 222.8340606689453
+      },
+      "file": "PNG/4.png",
+      "rasterInkBounds": {
+        "left": 56,
+        "top": 29,
+        "right": 199,
+        "bottom": 226,
+        "width": 144,
+        "height": 198,
+        "center": {
+          "x": 128,
+          "y": 128
+        }
+      },
+      "transparentPixels": 54942,
+      "nontransparentPixels": 10594,
+      "edgeInkPixels": 0,
+      "hasAlpha": true,
+      "displayAt176": {
+        "inkWidth": 99,
+        "inkHeight": 136.125
+      }
+    },
+    {
+      "digit": "5",
+      "fontSize": 268.0628272251309,
+      "inkWidth": 138.21843147277832,
+      "inkHeight": 196.8565673828125,
+      "baseline": {
+        "x": 48.513909339904785,
+        "y": 221.23983764648438
+      },
+      "file": "PNG/5.png",
+      "rasterInkBounds": {
+        "left": 60,
+        "top": 30,
+        "right": 195,
+        "bottom": 225,
+        "width": 136,
+        "height": 196,
+        "center": {
+          "x": 128,
+          "y": 128
+        }
+      },
+      "transparentPixels": 55011,
+      "nontransparentPixels": 10525,
+      "edgeInkPixels": 0,
+      "hasAlpha": true,
+      "displayAt176": {
+        "inkWidth": 93.5,
+        "inkHeight": 134.75
+      }
+    },
+    {
+      "digit": "6",
+      "fontSize": 268.0628272251309,
+      "inkWidth": 138.21843147277832,
+      "inkHeight": 201.04501342773438,
+      "baseline": {
+        "x": 49.013909339904785,
+        "y": 223.3340606689453
+      },
+      "file": "PNG/6.png",
+      "rasterInkBounds": {
+        "left": 59,
+        "top": 28,
+        "right": 195,
+        "bottom": 227,
+        "width": 137,
+        "height": 200,
+        "center": {
+          "x": 127.5,
+          "y": 128
+        }
+      },
+      "transparentPixels": 54036,
+      "nontransparentPixels": 11500,
+      "edgeInkPixels": 0,
+      "hasAlpha": true,
+      "displayAt176": {
+        "inkWidth": 94.1875,
+        "inkHeight": 137.5
+      }
+    },
+    {
+      "digit": "7",
+      "fontSize": 268.0628272251309,
+      "inkWidth": 134.0299940109253,
+      "inkHeight": 192.66812133789062,
+      "baseline": {
+        "x": 48.91969060897827,
+        "y": 223.3340606689453
+      },
+      "file": "PNG/7.png",
+      "rasterInkBounds": {
+        "left": 64,
+        "top": 32,
+        "right": 192,
+        "bottom": 223,
+        "width": 129,
+        "height": 192,
+        "center": {
+          "x": 128.5,
+          "y": 128
+        }
+      },
+      "transparentPixels": 57563,
+      "nontransparentPixels": 7973,
+      "edgeInkPixels": 0,
+      "hasAlpha": true,
+      "displayAt176": {
+        "inkWidth": 88.6875,
+        "inkHeight": 132
+      }
+    }
+  ]
+}

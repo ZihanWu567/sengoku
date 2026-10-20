@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-12",
+  "count": 4,
+  "files": [
+    {
+      "name": "01_三間槍足軽",
+      "path": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\素材\\部隊立繪_四種_v1\\1000透明PNG\\01_三間槍足軽_1000.png",
+      "width": 1000,
+      "height": 1000,
+      "hasAlpha": true,
+      "transparentPixels": 609853,
+      "opaquePixels": 2071,
+      "partialAlphaPixels": 388076
+    },
+    {
+      "name": "02_騎馬武者",
+      "path": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\素材\\部隊立繪_四種_v1\\1000透明PNG\\02_騎馬武者_1000.png",
+      "width": 1000,
+      "height": 1000,
+      "hasAlpha": true,
+      "transparentPixels": 413235,
+      "opaquePixels": 1718,
+      "partialAlphaPixels": 585047
+    },
+    {
+      "name": "03_鉄砲足軽",
+      "path": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\素材\\部隊立繪_四種_v1\\1000透明PNG\\03_鉄砲足軽_1000.png",
+      "width": 1000,
+      "height": 1000,
+      "hasAlpha": true,
+      "transparentPixels": 527068,
+      "opaquePixels": 1719,
+      "partialAlphaPixels": 471213
+    },
+    {
+      "name": "04_弓足軽",
+      "path": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\素材\\部隊立繪_四種_v1\\1000透明PNG\\04_弓足軽_1000.png",
+      "width": 1000,
+      "height": 1000,
+      "hasAlpha": true,
+      "transparentPixels": 624675,
+      "opaquePixels": 2591,
+      "partialAlphaPixels": 372734
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-17",
+  "font": "SourceHanSerifJP-Bold.otf",
+  "fontSize": 268.0628272251309,
+  "canvas": 256,
+  "displaySize": 176,
+  "frontColor": "#29251F",
+  "backColor": "#F3E9CC",
+  "front": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\数字贴图_v1\\PNG\\8.png",
+  "back": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊操作素材_v2.13\\PNG\\数字_背面\\8.png",
+  "bounds": {
+    "left": 62,
+    "top": 28,
+    "right": 193,
+    "bottom": 227
+  },
+  "baseline": {
+    "x": 49.41969060897827,
+    "y": 224.3340606689453
+  },
+  "inkPixels": 13354,
+  "edgeInkPixels": 0,
+  "alphaIdentical": true
+}
