@@ -1,0 +1,37 @@
+{
+  "UNIT_DEFEAT_IMAGE_URL": "https://steamusercontent-a.akamaihd.net/ugc/12074515027345295373/48175076490FD0943949738C762DC72B744FB89A/",
+  "UNIT_DEFEAT_IMAGE_ASPECT": 1,
+  "UNIT_DEFEAT_FRONT_GAP": -0.01,
+  "UNIT_DEFEAT_BACK_GAP": -0.099,
+  "UNIT_SURFACE_CLEARANCE": 0.001,
+  "UNIT_OVERLAY_SEPARATION": 0.01,
+  "UNIT_BACK_RAIL_IMAGE_URL": "https://steamusercontent-a.akamaihd.net/ugc/15004901137672824316/2126C232CB43C3C6599CF00E8AB37C00A1DF027A/",
+  "UNIT_NUMBER_IMAGES": {
+    "0": "https://steamusercontent-a.akamaihd.net/ugc/15741539766686036286/8F06DCEFDC0A7DD6EA49902D7888C678F649A807/",
+    "1": "https://steamusercontent-a.akamaihd.net/ugc/10566052030907888174/23D8068022D5A8E8301878FA053A8379A2A49A91/",
+    "2": "https://steamusercontent-a.akamaihd.net/ugc/13263482307692495342/C4099C3E2ABCB2CF5ABECC02D2A7E08166062868/",
+    "3": "https://steamusercontent-a.akamaihd.net/ugc/14712503159502714649/FF4DB69C354633051542048031AC9E29EDA60795/",
+    "4": "https://steamusercontent-a.akamaihd.net/ugc/16415472697083776957/A9C9763CA28D17CE11321740F10CFB76FF58166F/",
+    "5": "https://steamusercontent-a.akamaihd.net/ugc/15091530420330195864/1022A83E75BA73D9471A42D5FD95C2ED8DB705BC/",
+    "6": "https://steamusercontent-a.akamaihd.net/ugc/17226600230470747544/D29F9D3AAF0C71EDD54DA727555D82239E668157/",
+    "7": "https://steamusercontent-a.akamaihd.net/ugc/15935087608286395327/5F6406F5931C808BC90F170F90ADB1ADD2AFA1C7/"
+  },
+  "UNIT_NUMBER_BACK_IMAGES": {
+    "0": "https://steamusercontent-a.akamaihd.net/ugc/17283063414238440206/CB497E569D56FDB2E1EA6D7672D9FB8B7BF69382/",
+    "1": "https://steamusercontent-a.akamaihd.net/ugc/10088559354799110866/D593EE2F2CC8B8A4F9AE6DF6033C3784ED8F0CF3/",
+    "2": "https://steamusercontent-a.akamaihd.net/ugc/15302979320117435616/3FDAAF345D9BDB1EF33A376BA3796DD8C21A015B/",
+    "3": "https://steamusercontent-a.akamaihd.net/ugc/9706564093812589585/6BA165077990A59CDC72DAE13D03CEFE8F2E78B6/",
+    "4": "https://steamusercontent-a.akamaihd.net/ugc/10614879344100062506/F55193C036A331E07B1572FEBB5CADB27884FEE1/",
+    "5": "https://steamusercontent-a.akamaihd.net/ugc/16835871787610471302/DEE9F2DCE94249223C63632CB0369F211FDFEBDD/",
+    "6": "https://steamusercontent-a.akamaihd.net/ugc/14922730146151859858/3316C98A9380EBB827534F6B87106AD3C2A9C84D/",
+    "7": "https://steamusercontent-a.akamaihd.net/ugc/11359251419350111216/EDB86344CE097475D8AD019AE68A466008CAA53C/"
+  },
+  "UNIT_ACTION_IMAGES": {
+    "front_unacted": "https://steamusercontent-a.akamaihd.net/ugc/17099367515901329447/5A4953986D9DB235310C72E04496EE1367E31E2E/",
+    "front_acted": "https://steamusercontent-a.akamaihd.net/ugc/12755451477582832316/E517CC3F443BCB004EFA2000FD6FF30B630A1C09/",
+    "back_unacted": "https://steamusercontent-a.akamaihd.net/ugc/13521527839041962663/EB550F3E847144705EBB243EA1CC9D2A7CC09A11/",
+    "back_acted": "https://steamusercontent-a.akamaihd.net/ugc/17809223924220211268/D44A06D402412032AFF85CE39AA167930F713995/"
+  },
+  "_recorded_date": "2026-10-16",
+  "_source": "基于用户提供的当前 Global；保留透明边框新地址、正面离面间距 .001 和背面校准 -.099；v2.13.3 仅将背面叠层间距增至 .01，正面行动层仍 .001。"
+}

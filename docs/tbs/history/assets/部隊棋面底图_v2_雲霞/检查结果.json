@@ -1,0 +1,735 @@
+{
+  "version": 2,
+  "checkedAt": "2026-10-11T03:13:31.177Z",
+  "production": "Image-generated paper/cloud backgrounds plus native SVG labels, grid and direction; composed by Chromium screenshot. Sharp used for metadata only.",
+  "finalPNGCount": 10,
+  "expectedPNGCount": 10,
+  "allFinalDimensions1200": true,
+  "labelSafeZoneChecks": 40,
+  "requiredFontsLoaded": true,
+  "finalNativeTextOnly": [
+    "兵数",
+    "百人",
+    "士気",
+    "移動"
+  ],
+  "nativeNumeralsAbsent": true,
+  "nativeTroopTitlesAbsent": true,
+  "commanderBoundsLogical": [
+    50,
+    50,
+    200,
+    200
+  ],
+  "commanderBoundsPixels": [
+    200,
+    200,
+    800,
+    800
+  ],
+  "geometryAndFontsFrom": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v1\\排版坐标与配色.json",
+  "backgroundVisualReview": "Generated source pixels require visual review for unwanted content and texture/color appearance; text-node checks cannot inspect raster content.",
+  "paletteNote": "Game identification colors; not historical claims about clan colors.",
+  "appearance": {
+    "textureOpacity": 0.62,
+    "whiteTextureOpacity": 0.8,
+    "headerOverlayOpacity": 0.35,
+    "railOverlayOpacity": 0.5,
+    "accentBorderOpacity": 1
+  },
+  "perPaletteAdjustments": {},
+  "backgrounds": [
+    {
+      "id": "01_武田_紅",
+      "source": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\01_武田_紅_纹样.png",
+      "width": 1254,
+      "height": 1254,
+      "appearance": {
+        "textureOpacity": 0.62,
+        "whiteTextureOpacity": 0.8,
+        "headerOverlayOpacity": 0.35,
+        "railOverlayOpacity": 0.5,
+        "accentBorderOpacity": 1
+      }
+    },
+    {
+      "id": "02_北条_藍",
+      "source": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\02_北条_藍_纹样.png",
+      "width": 1254,
+      "height": 1254,
+      "appearance": {
+        "textureOpacity": 0.62,
+        "whiteTextureOpacity": 0.8,
+        "headerOverlayOpacity": 0.35,
+        "railOverlayOpacity": 0.5,
+        "accentBorderOpacity": 1
+      }
+    },
+    {
+      "id": "03_上杉_白",
+      "source": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\03_上杉_白_纹样.png",
+      "width": 1254,
+      "height": 1254,
+      "appearance": {
+        "textureOpacity": 0.8,
+        "whiteTextureOpacity": 0.8,
+        "headerOverlayOpacity": 0.35,
+        "railOverlayOpacity": 0.5,
+        "accentBorderOpacity": 1
+      }
+    },
+    {
+      "id": "04_里見_緑",
+      "source": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\04_里見_緑_纹样.png",
+      "width": 1254,
+      "height": 1254,
+      "appearance": {
+        "textureOpacity": 0.62,
+        "whiteTextureOpacity": 0.8,
+        "headerOverlayOpacity": 0.35,
+        "railOverlayOpacity": 0.5,
+        "accentBorderOpacity": 1
+      }
+    },
+    {
+      "id": "05_今川_紫",
+      "source": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\05_今川_紫_纹样.png",
+      "width": 1254,
+      "height": 1254,
+      "appearance": {
+        "textureOpacity": 0.62,
+        "whiteTextureOpacity": 0.8,
+        "headerOverlayOpacity": 0.35,
+        "railOverlayOpacity": 0.5,
+        "accentBorderOpacity": 1
+      }
+    },
+    {
+      "id": "06_佐竹_金",
+      "source": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\06_佐竹_金_纹样.png",
+      "width": 1254,
+      "height": 1254,
+      "appearance": {
+        "textureOpacity": 0.62,
+        "whiteTextureOpacity": 0.8,
+        "headerOverlayOpacity": 0.35,
+        "railOverlayOpacity": 0.5,
+        "accentBorderOpacity": 1
+      }
+    },
+    {
+      "id": "07_備用_橙",
+      "source": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\07_備用_橙_纹样.png",
+      "width": 1254,
+      "height": 1254,
+      "appearance": {
+        "textureOpacity": 0.62,
+        "whiteTextureOpacity": 0.8,
+        "headerOverlayOpacity": 0.35,
+        "railOverlayOpacity": 0.5,
+        "accentBorderOpacity": 1
+      }
+    },
+    {
+      "id": "08_備用_茶",
+      "source": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\08_備用_茶_纹样.png",
+      "width": 1254,
+      "height": 1254,
+      "appearance": {
+        "textureOpacity": 0.62,
+        "whiteTextureOpacity": 0.8,
+        "headerOverlayOpacity": 0.35,
+        "railOverlayOpacity": 0.5,
+        "accentBorderOpacity": 1
+      }
+    },
+    {
+      "id": "09_備用_青緑",
+      "source": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\09_備用_青緑_纹样.png",
+      "width": 1254,
+      "height": 1254,
+      "appearance": {
+        "textureOpacity": 0.62,
+        "whiteTextureOpacity": 0.8,
+        "headerOverlayOpacity": 0.35,
+        "railOverlayOpacity": 0.5,
+        "accentBorderOpacity": 1
+      }
+    },
+    {
+      "id": "10_備用_墨鼠",
+      "source": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\10_備用_墨鼠_纹样.png",
+      "width": 1254,
+      "height": 1254,
+      "appearance": {
+        "textureOpacity": 0.62,
+        "whiteTextureOpacity": 0.8,
+        "headerOverlayOpacity": 0.35,
+        "railOverlayOpacity": 0.5,
+        "accentBorderOpacity": 1
+      }
+    }
+  ],
+  "finalFiles": [
+    {
+      "id": "01_武田_紅",
+      "png": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\成品PNG\\01_武田_紅.png",
+      "sourceHTML": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\01_武田_紅_合成.html",
+      "width": 1200,
+      "height": 1200,
+      "requiredFontsLoaded": true,
+      "imageLoads": 1,
+      "labelSafeZoneChecks": 4,
+      "labels": [
+        {
+          "text": "兵数",
+          "bounds": {
+            "x": 259,
+            "y": 55,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "百人",
+          "bounds": {
+            "x": 263.5,
+            "y": 112.25,
+            "width": 23,
+            "height": 16.5
+          }
+        },
+        {
+          "text": "士気",
+          "bounds": {
+            "x": 259,
+            "y": 138.25,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "移動",
+          "bounds": {
+            "x": 259,
+            "y": 221.75,
+            "width": 32,
+            "height": 23
+          }
+        }
+      ],
+      "staticWords": [
+        "兵数",
+        "百人",
+        "士気",
+        "移動"
+      ]
+    },
+    {
+      "id": "02_北条_藍",
+      "png": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\成品PNG\\02_北条_藍.png",
+      "sourceHTML": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\02_北条_藍_合成.html",
+      "width": 1200,
+      "height": 1200,
+      "requiredFontsLoaded": true,
+      "imageLoads": 1,
+      "labelSafeZoneChecks": 4,
+      "labels": [
+        {
+          "text": "兵数",
+          "bounds": {
+            "x": 259,
+            "y": 55,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "百人",
+          "bounds": {
+            "x": 263.5,
+            "y": 112.25,
+            "width": 23,
+            "height": 16.5
+          }
+        },
+        {
+          "text": "士気",
+          "bounds": {
+            "x": 259,
+            "y": 138.25,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "移動",
+          "bounds": {
+            "x": 259,
+            "y": 221.75,
+            "width": 32,
+            "height": 23
+          }
+        }
+      ],
+      "staticWords": [
+        "兵数",
+        "百人",
+        "士気",
+        "移動"
+      ]
+    },
+    {
+      "id": "03_上杉_白",
+      "png": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\成品PNG\\03_上杉_白.png",
+      "sourceHTML": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\03_上杉_白_合成.html",
+      "width": 1200,
+      "height": 1200,
+      "requiredFontsLoaded": true,
+      "imageLoads": 1,
+      "labelSafeZoneChecks": 4,
+      "labels": [
+        {
+          "text": "兵数",
+          "bounds": {
+            "x": 259,
+            "y": 55,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "百人",
+          "bounds": {
+            "x": 263.5,
+            "y": 112.25,
+            "width": 23,
+            "height": 16.5
+          }
+        },
+        {
+          "text": "士気",
+          "bounds": {
+            "x": 259,
+            "y": 138.25,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "移動",
+          "bounds": {
+            "x": 259,
+            "y": 221.75,
+            "width": 32,
+            "height": 23
+          }
+        }
+      ],
+      "staticWords": [
+        "兵数",
+        "百人",
+        "士気",
+        "移動"
+      ]
+    },
+    {
+      "id": "04_里見_緑",
+      "png": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\成品PNG\\04_里見_緑.png",
+      "sourceHTML": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\04_里見_緑_合成.html",
+      "width": 1200,
+      "height": 1200,
+      "requiredFontsLoaded": true,
+      "imageLoads": 1,
+      "labelSafeZoneChecks": 4,
+      "labels": [
+        {
+          "text": "兵数",
+          "bounds": {
+            "x": 259,
+            "y": 55,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "百人",
+          "bounds": {
+            "x": 263.5,
+            "y": 112.25,
+            "width": 23,
+            "height": 16.5
+          }
+        },
+        {
+          "text": "士気",
+          "bounds": {
+            "x": 259,
+            "y": 138.25,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "移動",
+          "bounds": {
+            "x": 259,
+            "y": 221.75,
+            "width": 32,
+            "height": 23
+          }
+        }
+      ],
+      "staticWords": [
+        "兵数",
+        "百人",
+        "士気",
+        "移動"
+      ]
+    },
+    {
+      "id": "05_今川_紫",
+      "png": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\成品PNG\\05_今川_紫.png",
+      "sourceHTML": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\05_今川_紫_合成.html",
+      "width": 1200,
+      "height": 1200,
+      "requiredFontsLoaded": true,
+      "imageLoads": 1,
+      "labelSafeZoneChecks": 4,
+      "labels": [
+        {
+          "text": "兵数",
+          "bounds": {
+            "x": 259,
+            "y": 55,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "百人",
+          "bounds": {
+            "x": 263.5,
+            "y": 112.25,
+            "width": 23,
+            "height": 16.5
+          }
+        },
+        {
+          "text": "士気",
+          "bounds": {
+            "x": 259,
+            "y": 138.25,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "移動",
+          "bounds": {
+            "x": 259,
+            "y": 221.75,
+            "width": 32,
+            "height": 23
+          }
+        }
+      ],
+      "staticWords": [
+        "兵数",
+        "百人",
+        "士気",
+        "移動"
+      ]
+    },
+    {
+      "id": "06_佐竹_金",
+      "png": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\成品PNG\\06_佐竹_金.png",
+      "sourceHTML": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\06_佐竹_金_合成.html",
+      "width": 1200,
+      "height": 1200,
+      "requiredFontsLoaded": true,
+      "imageLoads": 1,
+      "labelSafeZoneChecks": 4,
+      "labels": [
+        {
+          "text": "兵数",
+          "bounds": {
+            "x": 259,
+            "y": 55,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "百人",
+          "bounds": {
+            "x": 263.5,
+            "y": 112.25,
+            "width": 23,
+            "height": 16.5
+          }
+        },
+        {
+          "text": "士気",
+          "bounds": {
+            "x": 259,
+            "y": 138.25,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "移動",
+          "bounds": {
+            "x": 259,
+            "y": 221.75,
+            "width": 32,
+            "height": 23
+          }
+        }
+      ],
+      "staticWords": [
+        "兵数",
+        "百人",
+        "士気",
+        "移動"
+      ]
+    },
+    {
+      "id": "07_備用_橙",
+      "png": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\成品PNG\\07_備用_橙.png",
+      "sourceHTML": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\07_備用_橙_合成.html",
+      "width": 1200,
+      "height": 1200,
+      "requiredFontsLoaded": true,
+      "imageLoads": 1,
+      "labelSafeZoneChecks": 4,
+      "labels": [
+        {
+          "text": "兵数",
+          "bounds": {
+            "x": 259,
+            "y": 55,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "百人",
+          "bounds": {
+            "x": 263.5,
+            "y": 112.25,
+            "width": 23,
+            "height": 16.5
+          }
+        },
+        {
+          "text": "士気",
+          "bounds": {
+            "x": 259,
+            "y": 138.25,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "移動",
+          "bounds": {
+            "x": 259,
+            "y": 221.75,
+            "width": 32,
+            "height": 23
+          }
+        }
+      ],
+      "staticWords": [
+        "兵数",
+        "百人",
+        "士気",
+        "移動"
+      ]
+    },
+    {
+      "id": "08_備用_茶",
+      "png": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\成品PNG\\08_備用_茶.png",
+      "sourceHTML": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\08_備用_茶_合成.html",
+      "width": 1200,
+      "height": 1200,
+      "requiredFontsLoaded": true,
+      "imageLoads": 1,
+      "labelSafeZoneChecks": 4,
+      "labels": [
+        {
+          "text": "兵数",
+          "bounds": {
+            "x": 259,
+            "y": 55,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "百人",
+          "bounds": {
+            "x": 263.5,
+            "y": 112.25,
+            "width": 23,
+            "height": 16.5
+          }
+        },
+        {
+          "text": "士気",
+          "bounds": {
+            "x": 259,
+            "y": 138.25,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "移動",
+          "bounds": {
+            "x": 259,
+            "y": 221.75,
+            "width": 32,
+            "height": 23
+          }
+        }
+      ],
+      "staticWords": [
+        "兵数",
+        "百人",
+        "士気",
+        "移動"
+      ]
+    },
+    {
+      "id": "09_備用_青緑",
+      "png": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\成品PNG\\09_備用_青緑.png",
+      "sourceHTML": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\09_備用_青緑_合成.html",
+      "width": 1200,
+      "height": 1200,
+      "requiredFontsLoaded": true,
+      "imageLoads": 1,
+      "labelSafeZoneChecks": 4,
+      "labels": [
+        {
+          "text": "兵数",
+          "bounds": {
+            "x": 259,
+            "y": 55,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "百人",
+          "bounds": {
+            "x": 263.5,
+            "y": 112.25,
+            "width": 23,
+            "height": 16.5
+          }
+        },
+        {
+          "text": "士気",
+          "bounds": {
+            "x": 259,
+            "y": 138.25,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "移動",
+          "bounds": {
+            "x": 259,
+            "y": 221.75,
+            "width": 32,
+            "height": 23
+          }
+        }
+      ],
+      "staticWords": [
+        "兵数",
+        "百人",
+        "士気",
+        "移動"
+      ]
+    },
+    {
+      "id": "10_備用_墨鼠",
+      "png": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\成品PNG\\10_備用_墨鼠.png",
+      "sourceHTML": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\制作源\\10_備用_墨鼠_合成.html",
+      "width": 1200,
+      "height": 1200,
+      "requiredFontsLoaded": true,
+      "imageLoads": 1,
+      "labelSafeZoneChecks": 4,
+      "labels": [
+        {
+          "text": "兵数",
+          "bounds": {
+            "x": 259,
+            "y": 55,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "百人",
+          "bounds": {
+            "x": 263.5,
+            "y": 112.25,
+            "width": 23,
+            "height": 16.5
+          }
+        },
+        {
+          "text": "士気",
+          "bounds": {
+            "x": 259,
+            "y": 138.25,
+            "width": 32,
+            "height": 23
+          }
+        },
+        {
+          "text": "移動",
+          "bounds": {
+            "x": 259,
+            "y": 221.75,
+            "width": 32,
+            "height": 23
+          }
+        }
+      ],
+      "staticWords": [
+        "兵数",
+        "百人",
+        "士気",
+        "移動"
+      ]
+    }
+  ],
+  "previews": [
+    {
+      "name": "十色总览",
+      "png": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\十色总览.png",
+      "width": 1400,
+      "height": 831
+    },
+    {
+      "name": "300像素检查",
+      "png": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\300像素检查.png",
+      "width": 1012,
+      "height": 850
+    },
+    {
+      "name": "叠放检查",
+      "png": "C:\\Users\\HP\\Documents\\ChatGPT\\日本战国\\TTS武将面板\\部隊棋面底图_v2_雲霞\\叠放检查.png",
+      "width": 1012,
+      "height": 556
+    }
+  ]
+}

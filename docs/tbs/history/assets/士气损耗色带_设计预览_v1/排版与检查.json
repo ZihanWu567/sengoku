@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-17",
+  "previewOnly": true,
+  "band": {
+    "width": 144,
+    "height": 24,
+    "x": 1100,
+    "y": 843,
+    "amber": "#C88927",
+    "red": "#C34A3C"
+  },
+  "checks": [
+    {
+      "file": "正面_5_有所下降.png",
+      "outsideMoraleChanges": 0
+    },
+    {
+      "file": "正面_3_不高于一半.png",
+      "outsideMoraleChanges": 0
+    },
+    {
+      "file": "背面_4_有所下降.png",
+      "outsideMoraleChanges": 0
+    },
+    {
+      "file": "背面_2_不高于一半.png",
+      "outsideMoraleChanges": 0
+    }
+  ],
+  "rule": "Compare current morale with the cap for the visible face; full=none, more than half=amber, at most half=red. All specimens remain unacted."
+}

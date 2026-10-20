@@ -1,0 +1,128 @@
+{
+  "date": "2026-10-12",
+  "width": 1200,
+  "height": 1200,
+  "transparent": true,
+  "fontFamily": "Source Han Serif JP",
+  "labels": [
+    {
+      "text": "兵数",
+      "weight": 700,
+      "cx": 1100,
+      "cy": 266,
+      "maxWidth": 180,
+      "maxHeight": 108,
+      "zone": [
+        1010,
+        212,
+        180,
+        108
+      ],
+      "oldSize": 64,
+      "size": 90.25,
+      "x": 1008.375,
+      "y": 300,
+      "bounds": {
+        "x": 1010.375,
+        "y": 223,
+        "width": 179.25,
+        "height": 86
+      }
+    },
+    {
+      "text": "百人",
+      "weight": 600,
+      "cx": 1100,
+      "cy": 486,
+      "maxWidth": 180,
+      "maxHeight": 72,
+      "zone": [
+        1010,
+        450,
+        180,
+        72
+      ],
+      "oldSize": 46,
+      "size": 78,
+      "x": 1021,
+      "y": 515,
+      "bounds": {
+        "x": 1024,
+        "y": 450,
+        "width": 152,
+        "height": 72
+      }
+    },
+    {
+      "text": "士気",
+      "weight": 700,
+      "cx": 1100,
+      "cy": 599,
+      "maxWidth": 180,
+      "maxHeight": 112,
+      "zone": [
+        1010,
+        543,
+        180,
+        112
+      ],
+      "oldSize": 64,
+      "size": 90.25,
+      "x": 1008.375,
+      "y": 633.5,
+      "bounds": {
+        "x": 1011.375,
+        "y": 556.5,
+        "width": 177.25,
+        "height": 85
+      }
+    },
+    {
+      "text": "移動",
+      "weight": 700,
+      "cx": 1100,
+      "cy": 933,
+      "maxWidth": 180,
+      "maxHeight": 112,
+      "zone": [
+        1010,
+        877,
+        180,
+        112
+      ],
+      "oldSize": 64,
+      "size": 90.25,
+      "x": 1010.375,
+      "y": 967,
+      "bounds": {
+        "x": 1010.375,
+        "y": 890,
+        "width": 179.25,
+        "height": 86
+      }
+    }
+  ],
+  "inkPixels": 21657,
+  "outsideInkPixels": 0,
+  "numberVisualZones": {
+    "count": [
+      1050,
+      330,
+      100,
+      112
+    ],
+    "morale": [
+      1040,
+      667,
+      120,
+      160
+    ],
+    "movement": [
+      1040,
+      1001,
+      120,
+      160
+    ]
+  },
+  "notes": "Only the transparent text asset is produced. The ten color PNGs and all previous assets are unchanged."
+}

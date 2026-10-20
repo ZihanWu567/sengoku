@@ -1,0 +1,594 @@
+{
+  "import_date": "2026-10-21",
+  "source_root": "原本地 TTS武将面板 目录",
+  "files": [
+    {
+      "source": "TTS武将面板/兵種与備隊面板合并版_日本漢字.lua",
+      "destination": "tts/Global.lua",
+      "source_sha256": "0fc8f3c8f23d908fcd7569c6977783c68734cb04d35fc10c3652518cc3cedd1e",
+      "note": "原样导入",
+      "imported_sha256": "0fc8f3c8f23d908fcd7569c6977783c68734cb04d35fc10c3652518cc3cedd1e"
+    },
+    {
+      "source": "TTS武将面板/Global_完整替换版_v2.14.11.txt",
+      "destination": "tts/releases/Global_v2.14.11.txt",
+      "source_sha256": "0fc8f3c8f23d908fcd7569c6977783c68734cb04d35fc10c3652518cc3cedd1e",
+      "note": "原样导入",
+      "imported_sha256": "0fc8f3c8f23d908fcd7569c6977783c68734cb04d35fc10c3652518cc3cedd1e"
+    },
+    {
+      "source": "TTS武将面板/備隊武将面板_日本漢字.lua",
+      "destination": "tts/modules/commanders.lua",
+      "source_sha256": "5a729bec65a0c1513b2f5b98d4edac81d2da605749d514c5ade3239ca6eba6e3",
+      "note": "原样导入",
+      "imported_sha256": "5a729bec65a0c1513b2f5b98d4edac81d2da605749d514c5ade3239ca6eba6e3"
+    },
+    {
+      "source": "TTS武将面板/验证工具/地图阵旗模块.lua",
+      "destination": "tts/modules/map_flags.lua",
+      "source_sha256": "8051d59f21ddd6550e857152a3e2890fc5572a03d1b6934025ecd190f80407b1",
+      "note": "原样导入",
+      "imported_sha256": "8051d59f21ddd6550e857152a3e2890fc5572a03d1b6934025ecd190f80407b1"
+    },
+    {
+      "source": "TTS武将面板/验证工具/備隊v2检查.lua",
+      "destination": "tests/tts/behavior.lua",
+      "source_sha256": "4b71995fa0924d1197688f1ac6b1a02f14425996b3498e47a60ea5aa77745839",
+      "note": "原样导入",
+      "imported_sha256": "4b71995fa0924d1197688f1ac6b1a02f14425996b3498e47a60ea5aa77745839"
+    },
+    {
+      "source": "TTS武将面板/验证工具/运行備隊v2检查.ps1",
+      "destination": "tools/tts/test.ps1",
+      "source_sha256": "c7128caa6d6bae358da8cf52ef45f165023cca685871af716326eaaf8ea8612c",
+      "note": "仅适配仓库路径、运行依赖参数；行为断言保留",
+      "imported_sha256": "f2bcf9ef5e6d8326b7e560dfaf0c1f51f7e925b210e6a24f974a12e9ba6dbfb3"
+    },
+    {
+      "source": "TTS武将面板/验证工具/同步備隊脚本.py",
+      "destination": "tools/tts/sync_global.py",
+      "source_sha256": "a340ab58271982351338a04e170bbdb11f29da3833aa8a4ecd09dd65cdecb18b",
+      "note": "适配仓库路径与 --check；维持既有模块拼装顺序",
+      "imported_sha256": "1c2e1e3fe756fc0bb8d554fb23985000434adc33f067687fb89c5fdc3b2e2484"
+    },
+    {
+      "source": "TTS武将面板/v2.11.1修复说明.md",
+      "destination": "docs/tbs/history/v2.11.1修复说明.md",
+      "source_sha256": "3bdb3f696aa40eadeb3f40780509d17975ebb4100e85da40c9b23ba1dd2f316a",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "3bdb3f696aa40eadeb3f40780509d17975ebb4100e85da40c9b23ba1dd2f316a"
+    },
+    {
+      "source": "TTS武将面板/v2.12.1方向修正说明.md",
+      "destination": "docs/tbs/history/v2.12.1方向修正说明.md",
+      "source_sha256": "f6f14dd79dc8facaca13d102424abf26303926fcef95ce298a0d1d3cd2ae0256",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "f6f14dd79dc8facaca13d102424abf26303926fcef95ce298a0d1d3cd2ae0256"
+    },
+    {
+      "source": "TTS武将面板/v2.12.2士气直接点击说明.md",
+      "destination": "docs/tbs/history/v2.12.2士气直接点击说明.md",
+      "source_sha256": "467b4f79f2ba682ff350caf8545d6236c98bdb3930f80332c190d7f37e30ebcd",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "467b4f79f2ba682ff350caf8545d6236c98bdb3930f80332c190d7f37e30ebcd"
+    },
+    {
+      "source": "TTS武将面板/v2.12.3移除部队菜单说明.md",
+      "destination": "docs/tbs/history/v2.12.3移除部队菜单说明.md",
+      "source_sha256": "384ed5c938229de8ab4b13a394b680f9ee5e05894149507ed86959ee429d734c",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "384ed5c938229de8ab4b13a394b680f9ee5e05894149507ed86959ee429d734c"
+    },
+    {
+      "source": "TTS武将面板/v2.12数字贴图与阵旗说明.md",
+      "destination": "docs/tbs/history/v2.12数字贴图与阵旗说明.md",
+      "source_sha256": "04410fad4748d253eb355c9cf19ffd256473310c61133a9731fe62ea65858021",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "04410fad4748d253eb355c9cf19ffd256473310c61133a9731fe62ea65858021"
+    },
+    {
+      "source": "TTS武将面板/v2.13.1按钮坐标与刷新修复说明.md",
+      "destination": "docs/tbs/history/v2.13.1按钮坐标与刷新修复说明.md",
+      "source_sha256": "d8e446394fda3ae0120eee849c181c4778eb5b53d7fc663df2c60f67d2998428",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "d8e446394fda3ae0120eee849c181c4778eb5b53d7fc663df2c60f67d2998428"
+    },
+    {
+      "source": "TTS武将面板/v2.13.2贴图闪烁修复说明.md",
+      "destination": "docs/tbs/history/v2.13.2贴图闪烁修复说明.md",
+      "source_sha256": "1a434d5b5ab63f61602bab5360794233a128ca4760127f0752e93a5d0ebf5c45",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "1a434d5b5ab63f61602bab5360794233a128ca4760127f0752e93a5d0ebf5c45"
+    },
+    {
+      "source": "TTS武将面板/v2.13.3背面层间距修复说明.md",
+      "destination": "docs/tbs/history/v2.13.3背面层间距修复说明.md",
+      "source_sha256": "e743d51a5251aea7b948f68797963b31a3ca8919ec013a62205bb9cbf2ce2830",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "e743d51a5251aea7b948f68797963b31a3ca8919ec013a62205bb9cbf2ce2830"
+    },
+    {
+      "source": "TTS武将面板/v2.13自动翻面与行动说明.md",
+      "destination": "docs/tbs/history/v2.13自动翻面与行动说明.md",
+      "source_sha256": "58b15a643440499ee3bef53cd9ea94faec06e59f0ac87777034547bdfdce1b2e",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "58b15a643440499ee3bef53cd9ea94faec06e59f0ac87777034547bdfdce1b2e"
+    },
+    {
+      "source": "TTS武将面板/v2.14.10士气快捷调整说明.md",
+      "destination": "docs/tbs/history/v2.14.10士气快捷调整说明.md",
+      "source_sha256": "a1299eec1f3bd9f9a63a7ffa46f466de45f6951571d7ab0472d940d509c9621b",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "a1299eec1f3bd9f9a63a7ffa46f466de45f6951571d7ab0472d940d509c9621b"
+    },
+    {
+      "source": "TTS武将面板/v2.14.11新增六兵種说明.md",
+      "destination": "docs/tbs/history/v2.14.11新增六兵種说明.md",
+      "source_sha256": "18ef45722bfea91a531f6e0c0d4f9becd55beac7183306ab73daaaeec68fb99b",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "18ef45722bfea91a531f6e0c0d4f9becd55beac7183306ab73daaaeec68fb99b"
+    },
+    {
+      "source": "TTS武将面板/v2.14.2背面白图修复说明.md",
+      "destination": "docs/tbs/history/v2.14.2背面白图修复说明.md",
+      "source_sha256": "828a6c2a61607f6a41869454f224876df7ae0d8cb6bb2cf1d73eb094860d0e8a",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "828a6c2a61607f6a41869454f224876df7ae0d8cb6bb2cf1d73eb094860d0e8a"
+    },
+    {
+      "source": "TTS武将面板/v2.14.4完整替换说明.md",
+      "destination": "docs/tbs/history/v2.14.4完整替换说明.md",
+      "source_sha256": "708e1839b837d6c2dde3d8e7216c9a49a9d170fd6d4b5beb4bb4bcaa2e6e2f37",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "708e1839b837d6c2dde3d8e7216c9a49a9d170fd6d4b5beb4bb4bcaa2e6e2f37"
+    },
+    {
+      "source": "TTS武将面板/v2.14.5新增兵種说明.md",
+      "destination": "docs/tbs/history/v2.14.5新增兵種说明.md",
+      "source_sha256": "7314bd0258dc4d1e7e7ccd9b64a24f377655225ef42cf99b5263a3d12c90c1ed",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "7314bd0258dc4d1e7e7ccd9b64a24f377655225ef42cf99b5263a3d12c90c1ed"
+    },
+    {
+      "source": "TTS武将面板/v2.14.6背面色带白图修复说明.md",
+      "destination": "docs/tbs/history/v2.14.6背面色带白图修复说明.md",
+      "source_sha256": "da1facfa5eddb88c6e8302ac3b038ea25998bd77124b4955a369b7cf5f86a48b",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "da1facfa5eddb88c6e8302ac3b038ea25998bd77124b4955a369b7cf5f86a48b"
+    },
+    {
+      "source": "TTS武将面板/v2.14.7背面原生色带说明.md",
+      "destination": "docs/tbs/history/v2.14.7背面原生色带说明.md",
+      "source_sha256": "cac1cc100897d1b5fb51750ac53ab0ba4bc95225ac1ca51c64e850caef4fe650",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "cac1cc100897d1b5fb51750ac53ab0ba4bc95225ac1ca51c64e850caef4fe650"
+    },
+    {
+      "source": "TTS武将面板/v2.14.8背面白色色带修复说明.md",
+      "destination": "docs/tbs/history/v2.14.8背面白色色带修复说明.md",
+      "source_sha256": "be3abb570f263701fc1368d4fe9bb3009d993dee381af864ccabf67a9443d234",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "be3abb570f263701fc1368d4fe9bb3009d993dee381af864ccabf67a9443d234"
+    },
+    {
+      "source": "TTS武将面板/v2.14.9空引用修复说明.md",
+      "destination": "docs/tbs/history/v2.14.9空引用修复说明.md",
+      "source_sha256": "506a3bafd55e82b91d1aea7c43680ef90e95584b0a5659e0517e73e1067069ba",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "506a3bafd55e82b91d1aea7c43680ef90e95584b0a5659e0517e73e1067069ba"
+    },
+    {
+      "source": "TTS武将面板/v2.14背面ObjectUI使用说明.md",
+      "destination": "docs/tbs/history/v2.14背面ObjectUI使用说明.md",
+      "source_sha256": "38939ef0c8e967b3befa169417b8cf3a259365db399486190469f98b0b4e4792",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "38939ef0c8e967b3befa169417b8cf3a259365db399486190469f98b0b4e4792"
+    },
+    {
+      "source": "TTS武将面板/与现有Global合并方法.md",
+      "destination": "docs/tbs/history/与现有Global合并方法.md",
+      "source_sha256": "03e442394a14c90df05a64dedb5f44fbe8e2e2514fe4e5a2f57c7986e3c89cb3",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "03e442394a14c90df05a64dedb5f44fbe8e2e2514fe4e5a2f57c7986e3c89cb3"
+    },
+    {
+      "source": "TTS武将面板/令牌背面済印.md",
+      "destination": "docs/tbs/history/令牌背面済印.md",
+      "source_sha256": "1d472ecebe355267f62a27f883af647238ca5b661ccd94653ae852d794b57823",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "1d472ecebe355267f62a27f883af647238ca5b661ccd94653ae852d794b57823"
+    },
+    {
+      "source": "TTS武将面板/令牌資料填写指南.md",
+      "destination": "docs/tbs/history/令牌資料填写指南.md",
+      "source_sha256": "0044388ea8bbe9c559f0c86c09113dd8e01937e3306d822cc7e73f8ed082d170",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "0044388ea8bbe9c559f0c86c09113dd8e01937e3306d822cc7e73f8ed082d170"
+    },
+    {
+      "source": "TTS武将面板/地图陣旗与英文标签.md",
+      "destination": "docs/tbs/history/地图陣旗与英文标签.md",
+      "source_sha256": "959563a525114cecfee28582919271eb9b6c5d78bd0a2c35a916c87454fabb5c",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "959563a525114cecfee28582919271eb9b6c5d78bd0a2c35a916c87454fabb5c"
+    },
+    {
+      "source": "TTS武将面板/备队武将面板教程.md",
+      "destination": "docs/tbs/history/备队武将面板教程.md",
+      "source_sha256": "e8c6ffb8912688fc32bfd8c97634f7f807b0bf9808b93cb303915eca14d96fde",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "e8c6ffb8912688fc32bfd8c97634f7f807b0bf9808b93cb303915eca14d96fde"
+    },
+    {
+      "source": "TTS武将面板/操作教程.md",
+      "destination": "docs/tbs/history/操作教程.md",
+      "source_sha256": "a2010537af990292dced93e6d3dbc9997b94f6f5e885a60bd51582de3a0a3958",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "a2010537af990292dced93e6d3dbc9997b94f6f5e885a60bd51582de3a0a3958"
+    },
+    {
+      "source": "TTS武将面板/新陣旗使用说明.md",
+      "destination": "docs/tbs/history/新陣旗使用说明.md",
+      "source_sha256": "8fc80ac46ce7d1754961467cfa6f850b6746f597e286e1829b8f3bc3e75f56ad",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "8fc80ac46ce7d1754961467cfa6f850b6746f597e286e1829b8f3bc3e75f56ad"
+    },
+    {
+      "source": "TTS武将面板/行動印与負傷显示.md",
+      "destination": "docs/tbs/history/行動印与負傷显示.md",
+      "source_sha256": "808413da22702b8466c1bc6019b928d18d9346f026c89e44cfc84044a44f88d1",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "808413da22702b8466c1bc6019b928d18d9346f026c89e44cfc84044a44f88d1"
+    },
+    {
+      "source": "TTS武将面板/部隊右欄_v2.11使用说明.md",
+      "destination": "docs/tbs/history/部隊右欄_v2.11使用说明.md",
+      "source_sha256": "515b56df8b8f9852ae0adc4cbd76b5486a0018842dcff59e6a20be72464ef3a5",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "515b56df8b8f9852ae0adc4cbd76b5486a0018842dcff59e6a20be72464ef3a5"
+    },
+    {
+      "source": "TTS武将面板/部隊棋面新布局说明.md",
+      "destination": "docs/tbs/history/部隊棋面新布局说明.md",
+      "source_sha256": "bee7029cbf432891ab4a81703f578c5b24d37cd3cd5c6f3c38ca4d41f0137cf7",
+      "note": "历史原文；版本适用性请读同目录 README",
+      "imported_sha256": "bee7029cbf432891ab4a81703f578c5b24d37cd3cd5c6f3c38ca4d41f0137cf7"
+    },
+    {
+      "source": "TTS武将面板/Global_完整替换版_v2.14.10.txt",
+      "destination": "tts/archive/releases/Global_完整替换版_v2.14.10.txt",
+      "source_sha256": "702a1c2cd66d30ccb7ade1902b556fd88f2d0381ee27ad05d667315b59d5a9f8",
+      "note": "原样导入",
+      "imported_sha256": "702a1c2cd66d30ccb7ade1902b556fd88f2d0381ee27ad05d667315b59d5a9f8"
+    },
+    {
+      "source": "TTS武将面板/Global_完整替换版_v2.14.4.txt",
+      "destination": "tts/archive/releases/Global_完整替换版_v2.14.4.txt",
+      "source_sha256": "7d1d5efad5e83bd7bf1cf88ade2ba68888cc13443dc543e5ed3ce31cc9e18a1e",
+      "note": "原样导入",
+      "imported_sha256": "7d1d5efad5e83bd7bf1cf88ade2ba68888cc13443dc543e5ed3ce31cc9e18a1e"
+    },
+    {
+      "source": "TTS武将面板/Global_完整替换版_v2.14.5.txt",
+      "destination": "tts/archive/releases/Global_完整替换版_v2.14.5.txt",
+      "source_sha256": "48650af348f55a72cdae821ba0353a413366598099b31b2a5d5fe571f7de05cd",
+      "note": "原样导入",
+      "imported_sha256": "48650af348f55a72cdae821ba0353a413366598099b31b2a5d5fe571f7de05cd"
+    },
+    {
+      "source": "TTS武将面板/Global_完整替换版_v2.14.6.txt",
+      "destination": "tts/archive/releases/Global_完整替换版_v2.14.6.txt",
+      "source_sha256": "6030b038832e59642a2c944146f56d1696ec53060b48e48dc1ce197c941dd2e5",
+      "note": "原样导入",
+      "imported_sha256": "6030b038832e59642a2c944146f56d1696ec53060b48e48dc1ce197c941dd2e5"
+    },
+    {
+      "source": "TTS武将面板/Global_完整替换版_v2.14.7.txt",
+      "destination": "tts/archive/releases/Global_完整替换版_v2.14.7.txt",
+      "source_sha256": "2b33310273ab8dc8b74ab06f11c182f9ab53fe81c8cfd9168bb50eb0d6a710aa",
+      "note": "原样导入",
+      "imported_sha256": "2b33310273ab8dc8b74ab06f11c182f9ab53fe81c8cfd9168bb50eb0d6a710aa"
+    },
+    {
+      "source": "TTS武将面板/Global_完整替换版_v2.14.8.txt",
+      "destination": "tts/archive/releases/Global_完整替换版_v2.14.8.txt",
+      "source_sha256": "13a92a504d9c6144e7f719e9581a8e2f57522120bc74facca909055b47a097a6",
+      "note": "原样导入",
+      "imported_sha256": "13a92a504d9c6144e7f719e9581a8e2f57522120bc74facca909055b47a097a6"
+    },
+    {
+      "source": "TTS武将面板/Global_完整替换版_v2.14.9.txt",
+      "destination": "tts/archive/releases/Global_完整替换版_v2.14.9.txt",
+      "source_sha256": "e691549f8d2240babd2675832e63172be57bd870767110c8888029cae8b86e53",
+      "note": "原样导入",
+      "imported_sha256": "e691549f8d2240babd2675832e63172be57bd870767110c8888029cae8b86e53"
+    },
+    {
+      "source": "TTS武将面板/兵种与备队面板合并版.lua",
+      "destination": "tts/archive/兵种与备队面板合并版.lua",
+      "source_sha256": "a5faa6bb5c826768ff83710a91ce2b42c6cc59c26b1a10744a90562871d50282",
+      "note": "原样导入",
+      "imported_sha256": "a5faa6bb5c826768ff83710a91ce2b42c6cc59c26b1a10744a90562871d50282"
+    },
+    {
+      "source": "TTS武将面板/武将面板.lua",
+      "destination": "tts/archive/武将面板.lua",
+      "source_sha256": "2a55751e06b5331b98bdf116d017c1d5e2929f5bfb647133ae6cf79fe74b64e5",
+      "note": "原样导入",
+      "imported_sha256": "2a55751e06b5331b98bdf116d017c1d5e2929f5bfb647133ae6cf79fe74b64e5"
+    },
+    {
+      "source": "TTS武将面板/部隊图片云端配置_20261015.json",
+      "destination": "docs/tbs/history/部隊图片云端配置_20261015.json",
+      "source_sha256": "558d115122fea551eab2a6c578068addb835fcfb356e1f2afa08ede19937c10f",
+      "note": "原样导入",
+      "imported_sha256": "558d115122fea551eab2a6c578068addb835fcfb356e1f2afa08ede19937c10f"
+    },
+    {
+      "source": "TTS武将面板/部隊图片云端配置_20261016.json",
+      "destination": "docs/tbs/history/部隊图片云端配置_20261016.json",
+      "source_sha256": "c20ee3625ccc11fe27b3eda3d68f5d90aa5842a576817ebbbb3b07720714667e",
+      "note": "原样导入",
+      "imported_sha256": "c20ee3625ccc11fe27b3eda3d68f5d90aa5842a576817ebbbb3b07720714667e"
+    },
+    {
+      "source": "TTS武将面板/部隊图片云端配置_20261017.json",
+      "destination": "docs/tbs/history/部隊图片云端配置_20261017.json",
+      "source_sha256": "57a1b63954f56294b2fb5a3fdcfaa5d979241ae0b4b686aba08857d7d1574467",
+      "note": "原样导入",
+      "imported_sha256": "57a1b63954f56294b2fb5a3fdcfaa5d979241ae0b4b686aba08857d7d1574467"
+    },
+    {
+      "source": "TTS武将面板/部隊图片云端配置_20261018.json",
+      "destination": "docs/tbs/history/部隊图片云端配置_20261018.json",
+      "source_sha256": "26c36f6a15f8a20fac33883a22b501793aaab6ab8204a2ef291c8c2ae13df8df",
+      "note": "原样导入",
+      "imported_sha256": "26c36f6a15f8a20fac33883a22b501793aaab6ab8204a2ef291c8c2ae13df8df"
+    },
+    {
+      "source": "TTS武将面板/士气损耗色带_设计预览_v1/排版与检查.json",
+      "destination": "docs/tbs/history/assets/士气损耗色带_设计预览_v1/排版与检查.json",
+      "source_sha256": "4df58ad71c7f785df1f099a391b602b03fb388fcd1eed3de9b8c0836065a0b86",
+      "note": "原样导入",
+      "imported_sha256": "4df58ad71c7f785df1f099a391b602b03fb388fcd1eed3de9b8c0836065a0b86"
+    },
+    {
+      "source": "TTS武将面板/士気损耗色带_v1/使用说明.md",
+      "destination": "docs/tbs/history/assets/士気损耗色带_v1/使用说明.md",
+      "source_sha256": "3d132d2c2066ce13ff5f9afe760c8c124700edad630f72830b12f7d5df8945a2",
+      "note": "原样导入",
+      "imported_sha256": "3d132d2c2066ce13ff5f9afe760c8c124700edad630f72830b12f7d5df8945a2"
+    },
+    {
+      "source": "TTS武将面板/士気损耗色带_v2_柔和渐变/使用说明.md",
+      "destination": "docs/tbs/history/assets/士気损耗色带_v2_柔和渐变/使用说明.md",
+      "source_sha256": "ea9de2adcb7a4268c0af85814363559ab6a03bdc04cd38859cb6750f5178cb8e",
+      "note": "原样导入",
+      "imported_sha256": "ea9de2adcb7a4268c0af85814363559ab6a03bdc04cd38859cb6750f5178cb8e"
+    },
+    {
+      "source": "TTS武将面板/士気损耗色带_v2_柔和渐变/素材规格与检查.json",
+      "destination": "docs/tbs/history/assets/士気损耗色带_v2_柔和渐变/素材规格与检查.json",
+      "source_sha256": "e890a6d9651fb9c4a2bfe4429d614d0e62ffa2e29707f6cd8fedfb711a54c25d",
+      "note": "原样导入",
+      "imported_sha256": "e890a6d9651fb9c4a2bfe4429d614d0e62ffa2e29707f6cd8fedfb711a54c25d"
+    },
+    {
+      "source": "TTS武将面板/数字贴图_v1/使用说明.md",
+      "destination": "docs/tbs/history/assets/数字贴图_v1/使用说明.md",
+      "source_sha256": "9c8cd9bc0763c4b81f3292fa1ccd3fceeeb4e75d27a5f7e988ab10d15953ba0a",
+      "note": "原样导入",
+      "imported_sha256": "9c8cd9bc0763c4b81f3292fa1ccd3fceeeb4e75d27a5f7e988ab10d15953ba0a"
+    },
+    {
+      "source": "TTS武将面板/数字贴图_v1/字形尺寸与检查.json",
+      "destination": "docs/tbs/history/assets/数字贴图_v1/字形尺寸与检查.json",
+      "source_sha256": "8e80527b4942e93be072fdc595fb4563f0b2f152c4bdff0af1a84168d01086d7",
+      "note": "原样导入",
+      "imported_sha256": "8e80527b4942e93be072fdc595fb4563f0b2f152c4bdff0af1a84168d01086d7"
+    },
+    {
+      "source": "TTS武将面板/数字贴图_v1/数字8尺寸与检查.json",
+      "destination": "docs/tbs/history/assets/数字贴图_v1/数字8尺寸与检查.json",
+      "source_sha256": "114e48e90ffb508f2d0b602304dac5805a5fa46d3758ae8a87c49d341fe49555",
+      "note": "原样导入",
+      "imported_sha256": "114e48e90ffb508f2d0b602304dac5805a5fa46d3758ae8a87c49d341fe49555"
+    },
+    {
+      "source": "TTS武将面板/数字贴图_v1/数字8接入说明.md",
+      "destination": "docs/tbs/history/assets/数字贴图_v1/数字8接入说明.md",
+      "source_sha256": "9e7f6f219e2ee29ff085742d8da35e1dbf8e0026d574a25e5a7ed57c737d54f0",
+      "note": "原样导入",
+      "imported_sha256": "9e7f6f219e2ee29ff085742d8da35e1dbf8e0026d574a25e5a7ed57c737d54f0"
+    },
+    {
+      "source": "TTS武将面板/文字素材_大字版/字号与位置.json",
+      "destination": "docs/tbs/history/assets/文字素材_大字版/字号与位置.json",
+      "source_sha256": "a41b92d1b71da0a43359b9dcbb8b39e383a1468d0b0997588dd72a0479389d2a",
+      "note": "原样导入",
+      "imported_sha256": "a41b92d1b71da0a43359b9dcbb8b39e383a1468d0b0997588dd72a0479389d2a"
+    },
+    {
+      "source": "TTS武将面板/框线文字_居中版/排版坐标.json",
+      "destination": "docs/tbs/history/assets/框线文字_居中版/排版坐标.json",
+      "source_sha256": "6e9b9b7432c661456d687733ca7a0d11cd0a6672214952dc1c8d9074ba6c79c8",
+      "note": "原样导入",
+      "imported_sha256": "6e9b9b7432c661456d687733ca7a0d11cd0a6672214952dc1c8d9074ba6c79c8"
+    },
+    {
+      "source": "TTS武将面板/正面行動素材_全透明底_v1/使用说明.md",
+      "destination": "docs/tbs/history/assets/正面行動素材_全透明底_v1/使用说明.md",
+      "source_sha256": "c96fade8ed6bb8ba06c26b947b2b1368c12ae1529fa9a9cc396106297356d6f1",
+      "note": "原样导入",
+      "imported_sha256": "c96fade8ed6bb8ba06c26b947b2b1368c12ae1529fa9a9cc396106297356d6f1"
+    },
+    {
+      "source": "TTS武将面板/正面行動素材_全透明底_v1/素材检查.json",
+      "destination": "docs/tbs/history/assets/正面行動素材_全透明底_v1/素材检查.json",
+      "source_sha256": "98ab75ab718a0c8495c63ad548efd01fbf0f403583ba2d67f61400b51d8487db",
+      "note": "原样导入",
+      "imported_sha256": "98ab75ab718a0c8495c63ad548efd01fbf0f403583ba2d67f61400b51d8487db"
+    },
+    {
+      "source": "TTS武将面板/素材/三間槍足軽_資料参考_単人_v1/制作记录与资料.json",
+      "destination": "docs/tbs/history/assets/素材/三間槍足軽_資料参考_単人_v1/制作记录与资料.json",
+      "source_sha256": "1ee6fe0f47ec98b9d9501ea2da94846d0aa2fd58dd5c6f90c51d3f0ce983a8e5",
+      "note": "原样导入",
+      "imported_sha256": "1ee6fe0f47ec98b9d9501ea2da94846d0aa2fd58dd5c6f90c51d3f0ce983a8e5"
+    },
+    {
+      "source": "TTS武将面板/素材/三間槍足軽_資料参考_単人_v1/导出检查.json",
+      "destination": "docs/tbs/history/assets/素材/三間槍足軽_資料参考_単人_v1/导出检查.json",
+      "source_sha256": "8fc9c89698304ac6aec0d4bf746c55dfc464f87e2fdb3716dd73b672f7289697",
+      "note": "原样导入",
+      "imported_sha256": "8fc9c89698304ac6aec0d4bf746c55dfc464f87e2fdb3716dd73b672f7289697"
+    },
+    {
+      "source": "TTS武将面板/素材/三間槍足軽_長槍差分版/使用说明.txt",
+      "destination": "docs/tbs/history/assets/素材/三間槍足軽_長槍差分版/使用说明.txt",
+      "source_sha256": "a0e65256b7518232cbd8bc3e20939b23aaa4367c3a4aeaa7ff13c10679c5519f",
+      "note": "原样导入",
+      "imported_sha256": "a0e65256b7518232cbd8bc3e20939b23aaa4367c3a4aeaa7ff13c10679c5519f"
+    },
+    {
+      "source": "TTS武将面板/素材/三間槍足軽_長槍差分版/制作记录.json",
+      "destination": "docs/tbs/history/assets/素材/三間槍足軽_長槍差分版/制作记录.json",
+      "source_sha256": "5ef501a9f3595bc63d49f93b2f2eafb072acfa6e4830260a0ab1055fa64dbeac",
+      "note": "原样导入",
+      "imported_sha256": "5ef501a9f3595bc63d49f93b2f2eafb072acfa6e4830260a0ab1055fa64dbeac"
+    },
+    {
+      "source": "TTS武将面板/素材/三間槍足軽_長槍差分版/导出检查.json",
+      "destination": "docs/tbs/history/assets/素材/三間槍足軽_長槍差分版/导出检查.json",
+      "source_sha256": "0b4666474f0c9200cf072a974f638d7d5684309502c37f9231051b994b2bfc13",
+      "note": "原样导入",
+      "imported_sha256": "0b4666474f0c9200cf072a974f638d7d5684309502c37f9231051b994b2bfc13"
+    },
+    {
+      "source": "TTS武将面板/素材/太田家_三紋陣旗_制作记录.txt",
+      "destination": "docs/tbs/history/assets/素材/太田家_三紋陣旗_制作记录.txt",
+      "source_sha256": "251068c6d341983aa95622664c6737ee3c3c97b8bf252bdd7c2c49c307048378",
+      "note": "原样导入",
+      "imported_sha256": "251068c6d341983aa95622664c6737ee3c3c97b8bf252bdd7c2c49c307048378"
+    },
+    {
+      "source": "TTS武将面板/素材/済_印章_透明_制作说明.txt",
+      "destination": "docs/tbs/history/assets/素材/済_印章_透明_制作说明.txt",
+      "source_sha256": "27f1717e1d076fafe17c1e56c6f99f23efdaa265525d48c7ca7e688d1ae2738a",
+      "note": "原样导入",
+      "imported_sha256": "27f1717e1d076fafe17c1e56c6f99f23efdaa265525d48c7ca7e688d1ae2738a"
+    },
+    {
+      "source": "TTS武将面板/素材/部隊立繪_四種_v1/使用说明.txt",
+      "destination": "docs/tbs/history/assets/素材/部隊立繪_四種_v1/使用说明.txt",
+      "source_sha256": "a806cfd6aec7f610edc421197eadddaf83e85967c296a6d1f080ea023d6bbb3b",
+      "note": "原样导入",
+      "imported_sha256": "a806cfd6aec7f610edc421197eadddaf83e85967c296a6d1f080ea023d6bbb3b"
+    },
+    {
+      "source": "TTS武将面板/素材/部隊立繪_四種_v1/制作记录.json",
+      "destination": "docs/tbs/history/assets/素材/部隊立繪_四種_v1/制作记录.json",
+      "source_sha256": "d26afde46a6ec2f582f18809f2dc278e42373a6091074f3195d7de1ab681bf2e",
+      "note": "原样导入",
+      "imported_sha256": "d26afde46a6ec2f582f18809f2dc278e42373a6091074f3195d7de1ab681bf2e"
+    },
+    {
+      "source": "TTS武将面板/素材/部隊立繪_四種_v1/导出检查.json",
+      "destination": "docs/tbs/history/assets/素材/部隊立繪_四種_v1/导出检查.json",
+      "source_sha256": "bf4b796fad2882fb7f75b20bbe8f09bbd2da2794e8150ea24903b67147d26045",
+      "note": "原样导入",
+      "imported_sha256": "bf4b796fad2882fb7f75b20bbe8f09bbd2da2794e8150ea24903b67147d26045"
+    },
+    {
+      "source": "TTS武将面板/素材/長柄足軽_新棋面_制作记录.txt",
+      "destination": "docs/tbs/history/assets/素材/長柄足軽_新棋面_制作记录.txt",
+      "source_sha256": "328df8568ee63631db45793f6b075273d387d3ad83be672632c3fbee34939a1b",
+      "note": "原样导入",
+      "imported_sha256": "328df8568ee63631db45793f6b075273d387d3ad83be672632c3fbee34939a1b"
+    },
+    {
+      "source": "TTS武将面板/设计示意/四周50像素_制作记录.txt",
+      "destination": "docs/tbs/history/assets/设计示意/四周50像素_制作记录.txt",
+      "source_sha256": "d4f17af46790fc5188a163558f2585f1534e3dd5952bdcca00bf5655c98dca66",
+      "note": "原样导入",
+      "imported_sha256": "d4f17af46790fc5188a163558f2585f1534e3dd5952bdcca00bf5655c98dca66"
+    },
+    {
+      "source": "TTS武将面板/部隊操作素材_v2.13/使用说明.md",
+      "destination": "docs/tbs/history/assets/部隊操作素材_v2.13/使用说明.md",
+      "source_sha256": "d81bd1363771bb40279d6f63dcb9047ed21ab048084d8e0a57c3110cfe266007",
+      "note": "原样导入",
+      "imported_sha256": "d81bd1363771bb40279d6f63dcb9047ed21ab048084d8e0a57c3110cfe266007"
+    },
+    {
+      "source": "TTS武将面板/部隊操作素材_v2.13/素材规格与检查.json",
+      "destination": "docs/tbs/history/assets/部隊操作素材_v2.13/素材规格与检查.json",
+      "source_sha256": "46de4d510e36cf64ce8bebc80923566ee5997a7beefd675e4ecf34fcde156ed4",
+      "note": "原样导入",
+      "imported_sha256": "46de4d510e36cf64ce8bebc80923566ee5997a7beefd675e4ecf34fcde156ed4"
+    },
+    {
+      "source": "TTS武将面板/部隊操作素材_外框透明版_v1/使用说明.md",
+      "destination": "docs/tbs/history/assets/部隊操作素材_外框透明版_v1/使用说明.md",
+      "source_sha256": "2c905cf20fb7afe46ea6172a1572973d9dfb427c8918b81f55f79b1a141a7f23",
+      "note": "原样导入",
+      "imported_sha256": "2c905cf20fb7afe46ea6172a1572973d9dfb427c8918b81f55f79b1a141a7f23"
+    },
+    {
+      "source": "TTS武将面板/部隊操作素材_外框透明版_v1/透明边检查.json",
+      "destination": "docs/tbs/history/assets/部隊操作素材_外框透明版_v1/透明边检查.json",
+      "source_sha256": "6b03ebc81b8eddc1ff14230011a7d9ed76aebd85959f9a03f82662dd0e8dbd3c",
+      "note": "原样导入",
+      "imported_sha256": "6b03ebc81b8eddc1ff14230011a7d9ed76aebd85959f9a03f82662dd0e8dbd3c"
+    },
+    {
+      "source": "TTS武将面板/部隊棋面底图_v2_雲霞/制作源/生成记录.json",
+      "destination": "docs/tbs/history/assets/部隊棋面底图_v2_雲霞/制作源/生成记录.json",
+      "source_sha256": "7bd47038966d0512b97994b452e0562d979726049083d46687f3d4f2af7c3299",
+      "note": "原样导入",
+      "imported_sha256": "7bd47038966d0512b97994b452e0562d979726049083d46687f3d4f2af7c3299"
+    },
+    {
+      "source": "TTS武将面板/部隊棋面底图_v2_雲霞/检查结果.json",
+      "destination": "docs/tbs/history/assets/部隊棋面底图_v2_雲霞/检查结果.json",
+      "source_sha256": "0853cd9b6fbf3687ae547e78786adc86218bebc652c5522fbe53be7a4036ef0e",
+      "note": "原样导入",
+      "imported_sha256": "0853cd9b6fbf3687ae547e78786adc86218bebc652c5522fbe53be7a4036ef0e"
+    },
+    {
+      "source": "TTS武将面板/部隊棋面底图_v3_居中版/十色合成检查.json",
+      "destination": "docs/tbs/history/assets/部隊棋面底图_v3_居中版/十色合成检查.json",
+      "source_sha256": "099f9b223a6606247b54053d5db03edf01617766547dda1beb64287a07866f81",
+      "note": "原样导入",
+      "imported_sha256": "099f9b223a6606247b54053d5db03edf01617766547dda1beb64287a07866f81"
+    },
+    {
+      "source": "TTS武将面板/部隊棋面底图_v3_居中版/武田红合成检查.json",
+      "destination": "docs/tbs/history/assets/部隊棋面底图_v3_居中版/武田红合成检查.json",
+      "source_sha256": "fbe9aa32de1d4d864a22ccb95a63145e5c4491a179cfea49603886dda93679a7",
+      "note": "原样导入",
+      "imported_sha256": "fbe9aa32de1d4d864a22ccb95a63145e5c4491a179cfea49603886dda93679a7"
+    },
+    {
+      "source": "TTS武将面板/验证工具/背面士气图像引擎审计_20261019.md",
+      "destination": "docs/tbs/history/diagnostics/背面士气图像引擎审计_20261019.md",
+      "source_sha256": "01802ded60f8a51e4ffd928747d37b99c858d5b22a0af67891bdca1d16348332",
+      "note": "原样导入",
+      "imported_sha256": "01802ded60f8a51e4ffd928747d37b99c858d5b22a0af67891bdca1d16348332"
+    },
+    {
+      "source": "TTS武将面板/验证工具/TTS背面贴花透明排序审计_20261016.md",
+      "destination": "docs/tbs/history/diagnostics/TTS背面贴花透明排序审计_20261016.md",
+      "source_sha256": "41f92f3458e810ff67649b527d412c7e59e8454e27d48485afac6e7269aa8827",
+      "note": "原样导入",
+      "imported_sha256": "41f92f3458e810ff67649b527d412c7e59e8454e27d48485afac6e7269aa8827"
+    },
+    {
+      "source": "TTS武将面板/验证工具/TTS按钮坐标审计_20261015.md",
+      "destination": "docs/tbs/history/diagnostics/TTS按钮坐标审计_20261015.md",
+      "source_sha256": "e396888d7add7af8fe1bb7c43cd9313dcdd5246b174a39bf60c1910629770195",
+      "note": "原样导入",
+      "imported_sha256": "e396888d7add7af8fe1bb7c43cd9313dcdd5246b174a39bf60c1910629770195"
+    }
+  ]
+}

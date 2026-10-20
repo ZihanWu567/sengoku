@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-17",
+  "font": "C:/Users/HP/AppData/Local/Microsoft/Windows/Fonts/SourceHanSerif-VF.otf",
+  "fontWeight": 700,
+  "fontPixels": 104,
+  "arrow": [
+    [
+      100,
+      19
+    ],
+    [
+      129,
+      72
+    ],
+    [
+      71,
+      72
+    ]
+  ],
+  "textCenter": [
+    100,
+    138
+  ],
+  "colors": {
+    "arrow": "#29251F",
+    "unacted": "#29251F",
+    "acted": "#A83D30"
+  },
+  "checks": [
+    {
+      "file": "行動_正面_未.png",
+      "width": 200,
+      "height": 200,
+      "transparentPixels": 35346,
+      "edgeInk": 0,
+      "arrowInk": 1598,
+      "glyphInk": 3056
+    },
+    {
+      "file": "行動_正面_済.png",
+      "width": 200,
+      "height": 200,
+      "transparentPixels": 34340,
+      "edgeInk": 0,
+      "arrowInk": 1598,
+      "glyphInk": 4062
+    }
+  ]
+}

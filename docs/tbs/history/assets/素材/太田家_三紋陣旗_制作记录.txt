@@ -1,0 +1,24 @@
+太田家 三紋陣旗 制作记录
+日期：2026-10-10
+方式：内置 image_gen 图像编辑工具，基于用户提供的旧阵旗图片。
+最终文件：太田家_三紋陣旗_v1.png
+实际尺寸：768 × 2048 像素，3:8，白底、不透明、三枚家纹纵列，无文字。
+原图：C:/Users/HP/Desktop/战国资源/松山城/新建文件夹/岩付众/太田家本阵.png
+用途：TTS主将面板右侧阵旗，显示框90×240，需上传取得云端直链后填入主将Description的flag_image。
+该图为根据原家纹制作的兵棋美术素材，不是太田資正实际阵旗的考证复原；AI编辑不保证每个轮廓像素与原图完全一致。
+第一张草图比例未达要求，因此使用第二次定向编辑补足纵向留白；原图和生成原文件均未覆盖。
+
+第一轮提示词：
+Use case: precise-object-edit.
+Asset type: flat PNG texture for a narrow Sengoku battle banner shown in a Tabletop Simulator UI.
+Input image 1 is the EDIT TARGET. It contains one black crossed-arrow-feather family crest at the top and Japanese words at the bottom.
+Make one finished banner texture, NOT a mockup. Remove ALL lettering, including 太田家 and 本陣. Preserve the exact distinctive silhouette, diagonal directions, overlapping structure and internal white line details of the existing crest. Do not redesign it, add arrows, simplify or introduce a different family emblem.
+Composition: exact tall aspect ratio 3:8, preferably 768 pixels wide x 2048 high. The entire canvas is the flat pure white banner, edge to edge, opaque. Repeat the SAME original crest exactly THREE times vertically in a single centered column. All three copies must be identical, oriented the same, same size and evenly spaced. Each crest fits within a 512 x 512 box. At 768x2048, the three boxes start at (128,128), (128,768), (128,1408). Preserve each crest's native proportions inside the box, no stretch.
+Crisp near-black solid crest shapes on pure white. Sharp clear white internal gaps. No text, labels, numbers, border, pole, seams, wrinkles, shadows, fabric texture, distress, gradients, perspective, surround, or other symbols. Exactly three complete copies of the supplied crest, entirely within the canvas, no cropping.
+This is a game-art layout derived from the user's crest, not a claim of historical reconstruction.
+
+最终编辑提示词：
+Edit the attached banner texture. The first draft is too short and crowded. Make the OUTPUT CANVAS substantially TALLER and NARROWER: EXACT width-to-height ratio THREE TO EIGHT (3:8), not 1:2. Target output 768 wide by 2048 tall. The entire output canvas must be the white flag texture itself, no framing or external background.
+Preserve the three black family crests, including their internal white lines and original directional silhouette, but reduce their relative size and add large equal white spaces between them. EXACTLY THREE identical copies vertically, no lettering.
+Precise proportional composition: each crest's bounding square takes only TWO THIRDS of the flag width and ONE QUARTER of flag height. Centers of the three crests at x=50% width, y=18.75%,50%,81.25% of height. Crest bounding boxes therefore x=16.67%..83.33%, y=6.25%..31.25%,37.5%..62.5%,68.75%..93.75%. White bands between crests and at top/bottom are each 6.25% of total height. Never stretch the emblem. The 3:8 tall blank flag composition and generous whitespace are essential.
+Flat pure white background with crisp solid near-black crests; absolutely NO texture, wrinkles, gradients, shadows, poles, captions, typography, borders, extra emblems or perspective. Single finished game texture.

@@ -1,0 +1,27 @@
+制作日期：2026-10-11
+目的：仅供排布讨论，不修改 TTS 脚本。
+几何：300×300；武将区域 x50..250/y50..250；标题 x0..250/y0..50；右栏 x250..300，三格各100高。
+插画来源：内置imagegen参考用户图片重绘；文字/分区/尺寸/遮挡均用代码精确绘制，原图文件未做像素编辑。
+插画生成提示词：
+Edit the attached Sengoku troop-counter image into an illustration-only asset for a UI schematic. Keep the same recognizable white-hooded Japanese teppo monk in dark red and black armor, holding and aiming a matchlock toward the right. Faithfully preserve the hand-drawn ink style, robe, armor and pose. Remove EVERY UI component: the entire top text header, right statistics column, all text, numbers, torii, sandals, tiny group icon, grid lines and borders. Expand the remaining soldier illustration naturally across a square full-bleed composition. The figure fills most of the square, with helmet and rifle visible; lower body can crop at the bottom. Background warm pale ivory parchment and subdued ochre haze, less saturated yellow than the reference. Clean illustration, no text, no frame, no diagram, no legend, no collage, no added people, no photographic style. Opaque image, square. This image will only occupy the illustration area inside an exactly measured, separately coded counter UI.
+
+最初美术草案提示词（因几何不精确未作为最终尺寸图）：
+Use case: ui-mockup / explanatory board-game layout schematic.
+Create ONE polished, clear comparison diagram showing the proposed layout of this Sengoku troop counter, using the attached image as the art and theme reference. This is a flat graphic schematic, straight-on, not a 3D scene, no perspective. Landscape canvas around 1536x1024, restrained light warm-gray presentation background, two equal square counters side-by-side with generous margin.
+The critical constraint is a 300×300 troop counter with a centered 200×200 commander counter placed on top, leaving exactly a 50-pixel-wide border on ALL FOUR SIDES. Keep all essential troop information inside that border. The presentation may enlarge the counters, but maintain these proportions precisely.
+LEFT counter: full, unobstructed redesigned troop counter. Small caption above it, exact text: “未叠放”.
+RIGHT counter: the IDENTICAL troop counter and layout, with a centered opaque square covering exactly the inner two-thirds of its width and height, from x=50 to250 and y=50 to250 in its 300-unit local coordinate grid. This represents the commander counter. Caption above, exact text: “叠放武将后”.
+Counter layout, both copies MUST MATCH:
+- top name strip is ONLY x=0..250,y=0..50; height one-sixth of the square. Warm parchment fill, bold charcoal Japanese characters exactly “鉄砲僧兵”. Beautiful disciplined spacing, not squeezed to edges.
+- right statistics strip is ONLY x=250..300,y=0..300; width EXACTLY one-sixth of counter, NOT wider. It includes the top-right corner.
+- right strip is split into EXACTLY THREE equal vertically stacked 50×100 information groups, with fine horizontal rules ONLY at y=100 and y=200. Do NOT separate icon cells and number cells. No icons anywhere in the right strip.
+- upper group: centered small text “兵数”, then a large bold “1”, then smaller text “百人” under the number.
+- middle group: centered small text “士気”, then large bold “6”. Very subtle pale sage tint behind this entire group.
+- lower group: centered small text “移動”, then large bold “4”.
+- all three numeric values same typeface and size and same horizontal centerline. Generous padding within the narrow right strip. Dark readable digits and labels. Thin dark divider at x=250.
+- x=0..250,y=50..300: the existing white-hooded teppo monk aiming his matchlock toward the upper right, recognizable costume and pose from reference. Softer low-saturation warm ivory and pale ochre illustration background; reduce brilliant yellow glow. No embedded extra text, crest, flags, torii or sandals. On the right copy, most of this illustration will be hidden by the commander overlay, with its left and bottom fringes still visible.
+- square outer shape, very thin dark olive outer border, fine internal rules, no rounded modern app cards and no glossy buttons.
+RIGHT commander overlay: opaque muted charcoal-green square with a subtle fine gold edge, positioned precisely in the center. Centered text exactly “武将令牌”, and below smaller “200 × 200”. No portrait needed: it is a coverage mask. Its top edge meets the bottom edge of the troop title strip; its right edge meets the left edge of the statistics strip. Absolutely NO overlap with the name, small labels, unit “百人”, or numbers.
+Add tidy thin dimension annotations outside or beside the RIGHT square that identify the top, left, bottom and right clear margins each as “50 px”. At least top and left dimension arrows must show the 50 margin between outer counter edge and inner overlay edge; ensure labels do not touch the counter text. A small bottom caption across the whole page exactly: “文字與數值全部保留在外圍 50 px”.
+No invented extra data, no logos, no decorative arrows in the troop itself. Prioritize geometric clarity, readable type, authentic understated wargame aesthetics.
+

@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-16",
+  "method": "Native canvas layout, original font, unchanged interior pixels; alpha-only boundary change.",
+  "assets": [
+    {
+      "file": "背面右欄.png",
+      "width": 200,
+      "height": 1200,
+      "transparent": {
+        "top": 14,
+        "right": 14,
+        "bottom": 14
+      },
+      "borderPixels": 22008,
+      "nonzeroBorderAlpha": 0,
+      "changedInterior": 0
+    },
+    {
+      "file": "行動_正面_未.png",
+      "width": 200,
+      "height": 200,
+      "transparent": {
+        "top": 14,
+        "right": 14,
+        "bottom": 5
+      },
+      "borderPixels": 6334,
+      "nonzeroBorderAlpha": 0,
+      "changedInterior": 0
+    },
+    {
+      "file": "行動_正面_済.png",
+      "width": 200,
+      "height": 200,
+      "transparent": {
+        "top": 14,
+        "right": 14,
+        "bottom": 5
+      },
+      "borderPixels": 6334,
+      "nonzeroBorderAlpha": 0,
+      "changedInterior": 0
+    },
+    {
+      "file": "行動_背面_未.png",
+      "width": 200,
+      "height": 200,
+      "transparent": {
+        "top": 14,
+        "right": 14,
+        "bottom": 5
+      },
+      "borderPixels": 6334,
+      "nonzeroBorderAlpha": 0,
+      "changedInterior": 0
+    },
+    {
+      "file": "行動_背面_済.png",
+      "width": 200,
+      "height": 200,
+      "transparent": {
+        "top": 14,
+        "right": 14,
+        "bottom": 5
+      },
+      "borderPixels": 6334,
+      "nonzeroBorderAlpha": 0,
+      "changedInterior": 0
+    }
+  ],
+  "clanBorderPixelIdentical": true
+}
