@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "version": "v1",
+  "scope": "engaged only",
+  "draft": true,
+  "baseline": {
+    "branch": "main",
+    "commit": "8c7aaa731f124eb693a23800402a65033806975f",
+    "reference_pr": 2,
+    "reference_pr_state_at_start": "OPEN",
+    "reference_document_commit": "4ddb1df0992a43aa9d8395157e2aba830f5ebe55"
+  },
+  "assets": [
+    {
+      "id": "engaged",
+      "label_ja": "交戦",
+      "status": "draft",
+      "description": "Two crossed straight Japanese yari; warm ochre shafts, ivory blades and dark outlines.",
+      "path": "engaged.png",
+      "pixel_size": {
+        "width": 512,
+        "height": 512
+      },
+      "alpha": "straight RGBA, transparent background",
+      "content_bbox_px": {
+        "x": 45,
+        "y": 44,
+        "width": 422,
+        "height": 424
+      },
+      "transparent_padding_px": {
+        "left": 45,
+        "top": 44,
+        "right": 45,
+        "bottom": 44
+      },
+      "alpha_bbox_threshold": 0,
+      "sha256": "0e306aea403dd9549fcfcdd8d815b82408987d8b857bc9fcb8c7a44a5ee16095",
+      "source_export": {
+        "path": "源图/engaged-1024.png",
+        "pixel_size": {
+          "width": 1024,
+          "height": 1024
+        },
+        "alpha": "straight RGBA, transparent background",
+        "content_bbox_px": {
+          "x": 95,
+          "y": 92,
+          "width": 834,
+          "height": 840
+        },
+        "transparent_padding_px": {
+          "left": 95,
+          "top": 92,
+          "right": 95,
+          "bottom": 92
+        },
+        "alpha_bbox_threshold": 0,
+        "sha256": "c25f9c37f7af9caadf216b040d27f524d764ce6267d942f9dcb7e8d5cc9a5cdd"
+      },
+      "cloud_url": "",
+      "recommended_display": {
+        "reference_board_px": {
+          "width": 1200,
+          "height": 1200
+        },
+        "coordinate_system": "pixels, top-left origin; x right, y down",
+        "width_px": 96,
+        "height_px": 96,
+        "top_left_px": {
+          "x": 22,
+          "y": 58
+        },
+        "center_px": {
+          "x": 70,
+          "y": 106
+        },
+        "placement": "left side of the existing title bar",
+        "title_canvas_gap_min_px": 10,
+        "left_frame_canvas_gap_px": 8,
+        "requires_title_change": false
+      },
+      "previews": [
+        {
+          "path": "预览/engaged_四字标题_1200.png",
+          "pixel_size": {
+            "width": 1200,
+            "height": 1200
+          },
+          "kind": "existing_front_card_overlay",
+          "source": "../../合成成品/槍足軽隊/03_上杉_白_槍足軽隊.png"
+        },
+        {
+          "path": "预览/engaged_五字标题_1200.png",
+          "pixel_size": {
+            "width": 1200,
+            "height": 1200
+          },
+          "kind": "existing_front_card_overlay",
+          "source": "../../合成成品/長柄足軽隊/06_佐竹_金_長柄足軽隊.png"
+        },
+        {
+          "path": "预览/engaged_炭灰示意_1200.png",
+          "pixel_size": {
+            "width": 1200,
+            "height": 1200
+          },
+          "kind": "illustrative_charcoal_back_only",
+          "background_color": "#24262B",
+          "not_a_tts_runtime_capture": true
+        }
+      ]
+    }
+  ],
+  "not_yet_produced": [
+    "out_of_command",
+    "formation_close",
+    "formation_open",
+    "fire_ready",
+    "fire_loading",
+    "routed"
+  ],
+  "overview": "总览.jpg",
+  "additional_previews": [
+    "预览/engaged_标题栏细节.jpg",
+    "预览/engaged_缩远检查.jpg"
+  ],
+  "runtime_integration": "not implemented",
+  "notes": [
+    "Cloud URL intentionally empty; no runtime-hosting URL has been provided.",
+    "Back preview is a charcoal contrast/layout illustration, not a captured or reconstructed TTS back.",
+    "At a 300px-wide board the 96px placement becomes 24px; final readability requires TTS distance and angle testing."
+  ]
+}
