@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "version": "v1",
-  "scope": "engaged only",
+  "scope": "engaged and out_of_command",
   "draft": true,
   "baseline": {
     "branch": "main",
@@ -159,30 +159,243 @@
         },
         "sha256": "9ef775f0c5814e6428081acde7429695355803a8284a91929815ffcf3d840a3a"
       }
+    },
+    {
+      "id": "out_of_command",
+      "label_ja": "指揮外",
+      "status": "draft",
+      "description": "Dark vermilion solid circular badge with an ivory gunbai war fan and a bold diagonal slash outlined in dark color; fills a 100x100 display canvas.",
+      "path": "out_of_command.png",
+      "pixel_size": {
+        "width": 512,
+        "height": 512
+      },
+      "alpha": "straight RGBA; solid badge, transparent outside circle",
+      "content_bbox_px": {
+        "x": 3,
+        "y": 3,
+        "width": 506,
+        "height": 505
+      },
+      "transparent_padding_px": {
+        "left": 3,
+        "top": 3,
+        "right": 3,
+        "bottom": 4
+      },
+      "alpha_bbox_threshold": 0,
+      "content_bbox_at_alpha_128_px": {
+        "x": 5,
+        "y": 6,
+        "width": 502,
+        "height": 500
+      },
+      "sha256": "7fc98221544b26f0057eb4256e58d6b812b5a5349a2c04b7dec48357b648c041",
+      "source_export": {
+        "path": "源图/out_of_command-1024.png",
+        "pixel_size": {
+          "width": 1024,
+          "height": 1024
+        },
+        "alpha": "straight RGBA; solid badge, transparent outside circle",
+        "content_bbox_px": {
+          "x": 10,
+          "y": 11,
+          "width": 1004,
+          "height": 1001
+        },
+        "transparent_padding_px": {
+          "left": 10,
+          "top": 11,
+          "right": 10,
+          "bottom": 12
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 10,
+          "y": 11,
+          "width": 1004,
+          "height": 1000
+        },
+        "sha256": "601892411506487897e227ff03bcde6f02c03292038faddb34bc5c4717604b8f"
+      },
+      "display_export": {
+        "path": "out_of_command-100.png",
+        "pixel_size": {
+          "width": 100,
+          "height": 100
+        },
+        "alpha": "straight RGBA; solid badge, transparent outside circle",
+        "content_bbox_px": {
+          "x": 0,
+          "y": 0,
+          "width": 100,
+          "height": 100
+        },
+        "transparent_padding_px": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 1,
+          "y": 1,
+          "width": 98,
+          "height": 98
+        },
+        "sha256": "465d637a3473810c35e437cdd46f94d3b1d53f2ff5ba2878580c237cfd8a107f"
+      },
+      "cloud_url": "",
+      "recommended_display": {
+        "reference_board_px": {
+          "width": 1200,
+          "height": 1200
+        },
+        "coordinate_system": "pixels, top-left origin; x right, y down",
+        "width_px": 100,
+        "height_px": 100,
+        "top_left_px": {
+          "x": 892,
+          "y": 56
+        },
+        "center_px": {
+          "x": 942,
+          "y": 106
+        },
+        "placement": "right side of the existing title bar; independently visible alongside engaged on the left",
+        "title_right_edge_exclusive_px": 885,
+        "title_canvas_gap_min_px": 7,
+        "right_frame_canvas_gap_px": 6,
+        "requires_title_change": false
+      },
+      "previews": [
+        {
+          "path": "预览/out_of_command_武田红_1200.png",
+          "pixel_size": {
+            "width": 1200,
+            "height": 1200
+          },
+          "kind": "existing_front_card_overlay",
+          "source": "../../合成成品/鉄砲足軽隊/01_武田_紅_鉄砲足軽隊.png"
+        },
+        {
+          "path": "预览/out_of_command_四字标题_1200.png",
+          "pixel_size": {
+            "width": 1200,
+            "height": 1200
+          },
+          "kind": "existing_front_card_overlay",
+          "source": "../../合成成品/槍足軽隊/03_上杉_白_槍足軽隊.png"
+        },
+        {
+          "path": "预览/out_of_command_五字标题_1200.png",
+          "pixel_size": {
+            "width": 1200,
+            "height": 1200
+          },
+          "kind": "existing_front_card_overlay",
+          "source": "../../合成成品/長柄足軽隊/06_佐竹_金_長柄足軽隊.png"
+        },
+        {
+          "path": "预览/out_of_command_炭灰示意_1200.png",
+          "pixel_size": {
+            "width": 1200,
+            "height": 1200
+          },
+          "kind": "illustrative_charcoal_back_only",
+          "background_color": "#24262B",
+          "not_a_tts_runtime_capture": true
+        }
+      ]
     }
   ],
   "not_yet_produced": [
-    "out_of_command",
     "formation_close",
     "formation_open",
     "fire_ready",
     "fire_loading",
     "routed"
   ],
-  "overview": "总览.jpg",
+  "overview": "out_of_command_总览.jpg",
   "additional_previews": [
     "预览/engaged_标题栏细节.jpg",
     "预览/engaged_缩远检查.jpg",
-    "预览/engaged_八色标题栏.jpg"
+    "预览/engaged_八色标题栏.jpg",
+    "预览/out_of_command_标题栏细节.jpg",
+    "预览/out_of_command_缩远检查.jpg",
+    "预览/双状态_八色标题栏.jpg"
   ],
   "runtime_integration": "not implemented",
   "notes": [
-    "At the user’s request, revision 4 restores the dark vermilion solid badge with ivory crossed katana. All three icon exports match revision 2 (commit abadd9f); the 100x100 display size and placement remain unchanged. The Takeda-red card preview and eight-color title-bar preview introduced in revision 3 are retained.",
-    "Cloud URL intentionally empty; no runtime-hosting URL has been provided.",
-    "Only the area outside the circular badge is transparent; the badge interior is solid.",
-    "At a 300px-wide board the 100px placement becomes 25px; final readability requires TTS distance and angle testing.",
-    "Alpha>0 bounding boxes include faint antialias pixels; the 100px export reaches its canvas bounds while the main circular contour retains about one pixel of clearance.",
-    "Back preview is a charcoal contrast/layout illustration, not a captured or reconstructed TTS back."
+    "Revision 5 adds out_of_command as a dark vermilion round badge with an ivory gunbai and a dark-outlined bold diagonal slash. The existing engaged entry and all three engaged PNG exports remain unchanged from revision 4.",
+    "The engaged badge uses a 100x100 canvas at (20,56), centered at (70,106). The out_of_command badge uses a separate 100x100 canvas at (892,56), centered at (942,106). Both can appear simultaneously; do not reuse one mutually exclusive display slot.",
+    "The right badge is placed beyond the rightmost title boundary x=885 exclusive, leaving a 7px title gap and a 6px right-frame gap. No existing title needs to move or shrink.",
+    "Cloud URLs intentionally empty; no runtime-hosting URLs have been provided.",
+    "Only the area outside each circular badge is transparent; both badge interiors are solid.",
+    "At a 300px-wide board each 100px placement becomes 25px; final readability requires TTS distance and angle testing.",
+    "Alpha>0 bounding boxes include faint antialias pixels; both 100px exports reach their canvas bounds while the main circular contours retain about one pixel of clearance.",
+    "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
+    "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 4
+  "revision": 5,
+  "additional_overviews": [
+    "总览.jpg"
+  ],
+  "combined_previews": [
+    {
+      "path": "预览/双状态_武田红_1200.png",
+      "pixel_size": {
+        "width": 1200,
+        "height": 1200
+      },
+      "kind": "existing_front_card_overlay",
+      "source": "../../合成成品/鉄砲足軽隊/01_武田_紅_鉄砲足軽隊.png",
+      "asset_ids": [
+        "engaged",
+        "out_of_command"
+      ]
+    },
+    {
+      "path": "预览/双状态_四字标题_1200.png",
+      "pixel_size": {
+        "width": 1200,
+        "height": 1200
+      },
+      "kind": "existing_front_card_overlay",
+      "source": "../../合成成品/槍足軽隊/03_上杉_白_槍足軽隊.png",
+      "asset_ids": [
+        "engaged",
+        "out_of_command"
+      ]
+    },
+    {
+      "path": "预览/双状态_五字标题_1200.png",
+      "pixel_size": {
+        "width": 1200,
+        "height": 1200
+      },
+      "kind": "existing_front_card_overlay",
+      "source": "../../合成成品/長柄足軽隊/06_佐竹_金_長柄足軽隊.png",
+      "asset_ids": [
+        "engaged",
+        "out_of_command"
+      ]
+    },
+    {
+      "path": "预览/双状态_炭灰示意_1200.png",
+      "pixel_size": {
+        "width": 1200,
+        "height": 1200
+      },
+      "kind": "illustrative_charcoal_back_only",
+      "background_color": "#24262B",
+      "not_a_tts_runtime_capture": true,
+      "asset_ids": [
+        "engaged",
+        "out_of_command"
+      ]
+    }
+  ]
 }
