@@ -1,6 +1,6 @@
 {
   "source": "tts/Global.lua + tts/modules/commanders.lua",
-  "version": "v2.14.11",
+  "version": "v2.15.0",
   "snapshot_date": "2026-10-21",
   "runtime_loads_this_json": false,
   "UNIT_DEFEAT_IMAGE_URL": "https://steamusercontent-a.akamaihd.net/ugc/12074515027345295373/48175076490FD0943949738C762DC72B744FB89A/",
@@ -41,5 +41,9 @@
     "amber": "https://steamusercontent-a.akamaihd.net/ugc/10852706972094849922/CDBBADA69115B0A8ACB89CA61D49F97DB000FE6B/",
     "red": "https://steamusercontent-a.akamaihd.net/ugc/10081792822323033846/E242210B585F53F64B46B18032F04FA937AB966B/"
   },
-  "ACTED_IMAGE_URL": "https://steamusercontent-a.akamaihd.net/ugc/16127482967476073358/AB4E3857AE6ECD0830ECE8C32682AE244709D8B5/"
+  "ACTED_IMAGE_URL": "https://steamusercontent-a.akamaihd.net/ugc/16127482967476073358/AB4E3857AE6ECD0830ECE8C32682AE244709D8B5/",
+  "UNIT_STATUS_IMAGES": {
+    "engaged": "",
+    "out_of_command": ""
+  }
 }

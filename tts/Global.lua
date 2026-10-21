@@ -1,4 +1,4 @@
--- 兵種＋備隊面板 v2.14.11：六兵種追加・数字画像専用（2026-10-20）
+-- 兵種＋備隊面板 v2.15.0：交戦・指揮外手動標記対応（2026-10-21）
 MIN_VALUE = 0
 
 -- 全军共用的敗走贴图。上传后只在这里填一次完整图片直链。
@@ -52,6 +52,16 @@ UNIT_ACTION_IMAGES = {
 UNIT_MORALE_BAND_IMAGES = {
     amber = "https://steamusercontent-a.akamaihd.net/ugc/10852706972094849922/CDBBADA69115B0A8ACB89CA61D49F97DB000FE6B/",
     red = "https://steamusercontent-a.akamaihd.net/ugc/10081792822323033846/E242210B585F53F64B46B18032F04FA937AB966B/"
+}
+
+-- 手动状态图标：每项一张透明 PNG，正反面共用；关闭时由 UI 淡显。
+-- 未填直链时不显示、不生成点击区；不会用文字占位。美术定稿后仅替换这里。
+UNIT_STATUS_IMAGES = {engaged = "", out_of_command = ""}
+UNIT_STATUS_LAYOUT = {
+    engaged_x = 70, out_of_command_x = 930, y = 100,
+    size = 100, hit_size = 120, -- 1200 棋面：标题两端留出 X10～130、870～990。
+    front_ui_clearance = 0.001, -- 新图标为 UI，不沿用正面投影贴花的负 GAP。
+    active_color = "#FFFFFFFF", inactive_color = "#FFFFFF50"
 }
 
 -- =========================
@@ -280,6 +290,8 @@ local function normalizeUnitState(guid, config_tag, config)
     state.back_value = bounded(state.back_value, config.max_back)
     state.manual_defeat_visible = state.manual_defeat_visible == true
     state.acted = state.acted == true
+    state.engaged = state.engaged == true
+    state.out_of_command = state.out_of_command == true
     state.config_tag = config_tag
     unit_state[guid] = state
     return state
@@ -516,6 +528,55 @@ local function unitActionButtonParameters(geometry, back)
     return parameters
 end
 
+local UNIT_STATUS_KINDS = {"engaged", "out_of_command"}
+local UNIT_STATUS_CALLBACKS = {engaged="toggleUnitEngaged",out_of_command="toggleUnitOutOfCommand"}
+
+local function unitStatusURL(kind)
+    return unitImageURL(type(UNIT_STATUS_IMAGES)=="table" and UNIT_STATUS_IMAGES[kind] or nil,false)
+end
+
+local function unitStatusButtonParameters(geometry,back,kind)
+    local layout=UNIT_STATUS_LAYOUT
+    local parameters=unitCounterButtonParameters(geometry,back,layout.y,UNIT_STATUS_CALLBACKS[kind],true)
+    parameters.position=unitButtonPosition(geometry,back,layout[kind.."_x"],layout.y,0)
+    if not back then
+        parameters.position[2]=geometry.surfaceTop+layout.front_ui_clearance+UNIT_COUNTER_LAYOUT.hit_lift
+    end
+    local size=math.max(1,math.floor(layout.hit_size*4*UNIT_COUNTER_LAYOUT.button_units_per_local/UNIT_COUNTER_LAYOUT.canvas+.5))
+    parameters.width,parameters.height=size,size
+    return parameters
+end
+
+-- 保留原按钮 0～5；新按钮按回调识别，不依赖新增按钮的索引顺序。
+-- 未登记图片／UI 等待中不留下盲点；资源就绪后再恢复点击。
+local function syncUnitStatusButtons(obj,geometry,ready)
+    local seen,remove={},{}
+    for index,button in ipairs(obj.getButtons() or {}) do
+        for _,kind in ipairs(UNIT_STATUS_KINDS) do
+            if button.click_function==UNIT_STATUS_CALLBACKS[kind] then
+                local back=math.abs(unitAxis(button.rotation,"z",3,0))%360>90
+                local key=kind..tostring(back)
+                if ready and unitStatusURL(kind)~="" and not seen[key] then
+                    local parameters=unitStatusButtonParameters(geometry,back,kind)
+                    parameters.index=button.index or (index-1)
+                    obj.editButton(parameters)
+                    seen[key]=true
+                else remove[#remove+1]=button.index or (index-1) end
+            end
+        end
+    end
+    table.sort(remove,function(a,b) return a>b end)
+    for _,index in ipairs(remove) do obj.removeButton(index) end
+    if not ready then return end
+    for _,kind in ipairs(UNIT_STATUS_KINDS) do
+        if unitStatusURL(kind)~="" then
+            for _,back in ipairs({false,true}) do
+                if not seen[kind..tostring(back)] then obj.createButton(unitStatusButtonParameters(geometry,back,kind)) end
+            end
+        end
+    end
+end
+
 local function sameUnitDecal(a, b)
     if a.url ~= b.url or a.name ~= b.name then return false end
     for _, field in ipairs({"position", "rotation", "scale"}) do
@@ -719,7 +780,9 @@ local function clearUnitBackUI(obj)
     local nodes,removed=unitBackUIStrip(currentNodes)
     local assets,removedAssets=unitBackUIAssets(ui)
     if removedAssets then
-        if unitBackUIFind(currentNodes,"sgub_root") then ui.setAttribute("sgub_root","active","false") end
+        for _,id in ipairs({"sgub_root","sgub_status_front","sgub_status_back"}) do
+            if unitBackUIFind(currentNodes,id) then ui.setAttribute(id,"active","false") end
+        end
         record=record or unitBackUIRecord(obj)
         record.mounted,record.attributes=false,{}
         ui.setCustomAssets(assets)
@@ -752,6 +815,7 @@ local function syncUnitBackUI(obj,state,config,geometry)
     asset("sgub_action_unacted",unitActionURL(false,true))
     asset("sgub_action_acted",unitActionURL(true,true))
     for _,kind in ipairs({"amber","red"}) do asset("sgub_band_"..kind,unitMoraleBandURL(kind)) end
+    for _,kind in ipairs(UNIT_STATUS_KINDS) do asset("sgub_status_image_"..kind,unitStatusURL(kind)) end
     local key=table.concat(signature,"\n")
     local layout=UNIT_COUNTER_LAYOUT
     -- 安装版 XmlUIWorldCanvas：局部旋转 +90°X、缩放 .01。
@@ -785,25 +849,65 @@ local function syncUnitBackUI(obj,state,config,geometry)
     image(ids[6],bandAsset,layout.morale_band_width,layout.morale_band_height,layout.morale_band_y)
     desired[ids[6]].image=desired[ids[6]].image~="" and bandAsset or ""
     if not bandKey then desired[ids[6]].active="false" end
-    local currentNodes=ui.getXmlTable() or {}
-    if not record.mounted or record.signature~=key or not unitBackUIFind(currentNodes,"sgub_root") then
-        local nodes=unitBackUIStrip(currentNodes)
-        local children={}
-        -- 图片已独立登记并完成加载；创建时绑定，随后显示最新状态。
-        for _,id in ipairs(ids) do
-            local attributes=copyConfig(desired[id])
-            attributes.active="false"
-            children[#children+1]={tag="Image",attributes=attributes}
+    -- 两面的状态图标复用现有资源／XML 生命周期，不改动数字栏或其六个子节点。
+    -- UI 支持透明度，因此无需为关闭状态再上传一套图片，也不引入叠层贴花。
+    local groups={{root=root,ids=copyConfig(ids)}}
+    if unitStatusURL("engaged")~="" or unitStatusURL("out_of_command")~="" then
+        for _,back in ipairs({false,true}) do
+            local side=back and "back" or "front"
+            local statusLayout=UNIT_STATUS_LAYOUT
+            local plane=back and (geometry.surfaceBottom-layout.back_ui_clearance)
+                or (geometry.surfaceTop+statusLayout.front_ui_clearance)
+            local header={id="sgub_status_"..side,width="1000",height="200",color="#FFFFFF00",
+                rectAlignment="MiddleCenter",raycastTarget="false",tooltip="",visibility="",active="true",
+                -- UI 初始 X→物件+X、Y→物件+Z；正面双轴翻转，背面仅翻转 Y。
+                rotation=back and "180 0 0" or "0 0 180",
+                position=unitUIVector((geometry.cx+(back and -1 or 1)*100/1200*geometry.width)*100,
+                    (geometry.cz-500/1200*geometry.depth)*100,-plane*100),
+                scale=unitUIVector(geometry.width*100/1200,geometry.depth*100/1200,1)}
+            local group={root=header,ids={}}
+            for _,kind in ipairs(UNIT_STATUS_KINDS) do
+                local id="sgub_status_"..side.."_"..kind
+                local name="sgub_status_image_"..kind
+                local exists=urls[name]~=""
+                desired[id]={id=id,width=tostring(statusLayout.size),height=tostring(statusLayout.size),
+                    image=exists and name or "",active=exists and "true" or "false",
+                    color=state[kind] and statusLayout.active_color or statusLayout.inactive_color,
+                    preserveAspect="true",raycastTarget="false",tooltip="",rectAlignment="MiddleCenter",
+                    position=unitUIVector(statusLayout[kind.."_x"]-500,100-statusLayout.y,0),
+                    rotation="0 0 0",scale="1 1 1"}
+                group.ids[#group.ids+1]=id
+                ids[#ids+1]=id
+            end
+            groups[#groups+1]=group
         end
-        local initial=copyConfig(root); initial.active="false"
-        nodes[#nodes+1]={tag="Panel",attributes=initial,children=children}
+    end
+    local currentNodes=ui.getXmlTable() or {}
+    local rootsPresent=true
+    for _,group in ipairs(groups) do
+        if not unitBackUIFind(currentNodes,group.root.id) then rootsPresent=false end
+    end
+    if not record.mounted or record.signature~=key or not rootsPresent then
+        local nodes=unitBackUIStrip(currentNodes)
+        -- 图片已独立登记并完成加载；创建时绑定，随后显示最新状态。
+        for _,group in ipairs(groups) do
+            local children={}
+            for _,id in ipairs(group.ids) do
+                local attributes=copyConfig(desired[id]); attributes.active="false"
+                children[#children+1]={tag="Image",attributes=attributes}
+            end
+            local initial=copyConfig(group.root); initial.active="false"
+            nodes[#nodes+1]={tag="Panel",attributes=initial,children=children}
+        end
         local mergedAssets=unitBackUIAssets(ui,assets)
         if not unitBackAssetsMatch(ui.getCustomAssets() or {},mergedAssets) then
             -- 图片配置变化时先收起旧画面，避免在等待下载期间留下过期数字。
             for _,id in ipairs(ids) do
                 if unitBackUIFind(currentNodes,id) then ui.setAttribute(id,"active","false") end
             end
-            if unitBackUIFind(currentNodes,"sgub_root") then ui.setAttribute("sgub_root","active","false") end
+            for _,id in ipairs({"sgub_root","sgub_status_front","sgub_status_back"}) do
+                if unitBackUIFind(currentNodes,id) then ui.setAttribute(id,"active","false") end
+            end
             record.mounted,record.attributes=false,{}
             ui.setCustomAssets(mergedAssets)
             unitBackUIWait(obj,record)
@@ -836,7 +940,7 @@ local function syncUnitBackUI(obj,state,config,geometry)
         record.attributes[id]=attributes
     end
     for _,id in ipairs(ids) do update(id,desired[id]) end
-    update("sgub_root",root) -- 图片先绑定，整组最后显示。
+    for _,group in ipairs(groups) do update(group.root.id,group.root) end -- 图片先绑定，整组最后显示。
     return true
 end
 
@@ -889,6 +993,7 @@ local function syncUnitImages(obj, state, config)
             print("[部隊背面 UI] "..obj.getGUID().."："..record.error)
         end
     end
+    syncUnitStatusButtons(obj,geometry,uiOK and backReady==true)
     -- API 成功不等于网络图片已下载；无效地址不提交空白贴花。
     return defeatURL ~= "", geometry
 end
@@ -900,7 +1005,8 @@ function clearUnitCounterVisuals(obj)
     local indices = {}
     for i, button in ipairs(obj.getButtons() or {}) do
         local callback = button.click_function
-        if callback == "changeFrontValue" or callback == "changeBackValue" or callback == "unitDefeatFallback" or callback == "toggleUnitActed" then
+        if callback == "changeFrontValue" or callback == "changeBackValue" or callback == "unitDefeatFallback" or callback == "toggleUnitActed"
+            or callback == "toggleUnitEngaged" or callback == "toggleUnitOutOfCommand" then
             table.insert(indices,button.index or (i-1))
         end
     end
@@ -1012,6 +1118,24 @@ function toggleUnitActed(obj, _player_color, _alt_click)
     updateDefeatText(obj)
 end
 
+-- 仅手动记录：不自动判断接敌／指挥路径，不联动士気、行动或翻面。
+-- 右键不切换，避免习惯性右键操作意外改状态；不限制玩家颜色。
+local function toggleUnitStatus(obj,kind,alt_click)
+    if alt_click then return end
+    local state=getStateAndConfig(obj)
+    if not state then return end
+    state[kind]=not state[kind]
+    updateDefeatText(obj)
+end
+
+function toggleUnitEngaged(obj,_player_color,alt_click)
+    toggleUnitStatus(obj,"engaged",alt_click)
+end
+
+function toggleUnitOutOfCommand(obj,_player_color,alt_click)
+    toggleUnitStatus(obj,"out_of_command",alt_click)
+end
+
 -- =========================
 -- 敗走文字逻辑
 -- =========================
@@ -1109,6 +1233,8 @@ function resetUnit(obj)
     state.back_value = config.max_back
     state.manual_defeat_visible = false
     state.acted = false
+    state.engaged = false
+    state.out_of_command = false
     unitFlipPending[obj.getGUID()] = nil
 
     updateDefeatText(obj)
@@ -1120,8 +1246,8 @@ end
 
 
 -- ===== 備隊面板 v2 =====
--- 備隊武将面板 v2.14.11：六兵種追加・数字画像専用
--- 更新日：2026-10-20
+-- 備隊武将面板 v2.15.0：交戦・指揮外手動標記対応
+-- 更新日：2026-10-21
 -- 画像・生年・統率は各武将令牌の Description に入力可能。
 -- team=ota_honjin / role=main,deputy1,deputy2 / name=太田資正
 -- birth=1522 / command=5 / image=https://... / status=無傷
