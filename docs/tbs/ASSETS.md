@@ -48,4 +48,4 @@
 
 [asset-inventory.json](asset-inventory.json) 记录导入前的文件 Git blob SHA 和目录 tree SHA，用来确认此次导入没有替换原图。没有为了代码迁移重压缩任何PNG、修改标题、移动文件或重建下载包。
 
-新状态图标、两态阵形、统一铁炮装填图与悬浮敗走图均未在本次制作。它们的最终尺寸及云端直链待后续任务决定。
+交戦／指揮外图标接口已加入v2.15.0：全军共用两张透明PNG，填写 `UNIT_STATUS_IMAGES.engaged` 与 `.out_of_command`，一张对应一种状态，两面及开关状态共用。用UI透明度产生淡色关闭态，不需要制作四张。规格与标题留位见 [STATUS_MARKERS.md](STATUS_MARKERS.md)。正式直链暂空；阵形、装填与悬浮敗走图仍待后续任务。

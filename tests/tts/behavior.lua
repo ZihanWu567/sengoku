@@ -1952,15 +1952,235 @@ local function runUnitMoraleQuickChecks()
     end
 end
 
+-- Optional shared status markers: image availability gates visible, clickable UI.
+local function runUnitStatusChecks()
+    local originalImages=UNIT_STATUS_IMAGES
+    UNIT_STATUS_IMAGES={}
+    local callbacks={engaged="toggleUnitEngaged",out_of_command="toggleUnitOutOfCommand"}
+    local function statusButtons(obj,kind,back)
+        local found={}
+        for _,button in ipairs(obj.buttons) do
+            if button.click_function==callbacks[kind] and
+                (back==nil or ((button.rotation or {})[3]==180)==back) then
+                found[#found+1]=button
+            end
+        end
+        return found
+    end
+    local function statusNode(obj,side,kind)
+        return obj.UI and findNode(obj.UI.xmlTable,"sgub_status_"..side.."_"..kind)
+    end
+    local function checkMarker(obj,kind,enabled,message)
+        for _,side in ipairs({"front","back"}) do
+            local node=statusNode(obj,side,kind)
+            assert(node,"Missing status Image "..side.." "..kind)
+            eq(node.tag,"Image",message.." "..side.." image node")
+            eq(node.attributes.active,"true",message.." "..side.." remains visible")
+            eq(node.attributes.image,"sgub_status_image_"..kind,message.." "..side.." preloaded sprite binding")
+            eq(node.attributes.color,enabled and "#FFFFFFFF" or "#FFFFFF50",message.." "..side.." visual state")
+            eq(node.attributes.raycastTarget,"false",message.." "..side.." image does not intercept clicks")
+            eq(#statusButtons(obj,kind,side=="back"),1,message.." "..side.." one click target")
+        end
+    end
+    local unit=token("交戦指揮外試験","","status1")
+    unit.tags.unit_nagaye_ashigaru=true
+    setupUnit(unit,getUnitConfig(unit)); flush()
+    eq(unit_state.status1.engaged,false,"new unit starts disengaged")
+    eq(unit_state.status1.out_of_command,false,"new unit starts without manual OOC marker")
+    eq(#unit.buttons,6,"absent status URLs leave original six buttons")
+    for kind in pairs(callbacks) do
+        eq(#statusButtons(unit,kind),0,"missing URL adds no invisible status hit area: "..kind)
+        for _,side in ipairs({"front","back"}) do
+            local node=statusNode(unit,side,kind)
+            eq(node==nil or node.attributes.active=="false",true,"missing URL shows no status placeholder: "..side.." "..kind)
+        end
+    end
+    UNIT_STATUS_IMAGES={engaged="https://example.invalid/engaged.png",out_of_command="https://example.invalid/out-of-command.png"}
+    updateDefeatText(unit); flush()
+    eq(#unit.buttons,10,"two shared statuses add one hit area per face")
+    for kind,url in pairs(UNIT_STATUS_IMAGES) do
+        eq(objectAssetURL(unit,"sgub_status_image_"..kind),url,"status image explicitly registered: "..kind)
+        checkMarker(unit,kind,false,"initial inactive "..kind)
+    end
+    local unchangedMorale=unit_state.status1.front_value
+    local other=token("別隊","","status2"); other.tags.unit_nagaye_ashigaru=true
+    setupUnit(other,getUnitConfig(other)); flush()
+    local button=statusButtons(unit,"engaged",false)[1]
+    _G[button.click_function](unit,"Red",false)
+    eq(unit_state.status1.engaged,true,"nonhost front left click enables shared engaged")
+    checkMarker(unit,"engaged",true,"engaged immediate refresh")
+    checkMarker(unit,"out_of_command",false,"engaged leaves OOC unchanged")
+    eq(unit_state.status1.front_value,unchangedMorale,"status click preserves morale")
+    eq(unit_state.status1.acted,false,"status click preserves action")
+    eq(unit.is_face_down,false,"status click does not flip unit")
+    eq(unit_state.status2.engaged,false,"status belongs only to clicked GUID")
+    toggleUnitEngaged(unit,"Red",true)
+    eq(unit_state.status1.engaged,true,"right click does not toggle engaged")
+    _G[statusButtons(unit,"out_of_command",true)[1].click_function](unit,"Blue",false)
+    eq(unit_state.status1.out_of_command,true,"nonhost back click enables shared OOC")
+    checkMarker(unit,"out_of_command",true,"OOC immediate refresh on both faces")
+    toggleUnitOutOfCommand(unit,"Blue",true)
+    eq(unit_state.status1.out_of_command,true,"right click does not toggle OOC")
+    _G[statusButtons(unit,"engaged",true)[1].click_function](unit,"Grey",false)
+    eq(unit_state.status1.engaged,false,"back callback changes same engaged record")
+    toggleUnitEngaged(unit,"Black",false)
+    local assetWrites,xmlWrites=unit.UI.assetCalls,unit.UI.xmlCalls
+    for n=1,6 do
+        toggleUnitEngaged(unit,"Red",false)
+        toggleUnitOutOfCommand(unit,"Blue",false)
+    end
+    eq(unit.UI.assetCalls,assetWrites,"status toggles reuse loaded images")
+    eq(unit.UI.xmlCalls,xmlWrites,"status toggles do not rebuild Canvas")
+    local attrs,decals=unit.UI.attributeCalls,unit.decalWrites
+    for n=1,4 do updateDefeatText(unit) end
+    eq(unit.UI.attributeCalls,attrs,"identical status refresh writes no attributes")
+    eq(unit.decalWrites,decals,"status refresh leaves existing decals stable")
+    eq(#unit.buttons,10,"repeated refresh never accumulates status buttons")
+
+    local function geometryCheck(obj,message)
+        local width=obj.bounds.size.x/obj.scale.x
+        local depth=obj.bounds.size.z/obj.scale.z
+        local cx=obj.bounds.offset.x/obj.scale.x
+        local cz=obj.bounds.offset.z/obj.scale.z
+        for _,back in ipairs({false,true}) do
+            local side=back and "back" or "front"
+            local root=findNode(obj.UI.xmlTable,"sgub_status_"..side)
+            assert(root,"Missing status header "..side)
+            eq(root.attributes.rotation,back and "180 0 0" or "0 0 180",message.." "..side.." faces outward")
+            local rp,rs=vector(root.attributes.position),vector(root.attributes.scale)
+            for kind,x in pairs({engaged=70,out_of_command=930}) do
+                local node=statusNode(obj,side,kind)
+                local child=vector(node.attributes.position)
+                local localX=rp[1]/100+(back and 1 or -1)*child[1]*rs[1]/100
+                local localY=-rp[3]/100
+                local localZ=rp[2]/100-child[2]*rs[2]/100
+                near(localX,cx+(back and 1 or -1)*(x/1200-.5)*width,message.." "..side.." "..kind.." screen X")
+                near(localZ,cz+(100/1200-.5)*depth,message.." "..side.." "..kind.." top row")
+                near(child[3],0,message.." "..side.." "..kind.." shares header plane")
+                near(tonumber(node.attributes.width)*rs[1]/100,100/1200*width,message.." "..side.." "..kind.." rendered width")
+                near(tonumber(node.attributes.height)*rs[2]/100,100/1200*depth,message.." "..side.." "..kind.." rendered height")
+                local hit=statusButtons(obj,kind,back)[1]
+                local hp=classicButtonObjectPosition(hit)
+                near(hp[1],localX,message.." "..side.." "..kind.." hit X")
+                near(hp[3],localZ,message.." "..side.." "..kind.." hit Z")
+                near(hp[2],localY+(back and -.004 or .004),message.." "..side.." "..kind.." hit above image")
+                classicButtonOrientation(hit,back,message.." "..side.." "..kind)
+            end
+        end
+    end
+    geometryCheck(unit,"default geometry")
+    unit.scale={x=2,y=3,z=.5}; unit.bounds={size={x=4,y=.6,z=1},offset={x=.4,y=.3,z=-.2}}
+    updateDefeatText(unit); flush()
+    geometryCheck(unit,"nonzero center and scaled geometry")
+    unit.scale={x=1,y=1,z=1}; unit.bounds={size={x=2,y=.2,z=2},offset={x=0,y=0,z=0}}
+    updateDefeatText(unit); flush()
+    unit.flip(); onObjectDrop("Red",unit); onObjectRotate(unit,nil,true,"Blue"); flush(); tick()
+    eq(unit_state.status1.engaged,true,"flip/drop keeps manual engaged marker")
+    eq(unit_state.status1.out_of_command,true,"flip/drop keeps manual OOC marker")
+    changeBackValue(unit,"Red",true)
+    toggleUnitActed(unit,"Blue",false)
+    toggleDefeatText(unit)
+    eq(unit_state.status1.engaged,true,"morale/action/rout preserves engaged")
+    eq(unit_state.status1.out_of_command,true,"morale/action/rout preserves OOC")
+    local shortcut=hotkeys["士気快捷調整"]
+    shortcut.callback("Red",unit,nil,false); changeBackValue(unit,"Red",false); shortcut.callback("Red",unit,nil,true)
+    eq(unit_state.status1.engaged,true,"quick refill preserves engaged")
+    eq(unit_state.status1.out_of_command,true,"quick refill preserves OOC")
+    local saved=onSave(); onLoad(saved); flush(); tick()
+    eq(unit_state.status1.engaged,true,"engaged survives save/load")
+    eq(unit_state.status1.out_of_command,true,"OOC survives save/load")
+    checkMarker(unit,"engaged",true,"restored engaged image")
+    checkMarker(unit,"out_of_command",true,"restored OOC image")
+    for _,fixture in ipairs({{},{engaged="true",out_of_command=1},{engaged={},out_of_command=false}}) do
+        unit_state.status1={front_value=4,back_value=3,engaged=fixture.engaged,out_of_command=fixture.out_of_command,acted=true}
+        local state=getStateAndConfig(unit)
+        eq(state.engaged,false,"old or invalid engaged value defaults false")
+        eq(state.out_of_command,false,"old or invalid OOC value defaults false")
+        eq(state.front_value,4,"status normalization preserves old morale")
+        eq(state.acted,true,"status normalization preserves old action flag")
+    end
+    toggleUnitEngaged(unit,"Red",false); toggleUnitOutOfCommand(unit,"Blue",false)
+    resetUnit(unit)
+    eq(unit_state.status1.engaged,false,"explicit full reset clears engaged")
+    eq(unit_state.status1.out_of_command,false,"explicit full reset clears OOC")
+
+    -- Register both sprites before revealing any header or click targets.
+    local pending=token("状态图片下载中","","status3"); pending.tags.unit_nagaye_ashigaru=true
+    pending.UI.holdAssets=true
+    setupUnit(pending,getUnitConfig(pending)); flush()
+    eq(#statusButtons(pending,"engaged"),0,"initial pending status has no clickable empty area")
+    eq(#statusButtons(pending,"out_of_command"),0,"initial pending OOC has no clickable empty area")
+    toggleUnitEngaged(pending,"Red",false); toggleUnitEngaged(pending,"Blue",false)
+    toggleUnitOutOfCommand(pending,"Blue",false)
+    pending.UI.holdAssets=false; pending.UI.loading=false; flush()
+    checkMarker(pending,"engaged",false,"load completion uses latest engaged")
+    checkMarker(pending,"out_of_command",true,"load completion uses latest OOC")
+    pending.UI.holdAssets=true
+    UNIT_STATUS_IMAGES.engaged="https://example.invalid/engaged-v2.png"
+    updateDefeatText(pending); flush()
+    eq(#statusButtons(pending,"engaged"),0,"replacement loading removes active hit targets")
+    toggleUnitEngaged(pending,"Red",false)
+    pending.UI.holdAssets=false; pending.UI.loading=false; flush()
+    checkMarker(pending,"engaged",true,"replacement completion uses newest shared state")
+    eq(objectAssetURL(pending,"sgub_status_image_engaged"),UNIT_STATUS_IMAGES.engaged,"replacement sprite URL registered")
+
+    -- Clearing one optional URL hides only that status and retains its state.
+    UNIT_STATUS_IMAGES.engaged=""
+    updateDefeatText(pending); flush()
+    eq(#statusButtons(pending,"engaged"),0,"cleared image removes engaged hit areas")
+    eq(#statusButtons(pending,"out_of_command"),2,"other status remains clickable")
+    eq(unit_state.status3.engaged,true,"missing image never deletes stored status")
+    for _,side in ipairs({"front","back"}) do
+        local node=statusNode(pending,side,"engaged")
+        eq(node==nil or node.attributes.active=="false",true,"cleared image has no visible substitute: "..side)
+    end
+    UNIT_STATUS_IMAGES={engaged="[https://example.invalid/e.png](https://example.invalid/e.png)",out_of_command="C:/private/status.png"}
+    updateDefeatText(pending); flush()
+    eq(#pending.buttons,6,"invalid or local status URLs leave no invisible hit areas")
+    eq(findNode(pending.UI.xmlTable,"sgub_status_front"),nil,"removing all usable images removes front header")
+    eq(findNode(pending.UI.xmlTable,"sgub_status_back"),nil,"removing all usable images removes back header")
+    eq(objectAssetURL(pending,"sgub_status_image_engaged"),nil,"cleared status asset is removed from registry")
+    eq(unit_state.status3.out_of_command,true,"removing both images preserves manual state")
+    UNIT_STATUS_IMAGES={out_of_command="https://example.invalid/out-of-command.png"}
+    updateDefeatText(pending); flush()
+    checkMarker(pending,"out_of_command",true,"restored image recovers saved state")
+    local noUI=token("无物件UI","","status4"); noUI.tags.unit_nagaye_ashigaru=true; noUI.UI=nil
+    setupUnit(noUI,getUnitConfig(noUI)); flush()
+    eq(#statusButtons(noUI,"out_of_command"),0,"missing Object.UI never creates invisible status targets")
+
+    pending.UI.xmlTable[#pending.UI.xmlTable+1]={tag="Text",attributes={id="foreign_status_text"},value="保留"}
+    pending.UI.assets[#pending.UI.assets+1]={name="foreign_status_asset",url="https://example.invalid/foreign-status.png"}
+    pending.decals[#pending.decals+1]={name="foreign_status_decal",url="https://example.invalid/foreign-decal.png"}
+    pending.createButton({click_function="foreignStatusButton",label="外部",rotation={0,0,0}})
+    pending.tags.unit_nagaye_ashigaru=nil
+    clearUnitCounterVisuals(pending); flush()
+    eq(#pending.buttons,1,"tag cleanup removes status and counter buttons only")
+    eq(pending.buttons[1].label,"外部","tag cleanup preserves foreign button")
+    eq(findNode(pending.UI.xmlTable,"sgub_status_front"),nil,"tag cleanup removes front status root")
+    eq(findNode(pending.UI.xmlTable,"sgub_status_back"),nil,"tag cleanup removes back status root")
+    eq(findNode(pending.UI.xmlTable,"foreign_status_text").value,"保留","tag cleanup preserves foreign XML")
+    eq(objectAssetURL(pending,"foreign_status_asset"),"https://example.invalid/foreign-status.png","tag cleanup preserves foreign assets")
+    eq(select(2,managedDecal(pending,"foreign_status_decal")),1,"tag cleanup preserves foreign decals")
+    for _,guid in ipairs({"status1","status2","status3","status4"}) do
+        local obj=objects[guid]
+        objects[guid]=nil; onObjectDestroy(obj)
+        eq(unit_state[guid],nil,"destroyed status unit releases persistent record: "..guid)
+    end
+    UNIT_STATUS_IMAGES=originalImages
+    preloadUnitImages(true)
+end
+
 function runTeamChecks(merged)
     local configuredDefeatURL=UNIT_DEFEAT_IMAGE_URL
     local configuredNumberImages=UNIT_NUMBER_IMAGES
     local configuredBackImages,configuredRail,configuredActions=UNIT_NUMBER_BACK_IMAGES,UNIT_BACK_RAIL_IMAGE_URL,UNIT_ACTION_IMAGES
     local configuredMoraleBands=UNIT_MORALE_BAND_IMAGES
+    local configuredStatusImages=UNIT_STATUS_IMAGES
     if merged then
         -- Existing resource-count regressions intentionally run with the optional bands disabled.
         -- The dedicated morale-band suite below enables and verifies both new assets separately.
         UNIT_MORALE_BAND_IMAGES={}
+        UNIT_STATUS_IMAGES={} -- Dedicated status suite supplies optional sprites separately.
         UNIT_NUMBER_IMAGES={}; UNIT_NUMBER_BACK_IMAGES={}
         for value=0,8 do
             UNIT_NUMBER_IMAGES[value]="https://example.invalid/number-"..value..".png"
@@ -2708,10 +2928,12 @@ function runTeamChecks(merged)
         runUnitPreloadChecks()
         runUnitMoraleBandChecks()
         runUnitMoraleQuickChecks()
+        runUnitStatusChecks()
     end
     UNIT_DEFEAT_IMAGE_URL=configuredDefeatURL
     UNIT_NUMBER_IMAGES=configuredNumberImages
     UNIT_NUMBER_BACK_IMAGES,UNIT_BACK_RAIL_IMAGE_URL,UNIT_ACTION_IMAGES=configuredBackImages,configuredRail,configuredActions
     UNIT_MORALE_BAND_IMAGES=configuredMoraleBands
+    UNIT_STATUS_IMAGES=configuredStatusImages
     return tostring(checks).." behavior checks passed (network and live TTS rendering not tested)"
 end

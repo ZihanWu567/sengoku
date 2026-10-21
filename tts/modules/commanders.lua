@@ -1,5 +1,5 @@
--- 備隊武将面板 v2.14.11：六兵種追加・数字画像専用
--- 更新日：2026-10-20
+-- 備隊武将面板 v2.15.0：交戦・指揮外手動標記対応
+-- 更新日：2026-10-21
 -- 画像・生年・統率は各武将令牌の Description に入力可能。
 -- team=ota_honjin / role=main,deputy1,deputy2 / name=太田資正
 -- birth=1522 / command=5 / image=https://... / status=無傷

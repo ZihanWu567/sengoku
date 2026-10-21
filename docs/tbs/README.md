@@ -3,6 +3,7 @@
 先阅读 [项目交接](../HANDOFF.md)，再按任务选择：
 
 - [配置与操作](CONFIGURATION.md)：兵种、人数、武将Description、标签及快捷操作。
+- [交戦／指揮外](STATUS_MARKERS.md)：手动状态、两张图片接口、标题留位及验证边界。
 - [美术关联](ASSETS.md)：现有十二类成品与十类运行配置的对应关系。
 - [RAN与当前改编](RULES.md)：参考条款、当前机制及未实现边界。
 - [待实现设计](DESIGN_BACKLOG.md)：交戦、指揮外、阵形、装填与敗走图标。
