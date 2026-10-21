@@ -3,7 +3,7 @@
 本目录提供两个独立的状态图标，均为**暗朱红实心圆章、圆外透明**，尚未接入 TTS Global Lua：
 
 - **交戦 / `engaged`**：象牙色交叉太刀。沿用用户选定的红色版本，三份图标导出和既有定位均保持 revision 4 原样。
-- **指揮外 / `out_of_command`**：较写实的战国漆木军配，配以克制的旧金属包边和材质质感、象牙色斜杠及暗朱红圆章；此次去除粗黑卡通轮廓。
+- **指揮外 / `out_of_command`**：根据用户上传的实物军配照片从零绘制。黑漆扇面两侧内凹收腰、上下角圆弧，带细金边；中央黑木脊贯穿扇面并延成长柄，柄端为金色柄帽。军配倾斜约 25°，去除参考照片中的全部文字，保留象牙斜杠与暗朱红圆章。
 
 两者都按 **100 × 100** 显示，分别位于标题栏左右两侧，**可以同时出现，不能作为互斥状态复用一个位置**。
 
@@ -16,7 +16,7 @@
 | `engaged` | [engaged.png](./engaged.png) | 512 × 512 | 3 / 4 / 3 / 4 px |
 | `engaged` | [engaged-100.png](./engaged-100.png) | 100 × 100 | 0 / 0 / 0 / 0 px |
 | `engaged` | [源图/engaged-1024.png](./源图/engaged-1024.png) | 1024 × 1024 | 10 / 12 / 10 / 12 px |
-| `out_of_command` | [out_of_command.png](./out_of_command.png) | 512 × 512 | 3 / 4 / 3 / 5 px |
+| `out_of_command` | [out_of_command.png](./out_of_command.png) | 512 × 512 | 3 / 6 / 3 / 5 px |
 | `out_of_command` | [out_of_command-100.png](./out_of_command-100.png) | 100 × 100 | 0 / 0 / 0 / 0 px |
 | `out_of_command` | [源图/out_of_command-1024.png](./源图/out_of_command-1024.png) | 1024 × 1024 | 10 / 13 / 10 / 14 px |
 
@@ -37,7 +37,7 @@
 
 ## 历史预览 · revision 5 旧稿
 
-**以下指揮外和双状态预览均保留 revision 5 旧稿，不显示本次 revision 6 的新版图标，不能作为当前效果。** 文件原样保留；manifest 已将这些引用移入 `previous_revision_previews`。交戦素材本轮未改动，其既有预览另行保留。
+**以下指揮外和双状态预览均保留 revision 5 旧稿，不显示本次 revision 7 的新版图标，不能作为当前效果。** 文件原样保留；manifest 已将这些引用移入 `previous_revision_previews`。交戦素材本轮未改动，其既有预览另行保留。
 
 [revision 5 指揮外与双状态旧总览](./out_of_command_总览.jpg) · [交戦既有总览](./总览.jpg)
 
@@ -59,7 +59,7 @@
 
 ## 代码侧交接
 
-- 本次为 **`revision: 6`**，重绘 `out_of_command` 为较写实的战国风格，仍按 100 × 100 显示，左上 `(892,56)`、中心 `(942,106)`。本轮不更新预览，当前效果以独立图标为准。`engaged` 的既有 manifest 条目、三个 PNG 导出及定位保持不变；红色图标仍与 revision 2（提交 `abadd9f`）一致。
+- 本次为 **`revision: 7`**，依据用户上传的实物照片从零重画 `out_of_command` 并去除全部文字，仍按 100 × 100 显示，左上 `(892,56)`、中心 `(942,106)`。本轮不更新预览，当前效果以独立图标为准。`engaged` 的既有 manifest 条目、三个 PNG 导出及定位保持不变；红色图标仍与 revision 2（提交 `abadd9f`）一致。
 - 固定标识为 `engaged` 和 `out_of_command`，分别登记资源并独立控制显示／隐藏。两者允许同时显示，不能互斥切换同一节点或复用同一坐标。
 - 两个 `cloud_url` 均为空。仓库预览链接不代表已配置或已验证的 TTS 图片资源；需要代码侧选定图片托管、登记资源并验证加载。
 - 本稿仅交接图片、尺寸和定位。状态如何触发、保存／恢复及清除由代码侧按已确认规则处理；这里不推测交战或指挥范围的自动判定、回合重置等逻辑。

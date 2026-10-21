@@ -164,7 +164,7 @@
       "id": "out_of_command",
       "label_ja": "指揮外",
       "status": "draft",
-      "description": "More realistic Sengoku lacquered-wood gunbai war fan with restrained aged-metal edging and material texture, crossed by an ivory diagonal slash on a dark vermilion solid circular badge; avoids thick cartoon-style black outlines.",
+      "description": "Drawn from scratch using the user-uploaded photograph of a physical gunbai: a black-lacquered face with inward-curving sides, rounded upper and lower corners, thin gold edging, a central black wooden spine continuing into a long handle, and a gold handle cap. The gunbai is tilted about 25 degrees; all lettering from the reference is removed. An ivory diagonal slash overlays the gunbai on a dark vermilion circular badge.",
       "path": "out_of_command.png",
       "pixel_size": {
         "width": 512,
@@ -173,24 +173,24 @@
       "alpha": "straight RGBA; solid badge, transparent outside circle",
       "content_bbox_px": {
         "x": 3,
-        "y": 4,
+        "y": 6,
         "width": 506,
-        "height": 503
+        "height": 501
       },
       "transparent_padding_px": {
         "left": 3,
-        "top": 4,
+        "top": 6,
         "right": 3,
         "bottom": 5
       },
       "alpha_bbox_threshold": 0,
       "content_bbox_at_alpha_128_px": {
         "x": 6,
-        "y": 7,
-        "width": 501,
-        "height": 498
+        "y": 8,
+        "width": 500,
+        "height": 497
       },
-      "sha256": "084ef6b494acc045b1f9b68815e35fee35fb26c8d362a61fcdce50cdaa17080a",
+      "sha256": "276718389964ced318d63228a75da8b4b331bf6d97ea5c8af9f552301acdd295",
       "source_export": {
         "path": "源图/out_of_command-1024.png",
         "pixel_size": {
@@ -212,12 +212,12 @@
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 11,
-          "y": 14,
-          "width": 1002,
-          "height": 996
+          "x": 12,
+          "y": 16,
+          "width": 1000,
+          "height": 994
         },
-        "sha256": "06a41b1130e0e05f59dee3d6d2cfcb6641b43c7f29129ab5df69cd51d073d119"
+        "sha256": "b0ee6b83ff6a52a102fbb11900f0800120a8b2c9a211c1df3cd5ece9f7bab2f5"
       },
       "display_export": {
         "path": "out_of_command-100.png",
@@ -241,11 +241,11 @@
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
           "x": 1,
-          "y": 1,
+          "y": 2,
           "width": 98,
-          "height": 98
+          "height": 97
         },
-        "sha256": "0a0d27a8160c54352d05fb72752ab13f3ce742e0da4d51f5c77ee58b139b4cfb"
+        "sha256": "7daddb2a97afdd8705daae74bb8780e0c5aafa876c0b2cb6a3d55d179ff4330d"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -288,8 +288,8 @@
   ],
   "runtime_integration": "not implemented",
   "notes": [
-    "Revision 6 redraws out_of_command in a more realistic Sengoku style: lacquered wood, restrained aged-metal edging and texture, an ivory diagonal slash, and a dark vermilion badge without thick cartoon-style outlines. The engaged entry and its three exports remain unchanged.",
-    "No new overview or board previews are generated for revision 6, at the user’s request. The current overview points to the standalone out_of_command.png; all older out_of_command and combined preview references are explicitly historical revision 5 assets.",
+    "Revision 7 redraws out_of_command from scratch using the user-uploaded photograph of a physical gunbai. Its black lacquer, waisted outline, rounded corners, thin gold edging, continuous central wooden spine, long handle and gold cap follow that reference; all lettering is removed. The gunbai is tilted about 25 degrees, with the ivory slash and dark vermilion badge retained. Engaged remains unchanged.",
+    "No new overview or board previews are generated for revision 7, at the user’s request. The current overview points to the standalone out_of_command.png; all older out_of_command and combined preview references are explicitly historical revision 5 assets.",
     "The engaged badge uses a 100x100 canvas at (20,56), centered at (70,106). The out_of_command badge uses a separate 100x100 canvas at (892,56), centered at (942,106). Both can appear simultaneously; do not reuse one mutually exclusive display slot.",
     "The right badge is placed beyond the rightmost title boundary x=885 exclusive, leaving a 7px title gap and a 6px right-frame gap. No existing title needs to move or shrink.",
     "Cloud URLs intentionally empty; no runtime-hosting URLs have been provided.",
@@ -299,7 +299,7 @@
     "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
     "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 6,
+  "revision": 7,
   "additional_overviews": [
     "总览.jpg"
   ],
@@ -311,7 +311,7 @@
         "out_of_command"
       ],
       "represents_current_artwork": false,
-      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not show the revision 6 artwork.",
+      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not show the current revision 7 artwork.",
       "overview": "out_of_command_总览.jpg",
       "out_of_command_previews": [
         {
