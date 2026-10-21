@@ -2,7 +2,7 @@
 
 日本战国题材的 **Tabletop Simulator（TTS）** 棋子脚本、武将／備隊面板和美术素材项目。对话中也曾简称 TBS；实际运行平台是 TTS。
 
-当前版本为 **v2.15.0（2026-10-21）**，在已导入的 v2.14.11 上增加交戦／指揮外手动标记。它提供棋子操作和状态显示，**不是完整的 RAN 规则或自动回合引擎**。
+当前版本为 **v2.16.0（2026-10-21）**，已提供交戦／指揮外手动标记，并新增底部阵形／射击两态图片接口。它提供棋子操作和状态显示，**不是完整的 RAN 规则或自动回合引擎**。
 
 另一位 Codex 开始工作前，请先阅读 [AGENTS.md](AGENTS.md) 和 [docs/HANDOFF.md](docs/HANDOFF.md)。
 
@@ -12,7 +12,7 @@
 | --- | --- |
 | [tts/Global.lua](tts/Global.lua) | 完整可运行的 Global Lua；部队逻辑在前半段，武将面板与地图旗在后半段 |
 | [tts/modules](tts/modules/) | 武将面板源文件、地图旗模块；已有源码的同步关系保留 |
-| [tts/releases/Global_v2.15.0.txt](tts/releases/Global_v2.15.0.txt) | 可直接全选复制的完整替换版，与 Global.lua 字节一致；旧版 TXT 仅供回溯 |
+| [tts/releases/Global_v2.16.0.txt](tts/releases/Global_v2.16.0.txt) | 可直接全选复制的完整替换版，与 Global.lua 字节一致；旧版 TXT 仅供回溯 |
 | [tools/tts](tools/tts/) / [tests/tts](tests/tts/) | 源码同步工具、MoonSharp 行为与 XML 检查 |
 | [docs/tbs](docs/tbs/) | 当前使用说明、配置、规则差异、设计待办、导入来源与历史资料 |
 | [素材/底图](素材/底图/) | 现有八色 1200×1200 底图 |
@@ -65,9 +65,9 @@ pwsh -NoProfile -File tools/tts/test.ps1 -TtsManagedPath 'D:/SteamLibrary/steama
 
 已实现：十类部队配置、数字图片、士气点击／快捷补满清空、正面耗尽自动翻面、背面耗尽敗走、独立「未／済」、损耗色带、双面部队旗、十二座位武将面板、受伤与有效统率、Description 数据读取与写回。
 
-新增：[交戦／指揮外手动标记](docs/tbs/STATUS_MARKERS.md)的共享状态、存档、点击与双面图片接口已实现。正式图片直链尚空，按用户要求此时不显示、不产生点击区域，也没有文字占位；配置图片后开启。
+[交戦／指揮外](docs/tbs/STATUS_MARKERS.md)已沿用用户确认可用的两张不同图片直链。新增[密集／散開与准备完成／装填中](docs/tbs/UNIT_MODES.md)的双面手动切换：近战／远程在同一底部位置显示不同组。四张新图直链暂空，每组填齐两张才显示图标和点击区；不提供文字占位。
 
-未实现：完整 RAN 回合／战斗裁决、交戦／指揮外自动判定及规则限制、散開／密集切换、射击准备／装填图标、检测叠放武将后抬升的敗走图标。后续范围见 [设计记录](docs/tbs/DESIGN_BACKLOG.md)。
+未实现：完整 RAN 回合／战斗裁决、交戦／指揮外自动判定及规则限制、阵形与射击状态的自动规则／回合恢复、检测叠放武将后抬升的敗走图标。后续范围见 [设计记录](docs/tbs/DESIGN_BACKLOG.md)。
 
 美术有 **12 类**，运行配置有 **10 类**。`槍武士隊` 与现有 `徒歩武士` 尚需确认对应关系，`近習騎馬隊`、`騎馬鉄砲隊` 尚无已批准的运行数值。详见 [美术关联表](docs/tbs/ASSETS.md)。
 

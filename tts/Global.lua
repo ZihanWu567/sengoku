@@ -1,4 +1,4 @@
--- 兵種＋備隊面板 v2.15.0：交戦・指揮外手動標記対応（2026-10-21）
+-- 兵種＋備隊面板 v2.16.0：散開・密集／射撃準備・装填中の切替（2026-10-21）
 MIN_VALUE = 0
 
 -- 全军共用的敗走贴图。上传后只在这里填一次完整图片直链。
@@ -56,12 +56,24 @@ UNIT_MORALE_BAND_IMAGES = {
 
 -- 手动状态图标：每项一张透明 PNG，正反面共用；关闭时由 UI 淡显。
 -- 未填直链时不显示、不生成点击区；不会用文字占位。美术定稿后仅替换这里。
-UNIT_STATUS_IMAGES = {engaged = "", out_of_command = ""}
+UNIT_STATUS_IMAGES = {
+    engaged = "https://steamusercontent-a.akamaihd.net/ugc/16621351352612699552/ECB71F566524A55352FD18E8815F79A99CED62FF/",
+    out_of_command = "https://steamusercontent-a.akamaihd.net/ugc/11196356357107166222/939374A167DBCDD7CA034F3E28D1593926D50C8E/"
+}
 UNIT_STATUS_LAYOUT = {
     engaged_x = 70, out_of_command_x = 930, y = 100,
     size = 100, hit_size = 120, -- 1200 棋面：标题两端留出 X10～130、870～990。
     front_ui_clearance = 0.001, -- 新图标为 UI，不沿用正面投影贴花的负 GAP。
     active_color = "#FFFFFFFF", inactive_color = "#FFFFFF50"
+}
+
+-- 底部同一位置：近战切换密集／散開，远程切换射撃準備／装填中。
+-- 每组必须填齐两张不同图片直链；未填齐不显示，也不留不可见按钮。
+UNIT_MODE_IMAGES = {closed = "", open = "", ready = "", reloading = ""}
+UNIT_MODE_LAYOUT = {
+    x = 850, y = 1130, width = 240, height = 110,
+    hit_width = 260, hit_height = 130,
+    front_ui_clearance = 0.001
 }
 
 -- =========================
@@ -70,60 +82,70 @@ UNIT_STATUS_LAYOUT = {
 UNIT_CONFIGS = {
     {
         tag = "unit_nagaye_ashigaru",
+        marker_mode = "formation",
         name = "長柄足軽",
         max_front = 6, max_back = 5,
         front_move = 4, back_move = 3
     },
     {
         tag = "unit_kiba_samurai",
+        marker_mode = "formation",
         name = "騎馬武士",
         max_front = 8, max_back = 7,
         front_move = 6, back_move = 5
     },
     {
         tag = "unit_kachi_samurai",
+        marker_mode = "formation",
         name = "徒歩武士",
         max_front = 8, max_back = 7,
         front_move = 4, back_move = 3
     },
     {
         tag = "unit_yari_ashigaru",
+        marker_mode = "formation",
         name = "槍足軽",
         max_front = 5, max_back = 4,
         front_move = 4, back_move = 3
     },
     {
         tag = "unit_yumi_ashigaru",
+        marker_mode = "fire",
         name = "弓足軽",
         max_front = 4, max_back = 3,
         front_move = 5, back_move = 4
     },
     {
         tag = "unit_yumi_sohei",
+        marker_mode = "fire",
         name = "弓僧兵",
         max_front = 4, max_back = 4,
         front_move = 5, back_move = 4
     },
     {
         tag = "unit_teppo_ashigaru",
+        marker_mode = "fire",
         name = "鉄砲足軽",
         max_front = 3, max_back = 2,
         front_move = 4, back_move = 3
     },
     {
         tag = "unit_teppo_sohei",
+        marker_mode = "fire",
         name = "鉄砲僧兵",
         max_front = 3, max_back = 3,
         front_move = 4, back_move = 3
     },
     {
         tag = "unit_akazonae_kiba",
+        marker_mode = "formation",
         name = "赤備騎馬",
         max_front = 8, max_back = 8,
         front_move = 6, back_move = 6
     },
     {
         tag = "unit_nanban_ozutsu",
+        marker_mode = "fire",
         name = "南蛮大筒",
         max_front = 2, max_back = 1,
         front_move = 2, back_move = 1
@@ -292,6 +314,8 @@ local function normalizeUnitState(guid, config_tag, config)
     state.acted = state.acted == true
     state.engaged = state.engaged == true
     state.out_of_command = state.out_of_command == true
+    state.open_order = state.open_order == true
+    state.reloading = state.reloading == true
     state.config_tag = config_tag
     unit_state[guid] = state
     return state
@@ -577,6 +601,52 @@ local function syncUnitStatusButtons(obj,geometry,ready)
     end
 end
 
+local UNIT_MODE_PAIRS = {
+    formation = {"closed", "open", field="open_order"},
+    fire = {"ready", "reloading", field="reloading"}
+}
+
+local function unitModePair(config)
+    return UNIT_MODE_PAIRS[config.marker_mode]
+end
+
+local function unitModeURL(key)
+    return unitImageURL(type(UNIT_MODE_IMAGES)=="table" and UNIT_MODE_IMAGES[key] or nil,false)
+end
+
+local function unitModeButtonParameters(geometry,back)
+    local layout=UNIT_MODE_LAYOUT
+    local parameters=unitCounterButtonParameters(geometry,back,layout.y,"toggleUnitMode",true)
+    parameters.position=unitButtonPosition(geometry,back,layout.x,layout.y,0)
+    if not back then parameters.position[2]=geometry.surfaceTop+layout.front_ui_clearance+UNIT_COUNTER_LAYOUT.hit_lift end
+    local units=4*UNIT_COUNTER_LAYOUT.button_units_per_local/UNIT_COUNTER_LAYOUT.canvas
+    parameters.width=math.max(1,math.floor(layout.hit_width*units+.5))
+    parameters.height=math.max(1,math.floor(layout.hit_height*units+.5))
+    return parameters
+end
+
+local function syncUnitModeButtons(obj,geometry,ready)
+    local seen,remove={},{}
+    for index,button in ipairs(obj.getButtons() or {}) do
+        if button.click_function=="toggleUnitMode" then
+            local back=math.abs(unitAxis(button.rotation,"z",3,0))%360>90
+            local key=tostring(back)
+            if ready and not seen[key] then
+                local parameters=unitModeButtonParameters(geometry,back)
+                parameters.index=button.index or (index-1)
+                obj.editButton(parameters); seen[key]=true
+            else remove[#remove+1]=button.index or (index-1) end
+        end
+    end
+    table.sort(remove,function(a,b) return a>b end)
+    for _,index in ipairs(remove) do obj.removeButton(index) end
+    if ready then
+        for _,back in ipairs({false,true}) do
+            if not seen[tostring(back)] then obj.createButton(unitModeButtonParameters(geometry,back)) end
+        end
+    end
+end
+
 local function sameUnitDecal(a, b)
     if a.url ~= b.url or a.name ~= b.name then return false end
     for _, field in ipairs({"position", "rotation", "scale"}) do
@@ -683,6 +753,8 @@ end
 -- 背面底栏和数值共用同一 Object.UI：子节点顺序决定覆盖顺序，
 -- 不再让多个透明贴花按摄像机距离互相排序。这里只管理 sgub_ 前缀。
 local unitBackUIRecords = {}
+local UNIT_UI_ROOTS = {"sgub_root","sgub_status_front","sgub_status_back","sgub_mode_front","sgub_mode_back"}
+local unitModeImageWarnings = {}
 local function unitBackUIOwned(id)
     return type(id)=="string" and id:sub(1,5)=="sgub_"
 end
@@ -780,7 +852,7 @@ local function clearUnitBackUI(obj)
     local nodes,removed=unitBackUIStrip(currentNodes)
     local assets,removedAssets=unitBackUIAssets(ui)
     if removedAssets then
-        for _,id in ipairs({"sgub_root","sgub_status_front","sgub_status_back"}) do
+        for _,id in ipairs(UNIT_UI_ROOTS) do
             if unitBackUIFind(currentNodes,id) then ui.setAttribute(id,"active","false") end
         end
         record=record or unitBackUIRecord(obj)
@@ -816,6 +888,30 @@ local function syncUnitBackUI(obj,state,config,geometry)
     asset("sgub_action_acted",unitActionURL(true,true))
     for _,kind in ipairs({"amber","red"}) do asset("sgub_band_"..kind,unitMoraleBandURL(kind)) end
     for _,kind in ipairs(UNIT_STATUS_KINDS) do asset("sgub_status_image_"..kind,unitStatusURL(kind)) end
+    local modePair=unitModePair(config)
+    local modeReady=false
+    if modePair then
+        local first,second=unitModeURL(modePair[1]),unitModeURL(modePair[2])
+        if first~="" and second~="" then
+            -- 新图组避免重复 URL 登记，防止 TTS 冷加载回调合并后一直等待。
+            -- 不改变已正常工作的旧资源登记流程；只拒绝有冲突的底部图组。
+            local conflict=first==second
+            for _,entry in ipairs(unitBackUIAssets(ui,assets)) do
+                if entry.url==first or entry.url==second then conflict=true end
+            end
+            if conflict then
+                local warning=first.."\n"..second
+                if not unitModeImageWarnings[warning] then
+                    unitModeImageWarnings[warning]=true
+                    print("[部隊底部圖標] 兩態圖片須使用不同地址，且不能重複其他UI資源；此組暫時隱藏。")
+                end
+            else
+                modeReady=true
+                asset("sgub_mode_image_"..modePair[1],first)
+                asset("sgub_mode_image_"..modePair[2],second)
+            end
+        end
+    end
     local key=table.concat(signature,"\n")
     local layout=UNIT_COUNTER_LAYOUT
     -- 安装版 XmlUIWorldCanvas：局部旋转 +90°X、缩放 .01。
@@ -882,6 +978,28 @@ local function syncUnitBackUI(obj,state,config,geometry)
             groups[#groups+1]=group
         end
     end
+    if modeReady then
+        local modeLayout=UNIT_MODE_LAYOUT
+        local selected=modePair[state[modePair.field] and 2 or 1]
+        for _,back in ipairs({false,true}) do
+            local side=back and "back" or "front"
+            local id="sgub_mode_"..side.."_image"
+            local plane=back and (geometry.surfaceBottom-layout.back_ui_clearance)
+                or (geometry.surfaceTop+modeLayout.front_ui_clearance)
+            local modeRoot={id="sgub_mode_"..side,width=tostring(modeLayout.width),height=tostring(modeLayout.height),
+                color="#FFFFFF00",rectAlignment="MiddleCenter",raycastTarget="false",tooltip="",visibility="",active="true",
+                rotation=back and "180 0 0" or "0 0 180",
+                position=unitUIVector((geometry.cx+(back and 1 or -1)*(modeLayout.x/1200-.5)*geometry.width)*100,
+                    (geometry.cz+(modeLayout.y/1200-.5)*geometry.depth)*100,-plane*100),
+                scale=unitUIVector(geometry.width*100/1200,geometry.depth*100/1200,1)}
+            desired[id]={id=id,width=tostring(modeLayout.width),height=tostring(modeLayout.height),
+                image="sgub_mode_image_"..selected,active="true",color="#FFFFFFFF",
+                preserveAspect="true",raycastTarget="false",tooltip="",rectAlignment="MiddleCenter",
+                position="0 0 0",rotation="0 0 0",scale="1 1 1"}
+            groups[#groups+1]={root=modeRoot,ids={id}}
+            ids[#ids+1]=id
+        end
+    end
     local currentNodes=ui.getXmlTable() or {}
     local rootsPresent=true
     for _,group in ipairs(groups) do
@@ -905,7 +1023,7 @@ local function syncUnitBackUI(obj,state,config,geometry)
             for _,id in ipairs(ids) do
                 if unitBackUIFind(currentNodes,id) then ui.setAttribute(id,"active","false") end
             end
-            for _,id in ipairs({"sgub_root","sgub_status_front","sgub_status_back"}) do
+            for _,id in ipairs(UNIT_UI_ROOTS) do
                 if unitBackUIFind(currentNodes,id) then ui.setAttribute(id,"active","false") end
             end
             record.mounted,record.attributes=false,{}
@@ -941,7 +1059,7 @@ local function syncUnitBackUI(obj,state,config,geometry)
     end
     for _,id in ipairs(ids) do update(id,desired[id]) end
     for _,group in ipairs(groups) do update(group.root.id,group.root) end -- 图片先绑定，整组最后显示。
-    return true
+    return true,modeReady
 end
 
 local function syncUnitImages(obj, state, config)
@@ -985,7 +1103,7 @@ local function syncUnitImages(obj, state, config)
     end
     -- 同时清除旧版的背面底栏／数字／行动贴花，保留陣旗及第三方贴花。
     reconcileUnitDecals(obj,UNIT_IMAGE_NAMES,UNIT_IMAGE_OWNED,wanted)
-    local uiOK,backReady=pcall(syncUnitBackUI,obj,state,config,geometry)
+    local uiOK,backReady,modeReady=pcall(syncUnitBackUI,obj,state,config,geometry)
     if not uiOK then
         local record=unitBackUIRecord(obj)
         if record.error~=tostring(backReady) then
@@ -994,6 +1112,7 @@ local function syncUnitImages(obj, state, config)
         end
     end
     syncUnitStatusButtons(obj,geometry,uiOK and backReady==true)
+    syncUnitModeButtons(obj,geometry,uiOK and backReady==true and modeReady==true)
     -- API 成功不等于网络图片已下载；无效地址不提交空白贴花。
     return defeatURL ~= "", geometry
 end
@@ -1006,7 +1125,7 @@ function clearUnitCounterVisuals(obj)
     for i, button in ipairs(obj.getButtons() or {}) do
         local callback = button.click_function
         if callback == "changeFrontValue" or callback == "changeBackValue" or callback == "unitDefeatFallback" or callback == "toggleUnitActed"
-            or callback == "toggleUnitEngaged" or callback == "toggleUnitOutOfCommand" then
+            or callback == "toggleUnitEngaged" or callback == "toggleUnitOutOfCommand" or callback == "toggleUnitMode" then
             table.insert(indices,button.index or (i-1))
         end
     end
@@ -1136,6 +1255,17 @@ function toggleUnitOutOfCommand(obj,_player_color,alt_click)
     toggleUnitStatus(obj,"out_of_command",alt_click)
 end
 
+-- 阵形／射击仅手动记录；未／済、翻面、士气恢复都不联动这两个字段。
+function toggleUnitMode(obj,_player_color,alt_click)
+    if alt_click then return end
+    local state,config=getStateAndConfig(obj)
+    if not state then return end
+    local pair=unitModePair(config)
+    if not pair then return end
+    state[pair.field]=not state[pair.field]
+    updateDefeatText(obj)
+end
+
 -- =========================
 -- 敗走文字逻辑
 -- =========================
@@ -1235,6 +1365,8 @@ function resetUnit(obj)
     state.acted = false
     state.engaged = false
     state.out_of_command = false
+    state.open_order = false
+    state.reloading = false
     unitFlipPending[obj.getGUID()] = nil
 
     updateDefeatText(obj)
@@ -1246,7 +1378,7 @@ end
 
 
 -- ===== 備隊面板 v2 =====
--- 備隊武将面板 v2.15.0：交戦・指揮外手動標記対応
+-- 備隊武将面板 v2.16.0：散開・密集／射撃準備・装填中の切替
 -- 更新日：2026-10-21
 -- 画像・生年・統率は各武将令牌の Description に入力可能。
 -- team=ota_honjin / role=main,deputy1,deputy2 / name=太田資正

@@ -2170,17 +2170,246 @@ local function runUnitStatusChecks()
     preloadUnitImages(true)
 end
 
+-- Bottom two-image controls: near-combat formation and ranged fire readiness.
+local function runUnitModeChecks()
+    local originalImages,originalStatus=UNIT_MODE_IMAGES,UNIT_STATUS_IMAGES
+    UNIT_STATUS_IMAGES={}
+    UNIT_MODE_IMAGES={}
+    local created={}
+    local function make(guid,tag)
+        local obj=token("下部切換試験","",guid)
+        obj.tags[tag]=true; created[#created+1]=obj
+        setupUnit(obj,getUnitConfig(obj)); flush()
+        return obj
+    end
+    local function buttons(obj,back)
+        local found={}
+        for _,button in ipairs(obj.buttons) do
+            if button.click_function=="toggleUnitMode" and
+                (back==nil or ((button.rotation or {})[3]==180)==back) then found[#found+1]=button end
+        end
+        return found
+    end
+    local function hidden(obj,message)
+        eq(#buttons(obj),0,message.." no invisible mode click areas")
+        for _,side in ipairs({"front","back"}) do
+            local root=findNode(obj.UI.xmlTable,"sgub_mode_"..side)
+            eq(root==nil or root.attributes.active=="false",true,message.." no mode placeholder: "..side)
+        end
+    end
+    local function imageIs(obj,key,message)
+        for _,side in ipairs({"front","back"}) do
+            local root=findNode(obj.UI.xmlTable,"sgub_mode_"..side)
+            local node=findNode(obj.UI.xmlTable,"sgub_mode_"..side.."_image")
+            assert(root and node,message.." missing mode XML: "..side)
+            eq(root.attributes.active,"true",message.." visible root: "..side)
+            eq(node.tag,"Image",message.." uses Image: "..side)
+            eq(node.attributes.active,"true",message.." visible image: "..side)
+            eq(objectAssetURL(obj,node.attributes.image) or node.attributes.image,UNIT_MODE_IMAGES[key],message.." correct image: "..side)
+            eq(node.attributes.raycastTarget,"false",message.." image passes mouse through: "..side)
+            eq(node.attributes.color=="#FFFFFF" or node.attributes.color=="#FFFFFFFF",true,message.." both states fully opaque: "..side)
+            eq(#buttons(obj,side=="back"),1,message.." one click area: "..side)
+        end
+    end
+    local unit=make("mode01","unit_nagaye_ashigaru")
+    hidden(unit,"empty image configuration")
+    eq(unit_state.mode01.open_order,false,"old/new record defaults to closed formation")
+    eq(unit_state.mode01.reloading,false,"old/new record defaults to fire ready")
+    UNIT_MODE_IMAGES={closed="https://example.invalid/mode-closed.png",open="https://example.invalid/mode-open.png",
+        ready="https://example.invalid/mode-ready.png",reloading="https://example.invalid/mode-reloading.png"}
+    updateDefeatText(unit); flush()
+    imageIs(unit,"closed","configured near-combat default")
+    local expected={unit_nagaye_ashigaru="formation",unit_kiba_samurai="formation",unit_kachi_samurai="formation",
+        unit_yari_ashigaru="formation",unit_akazonae_kiba="formation",unit_yumi_ashigaru="fire",unit_yumi_sohei="fire",
+        unit_teppo_ashigaru="fire",unit_teppo_sohei="fire",unit_nanban_ozutsu="fire"}
+    for index,config in ipairs(UNIT_CONFIGS) do
+        eq(config.marker_mode,expected[config.tag],"explicit troop mode: "..config.tag)
+        local troop=make("mode_type"..index,config.tag)
+        local key=expected[config.tag]=="formation" and "closed" or "ready"
+        imageIs(troop,key,"default mode for "..config.tag)
+        local count=0
+        for _,asset in ipairs(troop.UI.assets) do
+            if asset.name:sub(1,16)=="sgub_mode_image_" then count=count+1 end
+        end
+        eq(count,2,"only applicable image pair loaded: "..config.tag)
+        eq(objectAssetURL(troop,"sgub_mode_image_"..(key=="closed" and "ready" or "closed")),nil,
+            "opposite troop class images not loaded: "..config.tag)
+        eq(#troop.buttons,8,"each class adds exactly two face buttons: "..config.tag)
+    end
+    local unchanged=copy(unit_state.mode01)
+    _G[buttons(unit,false)[1].click_function](unit,"Red",false)
+    eq(unit_state.mode01.open_order,true,"nonhost front click opens formation")
+    eq(unit_state.mode01.reloading,false,"formation click leaves fire state untouched")
+    imageIs(unit,"open","formation click updates both faces immediately")
+    for _,key in ipairs({"front_value","back_value","acted","manual_defeat_visible","engaged","out_of_command"}) do
+        eq(unit_state.mode01[key],unchanged[key],"mode click preserves existing state: "..key)
+    end
+    eq(unit.is_face_down,false,"mode click does not turn unit over")
+    toggleUnitMode(unit,"Blue",true)
+    eq(unit_state.mode01.open_order,true,"right click ignores formation")
+    _G[buttons(unit,true)[1].click_function](unit,"Grey",false)
+    imageIs(unit,"closed","back click changes same shared formation record")
+    toggleUnitMode(unit,"Black",false)
+    local loads,xml=unit.UI.assetCalls,unit.UI.xmlCalls
+    for n=1,6 do toggleUnitMode(unit,"Red",false) end
+    eq(unit.UI.assetCalls,loads,"mode toggles never redownload image pair")
+    eq(unit.UI.xmlCalls,xml,"mode toggles do not rebuild Object.UI")
+    local attrs,decals=unit.UI.attributeCalls,unit.decalWrites
+    for n=1,4 do updateDefeatText(unit) end
+    eq(unit.UI.attributeCalls,attrs,"unchanged mode refresh writes no UI attributes")
+    eq(unit.decalWrites,decals,"mode refresh does not rewrite existing decals")
+
+    local function geometryCheck(obj,message)
+        local width,depth=obj.bounds.size.x/obj.scale.x,obj.bounds.size.z/obj.scale.z
+        local cx,cz=obj.bounds.offset.x/obj.scale.x,obj.bounds.offset.z/obj.scale.z
+        for _,back in ipairs({false,true}) do
+            local side=back and "back" or "front"
+            local root=findNode(obj.UI.xmlTable,"sgub_mode_"..side)
+            local node=findNode(obj.UI.xmlTable,"sgub_mode_"..side.."_image")
+            local p,s=vector(root.attributes.position),vector(root.attributes.scale)
+            local offset=vector(node.attributes.position)
+            local x=p[1]/100+(back and 1 or -1)*offset[1]*s[1]/100
+            local z=p[2]/100-offset[2]*s[2]/100
+            near(x,cx+(back and 1 or -1)*(850/1200-.5)*width,message.." "..side.." bottom-right X")
+            near(z,cz+(1130/1200-.5)*depth,message.." "..side.." bottom-right Y")
+            near(tonumber(node.attributes.width)*s[1]/100,240/1200*width,message.." "..side.." width")
+            near(tonumber(node.attributes.height)*s[2]/100,110/1200*depth,message.." "..side.." height")
+            near(offset[3],0,message.." "..side.." shares mode panel plane")
+            eq(root.attributes.rotation,back and "180 0 0" or "0 0 180",message.." "..side.." outward rotation")
+            local hit=buttons(obj,back)[1]
+            local hp=classicButtonObjectPosition(hit)
+            near(hp[1],x,message.." "..side.." hit X")
+            near(hp[3],z,message.." "..side.." hit Z")
+            near(hp[2],-p[3]/100+(back and -.004 or .004),message.." "..side.." hit above image")
+            eq(hit.width,433,message.." "..side.." 260-pixel hit width")
+            eq(hit.height,217,message.." "..side.." 130-pixel hit height")
+            classicButtonOrientation(hit,back,message.." "..side)
+        end
+    end
+    geometryCheck(unit,"default mode geometry")
+    unit.scale={x=2,y=3,z=.5}; unit.bounds={size={x=4,y=.6,z=1},offset={x=.4,y=.3,z=-.2}}
+    updateDefeatText(unit); flush(); geometryCheck(unit,"scaled offset mode geometry")
+    unit.scale={x=1,y=1,z=1}; unit.bounds={size={x=2,y=.2,z=2},offset={x=0,y=0,z=0}}
+    updateDefeatText(unit); flush()
+
+    -- Re-tagging switches the displayed group without destroying either stored manual choice.
+    unit.tags.unit_nagaye_ashigaru=nil; unit.tags.unit_teppo_ashigaru=true
+    setupUnit(unit,getUnitConfig(unit)); flush(); imageIs(unit,"ready","changing to ranged group")
+    toggleUnitMode(unit,"Blue",false)
+    imageIs(unit,"reloading","ranged click shows loading on both faces")
+    eq(unit_state.mode01.open_order,true,"ranged change retains earlier formation choice")
+    eq(unit_state.mode01.reloading,true,"ranged click records loading")
+    unit.flip(); onObjectDrop("Red",unit); onObjectRotate(unit,nil,true,"Blue"); flush(); tick()
+    toggleUnitActed(unit,"Red",false); changeBackValue(unit,"Blue",true); toggleDefeatText(unit)
+    local shortcut=hotkeys["士気快捷調整"]
+    shortcut.callback("Red",unit,nil,false); changeBackValue(unit,"Red",false); shortcut.callback("Red",unit,nil,true)
+    eq(unit_state.mode01.open_order,true,"movement/rout/rally does not clear formation")
+    eq(unit_state.mode01.reloading,true,"movement/rout/rally does not clear reload")
+    local saved=onSave(); unit_state={}; onLoad(saved); flush(); tick()
+    eq(unit_state.mode01.open_order,true,"formation survives save/load")
+    eq(unit_state.mode01.reloading,true,"reload survives save/load")
+    imageIs(unit,"reloading","saved shooting image restores")
+    unit.tags.unit_teppo_ashigaru=nil; unit.tags.unit_nagaye_ashigaru=true
+    setupUnit(unit,getUnitConfig(unit)); flush(); imageIs(unit,"open","restored earlier formation on retag")
+    for _,fixture in ipairs({{}, {open_order="true",reloading=1}, {open_order={},reloading=false}}) do
+        unit_state.mode01={front_value=4,back_value=3,acted=true,open_order=fixture.open_order,reloading=fixture.reloading}
+        local state=getStateAndConfig(unit)
+        eq(state.open_order,false,"missing/invalid formation is strict false")
+        eq(state.reloading,false,"missing/invalid reload is strict false")
+        eq(state.acted,true,"mode normalization keeps action")
+        eq(state.front_value,4,"mode normalization keeps morale")
+    end
+    unit_state.mode01.open_order=true; unit_state.mode01.reloading=true
+    resetUnit(unit)
+    eq(unit_state.mode01.open_order,false,"full reset clears formation")
+    eq(unit_state.mode01.reloading,false,"full reset clears reload")
+    imageIs(unit,"closed","full reset returns default image")
+
+    UNIT_STATUS_IMAGES={engaged="https://example.invalid/mode-top-engaged.png",out_of_command="https://example.invalid/mode-top-ooc.png"}
+    updateDefeatText(unit); flush()
+    eq(#unit.buttons,12,"top statuses and bottom mode coexist with original six buttons")
+    toggleUnitEngaged(unit,"Blue",false); toggleUnitOutOfCommand(unit,"Red",false)
+    toggleUnitMode(unit,"Grey",false)
+    eq(unit_state.mode01.engaged,true,"bottom click preserves top engaged")
+    eq(unit_state.mode01.out_of_command,true,"bottom click preserves top OOC")
+    imageIs(unit,"open","bottom mode remains independent with all top statuses")
+    eq(unit.buttons[1].click_function,"changeFrontValue","mode and status additions preserve front morale index")
+    eq(unit.buttons[2].click_function,"changeBackValue","mode and status additions preserve rear morale index")
+    UNIT_STATUS_IMAGES={}; resetUnit(unit); flush()
+
+    local valid=copy(UNIT_MODE_IMAGES)
+    for _,invalid in ipairs({"","C:/private/mode.png","[https://example.invalid/open.png](https://example.invalid/open.png)",valid.closed,UNIT_BACK_RAIL_IMAGE_URL}) do
+        UNIT_MODE_IMAGES.open=invalid
+        updateDefeatText(unit); flush()
+        hidden(unit,"missing/invalid/conflicting partner "..invalid)
+        eq(findNode(unit.UI.xmlTable,"sgub_root").attributes.active,"true","invalid mode pair leaves rear rail active")
+        eq(objectAssetURL(unit,"sgub_mode_image_closed"),nil,"partial/unsafe pair is not registered")
+    end
+    UNIT_MODE_IMAGES=copy(valid); updateDefeatText(unit); flush()
+    imageIs(unit,"closed","pair restoration returns mode control")
+
+    local configuredMode=UNIT_CONFIGS[1].marker_mode
+    UNIT_CONFIGS[1].marker_mode="unsupported-mode"
+    updateDefeatText(unit); flush(); hidden(unit,"unknown marker mode")
+    unit_state.mode01.open_order=true; unit_state.mode01.reloading=true
+    toggleUnitMode(unit,"Red",false)
+    eq(unit_state.mode01.open_order,true,"unknown mode callback preserves formation flag")
+    eq(unit_state.mode01.reloading,true,"unknown mode callback preserves reload flag")
+    UNIT_CONFIGS[1].marker_mode=configuredMode
+    resetUnit(unit); flush()
+
+    -- Distinct groups live on different units and may safely reuse their image pair.
+    UNIT_MODE_IMAGES.ready=UNIT_MODE_IMAGES.closed
+    UNIT_MODE_IMAGES.reloading=UNIT_MODE_IMAGES.open
+    updateDefeatText(unit); flush(); imageIs(unit,"closed","shared cross-group URLs keep formation visible")
+    local shared=make("mode_shared","unit_teppo_sohei")
+    imageIs(shared,"ready","shared cross-group URLs keep fire control visible")
+    eq(objectAssetURL(shared,"sgub_mode_image_closed"),nil,"shared cross-group URL does not register unused formation alias")
+    toggleUnitMode(shared,"Blue",false)
+    imageIs(shared,"reloading","shared cross-group URL still switches fire image")
+    UNIT_MODE_IMAGES=copy(valid)
+    updateDefeatText(shared); flush()
+
+    local pending=token("下部画像載入中","","mode_pending")
+    pending.tags.unit_yumi_sohei=true; created[#created+1]=pending
+    pending.UI.holdAssets=true; setupUnit(pending,getUnitConfig(pending)); flush()
+    hidden(pending,"pending pair")
+    toggleUnitMode(pending,"Red",false)
+    pending.UI.holdAssets=false; pending.UI.loading=false; flush()
+    imageIs(pending,"reloading","pending callback uses latest reload state")
+    local foreignURL="https://example.invalid/foreign-mode.png"
+    unit.UI.assets[#unit.UI.assets+1]={name="foreign_mode_asset",url=foreignURL}
+    unit.UI.xmlTable[#unit.UI.xmlTable+1]={tag="Text",attributes={id="foreign_mode_text"},value="保留"}
+    UNIT_MODE_IMAGES.open=foreignURL; updateDefeatText(unit); flush()
+    hidden(unit,"foreign URL collision")
+    eq(objectAssetURL(unit,"foreign_mode_asset"),foreignURL,"collision does not alter external resource")
+    UNIT_MODE_IMAGES=copy(valid); updateDefeatText(unit); flush()
+    unit.createButton({click_function="foreignModeButton",label="外部",rotation={0,0,0}})
+    unit.tags.unit_nagaye_ashigaru=nil; clearUnitCounterVisuals(unit); flush()
+    eq(#unit.buttons,1,"cleanup removes own mode and counter buttons only")
+    eq(unit.buttons[1].click_function,"foreignModeButton","cleanup preserves external button")
+    eq(findNode(unit.UI.xmlTable,"sgub_mode_front"),nil,"cleanup removes front mode root")
+    eq(findNode(unit.UI.xmlTable,"sgub_mode_back"),nil,"cleanup removes back mode root")
+    eq(findNode(unit.UI.xmlTable,"foreign_mode_text").value,"保留","cleanup preserves external XML")
+    eq(objectAssetURL(unit,"foreign_mode_asset"),foreignURL,"cleanup preserves external resource")
+    for _,obj in ipairs(created) do objects[obj.guid]=nil; onObjectDestroy(obj) end
+    flush()
+    UNIT_MODE_IMAGES,UNIT_STATUS_IMAGES=originalImages,originalStatus
+end
+
 function runTeamChecks(merged)
     local configuredDefeatURL=UNIT_DEFEAT_IMAGE_URL
     local configuredNumberImages=UNIT_NUMBER_IMAGES
     local configuredBackImages,configuredRail,configuredActions=UNIT_NUMBER_BACK_IMAGES,UNIT_BACK_RAIL_IMAGE_URL,UNIT_ACTION_IMAGES
     local configuredMoraleBands=UNIT_MORALE_BAND_IMAGES
     local configuredStatusImages=UNIT_STATUS_IMAGES
+    local configuredModeImages=UNIT_MODE_IMAGES
     if merged then
         -- Existing resource-count regressions intentionally run with the optional bands disabled.
         -- The dedicated morale-band suite below enables and verifies both new assets separately.
         UNIT_MORALE_BAND_IMAGES={}
         UNIT_STATUS_IMAGES={} -- Dedicated status suite supplies optional sprites separately.
+        UNIT_MODE_IMAGES={} -- Dedicated formation/fire suite supplies its own pairs.
         UNIT_NUMBER_IMAGES={}; UNIT_NUMBER_BACK_IMAGES={}
         for value=0,8 do
             UNIT_NUMBER_IMAGES[value]="https://example.invalid/number-"..value..".png"
@@ -2929,11 +3158,13 @@ function runTeamChecks(merged)
         runUnitMoraleBandChecks()
         runUnitMoraleQuickChecks()
         runUnitStatusChecks()
+        runUnitModeChecks()
     end
     UNIT_DEFEAT_IMAGE_URL=configuredDefeatURL
     UNIT_NUMBER_IMAGES=configuredNumberImages
     UNIT_NUMBER_BACK_IMAGES,UNIT_BACK_RAIL_IMAGE_URL,UNIT_ACTION_IMAGES=configuredBackImages,configuredRail,configuredActions
     UNIT_MORALE_BAND_IMAGES=configuredMoraleBands
     UNIT_STATUS_IMAGES=configuredStatusImages
+    UNIT_MODE_IMAGES=configuredModeImages
     return tostring(checks).." behavior checks passed (network and live TTS rendering not tested)"
 end
