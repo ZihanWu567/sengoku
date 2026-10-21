@@ -15,48 +15,54 @@
       "id": "engaged",
       "label_ja": "交戦",
       "status": "draft",
-      "description": "Two crossed straight Japanese yari; warm ochre shafts, ivory blades and dark outlines.",
+      "description": "Dark vermilion solid circular badge with broad ivory crossed Japanese katana; fills a 100x100 display canvas.",
       "path": "engaged.png",
       "pixel_size": {
         "width": 512,
         "height": 512
       },
-      "alpha": "straight RGBA, transparent background",
+      "alpha": "straight RGBA; solid badge, transparent outside circle",
       "content_bbox_px": {
-        "x": 45,
-        "y": 44,
-        "width": 422,
-        "height": 424
+        "x": 3,
+        "y": 4,
+        "width": 506,
+        "height": 504
       },
       "transparent_padding_px": {
-        "left": 45,
-        "top": 44,
-        "right": 45,
-        "bottom": 44
+        "left": 3,
+        "top": 4,
+        "right": 3,
+        "bottom": 4
       },
       "alpha_bbox_threshold": 0,
-      "sha256": "0e306aea403dd9549fcfcdd8d815b82408987d8b857bc9fcb8c7a44a5ee16095",
+      "sha256": "32b9790fde2839b4cba22f173f0097b8e00a0741632a3184bbf0186b6991fa72",
       "source_export": {
         "path": "源图/engaged-1024.png",
         "pixel_size": {
           "width": 1024,
           "height": 1024
         },
-        "alpha": "straight RGBA, transparent background",
+        "alpha": "straight RGBA; solid badge, transparent outside circle",
         "content_bbox_px": {
-          "x": 95,
-          "y": 92,
-          "width": 834,
-          "height": 840
+          "x": 10,
+          "y": 12,
+          "width": 1004,
+          "height": 1000
         },
         "transparent_padding_px": {
-          "left": 95,
-          "top": 92,
-          "right": 95,
-          "bottom": 92
+          "left": 10,
+          "top": 12,
+          "right": 10,
+          "bottom": 12
         },
         "alpha_bbox_threshold": 0,
-        "sha256": "c25f9c37f7af9caadf216b040d27f524d764ce6267d942f9dcb7e8d5cc9a5cdd"
+        "content_bbox_at_alpha_128_px": {
+          "x": 11,
+          "y": 13,
+          "width": 1002,
+          "height": 998
+        },
+        "sha256": "89d93fe08a136d822b2ba534198864dc35e0cc1583f111cdf1b324ed9f000de3"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -65,19 +71,19 @@
           "height": 1200
         },
         "coordinate_system": "pixels, top-left origin; x right, y down",
-        "width_px": 96,
-        "height_px": 96,
+        "width_px": 100,
+        "height_px": 100,
         "top_left_px": {
-          "x": 22,
-          "y": 58
+          "x": 20,
+          "y": 56
         },
         "center_px": {
           "x": 70,
           "y": 106
         },
         "placement": "left side of the existing title bar",
-        "title_canvas_gap_min_px": 10,
-        "left_frame_canvas_gap_px": 8,
+        "title_canvas_gap_min_px": 8,
+        "left_frame_canvas_gap_px": 6,
         "requires_title_change": false
       },
       "previews": [
@@ -109,7 +115,41 @@
           "background_color": "#24262B",
           "not_a_tts_runtime_capture": true
         }
-      ]
+      ],
+      "content_bbox_at_alpha_128_px": {
+        "x": 5,
+        "y": 7,
+        "width": 502,
+        "height": 499
+      },
+      "display_export": {
+        "path": "engaged-100.png",
+        "pixel_size": {
+          "width": 100,
+          "height": 100
+        },
+        "alpha": "straight RGBA; solid badge, transparent outside circle",
+        "content_bbox_px": {
+          "x": 0,
+          "y": 0,
+          "width": 100,
+          "height": 100
+        },
+        "transparent_padding_px": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 1,
+          "y": 1,
+          "width": 98,
+          "height": 98
+        },
+        "sha256": "9ef775f0c5814e6428081acde7429695355803a8284a91929815ffcf3d840a3a"
+      }
     }
   ],
   "not_yet_produced": [
@@ -127,8 +167,12 @@
   ],
   "runtime_integration": "not implemented",
   "notes": [
+    "User-selected revision: dark vermilion round badge plus ivory crossed katana; replaces the thin crossed-yari draft.",
     "Cloud URL intentionally empty; no runtime-hosting URL has been provided.",
-    "Back preview is a charcoal contrast/layout illustration, not a captured or reconstructed TTS back.",
-    "At a 300px-wide board the 96px placement becomes 24px; final readability requires TTS distance and angle testing."
-  ]
+    "Only the area outside the circular badge is transparent; the badge interior is solid.",
+    "At a 300px-wide board the 100px placement becomes 25px; final readability requires TTS distance and angle testing.",
+    "Alpha>0 bounding boxes include faint antialias pixels; the 100px export reaches its canvas bounds while the main circular contour retains about one pixel of clearance.",
+    "Back preview is a charcoal contrast/layout illustration, not a captured or reconstructed TTS back."
+  ],
+  "revision": 2
 }
