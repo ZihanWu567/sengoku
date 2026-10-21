@@ -15,7 +15,7 @@
       "id": "engaged",
       "label_ja": "交戦",
       "status": "draft",
-      "description": "Dark vermilion solid circular badge with broad ivory crossed Japanese katana; fills a 100x100 display canvas.",
+      "description": "Graphite-gray solid circular badge with broad ivory crossed Japanese katana and a pale-gold rim; fills a 100x100 display canvas.",
       "path": "engaged.png",
       "pixel_size": {
         "width": 512,
@@ -24,18 +24,18 @@
       "alpha": "straight RGBA; solid badge, transparent outside circle",
       "content_bbox_px": {
         "x": 3,
-        "y": 4,
+        "y": 3,
         "width": 506,
-        "height": 504
+        "height": 506
       },
       "transparent_padding_px": {
         "left": 3,
-        "top": 4,
+        "top": 3,
         "right": 3,
-        "bottom": 4
+        "bottom": 3
       },
       "alpha_bbox_threshold": 0,
-      "sha256": "32b9790fde2839b4cba22f173f0097b8e00a0741632a3184bbf0186b6991fa72",
+      "sha256": "8a3542100da225521146196b4b8147f614ab317427100a2d00a0dbf5c3ee48c2",
       "source_export": {
         "path": "源图/engaged-1024.png",
         "pixel_size": {
@@ -45,24 +45,24 @@
         "alpha": "straight RGBA; solid badge, transparent outside circle",
         "content_bbox_px": {
           "x": 10,
-          "y": 12,
+          "y": 11,
           "width": 1004,
-          "height": 1000
+          "height": 1002
         },
         "transparent_padding_px": {
           "left": 10,
-          "top": 12,
+          "top": 11,
           "right": 10,
-          "bottom": 12
+          "bottom": 11
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 11,
-          "y": 13,
-          "width": 1002,
-          "height": 998
+          "x": 10,
+          "y": 11,
+          "width": 1004,
+          "height": 1001
         },
-        "sha256": "89d93fe08a136d822b2ba534198864dc35e0cc1583f111cdf1b324ed9f000de3"
+        "sha256": "73f0efb1b57df57a5f47a5dbc76fd013d823fdf4ccf00358c78d91b325eca654"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -87,6 +87,15 @@
         "requires_title_change": false
       },
       "previews": [
+        {
+          "path": "预览/engaged_武田红_1200.png",
+          "pixel_size": {
+            "width": 1200,
+            "height": 1200
+          },
+          "kind": "existing_front_card_overlay",
+          "source": "../../合成成品/鉄砲足軽隊/01_武田_紅_鉄砲足軽隊.png"
+        },
         {
           "path": "预览/engaged_四字标题_1200.png",
           "pixel_size": {
@@ -118,9 +127,9 @@
       ],
       "content_bbox_at_alpha_128_px": {
         "x": 5,
-        "y": 7,
+        "y": 6,
         "width": 502,
-        "height": 499
+        "height": 500
       },
       "display_export": {
         "path": "engaged-100.png",
@@ -148,7 +157,7 @@
           "width": 98,
           "height": 98
         },
-        "sha256": "9ef775f0c5814e6428081acde7429695355803a8284a91929815ffcf3d840a3a"
+        "sha256": "442d772d63d47535cd1345a406ffb0dc4b6aeeb7557400f108ebba18e3853045"
       }
     }
   ],
@@ -163,16 +172,17 @@
   "overview": "总览.jpg",
   "additional_previews": [
     "预览/engaged_标题栏细节.jpg",
-    "预览/engaged_缩远检查.jpg"
+    "预览/engaged_缩远检查.jpg",
+    "预览/engaged_八色标题栏.jpg"
   ],
   "runtime_integration": "not implemented",
   "notes": [
-    "User-selected revision: dark vermilion round badge plus ivory crossed katana; replaces the thin crossed-yari draft.",
+    "User-approved graphite-gray palette with ivory crossed katana and a pale-gold rim, replacing the dark vermilion badge to distinguish it from Takeda red. Display size and placement remain unchanged from revision 2.",
     "Cloud URL intentionally empty; no runtime-hosting URL has been provided.",
     "Only the area outside the circular badge is transparent; the badge interior is solid.",
     "At a 300px-wide board the 100px placement becomes 25px; final readability requires TTS distance and angle testing.",
     "Alpha>0 bounding boxes include faint antialias pixels; the 100px export reaches its canvas bounds while the main circular contour retains about one pixel of clearance.",
     "Back preview is a charcoal contrast/layout illustration, not a captured or reconstructed TTS back."
   ],
-  "revision": 2
+  "revision": 3
 }
