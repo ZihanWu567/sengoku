@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "version": "v1",
-  "scope": "engaged, out_of_command, formation_close and formation_open",
+  "scope": "engaged, out_of_command, formation_close, formation_open and routed",
   "draft": true,
   "baseline": {
     "branch": "main",
@@ -475,21 +475,131 @@
         "validation_scope": "Candidate checked against frame coordinates and one existing 槍足軽隊 front card only; all-troop artwork clearance and TTS runtime rendering are not yet validated."
       },
       "previews": []
+    },
+    {
+      "id": "routed",
+      "label_ja": "敗走",
+      "status": "draft",
+      "description": "Large matte pale-ivory aged-paper plaque with a dark-brown border, a fallen unmarked charcoal cloth war banner on a brown wooden pole, and two broad dark-brown left-pointing retreat arrows. No lettering or dark vermilion. The arrows are visual status symbols and do not prescribe a movement direction. The banner does not replace the unit affiliation flag.",
+      "path": "routed.png",
+      "pixel_size": {
+        "width": 1200,
+        "height": 800
+      },
+      "alpha": "straight RGBA; opaque ivory plaque with a narrow antialiased rounded-rectangle edge, transparent outside",
+      "content_bbox_px": {
+        "x": 8,
+        "y": 47,
+        "width": 1185,
+        "height": 707
+      },
+      "transparent_padding_px": {
+        "left": 8,
+        "top": 47,
+        "right": 7,
+        "bottom": 46
+      },
+      "alpha_bbox_threshold": 0,
+      "content_bbox_at_alpha_128_px": {
+        "x": 8,
+        "y": 47,
+        "width": 1184,
+        "height": 706
+      },
+      "sha256": "792d6ebf8f0e8d865f66a488196a1b85822e6a226e66c4ca33a93229de691d77",
+      "source_export": {
+        "path": "源图/routed-1536x1024.png",
+        "pixel_size": {
+          "width": 1536,
+          "height": 1024
+        },
+        "alpha": "straight RGBA; opaque ivory plaque with a narrow antialiased rounded-rectangle edge, transparent outside",
+        "content_bbox_px": {
+          "x": 10,
+          "y": 60,
+          "width": 1517,
+          "height": 905
+        },
+        "transparent_padding_px": {
+          "left": 10,
+          "top": 60,
+          "right": 9,
+          "bottom": 59
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 10,
+          "y": 60,
+          "width": 1516,
+          "height": 904
+        },
+        "sha256": "6a1d67fc9806d28a795d735e83276f52830b80f8cab22a95f6d8f59a9db33b78"
+      },
+      "display_export": {
+        "path": "routed-600x400.png",
+        "pixel_size": {
+          "width": 600,
+          "height": 400
+        },
+        "alpha": "straight RGBA; opaque ivory plaque with a narrow antialiased rounded-rectangle edge, transparent outside",
+        "content_bbox_px": {
+          "x": 4,
+          "y": 23,
+          "width": 593,
+          "height": 354
+        },
+        "transparent_padding_px": {
+          "left": 4,
+          "top": 23,
+          "right": 3,
+          "bottom": 23
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 4,
+          "y": 23,
+          "width": 592,
+          "height": 354
+        },
+        "sha256": "769053dd3e5214ea144d1340ee7f23df7855c2d1f1d2c637c075e664c75b4d60"
+      },
+      "cloud_url": "",
+      "recommended_display": {
+        "reference_board_px": {
+          "width": 1200,
+          "height": 1200
+        },
+        "width_px": 600,
+        "height_px": 400,
+        "placement": "Candidate large-marker size only; position remains to be determined and is not assigned here. Use the full PNG canvas.",
+        "validation_scope": "No board preview, TTS runtime, distance, oblique-view or commander-overlap validation has been performed. The code side must determine placement and any commander-overlap treatment; the image alone does not prevent occlusion."
+      },
+      "recommended_runtime_texture": {
+        "path": "routed.png",
+        "pixel_size": {
+          "width": 1200,
+          "height": 800
+        },
+        "usage": "Preferred runtime texture for the candidate 600x400 display size. Upload and configure the hosted texture on the code side; runtime placement and rendering are unverified. The 600x400 PNG is a convenience export."
+      },
+      "previews": []
     }
   ],
   "not_yet_produced": [
     "fire_ready",
-    "fire_loading",
-    "routed"
+    "fire_loading"
   ],
-  "overview": "out_of_command.png",
+  "overview": "routed.png",
   "additional_previews": [],
-  "runtime_integration": "Artwork handoff only; use the 512px-wide PNGs, displaying circular badges at 100x100 UI size and formation plaques at 240x120. Hosted Steam URL replacement and cache refresh are code-side tasks; TTS runtime rendering is unverified.",
+  "runtime_integration": "Artwork handoff only. Existing circular badges and formation plaques retain their sizes and placements. routed.png (1200x800) is the preferred new texture; 600x400 is a candidate display size with no assigned position. Hosted URL setup and commander-overlap handling belong to the code side; TTS runtime rendering is unverified.",
   "notes": [
+    "Revision 13 adds routed only: a large pale-ivory plaque, fallen unmarked banner and two broad dark-brown left-pointing arrows, without lettering or dark vermilion. The four existing asset entries and their PNGs are unchanged. The arrows do not prescribe a movement direction, and this icon does not replace the unit affiliation flag.",
+    "routed.png is 1200x800, routed-600x400.png is the display-size export, and the source is 1536x1024. Candidate display size is 600x400 on a 1200x1200 board; no coordinates or automatic elevation logic are assigned. The rounded alpha outline removes outside background remnants; Box area downsampling retains a narrow antialiased edge.",
+    "No new preview or overview image was generated. overview points to the standalone routed.png. Commander overlap, front/back rendering, distance and oblique-angle readability require code-side and TTS validation; the artwork alone does not prevent occlusion.",
     "Revision 12 changes only out_of_command: an ivory-white diagonal slash with a dark-brown outline replaces the black slash with a pale outline. The charcoal gunbai, dark vermilion background, matte finish, clean outer ring, 100x100 display size and placement are retained. The other three icons and their asset entries remain unchanged.",
     "Revision 11 makes both formation plaques taller and increases the vertical row spacing in formation_open. The six same-scale markers, 2:1 canvases and existing mutually exclusive 240x120 candidate placement are retained. Box area downsampling and matching regular alpha boundaries retain narrow antialiasing.",
     "Use engaged.png and out_of_command.png (512x512) as the preferred circular runtime textures at 100x100 UI size, and formation_close.png and formation_open.png (512x256) at 240x120. Existing placement is unchanged. The display-size files are convenience exports. Upload/replacement of hosted Steam URLs and cache refresh belong to code-side integration; no TTS runtime validation has been performed.",
-    "All earlier engaged, out_of_command and combined previews are historical and do not represent revision 12. No new preview or overview was produced; overview points to standalone out_of_command.png.",
+    "All earlier engaged, out_of_command and combined previews are historical and do not represent revision 13. No new preview or overview was produced; overview points to standalone routed.png.",
     "Both circular badges retain the revision 10 edge cleanup: matching regular circular alpha boundaries, dark outer lines and matte pale-gold bands. Revision 12 gives the charcoal gunbai an ivory-white slash with a dark-brown outline. Same-size alpha channels are pixel-identical. Box area downsampling retains narrow antialiasing.",
     "At 240x120, both formation plaques have alpha>0 bounds (2,8)-(238,112), 104px high; their alpha>=128 visible height is 102px, increased from 88px in revision 9. Same-size alpha channels match pixel-for-pixel.",
     "Formation marker check: each 512x256 PNG contains six comparable-scale markers; the vertical separation of row centers is approximately 70px in formation_close and 89px in formation_open.",
@@ -502,7 +612,7 @@
     "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
     "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 12,
+  "revision": 13,
   "additional_overviews": [],
   "combined_previews": [],
   "previous_revision_previews": [
@@ -512,7 +622,7 @@
         "out_of_command"
       ],
       "represents_current_artwork": false,
-      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not represent the current revision 12 artwork.",
+      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not represent the current revision 13 artwork.",
       "overview": "out_of_command_总览.jpg",
       "out_of_command_previews": [
         {
@@ -620,7 +730,7 @@
         "engaged"
       ],
       "represents_current_artwork": false,
-      "note": "Pre-revision-10 engaged previews, overview and detail images retained unchanged; they show the earlier circular edge and do not represent the current revision 12 artwork.",
+      "note": "Pre-revision-10 engaged previews, overview and detail images retained unchanged; they show the earlier circular edge and do not represent the current revision 13 artwork.",
       "engaged_previews": [
         {
           "path": "预览/engaged_武田红_1200.png",
