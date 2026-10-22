@@ -134,7 +134,7 @@
       "id": "out_of_command",
       "label_ja": "指揮外",
       "status": "draft",
-      "description": "A rustic matte gunbai based on the physical reference: a waisted face with rounded corners, aged wood, subdued dark-gold edging, and a long handle. Revision 10 lifts the gunbai to charcoal black and retains the black diagonal slash with a thin pale ivory-gold outline for separation. The approximately 25-degree tilt, physical form, dark vermilion circular background, no-lettering treatment, and matte finish remain. A thicker regular outer ring matches engaged; narrow antialiasing is retained.",
+      "description": "A rustic matte gunbai based on the physical reference: a waisted face with rounded corners, aged wood, subdued dark-gold edging, and a long handle. Revision 12 changes the diagonal slash to ivory white with a dark-brown outline for contrast against the charcoal gunbai and dark vermilion circular background. The approximately 25-degree tilt, physical form, no-lettering treatment, and matte finish remain. The clean, thicker regular outer ring matches engaged; narrow antialiasing is retained.",
       "path": "out_of_command.png",
       "pixel_size": {
         "width": 512,
@@ -160,7 +160,7 @@
         "width": 496,
         "height": 496
       },
-      "sha256": "25e53eaa1071d879af51e820b5d9dabd65290b068052ab5ec259c4fe89675a59",
+      "sha256": "cb25b457234ade566345d15bd8ed11923b1d5556933505e2ec713938e5b4afed",
       "source_export": {
         "path": "源图/out_of_command-1024.png",
         "pixel_size": {
@@ -187,7 +187,7 @@
           "width": 992,
           "height": 992
         },
-        "sha256": "fe5d090c0a53f79f2eb8f6c6722cc4739f579e2ba29d0a989c363f9101b5f52b"
+        "sha256": "ad1b4c8b3794327d6aaf76d111ca2684d7236c5a64bcca44885489c619fe5883"
       },
       "display_export": {
         "path": "out_of_command-100.png",
@@ -215,7 +215,7 @@
           "width": 96,
           "height": 96
         },
-        "sha256": "6f0d4afd7d7a30935f68101fa0c195a138add72a71c4c542daeda148527775f4"
+        "sha256": "b979dc5aaca864dec7d1c9bfbb2204f38a9da8d82f98e22f6e2839f70fe3a56a"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -486,10 +486,11 @@
   "additional_previews": [],
   "runtime_integration": "Artwork handoff only; use the 512px-wide PNGs, displaying circular badges at 100x100 UI size and formation plaques at 240x120. Hosted Steam URL replacement and cache refresh are code-side tasks; TTS runtime rendering is unverified.",
   "notes": [
+    "Revision 12 changes only out_of_command: an ivory-white diagonal slash with a dark-brown outline replaces the black slash with a pale outline. The charcoal gunbai, dark vermilion background, matte finish, clean outer ring, 100x100 display size and placement are retained. The other three icons and their asset entries remain unchanged.",
     "Revision 11 makes both formation plaques taller and increases the vertical row spacing in formation_open. The six same-scale markers, 2:1 canvases and existing mutually exclusive 240x120 candidate placement are retained. Box area downsampling and matching regular alpha boundaries retain narrow antialiasing.",
     "Use engaged.png and out_of_command.png (512x512) as the preferred circular runtime textures at 100x100 UI size, and formation_close.png and formation_open.png (512x256) at 240x120. Existing placement is unchanged. The display-size files are convenience exports. Upload/replacement of hosted Steam URLs and cache refresh belong to code-side integration; no TTS runtime validation has been performed.",
-    "All earlier engaged, out_of_command and combined previews are historical and do not represent revision 11. No new preview or overview was produced; overview points to standalone out_of_command.png.",
-    "The two circular badges and their metadata retain the revision 10 edge cleanup and contrast changes: matching regular circular alpha boundaries, dark outer lines and matte pale-gold bands; a charcoal gunbai and black slash with a pale outline. Same-size alpha channels are pixel-identical. Box area downsampling retains narrow antialiasing.",
+    "All earlier engaged, out_of_command and combined previews are historical and do not represent revision 12. No new preview or overview was produced; overview points to standalone out_of_command.png.",
+    "Both circular badges retain the revision 10 edge cleanup: matching regular circular alpha boundaries, dark outer lines and matte pale-gold bands. Revision 12 gives the charcoal gunbai an ivory-white slash with a dark-brown outline. Same-size alpha channels are pixel-identical. Box area downsampling retains narrow antialiasing.",
     "At 240x120, both formation plaques have alpha>0 bounds (2,8)-(238,112), 104px high; their alpha>=128 visible height is 102px, increased from 88px in revision 9. Same-size alpha channels match pixel-for-pixel.",
     "Formation marker check: each 512x256 PNG contains six comparable-scale markers; the vertical separation of row centers is approximately 70px in formation_close and 89px in formation_open.",
     "At alpha>0 the circular exports have uniform transparent margins: 15px at 1024x1024, 7px at 512x512, and 1px at 100x100. Both badges retain a narrow antialiased edge.",
@@ -501,7 +502,7 @@
     "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
     "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 11,
+  "revision": 12,
   "additional_overviews": [],
   "combined_previews": [],
   "previous_revision_previews": [
@@ -511,7 +512,7 @@
         "out_of_command"
       ],
       "represents_current_artwork": false,
-      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not represent the current revision 11 artwork.",
+      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not represent the current revision 12 artwork.",
       "overview": "out_of_command_总览.jpg",
       "out_of_command_previews": [
         {
@@ -619,7 +620,7 @@
         "engaged"
       ],
       "represents_current_artwork": false,
-      "note": "Pre-revision-10 engaged previews, overview and detail images retained unchanged; they show the earlier circular edge and do not represent the current revision 11 artwork.",
+      "note": "Pre-revision-10 engaged previews, overview and detail images retained unchanged; they show the earlier circular edge and do not represent the current revision 12 artwork.",
       "engaged_previews": [
         {
           "path": "预览/engaged_武田红_1200.png",
