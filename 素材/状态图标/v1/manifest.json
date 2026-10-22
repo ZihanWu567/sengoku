@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "version": "v1",
-  "scope": "engaged and out_of_command",
+  "scope": "engaged, out_of_command, formation_close and formation_open",
   "draft": true,
   "baseline": {
     "branch": "main",
@@ -271,11 +271,235 @@
         "requires_title_change": false
       },
       "previews": []
+    },
+    {
+      "id": "formation_close",
+      "label_ja": "密集",
+      "status": "draft",
+      "description": "Pale ivory aged-paper horizontal plaque with a dark-brown border and exactly six same-scale black jingasa troop markers viewed from above, arranged in two close-packed rows of three. The pair shares the same marker scale. No dark vermilion. The visible plaque is flatter than the 2:1 canvas; transparent top and bottom padding is retained.",
+      "path": "formation_close.png",
+      "pixel_size": {
+        "width": 512,
+        "height": 256
+      },
+      "alpha": "straight RGBA; solid aged-paper plaque, transparent outside; vertical canvas padding retained",
+      "content_bbox_px": {
+        "x": 3,
+        "y": 32,
+        "width": 506,
+        "height": 192
+      },
+      "transparent_padding_px": {
+        "left": 3,
+        "top": 32,
+        "right": 3,
+        "bottom": 32
+      },
+      "alpha_bbox_threshold": 0,
+      "content_bbox_at_alpha_128_px": {
+        "x": 5,
+        "y": 35,
+        "width": 502,
+        "height": 186
+      },
+      "sha256": "c24b5f347dbe47fefd096e679c9a7e388a487895acd2fddc2a9657ba99a6d4c0",
+      "source_export": {
+        "path": "源图/formation_close-1024x512.png",
+        "pixel_size": {
+          "width": 1024,
+          "height": 512
+        },
+        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside; vertical canvas padding retained",
+        "content_bbox_px": {
+          "x": 10,
+          "y": 69,
+          "width": 1004,
+          "height": 374
+        },
+        "transparent_padding_px": {
+          "left": 10,
+          "top": 69,
+          "right": 10,
+          "bottom": 69
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 11,
+          "y": 70,
+          "width": 1002,
+          "height": 373
+        },
+        "sha256": "b9513ebb6ea7d23d766c3efbdf7abe876595f290303c452f2ef7c7a9320792fa"
+      },
+      "display_export": {
+        "path": "formation_close-240x120.png",
+        "pixel_size": {
+          "width": 240,
+          "height": 120
+        },
+        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside; vertical canvas padding retained",
+        "content_bbox_px": {
+          "x": 0,
+          "y": 14,
+          "width": 240,
+          "height": 92
+        },
+        "transparent_padding_px": {
+          "left": 0,
+          "top": 14,
+          "right": 0,
+          "bottom": 14
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 3,
+          "y": 16,
+          "width": 234,
+          "height": 88
+        },
+        "sha256": "2960dc2a8a3eedc777c9122b02905f6857375d75dfabe621e702229de52328ac"
+      },
+      "cloud_url": "",
+      "recommended_display": {
+        "reference_board_px": {
+          "width": 1200,
+          "height": 1200
+        },
+        "coordinate_system": "pixels, top-left origin; x right, y down",
+        "width_px": 240,
+        "height_px": 120,
+        "top_left_px": {
+          "x": 734,
+          "y": 1042
+        },
+        "center_px": {
+          "x": 854,
+          "y": 1102
+        },
+        "placement": "candidate lower-right position in the large illustration square, immediately left of the numeric column; position the full PNG canvas without trimming transparent padding",
+        "right_frame_canvas_gap_px": 24,
+        "bottom_frame_canvas_gap_px": 24,
+        "shared_position_group": "formation",
+        "mutually_exclusive_with": "formation_open",
+        "validation_scope": "Candidate checked against frame coordinates and one existing 槍足軽隊 front card only; all-troop artwork clearance and TTS runtime rendering are not yet validated."
+      },
+      "previews": []
+    },
+    {
+      "id": "formation_open",
+      "label_ja": "散開",
+      "status": "draft",
+      "description": "Pale ivory aged-paper horizontal plaque with a dark-brown border and exactly six same-scale black jingasa troop markers viewed from above, arranged in two loose, staggered rows of three. The pair shares the same marker scale. No dark vermilion. The visible plaque is flatter than the 2:1 canvas; transparent top and bottom padding is retained.",
+      "path": "formation_open.png",
+      "pixel_size": {
+        "width": 512,
+        "height": 256
+      },
+      "alpha": "straight RGBA; solid aged-paper plaque, transparent outside; vertical canvas padding retained",
+      "content_bbox_px": {
+        "x": 3,
+        "y": 32,
+        "width": 506,
+        "height": 192
+      },
+      "transparent_padding_px": {
+        "left": 3,
+        "top": 32,
+        "right": 3,
+        "bottom": 32
+      },
+      "alpha_bbox_threshold": 0,
+      "content_bbox_at_alpha_128_px": {
+        "x": 5,
+        "y": 35,
+        "width": 502,
+        "height": 186
+      },
+      "sha256": "be208374f5f51dfc17dca1a935a9362bd48f904b7eaf17dd71af7495c517b536",
+      "source_export": {
+        "path": "源图/formation_open-1024x512.png",
+        "pixel_size": {
+          "width": 1024,
+          "height": 512
+        },
+        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside; vertical canvas padding retained",
+        "content_bbox_px": {
+          "x": 10,
+          "y": 69,
+          "width": 1004,
+          "height": 374
+        },
+        "transparent_padding_px": {
+          "left": 10,
+          "top": 69,
+          "right": 10,
+          "bottom": 69
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 11,
+          "y": 70,
+          "width": 1002,
+          "height": 372
+        },
+        "sha256": "f1a8b24d6096df3aa5d28e5a2b27f48dfc4a02d5d1333c70a37884cff6d5e67f"
+      },
+      "display_export": {
+        "path": "formation_open-240x120.png",
+        "pixel_size": {
+          "width": 240,
+          "height": 120
+        },
+        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside; vertical canvas padding retained",
+        "content_bbox_px": {
+          "x": 0,
+          "y": 14,
+          "width": 240,
+          "height": 92
+        },
+        "transparent_padding_px": {
+          "left": 0,
+          "top": 14,
+          "right": 0,
+          "bottom": 14
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 3,
+          "y": 16,
+          "width": 235,
+          "height": 88
+        },
+        "sha256": "2eb561b696b62fbc911804af49128e96cac6ad44d71fcae6d02cab6b184aed6c"
+      },
+      "cloud_url": "",
+      "recommended_display": {
+        "reference_board_px": {
+          "width": 1200,
+          "height": 1200
+        },
+        "coordinate_system": "pixels, top-left origin; x right, y down",
+        "width_px": 240,
+        "height_px": 120,
+        "top_left_px": {
+          "x": 734,
+          "y": 1042
+        },
+        "center_px": {
+          "x": 854,
+          "y": 1102
+        },
+        "placement": "candidate lower-right position in the large illustration square, immediately left of the numeric column; position the full PNG canvas without trimming transparent padding",
+        "right_frame_canvas_gap_px": 24,
+        "bottom_frame_canvas_gap_px": 24,
+        "shared_position_group": "formation",
+        "mutually_exclusive_with": "formation_close",
+        "validation_scope": "Candidate checked against frame coordinates and one existing 槍足軽隊 front card only; all-troop artwork clearance and TTS runtime rendering are not yet validated."
+      },
+      "previews": []
     }
   ],
   "not_yet_produced": [
-    "formation_close",
-    "formation_open",
     "fire_ready",
     "fire_loading",
     "routed"
@@ -288,6 +512,7 @@
   ],
   "runtime_integration": "not implemented",
   "notes": [
+    "Revision 9 adds formation_close and formation_open only: six equal-scale top-view jingasa markers per image on a pale ivory aged-paper plaque with a dark-brown border. The 240x120 display canvas keeps 14px transparent padding above and below the flatter visible plaque. Both formation states share one mutually exclusive candidate position at (734,1042). This position was checked only against frame boundaries and one existing 槍足軽隊 front card; no all-troop or runtime validation, new previews, or overview was produced. Existing engaged and out_of_command asset entries remain unchanged.",
     "Revision 8 changes only out_of_command to a rustic, non-reflective finish: matte aged wood, subdued dark-gold earth-toned edging, and a black diagonal slash. Its black-lacquered waisted gunbai shape, approximately 25-degree tilt, dark vermilion badge, no-lettering treatment, dimensions and placement remain unchanged. Engaged remains unchanged.",
     "No new overview or board previews are generated for revision 8, at the user’s request. The current overview points to the standalone out_of_command.png; all older out_of_command and combined preview references are explicitly historical revision 5 assets.",
     "The engaged badge uses a 100x100 canvas at (20,56), centered at (70,106). The out_of_command badge uses a separate 100x100 canvas at (892,56), centered at (942,106). Both can appear simultaneously; do not reuse one mutually exclusive display slot.",
@@ -299,7 +524,7 @@
     "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
     "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 8,
+  "revision": 9,
   "additional_overviews": [
     "总览.jpg"
   ],
