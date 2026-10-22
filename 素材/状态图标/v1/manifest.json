@@ -164,7 +164,7 @@
       "id": "out_of_command",
       "label_ja": "指揮外",
       "status": "draft",
-      "description": "Drawn from scratch using the user-uploaded photograph of a physical gunbai: a black-lacquered face with inward-curving sides, rounded upper and lower corners, thin gold edging, a central black wooden spine continuing into a long handle, and a gold handle cap. The gunbai is tilted about 25 degrees; all lettering from the reference is removed. An ivory diagonal slash overlays the gunbai on a dark vermilion circular badge.",
+      "description": "A rustic, matte gunbai based on the user-uploaded physical reference: black-lacquered waisted face with rounded corners, an aged wooden surface, subdued dark-gold earth-toned edging, a central black wooden spine continuing into a long handle, and a muted handle cap. The approximately 25-degree tilted composition and dark vermilion circular badge remain unchanged; the central diagonal slash is black. All reference lettering is removed, with no glossy finish or reflective highlights.",
       "path": "out_of_command.png",
       "pixel_size": {
         "width": 512,
@@ -173,24 +173,24 @@
       "alpha": "straight RGBA; solid badge, transparent outside circle",
       "content_bbox_px": {
         "x": 3,
-        "y": 6,
+        "y": 3,
         "width": 506,
-        "height": 501
+        "height": 506
       },
       "transparent_padding_px": {
         "left": 3,
-        "top": 6,
+        "top": 3,
         "right": 3,
-        "bottom": 5
+        "bottom": 3
       },
       "alpha_bbox_threshold": 0,
       "content_bbox_at_alpha_128_px": {
         "x": 6,
-        "y": 8,
-        "width": 500,
-        "height": 497
+        "y": 6,
+        "width": 501,
+        "height": 500
       },
-      "sha256": "276718389964ced318d63228a75da8b4b331bf6d97ea5c8af9f552301acdd295",
+      "sha256": "4e063c87aeac7753dfe38f85f64e98dde2d18df94f603917b689389858ed1aa6",
       "source_export": {
         "path": "源图/out_of_command-1024.png",
         "pixel_size": {
@@ -200,24 +200,24 @@
         "alpha": "straight RGBA; solid badge, transparent outside circle",
         "content_bbox_px": {
           "x": 10,
-          "y": 13,
+          "y": 11,
           "width": 1004,
-          "height": 997
+          "height": 1002
         },
         "transparent_padding_px": {
           "left": 10,
-          "top": 13,
+          "top": 11,
           "right": 10,
-          "bottom": 14
+          "bottom": 11
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 12,
-          "y": 16,
-          "width": 1000,
-          "height": 994
+          "x": 11,
+          "y": 12,
+          "width": 1002,
+          "height": 1001
         },
-        "sha256": "b0ee6b83ff6a52a102fbb11900f0800120a8b2c9a211c1df3cd5ece9f7bab2f5"
+        "sha256": "11408be443720d14227d6ff18e86bd50591dacd7304a6eb7150083c26b5b3e3a"
       },
       "display_export": {
         "path": "out_of_command-100.png",
@@ -241,11 +241,11 @@
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
           "x": 1,
-          "y": 2,
+          "y": 1,
           "width": 98,
-          "height": 97
+          "height": 98
         },
-        "sha256": "7daddb2a97afdd8705daae74bb8780e0c5aafa876c0b2cb6a3d55d179ff4330d"
+        "sha256": "47d614b532f95e1bd9e783577f9aaa8ac8c2fec3747829552da36fd6f5c9ebec"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -288,8 +288,8 @@
   ],
   "runtime_integration": "not implemented",
   "notes": [
-    "Revision 7 redraws out_of_command from scratch using the user-uploaded photograph of a physical gunbai. Its black lacquer, waisted outline, rounded corners, thin gold edging, continuous central wooden spine, long handle and gold cap follow that reference; all lettering is removed. The gunbai is tilted about 25 degrees, with the ivory slash and dark vermilion badge retained. Engaged remains unchanged.",
-    "No new overview or board previews are generated for revision 7, at the user’s request. The current overview points to the standalone out_of_command.png; all older out_of_command and combined preview references are explicitly historical revision 5 assets.",
+    "Revision 8 changes only out_of_command to a rustic, non-reflective finish: matte aged wood, subdued dark-gold earth-toned edging, and a black diagonal slash. Its black-lacquered waisted gunbai shape, approximately 25-degree tilt, dark vermilion badge, no-lettering treatment, dimensions and placement remain unchanged. Engaged remains unchanged.",
+    "No new overview or board previews are generated for revision 8, at the user’s request. The current overview points to the standalone out_of_command.png; all older out_of_command and combined preview references are explicitly historical revision 5 assets.",
     "The engaged badge uses a 100x100 canvas at (20,56), centered at (70,106). The out_of_command badge uses a separate 100x100 canvas at (892,56), centered at (942,106). Both can appear simultaneously; do not reuse one mutually exclusive display slot.",
     "The right badge is placed beyond the rightmost title boundary x=885 exclusive, leaving a 7px title gap and a 6px right-frame gap. No existing title needs to move or shrink.",
     "Cloud URLs intentionally empty; no runtime-hosting URLs have been provided.",
@@ -299,7 +299,7 @@
     "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
     "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 7,
+  "revision": 8,
   "additional_overviews": [
     "总览.jpg"
   ],
@@ -311,7 +311,7 @@
         "out_of_command"
       ],
       "represents_current_artwork": false,
-      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not show the current revision 7 artwork.",
+      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not show the current revision 8 artwork.",
       "overview": "out_of_command_总览.jpg",
       "out_of_command_previews": [
         {
