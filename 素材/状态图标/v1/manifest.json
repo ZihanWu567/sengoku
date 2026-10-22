@@ -480,13 +480,13 @@
       "id": "routed",
       "label_ja": "敗走",
       "status": "draft",
-      "description": "Large antique ivory plaque with a dark-brown border, a torn and scorched fallen white war banner on a splintered wooden pole, and one smaller abandoned sashimono lying flat on the ground in the foreground. The sashimono has unmarked aged-white cloth with ragged scorched edges, a slender brown mast and a short crosspiece, all resting against the ground. It remains visually separate from the larger banner behind it. Amber-orange battlefield flames, brown-gray smoke and embers remain in the background inside the frame. Revision 16 removes the jingasa hat. No hat, arrows, lettering or clan crest; no dark-vermilion base. The exterior is transparent, and this icon does not replace the unit affiliation flag.",
+      "description": "Large dark-brown-and-gold-framed battlefield illustration centered on exactly one fallen, torn white sashimono. The broken wooden mast lies diagonally across scorched earth and the attached cloth gathers into natural ground-contact folds, with burn holes and ragged charred edges. Pale ash, sparse charred timber and distant burning fence silhouettes form a coherent perspective and warm firelit scene. Revision 17 replaces the previous two parallel banners with this single focal banner. Flames and smoke remain inside the frame, with a transparent exterior. No second flag, hat, arrows, lettering or clan crest; no dark-vermilion base. The icon does not replace the unit affiliation flag.",
       "path": "routed.png",
       "pixel_size": {
         "width": 1200,
         "height": 800
       },
-      "alpha": "straight RGBA; opaque ivory plaque with a narrow antialiased rounded-rectangle edge, transparent outside",
+      "alpha": "straight RGBA; opaque battlefield illustration inside a rounded frame, transparent outside with narrow antialiasing",
       "content_bbox_px": {
         "x": 8,
         "y": 47,
@@ -506,14 +506,14 @@
         "width": 1184,
         "height": 706
       },
-      "sha256": "ca51a46ec6beb6822ba117f65738184bd2403cb43c355e5a6398df3c255b3809",
+      "sha256": "f8042d5735cd0161a540c88e08c1c8a020a527befbf8850b3c98a138ad5b1099",
       "source_export": {
         "path": "源图/routed-1536x1024.png",
         "pixel_size": {
           "width": 1536,
           "height": 1024
         },
-        "alpha": "straight RGBA; opaque ivory plaque with a narrow antialiased rounded-rectangle edge, transparent outside",
+        "alpha": "straight RGBA; opaque battlefield illustration inside a rounded frame, transparent outside with narrow antialiasing",
         "content_bbox_px": {
           "x": 10,
           "y": 60,
@@ -533,7 +533,7 @@
           "width": 1516,
           "height": 904
         },
-        "sha256": "75e737723c0c4a90a64e83092d8e980be6b1298e0fffa936bcc2adf111ea758b"
+        "sha256": "1489790a8e89eae6f627f061e072aa87da69c29d622dbe7c0e21bbb05a6d1864"
       },
       "display_export": {
         "path": "routed-600x400.png",
@@ -541,7 +541,7 @@
           "width": 600,
           "height": 400
         },
-        "alpha": "straight RGBA; opaque ivory plaque with a narrow antialiased rounded-rectangle edge, transparent outside",
+        "alpha": "straight RGBA; opaque battlefield illustration inside a rounded frame, transparent outside with narrow antialiasing",
         "content_bbox_px": {
           "x": 4,
           "y": 23,
@@ -561,7 +561,7 @@
           "width": 592,
           "height": 354
         },
-        "sha256": "fe80b17b0058d17bc1b38275baa8b8dbfa6914bd6693ca66a5ac4d2d7d69c11d"
+        "sha256": "0c18b6aa52e99ad83958862d855e0b4e7e155158d6dcd08848e692496a51db3b"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -593,13 +593,13 @@
   "additional_previews": [],
   "runtime_integration": "Artwork handoff only. Existing circular badges and formation plaques retain their sizes and placements. routed.png (1200x800) is the preferred new texture; 600x400 is a candidate display size with no assigned position. Hosted URL setup and commander-overlap handling belong to the code side; TTS runtime rendering is unverified.",
   "notes": [
-    "Revision 16 replaces the routed jingasa with one smaller fallen sashimono laid flat in the foreground. The damaged large white banner, fire, smoke and ivory plaque remain. The other four asset entries and their PNGs are unchanged; all display-size and placement guidance is unchanged.",
+    "Revision 17 recomposes routed around one fallen white sashimono, replacing the two parallel banners. Natural cloth folds, ground contact, scorched earth, ash and distant firelight make a unified battlefield scene. The other four asset entries and their PNGs are unchanged; all display-size and placement guidance is unchanged.",
     "routed.png is 1200x800, routed-600x400.png is the display-size export, and the source is 1536x1024. Candidate display size is 600x400 on a 1200x1200 board; no coordinates or automatic elevation logic are assigned. The rounded alpha outline removes outside background remnants; Box area downsampling retains a narrow antialiased edge.",
     "No new preview or overview image was generated. overview points to the standalone routed.png. Commander overlap, front/back rendering, distance and oblique-angle readability require code-side and TTS validation; the artwork alone does not prevent occlusion.",
     "Revision 12 changes only out_of_command: an ivory-white diagonal slash with a dark-brown outline replaces the black slash with a pale outline. The charcoal gunbai, dark vermilion background, matte finish, clean outer ring, 100x100 display size and placement are retained. The other three icons and their asset entries remain unchanged.",
     "Revision 11 makes both formation plaques taller and increases the vertical row spacing in formation_open. The six same-scale markers, 2:1 canvases and existing mutually exclusive 240x120 candidate placement are retained. Box area downsampling and matching regular alpha boundaries retain narrow antialiasing.",
     "Use engaged.png and out_of_command.png (512x512) as the preferred circular runtime textures at 100x100 UI size, and formation_close.png and formation_open.png (512x256) at 240x120. Existing placement is unchanged. The display-size files are convenience exports. Upload/replacement of hosted Steam URLs and cache refresh belong to code-side integration; no TTS runtime validation has been performed.",
-    "All earlier engaged, out_of_command and combined previews are historical and do not represent revision 16. No new preview or overview was produced; overview points to standalone routed.png.",
+    "All earlier engaged, out_of_command and combined previews are historical and do not represent revision 17. No new preview or overview was produced; overview points to standalone routed.png.",
     "Both circular badges retain the revision 10 edge cleanup: matching regular circular alpha boundaries, dark outer lines and matte pale-gold bands. Revision 12 gives the charcoal gunbai an ivory-white slash with a dark-brown outline. Same-size alpha channels are pixel-identical. Box area downsampling retains narrow antialiasing.",
     "At 240x120, both formation plaques have alpha>0 bounds (2,8)-(238,112), 104px high; their alpha>=128 visible height is 102px, increased from 88px in revision 9. Same-size alpha channels match pixel-for-pixel.",
     "Formation marker check: each 512x256 PNG contains six comparable-scale markers; the vertical separation of row centers is approximately 70px in formation_close and 89px in formation_open.",
@@ -612,7 +612,7 @@
     "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
     "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 16,
+  "revision": 17,
   "additional_overviews": [],
   "combined_previews": [],
   "previous_revision_previews": [
@@ -622,7 +622,7 @@
         "out_of_command"
       ],
       "represents_current_artwork": false,
-      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not represent the current revision 16 artwork.",
+      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not represent the current revision 17 artwork.",
       "overview": "out_of_command_总览.jpg",
       "out_of_command_previews": [
         {
@@ -730,7 +730,7 @@
         "engaged"
       ],
       "represents_current_artwork": false,
-      "note": "Pre-revision-10 engaged previews, overview and detail images retained unchanged; they show the earlier circular edge and do not represent the current revision 16 artwork.",
+      "note": "Pre-revision-10 engaged previews, overview and detail images retained unchanged; they show the earlier circular edge and do not represent the current revision 17 artwork.",
       "engaged_previews": [
         {
           "path": "预览/engaged_武田红_1200.png",
