@@ -15,54 +15,54 @@
       "id": "engaged",
       "label_ja": "交戦",
       "status": "draft",
-      "description": "Dark vermilion solid circular badge with broad ivory crossed Japanese katana; fills a 100x100 display canvas.",
+      "description": "Dark vermilion solid circular badge with broad ivory crossed Japanese katana. Revision 10 replaces the irregular outer edge with a clean, thicker regular ring: a dark outer line and a matte pale-gold band. Original pixels within radius 465px of the 1024px source center and all ivory blade and handle pixels remain unchanged. Transparent outer speckles are removed while narrow antialiasing is retained.",
       "path": "engaged.png",
       "pixel_size": {
         "width": 512,
         "height": 512
       },
-      "alpha": "straight RGBA; solid badge, transparent outside circle",
+      "alpha": "straight RGBA; solid badge, transparent outside a regular circular edge with narrow antialiasing",
       "content_bbox_px": {
-        "x": 3,
-        "y": 4,
-        "width": 506,
-        "height": 504
+        "x": 7,
+        "y": 7,
+        "width": 498,
+        "height": 498
       },
       "transparent_padding_px": {
-        "left": 3,
-        "top": 4,
-        "right": 3,
-        "bottom": 4
+        "left": 7,
+        "top": 7,
+        "right": 7,
+        "bottom": 7
       },
       "alpha_bbox_threshold": 0,
-      "sha256": "32b9790fde2839b4cba22f173f0097b8e00a0741632a3184bbf0186b6991fa72",
+      "sha256": "1533e562950b5124455dc66108114555978f98d35f4928b46872734d138f32e1",
       "source_export": {
         "path": "源图/engaged-1024.png",
         "pixel_size": {
           "width": 1024,
           "height": 1024
         },
-        "alpha": "straight RGBA; solid badge, transparent outside circle",
+        "alpha": "straight RGBA; solid badge, transparent outside a regular circular edge with narrow antialiasing",
         "content_bbox_px": {
-          "x": 10,
-          "y": 12,
-          "width": 1004,
-          "height": 1000
+          "x": 15,
+          "y": 15,
+          "width": 994,
+          "height": 994
         },
         "transparent_padding_px": {
-          "left": 10,
-          "top": 12,
-          "right": 10,
-          "bottom": 12
+          "left": 15,
+          "top": 15,
+          "right": 15,
+          "bottom": 15
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 11,
-          "y": 13,
-          "width": 1002,
-          "height": 998
+          "x": 16,
+          "y": 16,
+          "width": 992,
+          "height": 992
         },
-        "sha256": "89d93fe08a136d822b2ba534198864dc35e0cc1583f111cdf1b324ed9f000de3"
+        "sha256": "cc064783d5281ae05cb1a1312fa815ca99bd832192827d820d5c33cb94f83a25"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -86,50 +86,12 @@
         "left_frame_canvas_gap_px": 6,
         "requires_title_change": false
       },
-      "previews": [
-        {
-          "path": "预览/engaged_武田红_1200.png",
-          "pixel_size": {
-            "width": 1200,
-            "height": 1200
-          },
-          "kind": "existing_front_card_overlay",
-          "source": "../../合成成品/鉄砲足軽隊/01_武田_紅_鉄砲足軽隊.png"
-        },
-        {
-          "path": "预览/engaged_四字标题_1200.png",
-          "pixel_size": {
-            "width": 1200,
-            "height": 1200
-          },
-          "kind": "existing_front_card_overlay",
-          "source": "../../合成成品/槍足軽隊/03_上杉_白_槍足軽隊.png"
-        },
-        {
-          "path": "预览/engaged_五字标题_1200.png",
-          "pixel_size": {
-            "width": 1200,
-            "height": 1200
-          },
-          "kind": "existing_front_card_overlay",
-          "source": "../../合成成品/長柄足軽隊/06_佐竹_金_長柄足軽隊.png"
-        },
-        {
-          "path": "预览/engaged_炭灰示意_1200.png",
-          "pixel_size": {
-            "width": 1200,
-            "height": 1200
-          },
-          "kind": "illustrative_charcoal_back_only",
-          "background_color": "#24262B",
-          "not_a_tts_runtime_capture": true
-        }
-      ],
+      "previews": [],
       "content_bbox_at_alpha_128_px": {
-        "x": 5,
-        "y": 7,
-        "width": 502,
-        "height": 499
+        "x": 8,
+        "y": 8,
+        "width": 496,
+        "height": 496
       },
       "display_export": {
         "path": "engaged-100.png",
@@ -137,87 +99,95 @@
           "width": 100,
           "height": 100
         },
-        "alpha": "straight RGBA; solid badge, transparent outside circle",
+        "alpha": "straight RGBA; solid badge, transparent outside a regular circular edge with narrow antialiasing",
         "content_bbox_px": {
-          "x": 0,
-          "y": 0,
-          "width": 100,
-          "height": 100
-        },
-        "transparent_padding_px": {
-          "left": 0,
-          "top": 0,
-          "right": 0,
-          "bottom": 0
-        },
-        "alpha_bbox_threshold": 0,
-        "content_bbox_at_alpha_128_px": {
           "x": 1,
           "y": 1,
           "width": 98,
           "height": 98
         },
-        "sha256": "9ef775f0c5814e6428081acde7429695355803a8284a91929815ffcf3d840a3a"
+        "transparent_padding_px": {
+          "left": 1,
+          "top": 1,
+          "right": 1,
+          "bottom": 1
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 2,
+          "y": 2,
+          "width": 96,
+          "height": 96
+        },
+        "sha256": "f74173d179f3be0b9af1f06f593901eeefb1956ad8e58b6e8eb94acfba93f207"
+      },
+      "recommended_runtime_texture": {
+        "path": "engaged.png",
+        "pixel_size": {
+          "width": 512,
+          "height": 512
+        },
+        "usage": "Preferred runtime texture; display the full PNG canvas at 100x100 UI size. The 100px export is a convenience export, not the preferred texture. Upload/replace the hosted Steam URL and refresh cached assets on the code side; no TTS runtime rendering has been verified."
       }
     },
     {
       "id": "out_of_command",
       "label_ja": "指揮外",
       "status": "draft",
-      "description": "A rustic, matte gunbai based on the user-uploaded physical reference: black-lacquered waisted face with rounded corners, an aged wooden surface, subdued dark-gold earth-toned edging, a central black wooden spine continuing into a long handle, and a muted handle cap. The approximately 25-degree tilted composition and dark vermilion circular badge remain unchanged; the central diagonal slash is black. All reference lettering is removed, with no glossy finish or reflective highlights.",
+      "description": "A rustic matte gunbai based on the physical reference: a waisted face with rounded corners, aged wood, subdued dark-gold edging, and a long handle. Revision 10 lifts the gunbai to charcoal black and retains the black diagonal slash with a thin pale ivory-gold outline for separation. The approximately 25-degree tilt, physical form, dark vermilion circular background, no-lettering treatment, and matte finish remain. A thicker regular outer ring matches engaged; narrow antialiasing is retained.",
       "path": "out_of_command.png",
       "pixel_size": {
         "width": 512,
         "height": 512
       },
-      "alpha": "straight RGBA; solid badge, transparent outside circle",
+      "alpha": "straight RGBA; solid badge, transparent outside a regular circular edge with narrow antialiasing",
       "content_bbox_px": {
-        "x": 3,
-        "y": 3,
-        "width": 506,
-        "height": 506
+        "x": 7,
+        "y": 7,
+        "width": 498,
+        "height": 498
       },
       "transparent_padding_px": {
-        "left": 3,
-        "top": 3,
-        "right": 3,
-        "bottom": 3
+        "left": 7,
+        "top": 7,
+        "right": 7,
+        "bottom": 7
       },
       "alpha_bbox_threshold": 0,
       "content_bbox_at_alpha_128_px": {
-        "x": 6,
-        "y": 6,
-        "width": 501,
-        "height": 500
+        "x": 8,
+        "y": 8,
+        "width": 496,
+        "height": 496
       },
-      "sha256": "4e063c87aeac7753dfe38f85f64e98dde2d18df94f603917b689389858ed1aa6",
+      "sha256": "25e53eaa1071d879af51e820b5d9dabd65290b068052ab5ec259c4fe89675a59",
       "source_export": {
         "path": "源图/out_of_command-1024.png",
         "pixel_size": {
           "width": 1024,
           "height": 1024
         },
-        "alpha": "straight RGBA; solid badge, transparent outside circle",
+        "alpha": "straight RGBA; solid badge, transparent outside a regular circular edge with narrow antialiasing",
         "content_bbox_px": {
-          "x": 10,
-          "y": 11,
-          "width": 1004,
-          "height": 1002
+          "x": 15,
+          "y": 15,
+          "width": 994,
+          "height": 994
         },
         "transparent_padding_px": {
-          "left": 10,
-          "top": 11,
-          "right": 10,
-          "bottom": 11
+          "left": 15,
+          "top": 15,
+          "right": 15,
+          "bottom": 15
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 11,
-          "y": 12,
-          "width": 1002,
-          "height": 1001
+          "x": 16,
+          "y": 16,
+          "width": 992,
+          "height": 992
         },
-        "sha256": "11408be443720d14227d6ff18e86bd50591dacd7304a6eb7150083c26b5b3e3a"
+        "sha256": "fe5d090c0a53f79f2eb8f6c6722cc4739f579e2ba29d0a989c363f9101b5f52b"
       },
       "display_export": {
         "path": "out_of_command-100.png",
@@ -225,27 +195,27 @@
           "width": 100,
           "height": 100
         },
-        "alpha": "straight RGBA; solid badge, transparent outside circle",
+        "alpha": "straight RGBA; solid badge, transparent outside a regular circular edge with narrow antialiasing",
         "content_bbox_px": {
-          "x": 0,
-          "y": 0,
-          "width": 100,
-          "height": 100
-        },
-        "transparent_padding_px": {
-          "left": 0,
-          "top": 0,
-          "right": 0,
-          "bottom": 0
-        },
-        "alpha_bbox_threshold": 0,
-        "content_bbox_at_alpha_128_px": {
           "x": 1,
           "y": 1,
           "width": 98,
           "height": 98
         },
-        "sha256": "47d614b532f95e1bd9e783577f9aaa8ac8c2fec3747829552da36fd6f5c9ebec"
+        "transparent_padding_px": {
+          "left": 1,
+          "top": 1,
+          "right": 1,
+          "bottom": 1
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 2,
+          "y": 2,
+          "width": 96,
+          "height": 96
+        },
+        "sha256": "6f0d4afd7d7a30935f68101fa0c195a138add72a71c4c542daeda148527775f4"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -270,66 +240,74 @@
         "right_frame_canvas_gap_px": 6,
         "requires_title_change": false
       },
-      "previews": []
+      "previews": [],
+      "recommended_runtime_texture": {
+        "path": "out_of_command.png",
+        "pixel_size": {
+          "width": 512,
+          "height": 512
+        },
+        "usage": "Preferred runtime texture; display the full PNG canvas at 100x100 UI size. The 100px export is a convenience export, not the preferred texture. Upload/replace the hosted Steam URL and refresh cached assets on the code side; no TTS runtime rendering has been verified."
+      }
     },
     {
       "id": "formation_close",
       "label_ja": "密集",
       "status": "draft",
-      "description": "Pale ivory aged-paper horizontal plaque with a dark-brown border and exactly six same-scale black jingasa troop markers viewed from above, arranged in two close-packed rows of three. The pair shares the same marker scale. No dark vermilion. The visible plaque is flatter than the 2:1 canvas; transparent top and bottom padding is retained.",
+      "description": "Pale ivory aged-paper horizontal plaque with a dark-brown border and exactly six same-scale black jingasa troop markers viewed from above, arranged in two close-packed rows of three. Revision 11 makes the plaque taller within the unchanged 2:1 canvas. The pair shares the same marker scale and matching regular outer alpha boundary with narrow antialiasing. No dark vermilion.",
       "path": "formation_close.png",
       "pixel_size": {
         "width": 512,
         "height": 256
       },
-      "alpha": "straight RGBA; solid aged-paper plaque, transparent outside; vertical canvas padding retained",
+      "alpha": "straight RGBA; solid aged-paper plaque, transparent outside a regular outer boundary with narrow antialiasing",
       "content_bbox_px": {
-        "x": 3,
-        "y": 32,
-        "width": 506,
-        "height": 192
+        "x": 6,
+        "y": 18,
+        "width": 501,
+        "height": 220
       },
       "transparent_padding_px": {
-        "left": 3,
-        "top": 32,
-        "right": 3,
-        "bottom": 32
+        "left": 6,
+        "top": 18,
+        "right": 5,
+        "bottom": 18
       },
       "alpha_bbox_threshold": 0,
       "content_bbox_at_alpha_128_px": {
-        "x": 5,
-        "y": 35,
-        "width": 502,
-        "height": 186
+        "x": 6,
+        "y": 18,
+        "width": 500,
+        "height": 220
       },
-      "sha256": "c24b5f347dbe47fefd096e679c9a7e388a487895acd2fddc2a9657ba99a6d4c0",
+      "sha256": "3fae8c7186882658bbc4300f20630ae7fd7f50f94e97c83cad14792f1d65c348",
       "source_export": {
         "path": "源图/formation_close-1024x512.png",
         "pixel_size": {
           "width": 1024,
           "height": 512
         },
-        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside; vertical canvas padding retained",
+        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside a regular outer boundary with narrow antialiasing",
         "content_bbox_px": {
-          "x": 10,
-          "y": 69,
-          "width": 1004,
-          "height": 374
+          "x": 12,
+          "y": 37,
+          "width": 1001,
+          "height": 439
         },
         "transparent_padding_px": {
-          "left": 10,
-          "top": 69,
-          "right": 10,
-          "bottom": 69
+          "left": 12,
+          "top": 37,
+          "right": 11,
+          "bottom": 36
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 11,
-          "y": 70,
-          "width": 1002,
-          "height": 373
+          "x": 12,
+          "y": 37,
+          "width": 1000,
+          "height": 438
         },
-        "sha256": "b9513ebb6ea7d23d766c3efbdf7abe876595f290303c452f2ef7c7a9320792fa"
+        "sha256": "35b4b7023b529ddd13a021a99d93ba806105184bee2cc34919111fb59e611757"
       },
       "display_export": {
         "path": "formation_close-240x120.png",
@@ -337,27 +315,27 @@
           "width": 240,
           "height": 120
         },
-        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside; vertical canvas padding retained",
+        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside a regular outer boundary with narrow antialiasing",
         "content_bbox_px": {
-          "x": 0,
-          "y": 14,
-          "width": 240,
-          "height": 92
+          "x": 2,
+          "y": 8,
+          "width": 236,
+          "height": 104
         },
         "transparent_padding_px": {
-          "left": 0,
-          "top": 14,
-          "right": 0,
-          "bottom": 14
+          "left": 2,
+          "top": 8,
+          "right": 2,
+          "bottom": 8
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
           "x": 3,
-          "y": 16,
+          "y": 9,
           "width": 234,
-          "height": 88
+          "height": 102
         },
-        "sha256": "2960dc2a8a3eedc777c9122b02905f6857375d75dfabe621e702229de52328ac"
+        "sha256": "2bb121a7a20dbcace95aa50ac0028edeedad347958cc726dac33101261f7d749"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -389,60 +367,60 @@
       "id": "formation_open",
       "label_ja": "散開",
       "status": "draft",
-      "description": "Pale ivory aged-paper horizontal plaque with a dark-brown border and exactly six same-scale black jingasa troop markers viewed from above, arranged in two loose, staggered rows of three. The pair shares the same marker scale. No dark vermilion. The visible plaque is flatter than the 2:1 canvas; transparent top and bottom padding is retained.",
+      "description": "Pale ivory aged-paper horizontal plaque with a dark-brown border and exactly six same-scale black jingasa troop markers viewed from above, arranged in two loose, staggered rows of three. Revision 11 makes the plaque taller within the unchanged 2:1 canvas and increases the vertical spacing between the two rows. The pair shares the same marker scale and matching regular outer alpha boundary with narrow antialiasing. No dark vermilion.",
       "path": "formation_open.png",
       "pixel_size": {
         "width": 512,
         "height": 256
       },
-      "alpha": "straight RGBA; solid aged-paper plaque, transparent outside; vertical canvas padding retained",
+      "alpha": "straight RGBA; solid aged-paper plaque, transparent outside a regular outer boundary with narrow antialiasing",
       "content_bbox_px": {
-        "x": 3,
-        "y": 32,
-        "width": 506,
-        "height": 192
+        "x": 6,
+        "y": 18,
+        "width": 501,
+        "height": 220
       },
       "transparent_padding_px": {
-        "left": 3,
-        "top": 32,
-        "right": 3,
-        "bottom": 32
+        "left": 6,
+        "top": 18,
+        "right": 5,
+        "bottom": 18
       },
       "alpha_bbox_threshold": 0,
       "content_bbox_at_alpha_128_px": {
-        "x": 5,
-        "y": 35,
-        "width": 502,
-        "height": 186
+        "x": 6,
+        "y": 18,
+        "width": 500,
+        "height": 220
       },
-      "sha256": "be208374f5f51dfc17dca1a935a9362bd48f904b7eaf17dd71af7495c517b536",
+      "sha256": "686a1ad9446d2c8f27f1fe2aa6cb34d0802987563ed7ec632f6ffe206da18702",
       "source_export": {
         "path": "源图/formation_open-1024x512.png",
         "pixel_size": {
           "width": 1024,
           "height": 512
         },
-        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside; vertical canvas padding retained",
+        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside a regular outer boundary with narrow antialiasing",
         "content_bbox_px": {
-          "x": 10,
-          "y": 69,
-          "width": 1004,
-          "height": 374
+          "x": 12,
+          "y": 37,
+          "width": 1001,
+          "height": 439
         },
         "transparent_padding_px": {
-          "left": 10,
-          "top": 69,
-          "right": 10,
-          "bottom": 69
+          "left": 12,
+          "top": 37,
+          "right": 11,
+          "bottom": 36
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 11,
-          "y": 70,
-          "width": 1002,
-          "height": 372
+          "x": 12,
+          "y": 37,
+          "width": 1000,
+          "height": 438
         },
-        "sha256": "f1a8b24d6096df3aa5d28e5a2b27f48dfc4a02d5d1333c70a37884cff6d5e67f"
+        "sha256": "45784ca22d09e6abe229dc2c29b10bfb637bb7cebdd8b398954fd94d372928ba"
       },
       "display_export": {
         "path": "formation_open-240x120.png",
@@ -450,27 +428,27 @@
           "width": 240,
           "height": 120
         },
-        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside; vertical canvas padding retained",
+        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside a regular outer boundary with narrow antialiasing",
         "content_bbox_px": {
-          "x": 0,
-          "y": 14,
-          "width": 240,
-          "height": 92
+          "x": 2,
+          "y": 8,
+          "width": 236,
+          "height": 104
         },
         "transparent_padding_px": {
-          "left": 0,
-          "top": 14,
-          "right": 0,
-          "bottom": 14
+          "left": 2,
+          "top": 8,
+          "right": 2,
+          "bottom": 8
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
           "x": 3,
-          "y": 16,
-          "width": 235,
-          "height": 88
+          "y": 9,
+          "width": 234,
+          "height": 102
         },
-        "sha256": "2eb561b696b62fbc911804af49128e96cac6ad44d71fcae6d02cab6b184aed6c"
+        "sha256": "26f8049890617bb0ddae366c14224af620e6d9ab8520420115bbb974ad74da88"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -505,29 +483,26 @@
     "routed"
   ],
   "overview": "out_of_command.png",
-  "additional_previews": [
-    "预览/engaged_标题栏细节.jpg",
-    "预览/engaged_缩远检查.jpg",
-    "预览/engaged_八色标题栏.jpg"
-  ],
-  "runtime_integration": "not implemented",
+  "additional_previews": [],
+  "runtime_integration": "Artwork handoff only; use the 512px-wide PNGs, displaying circular badges at 100x100 UI size and formation plaques at 240x120. Hosted Steam URL replacement and cache refresh are code-side tasks; TTS runtime rendering is unverified.",
   "notes": [
-    "Revision 9 adds formation_close and formation_open only: six equal-scale top-view jingasa markers per image on a pale ivory aged-paper plaque with a dark-brown border. The 240x120 display canvas keeps 14px transparent padding above and below the flatter visible plaque. Both formation states share one mutually exclusive candidate position at (734,1042). This position was checked only against frame boundaries and one existing 槍足軽隊 front card; no all-troop or runtime validation, new previews, or overview was produced. Existing engaged and out_of_command asset entries remain unchanged.",
-    "Revision 8 changes only out_of_command to a rustic, non-reflective finish: matte aged wood, subdued dark-gold earth-toned edging, and a black diagonal slash. Its black-lacquered waisted gunbai shape, approximately 25-degree tilt, dark vermilion badge, no-lettering treatment, dimensions and placement remain unchanged. Engaged remains unchanged.",
-    "No new overview or board previews are generated for revision 8, at the user’s request. The current overview points to the standalone out_of_command.png; all older out_of_command and combined preview references are explicitly historical revision 5 assets.",
+    "Revision 11 makes both formation plaques taller and increases the vertical row spacing in formation_open. The six same-scale markers, 2:1 canvases and existing mutually exclusive 240x120 candidate placement are retained. Box area downsampling and matching regular alpha boundaries retain narrow antialiasing.",
+    "Use engaged.png and out_of_command.png (512x512) as the preferred circular runtime textures at 100x100 UI size, and formation_close.png and formation_open.png (512x256) at 240x120. Existing placement is unchanged. The display-size files are convenience exports. Upload/replacement of hosted Steam URLs and cache refresh belong to code-side integration; no TTS runtime validation has been performed.",
+    "All earlier engaged, out_of_command and combined previews are historical and do not represent revision 11. No new preview or overview was produced; overview points to standalone out_of_command.png.",
+    "The two circular badges and their metadata retain the revision 10 edge cleanup and contrast changes: matching regular circular alpha boundaries, dark outer lines and matte pale-gold bands; a charcoal gunbai and black slash with a pale outline. Same-size alpha channels are pixel-identical. Box area downsampling retains narrow antialiasing.",
+    "At 240x120, both formation plaques have alpha>0 bounds (2,8)-(238,112), 104px high; their alpha>=128 visible height is 102px, increased from 88px in revision 9. Same-size alpha channels match pixel-for-pixel.",
+    "Formation marker check: each 512x256 PNG contains six comparable-scale markers; the vertical separation of row centers is approximately 70px in formation_close and 89px in formation_open.",
+    "At alpha>0 the circular exports have uniform transparent margins: 15px at 1024x1024, 7px at 512x512, and 1px at 100x100. Both badges retain a narrow antialiased edge.",
     "The engaged badge uses a 100x100 canvas at (20,56), centered at (70,106). The out_of_command badge uses a separate 100x100 canvas at (892,56), centered at (942,106). Both can appear simultaneously; do not reuse one mutually exclusive display slot.",
     "The right badge is placed beyond the rightmost title boundary x=885 exclusive, leaving a 7px title gap and a 6px right-frame gap. No existing title needs to move or shrink.",
     "Cloud URLs intentionally empty; no runtime-hosting URLs have been provided.",
     "Only the area outside each circular badge is transparent; both badge interiors are solid.",
     "At a 300px-wide board each 100px placement becomes 25px; final readability requires TTS distance and angle testing.",
-    "Alpha>0 bounding boxes include faint antialias pixels; both 100px exports reach their canvas bounds while the main circular contours retain about one pixel of clearance.",
     "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
     "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 9,
-  "additional_overviews": [
-    "总览.jpg"
-  ],
+  "revision": 11,
+  "additional_overviews": [],
   "combined_previews": [],
   "previous_revision_previews": [
     {
@@ -536,7 +511,7 @@
         "out_of_command"
       ],
       "represents_current_artwork": false,
-      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not show the current revision 8 artwork.",
+      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not represent the current revision 11 artwork.",
       "overview": "out_of_command_总览.jpg",
       "out_of_command_previews": [
         {
@@ -636,6 +611,61 @@
         "预览/out_of_command_标题栏细节.jpg",
         "预览/out_of_command_缩远检查.jpg",
         "预览/双状态_八色标题栏.jpg"
+      ]
+    },
+    {
+      "revision": 9,
+      "asset_ids": [
+        "engaged"
+      ],
+      "represents_current_artwork": false,
+      "note": "Pre-revision-10 engaged previews, overview and detail images retained unchanged; they show the earlier circular edge and do not represent the current revision 11 artwork.",
+      "engaged_previews": [
+        {
+          "path": "预览/engaged_武田红_1200.png",
+          "pixel_size": {
+            "width": 1200,
+            "height": 1200
+          },
+          "kind": "existing_front_card_overlay",
+          "source": "../../合成成品/鉄砲足軽隊/01_武田_紅_鉄砲足軽隊.png"
+        },
+        {
+          "path": "预览/engaged_四字标题_1200.png",
+          "pixel_size": {
+            "width": 1200,
+            "height": 1200
+          },
+          "kind": "existing_front_card_overlay",
+          "source": "../../合成成品/槍足軽隊/03_上杉_白_槍足軽隊.png"
+        },
+        {
+          "path": "预览/engaged_五字标题_1200.png",
+          "pixel_size": {
+            "width": 1200,
+            "height": 1200
+          },
+          "kind": "existing_front_card_overlay",
+          "source": "../../合成成品/長柄足軽隊/06_佐竹_金_長柄足軽隊.png"
+        },
+        {
+          "path": "预览/engaged_炭灰示意_1200.png",
+          "pixel_size": {
+            "width": 1200,
+            "height": 1200
+          },
+          "kind": "illustrative_charcoal_back_only",
+          "background_color": "#24262B",
+          "not_a_tts_runtime_capture": true
+        }
+      ],
+      "additional_previews": [
+        "预览/engaged_标题栏细节.jpg",
+        "预览/engaged_缩远检查.jpg",
+        "预览/engaged_八色标题栏.jpg"
+      ],
+      "additional_overviews": [
+        "总览.jpg"
       ]
     }
   ]
