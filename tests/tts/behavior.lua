@@ -900,229 +900,292 @@ local function runUnitLayoutChecks()
     objects.uiclea=nil; unit_state.uiclea=nil
 end
 local function runUnitDefeatImageChecks()
-    local previousURL,previousAspect=UNIT_DEFEAT_IMAGE_URL,UNIT_DEFEAT_IMAGE_ASPECT
+    local previousURL,previousAspect,previousLayout=UNIT_DEFEAT_IMAGE_URL,UNIT_DEFEAT_IMAGE_ASPECT,copy(UNIT_ROUT_LAYOUT)
     UNIT_DEFEAT_IMAGE_URL=""
     UNIT_DEFEAT_IMAGE_ASPECT=2
-    local unit=token("敗走画像足軽","","udi001")
-    unit.tags.unit_nagaye_ashigaru=true
-    unit.tags.count_100=true
-    local foreign={name="既存家紋",url="https://example.invalid/foreign-decal.png",position={1,2,3},rotation={0,90,0},scale={0.4,0.5,0.1}}
-    local similar={name="SG_UNIT_DEFEAT_FRONT_EXTRA",url="https://example.invalid/similar-name.png",position={2,3,4},rotation={0,0,0},scale={0.2,0.3,0.1}}
-    unit.decals={copy(foreign),copy(similar)}
-    unit_state.udi001={front_value=5,back_value=4,manual_defeat_visible=true}
-    setupUnit(unit,getUnitConfig(unit))
-    local function owned(object,name)
-        local result,count=nil,0
-        for _,decal in ipairs(object.decals) do
-            if decal.name==name then result=decal; count=count+1 end
+    setUnitRoutSnapshot({})
+    local created={}
+    local function make(guid)
+        local object=token("敗走画像足軽","",guid)
+        object.tags.unit_nagaye_ashigaru=true; object.tags.count_100=true
+        unit_state[guid]={front_value=5,back_value=4,manual_defeat_visible=true}
+        created[#created+1]=object
+        return object
+    end
+    local function roots(object,side)
+        return findNode(object.UI.xmlTable,"sgub_rout_"..side),findNode(object.UI.xmlTable,"sgub_rout_"..side.."_image")
+    end
+    local function visible(object,side)
+        local root,node=roots(object,side)
+        return root~=nil and node~=nil and root.attributes.active=="true" and node.attributes.active=="true"
+    end
+    local function graphic(object,side)
+        local root,node=roots(object,side)
+        assert(root and node,"Missing rout Canvas: "..side)
+        local p,scale=vector(root.attributes.position),vector(root.attributes.scale)
+        return {root=root,node=node,url=objectAssetURL(object,node.attributes.image) or node.attributes.image,
+            position={p[1]/100,-p[3]/100,p[2]/100},
+            width=tonumber(node.attributes.width)*scale[1]/100,
+            height=tonumber(node.attributes.height)*scale[2]/100}
+    end
+    local function hidden(object,message)
+        eq(visible(object,"front"),false,message.." no front overlay")
+        eq(visible(object,"back"),false,message.." no rear overlay")
+    end
+    local function displayed(object,url,message)
+        local side=object.is_face_down and "back" or "front"
+        eq(visible(object,side),true,message.." current physical face is active")
+        eq(visible(object,side=="back" and "front" or "back"),false,message.." opposite face is inactive")
+        for _,face in ipairs({"front","back"}) do
+            local g=graphic(object,face)
+            eq(g.url,url,message.." exact asset on "..face)
+            eq(g.node.tag,"Image",message.." Canvas Image on "..face)
+            eq(g.node.attributes.raycastTarget,"false",message.." image passes mouse through "..face)
+            eq(g.root.attributes.raycastTarget,"false",message.." root passes mouse through "..face)
+            eq(g.node.attributes.onClick,nil,message.." no image click handler "..face)
         end
-        return result,count
+        eq(select(2,managedDecal(object,"SG_UNIT_DEFEAT_FRONT")),0,message.." removes legacy front decal")
+        eq(select(2,managedDecal(object,"SG_UNIT_DEFEAT_BACK")),0,message.." removes legacy rear decal")
     end
-    local function ownCount(object)
-        return select(2,owned(object,"SG_UNIT_DEFEAT_FRONT"))+select(2,owned(object,"SG_UNIT_DEFEAT_BACK"))
-    end
+    local unit=make("udi001")
+    local foreign={name="既存家紋",url="https://example.invalid/foreign-decal.png",position={1,2,3},rotation={0,90,0},scale={.4,.5,.1}}
+    local similar={name="SG_UNIT_DEFEAT_FRONT_EXTRA",url="https://example.invalid/similar-name.png",position={2,3,4},rotation={0,0,0},scale={.2,.3,.1}}
+    unit.decals={copy(foreign),copy(similar),{name="SG_UNIT_DEFEAT_FRONT",url="https://example.invalid/old-rout.png"},
+        {name="SG_UNIT_DEFEAT_BACK",url="https://example.invalid/old-rout.png"}}
+    unit.UI.xmlTable={{tag="Panel",attributes={id="foreign_rout_neighbor",active="true"}}}
+    unit.UI.assets={{name="foreign_rout_asset",url="https://example.invalid/foreign-ui.png"}}
     local function checkForeign(message)
-        local retained=owned(unit,"既存家紋")
-        local retainedSimilar=owned(unit,"SG_UNIT_DEFEAT_FRONT_EXTRA")
-        eq(retained and retained.url,foreign.url,message.." foreign URL")
+        local retained=managedDecal(unit,"既存家紋")
+        eq(retained and retained.url,foreign.url,message.." foreign decal URL")
         near(retained.position[1],foreign.position[1],message.." foreign position")
         near(retained.rotation[2],foreign.rotation[2],message.." foreign rotation")
         near(retained.scale[2],foreign.scale[2],message.." foreign scale")
-        eq(retainedSimilar and retainedSimilar.url,similar.url,message.." similar prefix is not owned")
+        eq(managedDecal(unit,"SG_UNIT_DEFEAT_FRONT_EXTRA").url,similar.url,message.." similar prefix retained")
+        eq(findNode(unit.UI.xmlTable,"foreign_rout_neighbor").attributes.active,"true",message.." foreign UI retained")
+        eq(objectAssetURL(unit,"foreign_rout_asset"),"https://example.invalid/foreign-ui.png",message.." foreign asset retained")
     end
+    setupUnit(unit,getUnitConfig(unit)); flush()
     eq(unit.buttons[3].label,"敗走","empty image URL retains rear defeat text")
     eq(unit.buttons[4].label,"敗走","empty image URL retains front defeat text")
-    eq(ownCount(unit),0,"empty image URL submits no empty decal")
+    hidden(unit,"missing image")
+    eq(select(2,managedDecal(unit,"SG_UNIT_DEFEAT_FRONT")),0,"missing image cleans stale front decal")
+    eq(select(2,managedDecal(unit,"SG_UNIT_DEFEAT_BACK")),0,"missing image cleans stale rear decal")
     local imageA="https://example.invalid/unit-defeat-a.png?part=a=b&v=1"
     local imageB="https://example.invalid/unit-defeat-b.png"
-    UNIT_DEFEAT_IMAGE_URL=" \t"..imageA.."\194\160"
-    updateDefeatText(unit)
-    eq(ownCount(unit),2,"valid shared URL creates exactly one marker per face")
-    eq(unit.buttons[3].label,"","successful image submission suppresses rear text")
-    eq(unit.buttons[4].label,"","successful image submission suppresses front text")
-    local front=owned(unit,"SG_UNIT_DEFEAT_FRONT")
-    local back=owned(unit,"SG_UNIT_DEFEAT_BACK")
-    eq(front.url,imageA,"image URL trims surrounding whitespace and nonbreaking space")
-    eq(back.url,imageA,"both faces use exact shared URL including query")
-    -- MoonSharp's lazy trim failed at only 65 characters; realistic Steam URLs
-    -- and long query strings must flow through the actual decal setup path.
     local function checkURL(value,expected,message)
-        UNIT_DEFEAT_IMAGE_URL=value
-        updateDefeatText(unit)
-        eq(ownCount(unit),2,message.." has both face decals")
-        eq(owned(unit,"SG_UNIT_DEFEAT_FRONT").url,expected,message.." preserves complete front URL")
-        eq(owned(unit,"SG_UNIT_DEFEAT_BACK").url,expected,message.." preserves complete rear URL")
-        eq(unit.buttons[3].label,"",message.." suppresses text fallback")
+        UNIT_DEFEAT_IMAGE_URL=value; updateDefeatText(unit); flush()
+        displayed(unit,expected,message)
+        eq(unit.buttons[3].label,"",message.." suppresses rear text fallback")
+        eq(unit.buttons[4].label,"",message.." suppresses front text fallback")
     end
+    checkURL(" \t"..imageA.."\194\160",imageA,"trim spaces and UTF-8 NBSP")
     local steamURL="https://steamusercontent-a.akamaihd.net/ugc/17054381960929243766/8D21B8759B3A9DFDEF549D1E5ECCE4E8D5DC9E5E/"
-    checkURL(steamURL,steamURL,"real length Steam CDN URL")
-    local longPrefix="https://example.invalid/"
+    checkURL(steamURL,steamURL,"real Steam CDN URL")
+    local prefix="https://example.invalid/"
     for _,length in ipairs({64,65,106,200,512,2048,4096,16384}) do
-        local longURL=longPrefix..string.rep("a",length-#longPrefix)
+        local longURL=prefix..string.rep("a",length-#prefix)
         checkURL(longURL,longURL,"URL length "..length)
     end
     local queryURL="https://example.invalid/mark(1).png?path=a=b&filter=[one](two)&escaped=%20%25&tail=++#image"
     checkURL(queryURL,queryURL,"query punctuation remains literal")
-    checkURL(" \t\r\n"..steamURL.."\r\n\t ",steamURL,"surrounding ASCII whitespace")
-    checkURL(" "..steamURL.." ",steamURL,"literal MoonSharp NBSP")
-    checkURL("\194\160"..steamURL.."\194\160",steamURL,"UTF-8 byte-pair NBSP")
-    for _,whitespace in ipairs({"　","\227\128\128","﻿","\239\187\191"}) do
-        checkURL(whitespace..steamURL..whitespace,steamURL,"surrounding full-width space or BOM")
+    for _,whitespace in ipairs({" \t\r\n"," ","\194\160","　","\227\128\128","﻿","\239\187\191"}) do
+        checkURL(whitespace..steamURL..whitespace,steamURL,"surrounding ASCII or Unicode whitespace")
     end
-    local savedMatch,savedGsub,savedGmatch=string.match,string.gsub,string.gmatch
-    local function forbiddenPattern() error("Defeat URL processing must not invoke Lua patterns") end
-    string.match,string.gsub,string.gmatch=forbiddenPattern,forbiddenPattern,forbiddenPattern
-    local patternFree,patternError=pcall(checkURL," \t"..steamURL.." \r\n",steamURL,"pattern-free URL processing")
-    string.match,string.gsub,string.gmatch=savedMatch,savedGsub,savedGmatch
-    eq(patternFree,true,"long URL processing avoids match/gsub/gmatch: "..tostring(patternError))
     checkURL(imageA,imageA,"restore URL after long-address regression")
-    front=owned(unit,"SG_UNIT_DEFEAT_FRONT")
-    back=owned(unit,"SG_UNIT_DEFEAT_BACK")
-    near(front.position[1],0.25,"front image center uses calibrated artwork X 450")
-    near(back.position[1],-0.25,"rear image mirrors calibrated relative artwork X")
-    near(front.position[3],0.2,"front image center uses artwork Y 720")
-    near(back.position[3],0.2,"rear image retains artwork Y")
-    near(front.position[2],.1+UNIT_DEFEAT_FRONT_GAP+UNIT_SURFACE_CLEARANCE,"front defeat decal retains configured clearance beyond calibrated plane")
-    near(back.position[2],-.1-UNIT_DEFEAT_BACK_GAP-UNIT_SURFACE_CLEARANCE,"rear defeat decal retains configured clearance beyond calibrated plane")
-    near(front.scale[1],0.8,"default image width uses 480 artwork pixels")
-    near(front.scale[2],0.4,"default image aspect is two to one")
-    near(back.scale[1],0.8,"rear image width matches front")
-    near(back.scale[2],0.4,"rear image aspect matches front")
-    near(front.rotation[1],90,"front decal projection rotation X")
-    near(front.rotation[2],180,"front defeat artwork rotated upright")
-    near(back.rotation[1],270,"rear decal projection rotation X")
-    near(back.rotation[2],0,"rear defeat artwork rotated upright")
-    checkForeign("successful image update preserves")
-    local writes=unit.decalWrites
-    for n=1,3 do updateDefeatText(unit) end
-    setupUnit(unit,getUnitConfig(unit))
-    eq(unit.decalWrites,writes,"same URL and geometry never rewrites identical decals")
-    eq(ownCount(unit),2,"repeated setup never duplicates image markers")
-    table.insert(unit.decals,copy(front))
-    updateDefeatText(unit)
-    eq(ownCount(unit),2,"duplicate old managed decal is normalized")
-    checkForeign("duplicate cleanup preserves")
-    UNIT_DEFEAT_IMAGE_URL=imageB
-    updateDefeatText(unit)
-    eq(owned(unit,"SG_UNIT_DEFEAT_FRONT").url,imageB,"URL replacement updates front image")
-    eq(owned(unit,"SG_UNIT_DEFEAT_BACK").url,imageB,"URL replacement updates rear image")
-    checkForeign("URL replacement preserves")
-    unit.is_face_down=true
-    updateDefeatText(unit)
-    eq(ownCount(unit),2,"physical flip keeps both face decals without duplication")
-    eq(unit.is_face_down,true,"image update cannot change physical face")
-    unit.scale={x=2,y=3,z=0.5}
-    unit.bounds={size={x=4,y=0.6,z=1},offset={x=0.4,y=0.3,z=-0.2}}
-    updateDefeatText(unit)
-    front=owned(unit,"SG_UNIT_DEFEAT_FRONT"); back=owned(unit,"SG_UNIT_DEFEAT_BACK")
-    near(front.position[1],0.45,"scaled front image converts model offset to calibrated local X")
-    near(back.position[1],-0.05,"scaled rear image keeps offset while mirroring relative X")
-    near(front.position[3],-0.2,"scaled image converts model offset to local Z")
-    near(back.position[3],-0.2,"scaled rear image keeps local Z")
-    near(front.scale[1],0.8,"scaled model preserves artwork width proportion")
-    near(front.scale[2],0.4,"scaled model preserves artwork height proportion")
-    near(front.position[2],.2+UNIT_DEFEAT_FRONT_GAP+UNIT_SURFACE_CLEARANCE,"nonuniform front defeat clearance is applied in object-local units")
-    near(back.position[2],-UNIT_DEFEAT_BACK_GAP-UNIT_SURFACE_CLEARANCE,"nonuniform rear defeat clearance points out of the opposite face")
-    unit.scale={x=1,y=1,z=1}
-    unit.bounds={size={x=2,y=0.2,z=2},offset={x=0,y=0,z=0}}
-    UNIT_DEFEAT_IMAGE_ASPECT=0.25
-    updateDefeatText(unit)
-    front=owned(unit,"SG_UNIT_DEFEAT_FRONT")
-    near(front.scale[2],700/1200*2,"tall image is limited to 700 artwork pixels")
-    near(front.scale[1]/front.scale[2],0.25,"tall image clamp retains configured aspect")
+    local front,back=graphic(unit,"front"),graphic(unit,"back")
+    near(front.position[1],1/6,"front rout centered in 1000-pixel body at X500")
+    near(back.position[1],-1/6,"rear rout mirrors body center X")
+    near(front.position[3],1/6,"rout body center Y700")
+    near(back.position[3],1/6,"rear rout body center Y700")
+    near(front.position[2],.1+UNIT_ROUT_LAYOUT.surface_clearance,"front rout follows real surface")
+    near(back.position[2],-.1+.099-UNIT_ROUT_LAYOUT.surface_clearance,"rear rout retains calibrated near plane")
+    near(front.width,1,"default rout width uses 600 pixels")
+    near(front.height,.5,"two-to-one rout aspect")
+    eq(front.root.attributes.rotation,"0 0 180","front rout art upright")
+    eq(back.root.attributes.rotation,"180 0 0","rear rout art upright")
+    checkForeign("initial rout mount")
+    local writes,xml,assets,attributes=unit.decalWrites,unit.UI.xmlCalls,unit.UI.assetCalls,unit.UI.attributeCalls
+    local scanBefore=scans
+    for n=1,3 do refreshUnitRoutOverlays(); flush() end
+    eq(scans,scanBefore,"rout refresh never scans all objects")
+    eq(unit.decalWrites,writes,"stable rout refresh does not rewrite decals")
+    eq(unit.UI.xmlCalls,xml,"stable rout refresh does not rebuild XML")
+    eq(unit.UI.assetCalls,assets,"stable rout refresh does not reload images")
+    eq(unit.UI.attributeCalls,attributes,"stable rout refresh writes no unchanged UI attributes")
+    checkURL(imageB,imageB,"new rout URL replaces both face assets")
+    unit.is_face_down=true; refreshUnitRoutOverlays(); flush()
+    displayed(unit,imageB,"physical flip swaps visible face")
+    unit.scale={x=2,y=3,z=.5}; unit.bounds={size={x=4,y=.6,z=1},offset={x=.4,y=.3,z=-.2}}
+    updateDefeatText(unit); flush()
+    front,back=graphic(unit,"front"),graphic(unit,"back")
+    near(front.position[1],.2+1/6,"scaled front includes model center offset")
+    near(back.position[1],.2-1/6,"scaled rear mirrors around model center")
+    near(front.position[3],-.4+1/6,"scaled rout uses normalized model depth")
+    near(front.position[2],.2+UNIT_ROUT_LAYOUT.surface_clearance,"scaled front surface clearance")
+    near(back.position[2],.099-UNIT_ROUT_LAYOUT.surface_clearance,"scaled rear surface clearance")
+    near(front.width,1,"nonuniform scaling retains artwork proportion")
+    unit.scale={x=1,y=1,z=1}; unit.bounds={size={x=2,y=.2,z=2},offset={x=0,y=0,z=0}}
+    UNIT_DEFEAT_IMAGE_ASPECT=.25; updateDefeatText(unit); flush()
+    front=graphic(unit,"front")
+    near(front.height,UNIT_ROUT_LAYOUT.max_height/1200*2,"tall marker stays inside body height limit")
+    near(front.width/front.height,.25,"tall marker retains aspect ratio")
     for _,aspect in ipairs({0,-1,math.huge,0/0}) do
-        UNIT_DEFEAT_IMAGE_ASPECT=aspect
-        updateDefeatText(unit)
-        front=owned(unit,"SG_UNIT_DEFEAT_FRONT")
-        eq(front.scale[1]>0 and front.scale[2]>0 and front.scale[1]<math.huge and front.scale[2]<math.huge,true,"invalid aspect remains finite and positive")
-        eq(front.scale[2]<=700/1200*2+0.00001,true,"invalid aspect never exceeds image height limit")
+        UNIT_DEFEAT_IMAGE_ASPECT=aspect; updateDefeatText(unit); flush()
+        front=graphic(unit,"front")
+        eq(front.width>0 and front.height>0 and front.width<math.huge and front.height<math.huge,true,"invalid aspect stays finite")
+        eq(front.height<=UNIT_ROUT_LAYOUT.max_height/1200*2+.00001,true,"invalid aspect stays within height limit")
     end
     UNIT_DEFEAT_IMAGE_ASPECT=2
-    for _,invalid in ipairs({"", "file:///local/mark.png", "https://example.invalid/a b.png",
-        "https://example.invalid/a\tb.png", "https://example.invalid/a\nb.png",
-        "https://example.invalid/a b.png", "https://example.invalid/a\194\160b.png",
-        "https://example.invalid/a　b.png", "https://example.invalid/a\227\128\128b.png",
-        "https://example.invalid/a﻿b.png", "https://example.invalid/a\239\187\191b.png",17}) do
-        UNIT_DEFEAT_IMAGE_URL=imageA
-        updateDefeatText(unit)
-        eq(ownCount(unit),2,"valid URL restores image before invalid URL test")
-        UNIT_DEFEAT_IMAGE_URL=invalid
-        updateDefeatText(unit)
-        eq(ownCount(unit),0,"blank or invalid URL removes old managed images")
-        eq(unit.buttons[3].label,"敗走","blank or invalid URL restores rear text")
-        eq(unit.buttons[4].label,"敗走","blank or invalid URL restores front text")
-        checkForeign("invalid URL cleanup preserves")
+    for _,invalid in ipairs({"","file:///local/mark.png","https://example.invalid/a b.png","https://example.invalid/a\tb.png",
+        "https://example.invalid/a\nb.png","https://example.invalid/a b.png","https://example.invalid/a\194\160b.png",
+        "https://example.invalid/a　b.png","https://example.invalid/a\227\128\128b.png","https://example.invalid/a﻿b.png",
+        "https://example.invalid/a\239\187\191b.png",17}) do
+        checkURL(imageA,imageA,"restore valid URL before invalid test")
+        UNIT_DEFEAT_IMAGE_URL=invalid; updateDefeatText(unit); flush()
+        hidden(unit,"invalid rout URL")
+        eq(unit.buttons[3].label,"敗走","invalid image retains rear text fallback")
+        eq(unit.buttons[4].label,"敗走","invalid image retains front text fallback")
+        checkForeign("invalid URL cleanup")
     end
-    UNIT_DEFEAT_IMAGE_URL=imageA
-    local normalGet,normalSet=unit.getDecals,unit.setDecals
-    unit.getDecals=function() error("simulated getDecals unavailable") end
-    updateDefeatText(unit)
-    eq(unit.buttons[3].label,"敗走","decal read error retains text fallback")
-    unit.getDecals=normalGet
-    unit.setDecals=function() error("simulated setDecals unavailable") end
-    updateDefeatText(unit)
-    eq(unit.buttons[4].label,"敗走","decal write error retains text fallback")
-    eq(ownCount(unit),0,"failed write cannot be treated as a successful image mount")
-    unit.setDecals=normalSet
-    updateDefeatText(unit)
-    eq(ownCount(unit),2,"later successful update recovers from transient API error")
-    eq(unit.buttons[3].label,"","recovered image clears fallback text")
-    checkForeign("error recovery preserves")
-    unit_state.udi001.manual_defeat_visible=false
-    unit_state.udi001.back_value=3
-    updateDefeatText(unit)
-    eq(ownCount(unit),0,"clearing defeat state removes both image markers")
-    eq(unit.buttons[3].label,"","clearing defeat state leaves no rear text")
-    eq(unit.buttons[4].label,"","clearing defeat state leaves no front text")
-    checkForeign("state cleanup preserves")
-    unit_state.udi001.back_value=0
-    updateDefeatText(unit)
-    eq(ownCount(unit),2,"automatic zero rear morale adds image markers")
-    unit_state.udi001.back_value=2
-    updateDefeatText(unit)
-    eq(ownCount(unit),0,"positive rear morale removes automatic image markers")
-    toggleDefeatText(unit)
-    eq(ownCount(unit),2,"manual defeat toggle restores image mode")
-    local saved=onSave(); writes=unit.decalWrites
-    unit_state={}; onLoad(saved); flush(); tick()
-    eq(unit_state.udi001.manual_defeat_visible,true,"manual image condition survives save/load")
-    eq(unit_state.udi001.back_value,2,"rear morale survives image save/load")
-    eq(ownCount(unit),2,"save/load does not duplicate image markers")
-    eq(unit.decalWrites,writes,"save/load recognizes already identical image markers")
-    eq(unit.buttons[3].label,"","save/load retains rear image display")
-    eq(unit.buttons[4].label,"","save/load retains front image display")
-    checkForeign("save/load preserves")
+    checkURL(imageA,imageA,"restore rout image")
+    -- A duplicate URL must reuse its registered asset, not enqueue the same image twice.
+    UNIT_DEFEAT_IMAGE_URL=UNIT_NUMBER_BACK_IMAGES[4]; updateDefeatText(unit); flush()
+    displayed(unit,UNIT_NUMBER_BACK_IMAGES[4],"duplicate registered rout URL")
+    local duplicateCount=0
+    for _,asset in ipairs(unit.UI.assets) do if asset.url==UNIT_DEFEAT_IMAGE_URL then duplicateCount=duplicateCount+1 end end
+    eq(duplicateCount,1,"duplicate rout/digit URL registered only once")
+    UNIT_DEFEAT_IMAGE_URL="https://example.invalid/foreign-ui.png"; updateDefeatText(unit); flush()
+    displayed(unit,UNIT_DEFEAT_IMAGE_URL,"duplicate foreign asset URL")
+    duplicateCount=0
+    for _,asset in ipairs(unit.UI.assets) do if asset.url==UNIT_DEFEAT_IMAGE_URL then duplicateCount=duplicateCount+1 end end
+    eq(duplicateCount,1,"rout reuses foreign URL without duplicating or deleting it")
+    checkForeign("duplicate URL handling")
+    checkURL(imageA,imageA,"restore independent rout URL")
+    unit_state.udi001.manual_defeat_visible=false; unit_state.udi001.back_value=3
+    updateDefeatText(unit); flush(); hidden(unit,"clear rout state")
+    eq(unit.buttons[3].label,"","clear rout hides text too")
+    unit_state.udi001.back_value=0; updateDefeatText(unit); flush()
+    displayed(unit,imageA,"automatic rear-zero rout")
+    changeBackValue(unit,"White",false); flush(); hidden(unit,"positive recovery removes rout")
+    toggleDefeatText(unit); flush(); displayed(unit,imageA,"manual rout toggle")
+    local saved=onSave(); unit_state={}; onLoad(saved); flush(); tick()
+    eq(unit_state.udi001.manual_defeat_visible,true,"manual rout survives save/load")
+    displayed(unit,imageA,"saved rout reappears without decal duplication")
+    checkForeign("save/load")
+    resetUnit(unit); flush(); hidden(unit,"explicit unit reset")
+    unit_state.udi001.back_value=0; updateDefeatText(unit); flush()
+    hotkeys["士気快捷調整"].callback("White",unit,nil,false)
+    changeBackValue(unit,"White",false)
+    hotkeys["士気快捷調整"].callback("White",unit,nil,true)
+    flush(); hidden(unit,"quick refill immediately removes rout overlay")
+    -- Physics fixture uses world AABBs and inverse transforms, independently of UI positions.
+    -- Deliberately avoid changing token() globally; older tests model no physics.
+    local physical=make("urphys")
+    physical.world={x=31,y=8,z=-19}; physical.yaw=0
+    physical.positionToLocal=function(p)
+        local x,y,z=(p.x or p[1])-physical.world.x,(p.y or p[2])-physical.world.y,(p.z or p[3])-physical.world.z
+        local a=math.rad(physical.yaw); local rx,rz=x*math.cos(a)-z*math.sin(a),x*math.sin(a)+z*math.cos(a)
+        if physical.is_face_down then y,rz=-y,-rz end
+        return {x=rx/physical.scale.x,y=y/physical.scale.y,z=rz/physical.scale.z}
+    end
+    physical.positionToWorld=function(p)
+        local x,y,z=(p.x or p[1])*physical.scale.x,(p.y or p[2])*physical.scale.y,(p.z or p[3])*physical.scale.z
+        if physical.is_face_down then y,z=-y,-z end
+        local a=math.rad(physical.yaw)
+        return {x=physical.world.x+x*math.cos(a)+z*math.sin(a),y=physical.world.y+y,z=physical.world.z-x*math.sin(a)+z*math.cos(a)}
+    end
+    physical.getPosition=function() return copy(physical.world) end
+    physical.getRotation=function() return {x=0,y=physical.yaw,z=physical.is_face_down and 180 or 0} end
+    local commander=token("武將","team=iwatsuke_shu\nrole=main","urcmd1")
+    created[#created+1]=commander
+    commander.collider={center={x=31,y=8.25,z=-19},size={x=.8,y=.3,z=.8}}
+    commander.getBounds=function() commander.boundsReads=commander.boundsReads+1; return copy(commander.collider) end
+    local snapshot={urcmd1={object=commander,team="iwatsuke_shu",role="main"}}
+    setUnitRoutSnapshot(snapshot)
+    setupUnit(physical,getUnitConfig(physical)); flush()
+    near(graphic(physical,"front").position[2],.42,"commander top lifts rout plus small clearance")
+    local function refreshHeight(expected,message)
+        refreshUnitRoutOverlays(); flush()
+        near(graphic(physical,physical.is_face_down and "back" or "front").position[2],expected,message)
+    end
+    local baseline=.1+UNIT_ROUT_LAYOUT.surface_clearance
+    commander.held_by_color="White"; refreshHeight(baseline,"held commander is excluded")
+    commander.held_by_color=nil; commander.loading_custom=true; refreshHeight(baseline,"loading commander is excluded")
+    commander.loading_custom=false; commander.spawning=true; refreshHeight(baseline,"spawning commander is excluded")
+    commander.spawning=false
+    commander.collider.center.x=33; refreshHeight(baseline,"neighbor commander cannot raise marker")
+    commander.collider.center.x=31; commander.collider.center.y=9
+    refreshHeight(baseline,"airborne commander cannot raise marker")
+    commander.collider.center.y=8.25
+    snapshot.urcmd1.role="unit"; setUnitRoutSnapshot(snapshot); refreshHeight(baseline,"unit role is not treated as commander")
+    for _,role in ipairs({"main","deputy1","deputy2"}) do
+        snapshot.urcmd1.role=role; setUnitRoutSnapshot(snapshot); refreshHeight(.42,"eligible commander role "..role)
+    end
+    objects.urcmd1=nil; refreshHeight(baseline,"removed commander is excluded from stale snapshot")
+    objects.urcmd1=commander
+    commander.collider.center.y=8.1
+    refreshHeight(baseline,"same-table commander is not stacked on top")
+    commander.collider.center.y=8.25
+    physical.is_face_down=true; refreshHeight(-.42,"rear rout lifts outward above stacked commander")
+    displayed(physical,imageA,"stacked rear only displays rear image")
+    physical.is_face_down=false; physical.yaw=90
+    refreshHeight(.42,"rotated and translated tile still finds commander")
+    physical.scale={x=2,y=3,z=.5}; physical.bounds={size={x=4,y=.6,z=1},offset={x=0,y=0,z=0}}
+    commander.collider.center.y=8.45
+    refreshHeight(.22,"scaled tile transforms commander world height into local space")
+    physical.is_face_down=true; refreshHeight(-.22,"scaled rear commander height points outward")
+    setUnitRoutSnapshot({}); refreshHeight(-.011,"removing last commander returns rear to calibrated near plane")
+    onObjectDrop("White",commander); flush(); tick()
+    near(graphic(physical,"back").position[2],-.22,"existing panel timer refreshes newly registered commander")
+    onObjectEnterContainer(nil,commander); flush(); tick()
+    near(graphic(physical,"back").position[2],-.011,"commander in container removed from registry even if object still exists")
+    local readBefore=commander.boundsReads
+    local scanBeforeRefresh=scans
+    refreshUnitRoutOverlays(); flush()
+    eq(scans,scanBeforeRefresh,"commander refresh uses supplied registry without world scan")
+    eq(commander.boundsReads,readBefore,"empty snapshot does not inspect removed commander")
+    -- Resource loads must resolve against current rout state and current physical face.
+    local loading=make("urload"); loading.UI.holdAssets=true
+    setupUnit(loading,getUnitConfig(loading)); flush()
+    hidden(loading,"pending custom assets")
+    unit_state.urload.manual_defeat_visible=false
+    loading.is_face_down=true
+    updateDefeatText(loading)
+    loading.UI.holdAssets=false; loading.UI.loading=false; flush()
+    hidden(loading,"rout cleared while image was loading")
+    unit_state.urload.manual_defeat_visible=true; updateDefeatText(loading); flush()
+    displayed(loading,imageA,"later rout uses current rear face")
+    loading.tags.unit_nagaye_ashigaru=nil; clearUnitCounterVisuals(loading); flush()
+    hidden(loading,"removed unit tag cleans rout UI")
+    -- Model readiness regression: do not measure or build while model is spawning/loading.
     UNIT_DEFEAT_IMAGE_URL=""
-    setupUnit(unit,getUnitConfig(unit))
-    eq(ownCount(unit),0,"removing global URL cleans images recovered from a saved object")
-    eq(unit.buttons[3].label,"敗走","removing global URL restores saved defeat condition as text")
-    local loading=token("加载中的足軽","","udload")
-    loading.tags.unit_nagaye_ashigaru=true
-    loading.tags.count_100=true
-    loading.loading_custom=true
+    local model=token("加载中的足軽","","udload")
+    created[#created+1]=model
+    model.tags.unit_nagaye_ashigaru=true; model.tags.count_100=true; model.loading_custom=true
     unit_state.udload={front_value=2,back_value=2,manual_defeat_visible=false}
     local queued=#conditions
-    setupUnit(loading,getUnitConfig(loading))
-    setupUnit(loading,getUnitConfig(loading))
-    eq(#conditions,queued+1,"repeated setup queues only one readiness waiter")
-    eq(#loading.buttons,0,"loading model has no prematurely positioned buttons")
-    eq(loading.boundsReads,0,"loading model bounds are not measured prematurely")
-    loading.tags.count_100=nil; loading.tags.count_200=true
-    loading.loading_custom=false
-    flush()
-    eq(#loading.buttons,6,"loaded model gets right rail buttons")
-    numberImage(loading,"FRONT","COUNT",2,"readiness callback uses latest quantity tag")
-    eq(unit_state.udload.front_value,2,"readiness callback preserves existing morale")
+    setupUnit(model,getUnitConfig(model)); setupUnit(model,getUnitConfig(model))
+    eq(#conditions,queued+1,"repeated setup queues one model readiness waiter")
+    eq(#model.buttons,0,"loading model has no prematurely positioned buttons")
+    eq(model.boundsReads,0,"loading model bounds are not measured prematurely")
+    model.tags.count_100=nil; model.tags.count_200=true; model.loading_custom=false; flush()
+    eq(model.buttons[1].click_function,"changeFrontValue","loaded model gets front morale button")
+    eq(model.buttons[6].click_function,"toggleUnitActed","loaded model gets rear action button")
+    numberImage(model,"FRONT","COUNT",2,"readiness uses latest quantity tag")
+    eq(unit_state.udload.front_value,2,"readiness preserves morale")
     local destroyed=token("移除中的足軽","","udgone")
-    destroyed.tags.unit_nagaye_ashigaru=true
-    destroyed.spawning=true
-    setupUnit(destroyed,getUnitConfig(destroyed))
-    objects.udgone=nil
-    flush()
+    destroyed.tags.unit_nagaye_ashigaru=true; destroyed.spawning=true
+    setupUnit(destroyed,getUnitConfig(destroyed)); objects.udgone=nil; flush()
     eq(#destroyed.buttons,0,"destroyed pending model is not rebuilt")
-    UNIT_DEFEAT_IMAGE_URL=previousURL
-    UNIT_DEFEAT_IMAGE_ASPECT=previousAspect
-    eq(UNIT_DEFEAT_IMAGE_URL,previousURL,"image regressions restore configured shared URL")
+    for _,object in ipairs(created) do
+        if unit_state[object.guid] then
+            unit_state[object.guid].manual_defeat_visible=false; unit_state[object.guid].back_value=3
+            if object.tags.unit_nagaye_ashigaru then updateDefeatText(object) end
+        end
+    end
+    flush(); setUnitRoutSnapshot({})
+    UNIT_DEFEAT_IMAGE_URL,UNIT_DEFEAT_IMAGE_ASPECT,UNIT_ROUT_LAYOUT=previousURL,previousAspect,previousLayout
+    eq(UNIT_DEFEAT_IMAGE_URL,previousURL,"rout tests restore global image URL")
 end
 local function runUnitProgressionChecks()
     local originalDefeatURL=UNIT_DEFEAT_IMAGE_URL

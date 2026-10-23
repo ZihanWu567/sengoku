@@ -1,12 +1,18 @@
--- 兵種＋備隊面板 v2.17.0：陣形TQ修正・行動連動・士氣上限表示（2026-10-23）
+-- 兵種＋備隊面板 v2.18.0：敗走大圖・武將疊放避讓（2026-10-23）
 MIN_VALUE = 0
 
 -- 全军共用的敗走贴图。上传后只在这里填一次完整图片直链。
 -- 留空时暂用「敗走」文字；无需在每个部队 Description 重复填写。
-UNIT_DEFEAT_IMAGE_URL = "https://steamusercontent-a.akamaihd.net/ugc/12074515027345295373/48175076490FD0943949738C762DC72B744FB89A/"
-UNIT_DEFEAT_IMAGE_ASPECT = 1
+UNIT_DEFEAT_IMAGE_URL = "https://steamusercontent-a.akamaihd.net/ugc/17888454137110814569/47DFB8A61C7882C595C5F3F4C7AC1618A57C695B/"
+UNIT_DEFEAT_IMAGE_ASPECT = 1.5 -- 当前透明 PNG 为 1200×800。
+-- 敗走大图：1200棋面主体区域（X0～1000、Y200～1200）中央。
+-- 间距为物件局部单位；仅显示层抬高，不生成实体、不拦截鼠标。
+UNIT_ROUT_LAYOUT = {
+    x=500, y=700, width=600, max_height=500,
+    surface_clearance=0.01, commander_clearance=0.02, contact_tolerance=0.08
+}
 
--- 正面数字、陣旗、敗走贴花的实测偏移；背面数值栏 Object.UI 不使用贴花偏移。
+-- 数字、陣旗贴花的实测偏移；新敗走图使用独立UI位置，不用贴花偏移。
 UNIT_DEFEAT_FRONT_GAP = -0.01
 UNIT_DEFEAT_BACK_GAP = -0.099 -- 沿用用户 2026-10-16 提供的当前配置。
 
@@ -205,6 +211,7 @@ end
 function onLoad(saved_data)
     unit_state = {}
     unitFlipPending = {}
+    resetUnitRoutOverlays()
     registerUnitMoraleQuickKey()
     if type(saved_data) == "string" and saved_data ~= "" then
         local ok, data = pcall(JSON.decode, saved_data)
@@ -429,10 +436,7 @@ local UNIT_COUNTER_LAYOUT = {
     action_size = 200,
     surface_gap = 0.01,
     -- 经典按钮的尺寸换算集中在这里；不是 Object.UI 阵旗使用的换算值。
-    button_units_per_local = 500,
-    defeat_x = 450,
-    defeat_y = 720,
-    defeat_width = 480
+    button_units_per_local = 500
 }
 local unitDecalErrors = {}
 local unitMissingImages = {}
@@ -801,7 +805,7 @@ end
 -- 背面底栏和数值共用同一 Object.UI：子节点顺序决定覆盖顺序，
 -- 不再让多个透明贴花按摄像机距离互相排序。这里只管理 sgub_ 前缀。
 local unitBackUIRecords = {}
-local UNIT_UI_ROOTS = {"sgub_root","sgub_status_front","sgub_status_back","sgub_mode_front","sgub_mode_back"}
+local UNIT_UI_ROOTS = {"sgub_root","sgub_status_front","sgub_status_back","sgub_mode_front","sgub_mode_back","sgub_rout_front","sgub_rout_back"}
 local unitModeImageWarnings = {}
 local function unitBackUIOwned(id)
     return type(id)=="string" and id:sub(1,5)=="sgub_"
@@ -918,6 +922,143 @@ local function unitUIVector(x,y,z)
     return string.format("%.6f %.6f %.6f",x,y,z)
 end
 
+local unitRoutObjects, unitRoutSnapshot = {}, {}
+function resetUnitRoutOverlays()
+    unitRoutObjects, unitRoutSnapshot = {}, {}
+end
+
+-- 面板维护的登记快照；不另扫全桌，不将普通部队或装饰当成武将。
+function setUnitRoutSnapshot(snapshot)
+    unitRoutSnapshot = snapshot or {}
+end
+
+local function unitRoutCandidates()
+    local candidates = {}
+    for guid,entry in pairs(unitRoutSnapshot) do
+        local obj,role=entry.object,entry.role
+        if (role=="main" or role=="deputy1" or role=="deputy2") and obj
+            and getObjectFromGUID(guid)==obj and not obj.held_by_color
+            and not obj.spawning and not obj.loading_custom and obj.getBounds then
+            local ok,bounds=pcall(function() return obj.getBounds() end)
+            if ok and bounds and bounds.center and bounds.size then
+                candidates[#candidates+1]={object=obj,bounds=bounds}
+            end
+        end
+    end
+    return candidates
+end
+
+local function unitRoutSize()
+    local aspect=math.max(0.1,unitNumber(UNIT_DEFEAT_IMAGE_ASPECT,1.5))
+    local width=math.min(math.max(1,unitNumber(UNIT_ROUT_LAYOUT.width,600)),
+        math.max(1,unitNumber(UNIT_ROUT_LAYOUT.max_height,500))*aspect)
+    return width,width/aspect
+end
+
+local function unitRoutPlane(obj,geometry,back,candidates)
+    local layout=UNIT_ROUT_LAYOUT
+    local sign=back and -1 or 1
+    local surface=back and -geometry.surfaceBottom or geometry.surfaceTop
+    local base=back and -(geometry.surfaceBottom-UNIT_COUNTER_LAYOUT.back_ui_clearance)
+        or geometry.surfaceTop
+    base=base+math.max(0,unitNumber(layout.surface_clearance,.01))
+    if not obj.positionToLocal or obj.held_by_color then return sign*base end
+    local x=geometry.cx+(back and 1 or -1)*(layout.x/1200-.5)*geometry.width
+    local z=geometry.cz+(layout.y/1200-.5)*geometry.depth
+    local width,height=unitRoutSize()
+    local halfX,halfZ=width/2400*geometry.width,height/2400*geometry.depth
+    local layers={}
+    for _,candidate in ipairs(candidates) do
+        if candidate.object~=obj then
+            local b=candidate.bounds
+            local center=obj.positionToLocal(b.center)
+            local cx,cz=unitAxis(center,"x",1,0),unitAxis(center,"z",3,0)
+            -- 中心须在本棋面内，防止相邻部队上的武将触发抬高。
+            if math.abs(cx-geometry.cx)<geometry.width/2 and math.abs(cz-geometry.cz)<geometry.depth/2 then
+                local lo={math.huge,math.huge,math.huge}
+                local hi={-math.huge,-math.huge,-math.huge}
+                for _,dx in ipairs({-1,1}) do for _,dy in ipairs({-1,1}) do for _,dz in ipairs({-1,1}) do
+                    local p=obj.positionToLocal({
+                        unitAxis(b.center,"x",1,0)+dx*unitAxis(b.size,"x",1,0)/2,
+                        unitAxis(b.center,"y",2,0)+dy*unitAxis(b.size,"y",2,0)/2,
+                        unitAxis(b.center,"z",3,0)+dz*unitAxis(b.size,"z",3,0)/2})
+                    local v={unitAxis(p,"x",1,0),sign*unitAxis(p,"y",2,0),unitAxis(p,"z",3,0)}
+                    for i=1,3 do lo[i]=math.min(lo[i],v[i]); hi[i]=math.max(hi[i],v[i]) end
+                end end end
+                if hi[1]>x-halfX and lo[1]<x+halfX and hi[3]>z-halfZ and lo[3]<z+halfZ then
+                    layers[#layers+1]={bottom=lo[2],top=hi[2]}
+                end
+            end
+        end
+    end
+    table.sort(layers,function(a,b) return a.bottom<b.bottom end)
+    local top=surface
+    local tolerance=math.max(0,unitNumber(layout.contact_tolerance,.08))
+    for _,layer in ipairs(layers) do
+        -- 仅接受贴着棋面/已接受武将的叠放，排除同桌邻棋及空中路过。
+        if layer.bottom>=surface-tolerance and layer.bottom<=top+tolerance and layer.top>top then
+            top=layer.top
+        end
+    end
+    if top>surface then base=math.max(base,top+math.max(0,unitNumber(layout.commander_clearance,.02))) end
+    return sign*base
+end
+
+local function unitRoutRoots(obj,geometry,routed,candidates)
+    local layout=UNIT_ROUT_LAYOUT
+    local width,height=unitRoutSize()
+    local roots={}
+    local back=obj.is_face_down==true
+    local plane=unitRoutPlane(obj,geometry,back,routed and (candidates or unitRoutCandidates()) or {})
+    for _,sideBack in ipairs({false,true}) do
+        local side=sideBack and "back" or "front"
+        local sidePlane=sideBack==back and plane or unitRoutPlane(obj,geometry,sideBack,{})
+        roots[#roots+1]={id="sgub_rout_"..side,width=tostring(width),height=tostring(height),
+            color="#FFFFFF00",rectAlignment="MiddleCenter",raycastTarget="false",tooltip="",visibility="",
+            active=routed and back==sideBack and "true" or "false",
+            rotation=sideBack and "180 0 0" or "0 0 180",
+            position=unitUIVector((geometry.cx+(sideBack and 1 or -1)*(layout.x/1200-.5)*geometry.width)*100,
+                (geometry.cz+(layout.y/1200-.5)*geometry.depth)*100,-sidePlane*100),
+            scale=unitUIVector(geometry.width*100/1200,geometry.depth*100/1200,1)}
+    end
+    return roots
+end
+
+-- 复用面板0.75秒定时刷新。仅败走集合×已登记武将；未变不写UI，不重建XML或下载图片。
+function refreshUnitRoutOverlays()
+    if not next(unitRoutObjects) then return end
+    local candidates=unitRoutCandidates()
+    for guid,obj in pairs(unitRoutObjects) do
+        local state=unit_state[guid]
+        if getObjectFromGUID(guid)~=obj or not state then unitRoutObjects[guid]=nil
+        else
+            local record=unitBackUIRecords[guid]
+            local routed=getDefeatText(state)~="" and unitDefeatURL()~=""
+            if record and record.mounted and not record.pending and obj.UI and not obj.UI.loading
+                and not obj.spawning and not obj.loading_custom then
+                local ok,failure=pcall(function()
+                    local roots=unitRoutRoots(obj,unitCounterGeometry(obj),routed,candidates)
+                    for _,root in ipairs(roots) do
+                        local previous=record.attributes[root.id]
+                        if previous then
+                            local changed,dirty={},false
+                            for name,value in pairs(root) do
+                                if name~="id" and previous[name]~=value then changed[name],dirty=value,true end
+                            end
+                            if dirty then obj.UI.setAttributes(root.id,changed); record.attributes[root.id]=root end
+                        end
+                    end
+                end)
+                if not ok and record.routError~=tostring(failure) then
+                    record.routError=tostring(failure)
+                    print("[敗走圖標] "..guid.."："..record.routError)
+                end
+            end
+            if not routed then unitRoutObjects[guid]=nil end
+        end
+    end
+end
+
 local function syncUnitBackUI(obj,state,config,geometry)
     local ui=obj.UI
     if not ui then return false end
@@ -960,6 +1101,15 @@ local function syncUnitBackUI(obj,state,config,geometry)
             end
         end
     end
+    local routURL,routAsset=unitDefeatURL(),nil
+    if routURL~="" then
+        -- 正反面共用一次登记；若用户复用了另一资源地址，复用其名字，避免冷加载卡住。
+        for _,entry in ipairs(unitBackUIAssets(ui,assets)) do
+            if entry.url==routURL then routAsset=entry.name; break end
+        end
+        if not routAsset then routAsset="sgub_rout_image"; asset(routAsset,routURL) end
+    end
+    signature[#signature+1]="rout="..(routAsset or "").."="..routURL
     local key=table.concat(signature,"\n")
     local layout=UNIT_COUNTER_LAYOUT
     -- 安装版 XmlUIWorldCanvas：局部旋转 +90°X、缩放 .01。
@@ -1048,6 +1198,18 @@ local function syncUnitBackUI(obj,state,config,geometry)
             ids[#ids+1]=id
         end
     end
+    if routAsset then
+        local width,height=unitRoutSize()
+        local routed=getDefeatText(state)~=""
+        for _,routRoot in ipairs(unitRoutRoots(obj,geometry,routed)) do
+            local id=routRoot.id.."_image"
+            desired[id]={id=id,width=tostring(width),height=tostring(height),image=routAsset,
+                active="true",color="#FFFFFFFF",preserveAspect="true",raycastTarget="false",tooltip="",
+                rectAlignment="MiddleCenter",position="0 0 0",rotation="0 0 0",scale="1 1 1"}
+            groups[#groups+1]={root=routRoot,ids={id}}
+            ids[#ids+1]=id
+        end
+    end
     local currentNodes=ui.getXmlTable() or {}
     local rootsPresent=true
     for _,group in ipairs(groups) do
@@ -1113,6 +1275,8 @@ end
 local function syncUnitImages(obj, state, config)
     preloadUnitImages(false)
     local wanted, geometry, layout = {}, unitCounterGeometry(obj), UNIT_COUNTER_LAYOUT
+    local defeatURL=unitDefeatURL()
+    unitRoutObjects[obj.getGUID()]=(defeatURL~="" and getDefeatText(state)~="") and obj or nil
     local fields = {
         {"COUNT", config.count_label, layout.count_y},
         {"MORALE", state.front_value, layout.morale_y},
@@ -1140,16 +1304,7 @@ local function syncUnitImages(obj, state, config)
         wanted.SG_UNIT_MORALE_BAND_FRONT = unitSurfaceImage(geometry,"SG_UNIT_MORALE_BAND_FRONT",bandURL,false,
             layout.number_x,layout.morale_band_y,layout.morale_band_width,layout.morale_band_height,0)
     end
-    local defeatURL = unitDefeatURL()
-    if defeatURL ~= "" and getDefeatText(state) ~= "" then
-        local aspect = math.max(0.1,unitNumber(UNIT_DEFEAT_IMAGE_ASPECT,2))
-        local width = math.min(layout.defeat_width,700*aspect)
-        for _, back in ipairs({false,true}) do
-            local name = back and "SG_UNIT_DEFEAT_BACK" or "SG_UNIT_DEFEAT_FRONT"
-            wanted[name] = unitSurfaceImage(geometry,name,defeatURL,back,layout.defeat_x,layout.defeat_y,width,width/aspect)
-        end
-    end
-    -- 同时清除旧版的背面底栏／数字／行动贴花，保留陣旗及第三方贴花。
+    -- 同时清除旧版敗走及背面底栏／数字／行动贴花，保留陣旗及第三方贴花。
     reconcileUnitDecals(obj,UNIT_IMAGE_NAMES,UNIT_IMAGE_OWNED,wanted)
     local uiOK,backReady,modeReady=pcall(syncUnitBackUI,obj,state,config,geometry)
     if not uiOK then
@@ -1162,10 +1317,11 @@ local function syncUnitImages(obj, state, config)
     syncUnitStatusButtons(obj,geometry,uiOK and backReady==true)
     syncUnitModeButtons(obj,geometry,uiOK and backReady==true and modeReady==true)
     -- API 成功不等于网络图片已下载；无效地址不提交空白贴花。
-    return defeatURL ~= "", geometry
+    return defeatURL ~= "" and uiOK and backReady~=false, geometry
 end
 
 function clearUnitCounterVisuals(obj)
+    unitRoutObjects[obj.getGUID()] = nil
     reconcileUnitDecals(obj,UNIT_IMAGE_NAMES,UNIT_IMAGE_OWNED,{})
     clearUnitBackUI(obj)
     -- 仅移除本模块按钮，不清空整个棋子的第三方按钮/右键菜单。
@@ -1209,6 +1365,7 @@ end
 
 -- 显式供销毁事件清理。
 function forgetUnitCounter(guid)
+    unitRoutObjects[guid] = nil
     unitDecalErrors[guid] = nil
     unitSetupPending[guid] = nil
     unitFlipPending[guid] = nil
@@ -1456,7 +1613,7 @@ end
 
 
 -- ===== 備隊面板 v2 =====
--- 備隊武将面板 v2.17.0：陣形TQ修正・行動連動・士氣上限表示
+-- 備隊武将面板 v2.18.0：敗走大圖・武將疊放避讓
 -- 更新日：2026-10-23
 -- 画像・生年・統率は各武将令牌の Description に入力可能。
 -- team=ota_honjin / role=main,deputy1,deputy2 / name=太田資正
@@ -2365,6 +2522,7 @@ local function renderMapEffects()
     end
     highlighted = wanted
     sgMapUpdate(snapshot, playerViews)
+    if type(setUnitRoutSnapshot)=="function" then setUnitRoutSnapshot(snapshot) end
 end
 
 renderAllViews = function()
@@ -2504,6 +2662,7 @@ function initTeamPanel()
     refreshTimer = Wait.time(function()
         retryBackStamps()
         renderAllViews()
+        if type(refreshUnitRoutOverlays)=="function" then refreshUnitRoutOverlays() end
     end, 0.75, -1)
 end
 

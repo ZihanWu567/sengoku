@@ -1,0 +1,3253 @@
+-- 兵種＋備隊面板 v2.18.0：敗走大圖・武將疊放避讓（2026-10-23）
+MIN_VALUE = 0
+
+-- 全军共用的敗走贴图。上传后只在这里填一次完整图片直链。
+-- 留空时暂用「敗走」文字；无需在每个部队 Description 重复填写。
+UNIT_DEFEAT_IMAGE_URL = "https://steamusercontent-a.akamaihd.net/ugc/17888454137110814569/47DFB8A61C7882C595C5F3F4C7AC1618A57C695B/"
+UNIT_DEFEAT_IMAGE_ASPECT = 1.5 -- 当前透明 PNG 为 1200×800。
+-- 敗走大图：1200棋面主体区域（X0～1000、Y200～1200）中央。
+-- 间距为物件局部单位；仅显示层抬高，不生成实体、不拦截鼠标。
+UNIT_ROUT_LAYOUT = {
+    x=500, y=700, width=600, max_height=500,
+    surface_clearance=0.01, commander_clearance=0.02, contact_tolerance=0.08
+}
+
+-- 数字、陣旗贴花的实测偏移；新敗走图使用独立UI位置，不用贴花偏移。
+UNIT_DEFEAT_FRONT_GAP = -0.01
+UNIT_DEFEAT_BACK_GAP = -0.099 -- 沿用用户 2026-10-16 提供的当前配置。
+
+-- 贴花沿各面的朝外方向留出间距；保留正面已校准的显示位置。
+UNIT_SURFACE_CLEARANCE = 0.001 -- 保留用户已确认正面稳定的离面间距。
+
+-- 全军共用 0～8 数字图，已保留用户上传的全部云端直链。
+-- 只改引号内地址，无需逐枚填写 Description。0 也有图片，不会显示为空白。
+UNIT_NUMBER_IMAGES = {
+    [0] = "https://steamusercontent-a.akamaihd.net/ugc/15741539766686036286/8F06DCEFDC0A7DD6EA49902D7888C678F649A807/",
+    [1] = "https://steamusercontent-a.akamaihd.net/ugc/10566052030907888174/23D8068022D5A8E8301878FA053A8379A2A49A91/",
+    [2] = "https://steamusercontent-a.akamaihd.net/ugc/13263482307692495342/C4099C3E2ABCB2CF5ABECC02D2A7E08166062868/",
+    [3] = "https://steamusercontent-a.akamaihd.net/ugc/14712503159502714649/FF4DB69C354633051542048031AC9E29EDA60795/",
+    [4] = "https://steamusercontent-a.akamaihd.net/ugc/16415472697083776957/A9C9763CA28D17CE11321740F10CFB76FF58166F/",
+    [5] = "https://steamusercontent-a.akamaihd.net/ugc/15091530420330195864/1022A83E75BA73D9471A42D5FD95C2ED8DB705BC/",
+    [6] = "https://steamusercontent-a.akamaihd.net/ugc/17226600230470747544/D29F9D3AAF0C71EDD54DA727555D82239E668157/",
+    [7] = "https://steamusercontent-a.akamaihd.net/ugc/15935087608286395327/5F6406F5931C808BC90F170F90ADB1ADD2AFA1C7/",
+    [8] = "https://steamusercontent-a.akamaihd.net/ugc/10356777240140799217/225F475FB22367023EDD1005240F8160EA9342D0/"
+}
+
+-- 背面深色栏用象牙白数字，0～8 均使用云端直链。
+UNIT_NUMBER_BACK_IMAGES = {
+    [0] = "https://steamusercontent-a.akamaihd.net/ugc/17283063414238440206/CB497E569D56FDB2E1EA6D7672D9FB8B7BF69382/",
+    [1] = "https://steamusercontent-a.akamaihd.net/ugc/10088559354799110866/D593EE2F2CC8B8A4F9AE6DF6033C3784ED8F0CF3/",
+    [2] = "https://steamusercontent-a.akamaihd.net/ugc/15302979320117435616/3FDAAF345D9BDB1EF33A376BA3796DD8C21A015B/",
+    [3] = "https://steamusercontent-a.akamaihd.net/ugc/9706564093812589585/6BA165077990A59CDC72DAE13D03CEFE8F2E78B6/",
+    [4] = "https://steamusercontent-a.akamaihd.net/ugc/10614879344100062506/F55193C036A331E07B1572FEBB5CADB27884FEE1/",
+    [5] = "https://steamusercontent-a.akamaihd.net/ugc/16835871787610471302/DEE9F2DCE94249223C63632CB0369F211FDFEBDD/",
+    [6] = "https://steamusercontent-a.akamaihd.net/ugc/14922730146151859858/3316C98A9380EBB827534F6B87106AD3C2A9C84D/",
+    [7] = "https://steamusercontent-a.akamaihd.net/ugc/11359251419350111216/EDB86344CE097475D8AD019AE68A466008CAA53C/",
+    [8] = "https://steamusercontent-a.akamaihd.net/ugc/14115046685071241718/CED867538FB6F77835B101A583A39A140444FE57/"
+}
+UNIT_BACK_RAIL_IMAGE_URL = "https://steamusercontent-a.akamaihd.net/ugc/15004901137672824316/2126C232CB43C3C6599CF00E8AB37C00A1DF027A/"
+UNIT_ACTION_IMAGES = {
+    front_unacted = "https://steamusercontent-a.akamaihd.net/ugc/17392910429985888997/852A97BA1BD403785CABCBC1D785C4D158F0E97C/",
+    front_acted = "https://steamusercontent-a.akamaihd.net/ugc/12935914556946736329/F46F834B7815F266F6BED09F1ECCD62861B85D01/",
+    back_unacted = "https://steamusercontent-a.akamaihd.net/ugc/13521527839041962663/EB550F3E847144705EBB243EA1CC9D2A7CC09A11/",
+    back_acted = "https://steamusercontent-a.akamaihd.net/ugc/17809223924220211268/D44A06D402412032AFF85CE39AA167930F713995/"
+}
+
+-- 士気损耗色带：正反面共用两张透明 PNG，不改变原数字字色。
+-- 已保留用户上传的云端直链；两面及所有玩家共用。
+UNIT_MORALE_BAND_IMAGES = {
+    amber = "https://steamusercontent-a.akamaihd.net/ugc/10852706972094849922/CDBBADA69115B0A8ACB89CA61D49F97DB000FE6B/",
+    red = "https://steamusercontent-a.akamaihd.net/ugc/10081792822323033846/E242210B585F53F64B46B18032F04FA937AB966B/"
+}
+
+-- 手动状态图标：每项一张透明 PNG，正反面共用；关闭时由 UI 淡显。
+-- 未填直链时不显示、不生成点击区；不会用文字占位。美术定稿后仅替换这里。
+UNIT_STATUS_IMAGES = {
+    engaged = "https://steamusercontent-a.akamaihd.net/ugc/16621351352612699552/ECB71F566524A55352FD18E8815F79A99CED62FF/",
+    out_of_command = "https://steamusercontent-a.akamaihd.net/ugc/11196356357107166222/939374A167DBCDD7CA034F3E28D1593926D50C8E/"
+}
+UNIT_STATUS_LAYOUT = {
+    engaged_x = 77, out_of_command_x = 935, y = 110, -- 用户实测校准（2026-10-23）。
+    size = 100, hit_size = 120, -- 1200 棋面：点击范围 X17～137、875～995，Y50～170。
+    front_ui_clearance = 0.001, -- 新图标为 UI，不沿用正面投影贴花的负 GAP。
+    active_color = "#FFFFFFFF", inactive_color = "#FFFFFF20"
+}
+
+-- 底部同一位置：近战切换密集／散開，远程切换射撃準備／装填中。
+-- 每组必须填齐两张不同图片直链；未填齐不显示，也不留不可见按钮。
+UNIT_MODE_IMAGES = {
+    closed = "https://steamusercontent-a.akamaihd.net/ugc/11515895100246543386/C63536BA44742C27108483536A4C088FFD1F5B06/",
+    open = "https://steamusercontent-a.akamaihd.net/ugc/11025487001876169960/A2E57E3E6BE1CC1A9388C1F6965B78A632FF6156/",
+    ready = "", reloading = ""
+}
+UNIT_MODE_LAYOUT = {
+    x = 820, y = 1125, width = 320, height = 130,
+    hit_width = 340, hit_height = 140,
+    front_ui_clearance = 0.001
+}
+
+-- =========================
+-- 兵種配置
+-- =========================
+UNIT_CONFIGS = {
+    {
+        tag = "unit_nagaye_ashigaru",
+        marker_mode = "formation",
+        name = "長柄足軽",
+        max_front = 6, max_back = 5,
+        front_move = 4, back_move = 3
+    },
+    {
+        tag = "unit_kiba_samurai",
+        marker_mode = "formation",
+        name = "騎馬武士",
+        max_front = 8, max_back = 7,
+        front_move = 6, back_move = 5
+    },
+    {
+        tag = "unit_kachi_samurai",
+        marker_mode = "formation",
+        name = "徒歩武士",
+        max_front = 8, max_back = 7,
+        front_move = 4, back_move = 3
+    },
+    {
+        tag = "unit_yari_ashigaru",
+        marker_mode = "formation",
+        name = "槍足軽",
+        max_front = 5, max_back = 4,
+        front_move = 4, back_move = 3
+    },
+    {
+        tag = "unit_yumi_ashigaru",
+        marker_mode = "fire",
+        name = "弓足軽",
+        max_front = 4, max_back = 3,
+        front_move = 5, back_move = 4
+    },
+    {
+        tag = "unit_yumi_sohei",
+        marker_mode = "fire",
+        name = "弓僧兵",
+        max_front = 4, max_back = 4,
+        front_move = 5, back_move = 4
+    },
+    {
+        tag = "unit_teppo_ashigaru",
+        marker_mode = "fire",
+        name = "鉄砲足軽",
+        max_front = 3, max_back = 2,
+        front_move = 4, back_move = 3
+    },
+    {
+        tag = "unit_teppo_sohei",
+        marker_mode = "fire",
+        name = "鉄砲僧兵",
+        max_front = 3, max_back = 3,
+        front_move = 4, back_move = 3
+    },
+    {
+        tag = "unit_akazonae_kiba",
+        marker_mode = "formation",
+        name = "赤備騎馬",
+        max_front = 8, max_back = 8,
+        front_move = 6, back_move = 6
+    },
+    {
+        tag = "unit_nanban_ozutsu",
+        marker_mode = "fire",
+        name = "南蛮大筒",
+        max_front = 2, max_back = 1,
+        front_move = 2, back_move = 1
+    }
+}
+
+-- =========================
+-- 数量配置
+-- =========================
+COUNT_CONFIGS = {
+    {
+        tag = "count_100",
+        label = "1"
+    },
+    {
+        tag = "count_200",
+        label = "2"
+    },
+    {
+        tag = "count_300",
+        label = "3"
+    },
+    {
+        tag = "count_400",
+        label = "4"
+    }
+}
+
+DEFAULT_COUNT_LABEL = "1"
+
+-- 每个棋子的状態，按 GUID 保存
+unit_state = {}
+local unitSetupPending = {}
+local unitFlipPending = {}
+local unitMoraleQuickPlayers = {}
+
+-- 临时按键状态不写入存档；换座/离开时也清除，避免下位玩家继承按住状态。
+function clearUnitMoraleQuickKeys()
+    unitMoraleQuickPlayers = {}
+end
+
+local function registerUnitMoraleQuickKey()
+    clearUnitMoraleQuickKeys()
+    -- 玩家在 Options → Game Keys 绑定一次。标签保持不变，重载后沿用绑定。
+    -- true 同时接收松开事件；不清空其他脚本注册的快捷键。
+    addHotkey("士気快捷調整", function(playerColor, _object, _position, isKeyUp)
+        if type(playerColor) == "string" then
+            unitMoraleQuickPlayers[playerColor] = not isKeyUp or nil
+        end
+    end, true)
+end
+
+function onLoad(saved_data)
+    unit_state = {}
+    unitFlipPending = {}
+    resetUnitRoutOverlays()
+    registerUnitMoraleQuickKey()
+    if type(saved_data) == "string" and saved_data ~= "" then
+        local ok, data = pcall(JSON.decode, saved_data)
+        if ok and type(data) == "table" and type(data.unit_state) == "table" then
+            unit_state = data.unit_state
+        end
+    end
+
+    preloadUnitImages(true)
+    Wait.time(setupAllUnits, 1)
+    initTeamPanel()
+end
+
+function onSave()
+    return JSON.encode({
+        unit_state = unit_state
+    })
+end
+
+function setupAllUnits()
+    for _, obj in ipairs(getAllObjects()) do
+        local config_tag, config = getUnitConfig(obj)
+
+        -- 一枚棋子的素材/模型出错，不能中断其余部队的初始化。
+        local ok, failure
+        if config ~= nil then ok, failure = pcall(setupUnit, obj, config_tag, config)
+        else ok, failure = pcall(clearUnitCounterVisuals, obj) end
+        if not ok then print("[部隊棋面] " .. obj.getGUID() .. "：" .. tostring(failure)) end
+    end
+end
+
+function onObjectSpawn(obj)
+    sgPanelObjectSpawn(obj)
+    local spawnedGUID = obj.getGUID()
+    Wait.time(function()
+        local liveObject = getObjectFromGUID(spawnedGUID)
+        if not liveObject then return end
+        obj = liveObject
+        local config_tag, config = getUnitConfig(obj)
+
+        if config ~= nil then
+            setupUnit(obj, config_tag, config)
+        else
+            clearUnitCounterVisuals(obj)
+        end
+    end, 0.5)
+end
+
+function onObjectDestroy(obj)
+    sgPanelObjectDestroy(obj)
+    local guid = obj.getGUID()
+    forgetUnitCounter(guid)
+
+    if unit_state[guid] ~= nil then
+        unit_state[guid] = nil
+    end
+end
+
+-- =========================
+-- 读取兵種 tag
+-- =========================
+function getUnitConfig(obj)
+    for _, unit_config in ipairs(UNIT_CONFIGS) do
+        if obj.hasTag(unit_config.tag) then
+            local config = copyConfig(unit_config)
+            config.count_label = getCountLabel(obj)
+
+            return unit_config.tag, config
+        end
+    end
+
+    return nil, nil
+end
+
+-- =========================
+-- 读取数量 tag
+-- =========================
+function getCountLabel(obj)
+    for _, count_config in ipairs(COUNT_CONFIGS) do
+        if obj.hasTag(count_config.tag) then
+            return count_config.label
+        end
+    end
+
+    return DEFAULT_COUNT_LABEL
+end
+
+function copyConfig(source)
+    local result = {}
+
+    for key, value in pairs(source) do
+        result[key] = value
+    end
+
+    return result
+end
+
+local function unitMoraleMaximum(state, config, back)
+    local printed = back and config.max_back or config.max_front
+    return math.max(MIN_VALUE, printed - (config.marker_mode == "formation" and state.open_order and 1 or 0))
+end
+
+local function unitMoraleTooltip(state, config, back)
+    local printed = back and config.max_back or config.max_front
+    local maximum = unitMoraleMaximum(state, config, back)
+    return "基礎士氣上限："..printed.."\n實際士氣上限："..maximum..(maximum < printed and "（散開 −1）" or "")
+end
+
+-- 正面耗尽和换阵越过阈值共用同一转段；前阶段损伤不重复带到背面。
+local function disruptUnit(obj, state, config)
+    state.back_value = unitMoraleMaximum(state, config, true)
+    state.back_threshold_pending = false
+    state.manual_defeat_visible = false
+    if obj.is_face_down then return end
+    local guid, transition = obj.getGUID(), {}
+    unitFlipPending[guid] = transition
+    local ok, failure = pcall(function() obj.flip() end)
+    if not ok then
+        unitFlipPending[guid] = nil
+        print("[部隊] 自动翻面失败，请手动按 F；背面士气已就绪："..tostring(failure))
+    else
+        Wait.time(function()
+            if unitFlipPending[guid] == transition then unitFlipPending[guid] = nil end
+        end,0.5)
+    end
+end
+
+-- 旧存档的散開仅是图片标记；第一次升级扣除一次TQ修正，之后不重复扣。
+local function normalizeUnitState(obj, config_tag, config)
+    local guid = obj.getGUID()
+    local state = unit_state[guid]
+    -- 新记录从满士气开始；已有记录的 0 值仍照原存档保留。
+    if type(state) ~= "table" then state = {front_value=config.max_front,back_value=config.max_back} end
+    local function bounded(value, maximum)
+        local number = tonumber(value)
+        if not number or number ~= number or number == math.huge or number == -math.huge then return MIN_VALUE end
+        return math.max(MIN_VALUE, math.min(maximum, math.floor(number)))
+    end
+    state.front_value = bounded(state.front_value, config.max_front)
+    state.back_value = bounded(state.back_value, config.max_back)
+    state.manual_defeat_visible = state.manual_defeat_visible == true
+    state.acted = state.acted == true
+    state.engaged = state.engaged == true
+    state.out_of_command = state.out_of_command == true
+    state.open_order = state.open_order == true
+    state.reloading = state.reloading == true
+    state.back_threshold_pending = state.back_threshold_pending == true
+    local before, previousBack = state.front_value, state.back_value
+    if state.formation_tq_version ~= 1 and config.marker_mode == "formation" and state.open_order then
+        state.front_value = math.max(MIN_VALUE,state.front_value-1)
+        state.back_value = math.max(MIN_VALUE,state.back_value-1)
+        -- 手动修改过的未使用背面储备，不应让尚在正面的部队提前敗走。
+        state.back_threshold_pending = previousBack > 0 and state.back_value == 0 and not obj.is_face_down
+        if before > 0 and state.front_value == 0 and not obj.is_face_down
+            and previousBack > 0 and not state.manual_defeat_visible then disruptUnit(obj,state,config) end
+    end
+    state.formation_tq_version = 1
+    state.front_value = bounded(state.front_value,unitMoraleMaximum(state,config,false))
+    state.back_value = bounded(state.back_value,unitMoraleMaximum(state,config,true))
+    if obj.is_face_down or state.back_value > 0 or state.front_value == 0 then state.back_threshold_pending = false end
+    state.config_tag = config_tag
+    unit_state[guid] = state
+    return state
+end
+
+function setupUnit(obj, config_tag, config)
+    if obj.spawning or obj.loading_custom then
+        local guid = obj.getGUID()
+        if unitSetupPending[guid] then return end
+        unitSetupPending[guid] = true
+        Wait.condition(function()
+            unitSetupPending[guid] = nil
+            local live = getObjectFromGUID(guid)
+            if not live then return end
+            local tag, latest = getUnitConfig(live)
+            if latest then setupUnit(live, tag, latest) end
+        end, function()
+            local live = getObjectFromGUID(guid)
+            return not live or (not live.spawning and not live.loading_custom)
+        end, 30, function()
+            unitSetupPending[guid] = nil
+            print("[部隊棋面] " .. guid .. " 图片尚未加载完成；加载后可重新 Save & Play。")
+        end)
+        return
+    end
+    normalizeUnitState(obj, config_tag, config)
+    createCounter(obj, config)
+end
+
+function getStateAndConfig(obj)
+    local config_tag, config = getUnitConfig(obj)
+
+    if config == nil then
+        return nil, nil
+    end
+
+    return normalizeUnitState(obj, config_tag, config), config
+end
+
+-- =========================
+-- 创建按钮
+-- =========================
+-- 所有坐标均对应 1200 × 1200 的完整底图，不是中央立绘的 1000 × 1000 区域。
+-- 正面使用贴花；背面使用一个 Object.UI。经典按钮只负责点击。
+local UNIT_COUNTER_LAYOUT = {
+    canvas = 1200,
+    number_x = 1100,
+    count_y = 374.5,
+    morale_y = 748,
+    morale_band_y = 843,
+    morale_band_width = 144,
+    morale_band_height = 24,
+    move_y = 1081.5,
+    image_pixels = 176,
+    hit_width = 176,
+    hit_height = 176,
+    hit_lift = 0.004, -- 点击面紧贴已显示的数字，沿各面的朝外方向略微抬起。
+    back_ui_clearance = -0.099, -- 用户实测贴合背面的位置（2026-10-17）；整组 UI 与点击面共同跟随，内部图像共面。
+    front_action_lift = 0.001, -- 正面未／済保留原来的稳定高度。
+    action_x = 1100,
+    action_y = 100,
+    action_size = 200,
+    surface_gap = 0.01,
+    -- 经典按钮的尺寸换算集中在这里；不是 Object.UI 阵旗使用的换算值。
+    button_units_per_local = 500
+}
+local unitDecalErrors = {}
+local unitMissingImages = {}
+local UNIT_MAX_DIGIT = 8
+
+local function unitNumber(value, fallback)
+    local n = tonumber(value)
+    if not n or n ~= n or n == math.huge or n == -math.huge then return fallback end
+    return n
+end
+
+local function unitAxis(vector, name, index, fallback)
+    return vector and unitNumber(vector[name] or vector[index], fallback) or fallback
+end
+
+local function unitCounterGeometry(obj)
+    local scale = obj.getScale()
+    local sx = math.max(0.0001, math.abs(unitAxis(scale, "x", 1, 1)))
+    local sy = math.max(0.0001, math.abs(unitAxis(scale, "y", 2, 1)))
+    local sz = math.max(0.0001, math.abs(unitAxis(scale, "z", 3, 1)))
+    local bounds
+    -- 经典按钮、Object.UI、贴花属于显示层；优先碰撞体尺寸避免显示层影响边界。
+    if obj.getBoundsNormalized then
+        local ok, result = pcall(function() return obj.getBoundsNormalized() end)
+        if ok then bounds = result end
+    end
+    if (type(bounds) ~= "table" or not bounds.size) and obj.getVisualBoundsNormalized then
+        local ok, result = pcall(function() return obj.getVisualBoundsNormalized() end)
+        if ok then bounds = result end
+    end
+    if type(bounds) ~= "table" or not bounds.size then error("无法取得部队模型边界") end
+    local size, offset = bounds.size, bounds.offset
+    local width = unitAxis(size, "x", 1, 2 * sx) / sx
+    local depth = unitAxis(size, "z", 3, 2 * sz) / sz
+    local height = unitAxis(size, "y", 2, 0.1 * sy) / sy
+    local cx = unitAxis(offset, "x", 1, 0) / sx
+    local cy = unitAxis(offset, "y", 2, 0) / sy
+    local cz = unitAxis(offset, "z", 3, 0) / sz
+    local autoTop = cy + height/2 + UNIT_COUNTER_LAYOUT.surface_gap
+    local autoBottom = cy - height/2 - UNIT_COUNTER_LAYOUT.surface_gap
+    return {width=math.max(width,0.01), depth=math.max(depth,0.01), cx=cx, cz=cz,
+        top=autoTop, bottom=autoBottom,
+        surfaceTop=cy+height/2, surfaceBottom=cy-height/2}
+end
+
+-- 贴花使用物件局部坐标；经典按钮 API 的 X 会被 TTS 的 LuaPanel 反转。
+local function unitImagePosition(geometry, back, x, y, lift)
+    local canvas = UNIT_COUNTER_LAYOUT.canvas
+    return {geometry.cx + (back and 1 or -1)*(x/canvas-0.5)*geometry.width,
+        (back and (geometry.surfaceBottom-unitNumber(UNIT_DEFEAT_BACK_GAP,-0.09))
+            or (geometry.surfaceTop+unitNumber(UNIT_DEFEAT_FRONT_GAP,-0.01))) + (back and -1 or 1)*(math.max(0,unitNumber(UNIT_SURFACE_CLEARANCE,0.01))+(lift or 0)),
+        geometry.cz+(y/canvas-0.5)*geometry.depth}
+end
+
+local function unitButtonPosition(geometry, back, x, y, lift)
+    local position = unitImagePosition(geometry,back,x,y,(lift or 0)+UNIT_COUNTER_LAYOUT.hit_lift)
+    if back then
+        -- UI 是实体表面外的平面，不能沿用投影贴花的 GAP。
+        position[2] = geometry.surfaceBottom-UNIT_COUNTER_LAYOUT.back_ui_clearance-UNIT_COUNTER_LAYOUT.hit_lift
+    end
+    position[1] = -position[1] -- 包含模型中心偏移，不能仅反转右栏偏移。
+    return position
+end
+
+-- 数字与行動仅显示图片；透明按钮始终保留点击功能，不生成文字后备。
+local function unitCounterButtonParameters(geometry, faceDown, y, callback, clickable)
+    local layout = UNIT_COUNTER_LAYOUT
+    local factor = layout.button_units_per_local / layout.canvas
+    local position = unitButtonPosition(geometry,faceDown,layout.number_x,y,0)
+    return {
+        label="", click_function=callback or "null", function_owner=Global,
+        position=position,
+        rotation=faceDown and {0,0,180} or {0,0,0},
+        scale={geometry.width/4, geometry.depth/4, geometry.depth/4},
+        width=clickable and math.max(60,math.floor(layout.hit_width * 4 * factor + 0.5)) or 0,
+        height=clickable and math.max(60,math.floor(layout.hit_height * 4 * factor + 0.5)) or 0,
+        color={1,1,1,0}, hover_color={1,0.90,0.58,0.14}, press_color={0.35,0.23,0.08,0.20},
+        tooltip=""
+    }
+end
+
+local function unitCounterButton(obj, geometry, faceDown, y, callback, clickable)
+    obj.createButton(unitCounterButtonParameters(geometry,faceDown,y,callback,clickable))
+end
+
+-- 完全不用 Lua pattern：MoonSharp 的 (.-) 在普通长直链上也会递归超限。
+local function unitURLSpaceLength(text, index)
+    local char = text:sub(index,index)
+    if char == "　" or char == "﻿" then return 1 end
+    local code = text:byte(index)
+    if code == 32 or (code and code >= 9 and code <= 13)
+        or code == 160 or code == 12288 or code == 65279 then return 1 end
+    -- 同时兼容 MoonSharp 的 Unicode 字符与 Lua UTF-8 字节形式。
+    if code == 194 and text:byte(index+1) == 160 then return 2 end
+    if code == 227 and text:byte(index+1) == 128 and text:byte(index+2) == 128 then return 3 end
+    if code == 239 and text:byte(index+1) == 187 and text:byte(index+2) == 191 then return 3 end
+    return 0
+end
+
+local function unitImageURL(raw, allowLocal)
+    if type(raw) ~= "string" then return "" end
+    local first, last, index, trailingSpace = nil, 0, 1, false
+    while index <= #raw do
+        local blankLength = unitURLSpaceLength(raw,index)
+        if blankLength > 0 then
+            if first then trailingSpace = true end
+            index = index + blankLength
+        else
+            local code = raw:byte(index)
+            if trailingSpace or code < 32 or code == 127 then return "" end
+            if not first then first = index end
+            last = index
+            index = index + 1
+        end
+    end
+    if not first then return "" end
+    local url = raw:sub(first,last)
+    local prefix = url:sub(1,8):lower()
+    local schemeLength = prefix == "https://" and 8 or (prefix:sub(1,7) == "http://" and 7 or 0)
+    if schemeLength > 0 and #url > schemeLength then return url end
+    if allowLocal then
+        local drive = url:sub(1,1):lower()
+        if drive >= "a" and drive <= "z" and url:sub(2,3) == ":/" and #url > 3 then return url end
+        if prefix == "file:///" and #url > 8 then return url end
+    end
+    return ""
+end
+
+local function unitDefeatURL()
+    return unitImageURL(UNIT_DEFEAT_IMAGE_URL, false)
+end
+
+local function unitDigitURL(value, back)
+    local digit = tonumber(value)
+    if not digit or digit < 0 or digit > UNIT_MAX_DIGIT or digit ~= math.floor(digit) then return "" end
+    local images = UNIT_NUMBER_IMAGES
+    if back then images = UNIT_NUMBER_BACK_IMAGES end
+    if type(images) ~= "table" then return "" end
+    return unitImageURL(images[digit], true)
+end
+
+local function unitActionURL(acted, back)
+    local key = (back and "back_" or "front_") .. (acted and "acted" or "unacted")
+    return unitImageURL(type(UNIT_ACTION_IMAGES)=="table" and UNIT_ACTION_IMAGES[key] or nil,true)
+end
+
+-- 按各面自己的上限判断；不保存派生状态，复原存档时也从当前士気重算。
+local function unitMoraleBandKey(state, config, back)
+    if getDefeatText(state) ~= "" then return nil end
+    local value = back and state.back_value or state.front_value
+    local maximum = unitMoraleMaximum(state,config,back)
+    if value <= 0 or value >= maximum then return nil end
+    return value * 2 <= maximum and "red" or "amber"
+end
+
+local function unitMoraleBandURL(key)
+    if not key then return "" end
+    return unitImageURL(type(UNIT_MORALE_BAND_IMAGES)=="table" and UNIT_MORALE_BAND_IMAGES[key] or nil,true)
+end
+
+local function unitActionButtonParameters(geometry, back)
+    local layout = UNIT_COUNTER_LAYOUT
+    local parameters = unitCounterButtonParameters(geometry,back,layout.action_y,"toggleUnitActed",true)
+    parameters.position = unitButtonPosition(geometry,back,layout.action_x,layout.action_y,back and 0 or layout.front_action_lift)
+    return parameters
+end
+
+local UNIT_STATUS_KINDS = {"engaged", "out_of_command"}
+local UNIT_STATUS_CALLBACKS = {engaged="toggleUnitEngaged",out_of_command="toggleUnitOutOfCommand"}
+
+local function unitStatusURL(kind)
+    return unitImageURL(type(UNIT_STATUS_IMAGES)=="table" and UNIT_STATUS_IMAGES[kind] or nil,false)
+end
+
+local function unitStatusButtonParameters(geometry,back,kind)
+    local layout=UNIT_STATUS_LAYOUT
+    local parameters=unitCounterButtonParameters(geometry,back,layout.y,UNIT_STATUS_CALLBACKS[kind],true)
+    parameters.position=unitButtonPosition(geometry,back,layout[kind.."_x"],layout.y,0)
+    if not back then
+        parameters.position[2]=geometry.surfaceTop+layout.front_ui_clearance+UNIT_COUNTER_LAYOUT.hit_lift
+    end
+    local size=math.max(1,math.floor(layout.hit_size*4*UNIT_COUNTER_LAYOUT.button_units_per_local/UNIT_COUNTER_LAYOUT.canvas+.5))
+    parameters.width,parameters.height=size,size
+    return parameters
+end
+
+-- 保留原按钮 0～5；新按钮按回调识别，不依赖新增按钮的索引顺序。
+-- 未登记图片／UI 等待中不留下盲点；资源就绪后再恢复点击。
+local function syncUnitStatusButtons(obj,geometry,ready)
+    local seen,remove={},{}
+    for index,button in ipairs(obj.getButtons() or {}) do
+        for _,kind in ipairs(UNIT_STATUS_KINDS) do
+            if button.click_function==UNIT_STATUS_CALLBACKS[kind] then
+                local back=math.abs(unitAxis(button.rotation,"z",3,0))%360>90
+                local key=kind..tostring(back)
+                if ready and unitStatusURL(kind)~="" and not seen[key] then
+                    local parameters=unitStatusButtonParameters(geometry,back,kind)
+                    parameters.index=button.index or (index-1)
+                    obj.editButton(parameters)
+                    seen[key]=true
+                else remove[#remove+1]=button.index or (index-1) end
+            end
+        end
+    end
+    table.sort(remove,function(a,b) return a>b end)
+    for _,index in ipairs(remove) do obj.removeButton(index) end
+    if not ready then return end
+    for _,kind in ipairs(UNIT_STATUS_KINDS) do
+        if unitStatusURL(kind)~="" then
+            for _,back in ipairs({false,true}) do
+                if not seen[kind..tostring(back)] then obj.createButton(unitStatusButtonParameters(geometry,back,kind)) end
+            end
+        end
+    end
+end
+
+local UNIT_MODE_PAIRS = {
+    formation = {"closed", "open", field="open_order"},
+    fire = {"ready", "reloading", field="reloading"}
+}
+
+local function unitModePair(config)
+    return UNIT_MODE_PAIRS[config.marker_mode]
+end
+
+local function unitModeURL(key)
+    return unitImageURL(type(UNIT_MODE_IMAGES)=="table" and UNIT_MODE_IMAGES[key] or nil,false)
+end
+
+local function unitModeButtonParameters(geometry,back)
+    local layout=UNIT_MODE_LAYOUT
+    local parameters=unitCounterButtonParameters(geometry,back,layout.y,"toggleUnitMode",true)
+    parameters.position=unitButtonPosition(geometry,back,layout.x,layout.y,0)
+    if not back then parameters.position[2]=geometry.surfaceTop+layout.front_ui_clearance+UNIT_COUNTER_LAYOUT.hit_lift end
+    local units=4*UNIT_COUNTER_LAYOUT.button_units_per_local/UNIT_COUNTER_LAYOUT.canvas
+    parameters.width=math.max(1,math.floor(layout.hit_width*units+.5))
+    parameters.height=math.max(1,math.floor(layout.hit_height*units+.5))
+    return parameters
+end
+
+local function syncUnitModeButtons(obj,geometry,ready)
+    local seen,remove={},{}
+    for index,button in ipairs(obj.getButtons() or {}) do
+        if button.click_function=="toggleUnitMode" then
+            local back=math.abs(unitAxis(button.rotation,"z",3,0))%360>90
+            local key=tostring(back)
+            if ready and not seen[key] then
+                local parameters=unitModeButtonParameters(geometry,back)
+                parameters.index=button.index or (index-1)
+                obj.editButton(parameters); seen[key]=true
+            else remove[#remove+1]=button.index or (index-1) end
+        end
+    end
+    table.sort(remove,function(a,b) return a>b end)
+    for _,index in ipairs(remove) do obj.removeButton(index) end
+    if ready then
+        for _,back in ipairs({false,true}) do
+            if not seen[tostring(back)] then obj.createButton(unitModeButtonParameters(geometry,back)) end
+        end
+    end
+end
+
+local function sameUnitDecal(a, b)
+    if a.url ~= b.url or a.name ~= b.name then return false end
+    for _, field in ipairs({"position", "rotation", "scale"}) do
+        for index, axis in ipairs({"x", "y", "z"}) do
+            local left = unitAxis(a[field], axis, index, -99999)
+            local right = unitAxis(b[field], axis, index, 99999)
+            local difference = left - right
+            if field == "rotation" then difference = (difference + 180) % 360 - 180 end
+            if math.abs(difference) > 0.0005 then return false end
+        end
+    end
+    return true
+end
+
+-- 贴图与预载共用一次差异比较；只替换自有名称，保留其他脚本和用户贴花。
+local function reconcileUnitDecals(target, names, owned, wanted)
+    local retained, seen, changed = {}, {}, false
+    for _, decal in ipairs(target.getDecals() or {}) do
+        if owned[decal.name] then
+            if not wanted[decal.name] or seen[decal.name] or not sameUnitDecal(decal,wanted[decal.name]) then changed = true end
+            seen[decal.name] = true
+        else
+            table.insert(retained,decal)
+        end
+    end
+    for _, name in ipairs(names) do
+        if wanted[name] then
+            table.insert(retained,wanted[name])
+            if not seen[name] then changed = true end
+        end
+    end
+    if changed then target.setDecals(retained) end
+end
+
+local unitCacheSources, unitCacheError
+function preloadUnitImages(force)
+    -- 固定一份全桌预载，不随部队数量增加。保留 URL 引用，避免数字暂时不用即被卸载。
+    if not Global.getDecals or not Global.setDecals then return end
+    local sources, names, owned = {}, {}, {}
+    local function source(key, value)
+        local name = "SG_UNIT_CACHE_" .. key
+        sources[name] = type(value)=="string" and value or ""
+        names[#names+1], owned[name] = name, true
+    end
+    for _,back in ipairs({false,true}) do
+        local images = UNIT_NUMBER_IMAGES
+        if back then images = UNIT_NUMBER_BACK_IMAGES end
+        for digit=0,UNIT_MAX_DIGIT do source((back and "BACK_" or "FRONT_")..digit,type(images)=="table" and images[digit]) end
+    end
+    for _,key in ipairs({"front_unacted","front_acted","back_unacted","back_acted"}) do
+        source(key,type(UNIT_ACTION_IMAGES)=="table" and UNIT_ACTION_IMAGES[key])
+    end
+    for _,key in ipairs({"amber","red"}) do
+        source("BAND_"..key,unitMoraleBandURL(key))
+    end
+    source("RAIL",UNIT_BACK_RAIL_IMAGE_URL)
+    source("DEFEAT",UNIT_DEFEAT_IMAGE_URL)
+    local changed = force or not unitCacheSources
+    for _,name in ipairs(names) do
+        if not unitCacheSources or sources[name]~=unitCacheSources[name] then changed=true; break end
+    end
+    if not changed then return end
+    local wanted, urls = {}, {}
+    for index,name in ipairs(names) do
+        local url = unitImageURL(sources[name],name~="SG_UNIT_CACHE_DEFEAT")
+        if url~="" and not urls[url] then
+            urls[url] = true
+            -- 全局贴花没有棋子实体，放在桌面远下方；不占用战场或可点击区域。
+            wanted[name] = {name=name,url=url,position={index*0.01,-1000,0},rotation={90,0,0},scale={0.001,0.001,0.001}}
+        end
+    end
+    local ok, failure = pcall(reconcileUnitDecals,Global,names,owned,wanted)
+    if ok then unitCacheSources, unitCacheError = sources, nil
+    elseif unitCacheError~=tostring(failure) then
+        unitCacheError = tostring(failure)
+        print("[部隊图片预载] "..unitCacheError.."；棋面仍按当前数值更新。")
+    end
+end
+
+local UNIT_IMAGE_NAMES = {
+    "SG_UNIT_BACK_RAIL",
+    "SG_UNIT_NUM_FRONT_COUNT", "SG_UNIT_NUM_BACK_COUNT",
+    "SG_UNIT_NUM_FRONT_MORALE", "SG_UNIT_NUM_BACK_MORALE",
+    "SG_UNIT_NUM_FRONT_MOVE", "SG_UNIT_NUM_BACK_MOVE",
+    "SG_UNIT_DEFEAT_FRONT", "SG_UNIT_DEFEAT_BACK",
+    "SG_UNIT_ACTION_FRONT", "SG_UNIT_ACTION_BACK",
+    "SG_UNIT_MORALE_BAND_FRONT"
+}
+local UNIT_IMAGE_OWNED = {}
+for _, name in ipairs(UNIT_IMAGE_NAMES) do UNIT_IMAGE_OWNED[name] = true end
+
+local function unitSurfaceImage(geometry, name, url, back, x, y, width, height, lift)
+    local canvas = UNIT_COUNTER_LAYOUT.canvas
+    return {
+        name=name, url=url,
+        -- 按用户正背面截图校准：底图右侧对应正面局部 -X、背面局部 +X。
+        position=unitImagePosition(geometry,back,x,y,lift),
+        -- 仅将平面图案转半圈，不改变投向哪一面的法线，也不颠倒数值行序。
+        rotation=back and {270,0,0} or {90,180,0},
+        scale={width/canvas*geometry.width,height/canvas*geometry.depth,0.1}
+    }
+end
+
+-- 背面底栏和数值共用同一 Object.UI：子节点顺序决定覆盖顺序，
+-- 不再让多个透明贴花按摄像机距离互相排序。这里只管理 sgub_ 前缀。
+local unitBackUIRecords = {}
+local UNIT_UI_ROOTS = {"sgub_root","sgub_status_front","sgub_status_back","sgub_mode_front","sgub_mode_back","sgub_rout_front","sgub_rout_back"}
+local unitModeImageWarnings = {}
+local function unitBackUIOwned(id)
+    return type(id)=="string" and id:sub(1,5)=="sgub_"
+end
+
+-- 冷启动时 xmlLayout 尚未建立，getAttribute 会抛出引擎空引用。
+-- getXmlTable 对空界面返回空表；在 Lua 表中查找节点不会访问未创建的布局。
+local function unitBackUIFind(nodes,id)
+    for _,node in ipairs(nodes or {}) do
+        if node.attributes and node.attributes.id==id then return node end
+        local child=unitBackUIFind(node.children,id)
+        if child then return child end
+    end
+end
+
+local function unitBackUIStrip(nodes)
+    local result, changed = {}, false
+    for _,node in ipairs(nodes or {}) do
+        if unitBackUIOwned(node.attributes and node.attributes.id) then changed=true
+        else
+            if node.children then
+                local children, removed = unitBackUIStrip(node.children)
+                if removed then node.children,changed=children,true end
+            end
+            result[#result+1]=node
+        end
+    end
+    return result,changed
+end
+
+local function unitBackUIAssets(ui, wanted)
+    local result, changed = {}, false
+    for _,asset in ipairs(ui.getCustomAssets() or {}) do
+        if unitBackUIOwned(asset.name) then changed=true
+        else result[#result+1]=asset end
+    end
+    for _,asset in ipairs(wanted or {}) do result[#result+1]=asset end
+    return result,changed
+end
+
+-- 兼容安装版：setXmlTable 的第二张 Lua 表可能被短重载忽略。
+-- 必须显式登记资源，等待完成后再创建 XML。
+local function unitBackAssetsMatch(current,wanted)
+    if #current~=#wanted then return false end
+    for i,asset in ipairs(wanted) do
+        local actual=current[i]
+        if not actual or actual.name~=asset.name or actual.url~=asset.url then return false end
+    end
+    return true
+end
+
+local function unitBackUIRecord(obj)
+    local guid=obj.getGUID()
+    local record=unitBackUIRecords[guid]
+    if not record or record.object~=obj then
+        record={object=obj,attributes={}}
+        unitBackUIRecords[guid]=record
+    end
+    return record
+end
+
+-- 每枚最多一个等待任务。回调重新读取士气/行动，绝不写回下载前的旧状态。
+local function unitBackUIWait(obj,record)
+    if record.pending then return end
+    local guid=obj.getGUID()
+    record.pending=true
+    local function current()
+        return unitBackUIRecords[guid]==record and getObjectFromGUID(guid)==obj
+    end
+    Wait.frames(function()
+        if not current() then return end
+        Wait.condition(function()
+            if not current() then return end
+            record.pending=false
+            local _,config=getUnitConfig(obj)
+            if config then updateDefeatText(obj) else clearUnitCounterVisuals(obj) end
+        end,function()
+            return not current() or (obj.UI and not obj.UI.loading and not obj.spawning and not obj.loading_custom)
+        end,30,function()
+            if not current() then return end
+            record.pending=false
+            print("[部隊背面] "..guid.." UI 图片加载超时；请检查网络，加载后点击士気或重新 Save & Play 重试。")
+        end)
+    end,2)
+end
+
+local function clearUnitBackUI(obj)
+    local ui=obj.UI
+    if not ui then return end
+    local guid,record=obj.getGUID(),unitBackUIRecords[obj.getGUID()]
+    if ui.loading or (record and record.pending) then
+        unitBackUIWait(obj,record or unitBackUIRecord(obj))
+        return
+    end
+    local currentNodes=ui.getXmlTable() or {}
+    local nodes,removed=unitBackUIStrip(currentNodes)
+    local assets,removedAssets=unitBackUIAssets(ui)
+    if removedAssets then
+        for _,id in ipairs(UNIT_UI_ROOTS) do
+            if unitBackUIFind(currentNodes,id) then ui.setAttribute(id,"active","false") end
+        end
+        record=record or unitBackUIRecord(obj)
+        record.mounted,record.attributes=false,{}
+        ui.setCustomAssets(assets)
+        unitBackUIWait(obj,record)
+        return
+    end
+    if removed and #nodes==0 then ui.setXml("")
+    elseif removed then ui.setXmlTable(nodes) end
+    unitBackUIRecords[guid]=nil
+end
+
+local function unitUIVector(x,y,z)
+    return string.format("%.6f %.6f %.6f",x,y,z)
+end
+
+local unitRoutObjects, unitRoutSnapshot = {}, {}
+function resetUnitRoutOverlays()
+    unitRoutObjects, unitRoutSnapshot = {}, {}
+end
+
+-- 面板维护的登记快照；不另扫全桌，不将普通部队或装饰当成武将。
+function setUnitRoutSnapshot(snapshot)
+    unitRoutSnapshot = snapshot or {}
+end
+
+local function unitRoutCandidates()
+    local candidates = {}
+    for guid,entry in pairs(unitRoutSnapshot) do
+        local obj,role=entry.object,entry.role
+        if (role=="main" or role=="deputy1" or role=="deputy2") and obj
+            and getObjectFromGUID(guid)==obj and not obj.held_by_color
+            and not obj.spawning and not obj.loading_custom and obj.getBounds then
+            local ok,bounds=pcall(function() return obj.getBounds() end)
+            if ok and bounds and bounds.center and bounds.size then
+                candidates[#candidates+1]={object=obj,bounds=bounds}
+            end
+        end
+    end
+    return candidates
+end
+
+local function unitRoutSize()
+    local aspect=math.max(0.1,unitNumber(UNIT_DEFEAT_IMAGE_ASPECT,1.5))
+    local width=math.min(math.max(1,unitNumber(UNIT_ROUT_LAYOUT.width,600)),
+        math.max(1,unitNumber(UNIT_ROUT_LAYOUT.max_height,500))*aspect)
+    return width,width/aspect
+end
+
+local function unitRoutPlane(obj,geometry,back,candidates)
+    local layout=UNIT_ROUT_LAYOUT
+    local sign=back and -1 or 1
+    local surface=back and -geometry.surfaceBottom or geometry.surfaceTop
+    local base=back and -(geometry.surfaceBottom-UNIT_COUNTER_LAYOUT.back_ui_clearance)
+        or geometry.surfaceTop
+    base=base+math.max(0,unitNumber(layout.surface_clearance,.01))
+    if not obj.positionToLocal or obj.held_by_color then return sign*base end
+    local x=geometry.cx+(back and 1 or -1)*(layout.x/1200-.5)*geometry.width
+    local z=geometry.cz+(layout.y/1200-.5)*geometry.depth
+    local width,height=unitRoutSize()
+    local halfX,halfZ=width/2400*geometry.width,height/2400*geometry.depth
+    local layers={}
+    for _,candidate in ipairs(candidates) do
+        if candidate.object~=obj then
+            local b=candidate.bounds
+            local center=obj.positionToLocal(b.center)
+            local cx,cz=unitAxis(center,"x",1,0),unitAxis(center,"z",3,0)
+            -- 中心须在本棋面内，防止相邻部队上的武将触发抬高。
+            if math.abs(cx-geometry.cx)<geometry.width/2 and math.abs(cz-geometry.cz)<geometry.depth/2 then
+                local lo={math.huge,math.huge,math.huge}
+                local hi={-math.huge,-math.huge,-math.huge}
+                for _,dx in ipairs({-1,1}) do for _,dy in ipairs({-1,1}) do for _,dz in ipairs({-1,1}) do
+                    local p=obj.positionToLocal({
+                        unitAxis(b.center,"x",1,0)+dx*unitAxis(b.size,"x",1,0)/2,
+                        unitAxis(b.center,"y",2,0)+dy*unitAxis(b.size,"y",2,0)/2,
+                        unitAxis(b.center,"z",3,0)+dz*unitAxis(b.size,"z",3,0)/2})
+                    local v={unitAxis(p,"x",1,0),sign*unitAxis(p,"y",2,0),unitAxis(p,"z",3,0)}
+                    for i=1,3 do lo[i]=math.min(lo[i],v[i]); hi[i]=math.max(hi[i],v[i]) end
+                end end end
+                if hi[1]>x-halfX and lo[1]<x+halfX and hi[3]>z-halfZ and lo[3]<z+halfZ then
+                    layers[#layers+1]={bottom=lo[2],top=hi[2]}
+                end
+            end
+        end
+    end
+    table.sort(layers,function(a,b) return a.bottom<b.bottom end)
+    local top=surface
+    local tolerance=math.max(0,unitNumber(layout.contact_tolerance,.08))
+    for _,layer in ipairs(layers) do
+        -- 仅接受贴着棋面/已接受武将的叠放，排除同桌邻棋及空中路过。
+        if layer.bottom>=surface-tolerance and layer.bottom<=top+tolerance and layer.top>top then
+            top=layer.top
+        end
+    end
+    if top>surface then base=math.max(base,top+math.max(0,unitNumber(layout.commander_clearance,.02))) end
+    return sign*base
+end
+
+local function unitRoutRoots(obj,geometry,routed,candidates)
+    local layout=UNIT_ROUT_LAYOUT
+    local width,height=unitRoutSize()
+    local roots={}
+    local back=obj.is_face_down==true
+    local plane=unitRoutPlane(obj,geometry,back,routed and (candidates or unitRoutCandidates()) or {})
+    for _,sideBack in ipairs({false,true}) do
+        local side=sideBack and "back" or "front"
+        local sidePlane=sideBack==back and plane or unitRoutPlane(obj,geometry,sideBack,{})
+        roots[#roots+1]={id="sgub_rout_"..side,width=tostring(width),height=tostring(height),
+            color="#FFFFFF00",rectAlignment="MiddleCenter",raycastTarget="false",tooltip="",visibility="",
+            active=routed and back==sideBack and "true" or "false",
+            rotation=sideBack and "180 0 0" or "0 0 180",
+            position=unitUIVector((geometry.cx+(sideBack and 1 or -1)*(layout.x/1200-.5)*geometry.width)*100,
+                (geometry.cz+(layout.y/1200-.5)*geometry.depth)*100,-sidePlane*100),
+            scale=unitUIVector(geometry.width*100/1200,geometry.depth*100/1200,1)}
+    end
+    return roots
+end
+
+-- 复用面板0.75秒定时刷新。仅败走集合×已登记武将；未变不写UI，不重建XML或下载图片。
+function refreshUnitRoutOverlays()
+    if not next(unitRoutObjects) then return end
+    local candidates=unitRoutCandidates()
+    for guid,obj in pairs(unitRoutObjects) do
+        local state=unit_state[guid]
+        if getObjectFromGUID(guid)~=obj or not state then unitRoutObjects[guid]=nil
+        else
+            local record=unitBackUIRecords[guid]
+            local routed=getDefeatText(state)~="" and unitDefeatURL()~=""
+            if record and record.mounted and not record.pending and obj.UI and not obj.UI.loading
+                and not obj.spawning and not obj.loading_custom then
+                local ok,failure=pcall(function()
+                    local roots=unitRoutRoots(obj,unitCounterGeometry(obj),routed,candidates)
+                    for _,root in ipairs(roots) do
+                        local previous=record.attributes[root.id]
+                        if previous then
+                            local changed,dirty={},false
+                            for name,value in pairs(root) do
+                                if name~="id" and previous[name]~=value then changed[name],dirty=value,true end
+                            end
+                            if dirty then obj.UI.setAttributes(root.id,changed); record.attributes[root.id]=root end
+                        end
+                    end
+                end)
+                if not ok and record.routError~=tostring(failure) then
+                    record.routError=tostring(failure)
+                    print("[敗走圖標] "..guid.."："..record.routError)
+                end
+            end
+            if not routed then unitRoutObjects[guid]=nil end
+        end
+    end
+end
+
+local function syncUnitBackUI(obj,state,config,geometry)
+    local ui=obj.UI
+    if not ui then return false end
+    local record=unitBackUIRecord(obj)
+    if record.pending then return nil end
+    if ui.loading then unitBackUIWait(obj,record); return nil end
+    local assets,urls,signature={},{},{}
+    local function asset(name,url)
+        urls[name]=url
+        signature[#signature+1]=name.."="..url
+        if url~="" then assets[#assets+1]={name=name,url=url} end
+    end
+    for digit=0,UNIT_MAX_DIGIT do asset("sgub_digit_"..digit,unitDigitURL(digit,true)) end
+    asset("sgub_rail_image",unitImageURL(UNIT_BACK_RAIL_IMAGE_URL,true))
+    asset("sgub_action_unacted",unitActionURL(false,true))
+    asset("sgub_action_acted",unitActionURL(true,true))
+    for _,kind in ipairs({"amber","red"}) do asset("sgub_band_"..kind,unitMoraleBandURL(kind)) end
+    for _,kind in ipairs(UNIT_STATUS_KINDS) do asset("sgub_status_image_"..kind,unitStatusURL(kind)) end
+    local modePair=unitModePair(config)
+    local modeReady=false
+    if modePair then
+        local first,second=unitModeURL(modePair[1]),unitModeURL(modePair[2])
+        if first~="" and second~="" then
+            -- 新图组避免重复 URL 登记，防止 TTS 冷加载回调合并后一直等待。
+            -- 不改变已正常工作的旧资源登记流程；只拒绝有冲突的底部图组。
+            local conflict=first==second
+            for _,entry in ipairs(unitBackUIAssets(ui,assets)) do
+                if entry.url==first or entry.url==second then conflict=true end
+            end
+            if conflict then
+                local warning=first.."\n"..second
+                if not unitModeImageWarnings[warning] then
+                    unitModeImageWarnings[warning]=true
+                    print("[部隊底部圖標] 兩態圖片須使用不同地址，且不能重複其他UI資源；此組暫時隱藏。")
+                end
+            else
+                modeReady=true
+                asset("sgub_mode_image_"..modePair[1],first)
+                asset("sgub_mode_image_"..modePair[2],second)
+            end
+        end
+    end
+    local routURL,routAsset=unitDefeatURL(),nil
+    if routURL~="" then
+        -- 正反面共用一次登记；若用户复用了另一资源地址，复用其名字，避免冷加载卡住。
+        for _,entry in ipairs(unitBackUIAssets(ui,assets)) do
+            if entry.url==routURL then routAsset=entry.name; break end
+        end
+        if not routAsset then routAsset="sgub_rout_image"; asset(routAsset,routURL) end
+    end
+    signature[#signature+1]="rout="..(routAsset or "").."="..routURL
+    local key=table.concat(signature,"\n")
+    local layout=UNIT_COUNTER_LAYOUT
+    -- 安装版 XmlUIWorldCanvas：局部旋转 +90°X、缩放 .01。
+    -- 整组再转 180°X：右侧对应 +X，上方对应 -Z，朝外法线朝 -Y。
+    local root={id="sgub_root",width="200",height="1200",color="#FFFFFF00",
+        rectAlignment="MiddleCenter",raycastTarget="false",tooltip="",visibility="",
+        rotation="180 0 0",active="true",
+        position=unitUIVector((geometry.cx+500/1200*geometry.width)*100,geometry.cz*100,
+            -(geometry.surfaceBottom-layout.back_ui_clearance)*100),
+        scale=unitUIVector(geometry.width*100/1200,geometry.depth*100/1200,1)}
+    local desired={}
+    local ids={"sgub_rail","sgub_count","sgub_morale","sgub_move","sgub_action","sgub_morale_band"}
+    local function image(id,name,width,height,y)
+        local exists=urls[name] and urls[name]~=""
+        desired[id]={id=id,width=tostring(width),height=tostring(height),
+            -- 运行时直接绑定 URL；资源名只用于预载登记，不能当作已绑定成功。
+            image=exists and urls[name] or "",active=exists and "true" or "false",
+            color="#FFFFFF",preserveAspect="true",raycastTarget="false",tooltip="",
+            rectAlignment="MiddleCenter",position=unitUIVector(0,600-y,0),rotation="0 0 0",scale="1 1 1"}
+    end
+    image(ids[1],"sgub_rail_image",200,1200,600)
+    image(ids[2],"sgub_digit_"..tostring(config.count_label),176,176,layout.count_y)
+    image(ids[3],"sgub_digit_"..tostring(state.back_value),176,176,layout.morale_y)
+    image(ids[4],"sgub_digit_"..tostring(config.back_move),176,176,layout.move_y)
+    image(ids[5],state.acted and "sgub_action_acted" or "sgub_action_unacted",200,200,100)
+    local bandKey=unitMoraleBandKey(state,config,true)
+    -- 色带使用已完成预载的资源名，避免首次扣减时另开 URL 下载并露出白色占位图。
+    -- 满士气只隐藏，不清空绑定；即使首次加载时满士气，也准备好一张有效色带。
+    local bandAsset="sgub_band_"..(bandKey or "amber")
+    if not bandKey and urls[bandAsset]=="" then bandAsset="sgub_band_red" end
+    image(ids[6],bandAsset,layout.morale_band_width,layout.morale_band_height,layout.morale_band_y)
+    desired[ids[6]].image=desired[ids[6]].image~="" and bandAsset or ""
+    if not bandKey then desired[ids[6]].active="false" end
+    -- 两面的状态图标复用现有资源／XML 生命周期，不改动数字栏或其六个子节点。
+    -- UI 支持透明度，因此无需为关闭状态再上传一套图片，也不引入叠层贴花。
+    local groups={{root=root,ids=copyConfig(ids)}}
+    if unitStatusURL("engaged")~="" or unitStatusURL("out_of_command")~="" then
+        for _,back in ipairs({false,true}) do
+            local side=back and "back" or "front"
+            local statusLayout=UNIT_STATUS_LAYOUT
+            local plane=back and (geometry.surfaceBottom-layout.back_ui_clearance)
+                or (geometry.surfaceTop+statusLayout.front_ui_clearance)
+            local header={id="sgub_status_"..side,width="1000",height="200",color="#FFFFFF00",
+                rectAlignment="MiddleCenter",raycastTarget="false",tooltip="",visibility="",active="true",
+                -- UI 初始 X→物件+X、Y→物件+Z；正面双轴翻转，背面仅翻转 Y。
+                rotation=back and "180 0 0" or "0 0 180",
+                position=unitUIVector((geometry.cx+(back and -1 or 1)*100/1200*geometry.width)*100,
+                    (geometry.cz-500/1200*geometry.depth)*100,-plane*100),
+                scale=unitUIVector(geometry.width*100/1200,geometry.depth*100/1200,1)}
+            local group={root=header,ids={}}
+            for _,kind in ipairs(UNIT_STATUS_KINDS) do
+                local id="sgub_status_"..side.."_"..kind
+                local name="sgub_status_image_"..kind
+                local exists=urls[name]~=""
+                desired[id]={id=id,width=tostring(statusLayout.size),height=tostring(statusLayout.size),
+                    image=exists and name or "",active=exists and "true" or "false",
+                    color=state[kind] and statusLayout.active_color or statusLayout.inactive_color,
+                    preserveAspect="true",raycastTarget="false",tooltip="",rectAlignment="MiddleCenter",
+                    position=unitUIVector(statusLayout[kind.."_x"]-500,100-statusLayout.y,0),
+                    rotation="0 0 0",scale="1 1 1"}
+                group.ids[#group.ids+1]=id
+                ids[#ids+1]=id
+            end
+            groups[#groups+1]=group
+        end
+    end
+    if modeReady then
+        local modeLayout=UNIT_MODE_LAYOUT
+        local selected=modePair[state[modePair.field] and 2 or 1]
+        for _,back in ipairs({false,true}) do
+            local side=back and "back" or "front"
+            local id="sgub_mode_"..side.."_image"
+            local plane=back and (geometry.surfaceBottom-layout.back_ui_clearance)
+                or (geometry.surfaceTop+modeLayout.front_ui_clearance)
+            local modeRoot={id="sgub_mode_"..side,width=tostring(modeLayout.width),height=tostring(modeLayout.height),
+                color="#FFFFFF00",rectAlignment="MiddleCenter",raycastTarget="false",tooltip="",visibility="",active="true",
+                rotation=back and "180 0 0" or "0 0 180",
+                position=unitUIVector((geometry.cx+(back and 1 or -1)*(modeLayout.x/1200-.5)*geometry.width)*100,
+                    (geometry.cz+(modeLayout.y/1200-.5)*geometry.depth)*100,-plane*100),
+                scale=unitUIVector(geometry.width*100/1200,geometry.depth*100/1200,1)}
+            desired[id]={id=id,width=tostring(modeLayout.width),height=tostring(modeLayout.height),
+                image="sgub_mode_image_"..selected,active="true",color="#FFFFFFFF",
+                preserveAspect="true",raycastTarget="false",tooltip="",rectAlignment="MiddleCenter",
+                position="0 0 0",rotation="0 0 0",scale="1 1 1"}
+            groups[#groups+1]={root=modeRoot,ids={id}}
+            ids[#ids+1]=id
+        end
+    end
+    if routAsset then
+        local width,height=unitRoutSize()
+        local routed=getDefeatText(state)~=""
+        for _,routRoot in ipairs(unitRoutRoots(obj,geometry,routed)) do
+            local id=routRoot.id.."_image"
+            desired[id]={id=id,width=tostring(width),height=tostring(height),image=routAsset,
+                active="true",color="#FFFFFFFF",preserveAspect="true",raycastTarget="false",tooltip="",
+                rectAlignment="MiddleCenter",position="0 0 0",rotation="0 0 0",scale="1 1 1"}
+            groups[#groups+1]={root=routRoot,ids={id}}
+            ids[#ids+1]=id
+        end
+    end
+    local currentNodes=ui.getXmlTable() or {}
+    local rootsPresent=true
+    for _,group in ipairs(groups) do
+        if not unitBackUIFind(currentNodes,group.root.id) then rootsPresent=false end
+    end
+    if not record.mounted or record.signature~=key or not rootsPresent then
+        local nodes=unitBackUIStrip(currentNodes)
+        -- 图片已独立登记并完成加载；创建时绑定，随后显示最新状态。
+        for _,group in ipairs(groups) do
+            local children={}
+            for _,id in ipairs(group.ids) do
+                local attributes=copyConfig(desired[id]); attributes.active="false"
+                children[#children+1]={tag="Image",attributes=attributes}
+            end
+            local initial=copyConfig(group.root); initial.active="false"
+            nodes[#nodes+1]={tag="Panel",attributes=initial,children=children}
+        end
+        local mergedAssets=unitBackUIAssets(ui,assets)
+        if not unitBackAssetsMatch(ui.getCustomAssets() or {},mergedAssets) then
+            -- 图片配置变化时先收起旧画面，避免在等待下载期间留下过期数字。
+            for _,id in ipairs(ids) do
+                if unitBackUIFind(currentNodes,id) then ui.setAttribute(id,"active","false") end
+            end
+            for _,id in ipairs(UNIT_UI_ROOTS) do
+                if unitBackUIFind(currentNodes,id) then ui.setAttribute(id,"active","false") end
+            end
+            record.mounted,record.attributes=false,{}
+            ui.setCustomAssets(mergedAssets)
+            unitBackUIWait(obj,record)
+            return nil
+        end
+        ui.setXmlTable(nodes)
+        record.mounted,record.signature,record.attributes=true,key,{}
+        unitBackUIWait(obj,record)
+        return nil
+    end
+    local function update(id,attributes)
+        local previous=record.attributes[id] or {}
+        local changed,dirty={},false
+        for name,value in pairs(attributes) do
+            if name~="id" and previous[name]~=value and
+                not (id==ids[6] and (name=="image" or name=="active")) then
+                changed[name],dirty=value,true
+            end
+        end
+        if dirty then ui.setAttributes(id,changed) end
+        if id==ids[6] then
+            -- 已离开 loading 等待；资源名同步解析已加载 Sprite，再打开显示。
+            -- 重新出现时也重绑一次，避免继承此前空白/隐藏时的 Image 状态。
+            if previous.image~=attributes.image or
+                (previous.active~="true" and attributes.active=="true") then
+                ui.setAttribute(id,"image",attributes.image)
+            end
+            if previous.active~=attributes.active then ui.setAttribute(id,"active",attributes.active) end
+        end
+        record.attributes[id]=attributes
+    end
+    for _,id in ipairs(ids) do update(id,desired[id]) end
+    for _,group in ipairs(groups) do update(group.root.id,group.root) end -- 图片先绑定，整组最后显示。
+    return true,modeReady
+end
+
+local function syncUnitImages(obj, state, config)
+    preloadUnitImages(false)
+    local wanted, geometry, layout = {}, unitCounterGeometry(obj), UNIT_COUNTER_LAYOUT
+    local defeatURL=unitDefeatURL()
+    unitRoutObjects[obj.getGUID()]=(defeatURL~="" and getDefeatText(state)~="") and obj or nil
+    local fields = {
+        {"COUNT", config.count_label, layout.count_y},
+        {"MORALE", state.front_value, layout.morale_y},
+        {"MOVE", config.front_move, layout.move_y}
+    }
+    for _, field in ipairs(fields) do
+        local value, url = field[2], unitDigitURL(field[2],false)
+        if url ~= "" then
+            local name = "SG_UNIT_NUM_FRONT_"..field[1]
+            wanted[name] = unitSurfaceImage(geometry,name,url,false,layout.number_x,field[3],layout.image_pixels,layout.image_pixels,0)
+        else
+            local key=tostring(value)
+            if not unitMissingImages[key] then
+                unitMissingImages[key]=true
+                print("[部隊数字] 正面 "..key.." 缺少图片地址；请检查 Global 顶部 UNIT_NUMBER_IMAGES。数值仍然保留。")
+            end
+        end
+    end
+    local actionURL = unitActionURL(state.acted,false)
+    if actionURL ~= "" then
+        wanted.SG_UNIT_ACTION_FRONT = unitSurfaceImage(geometry,"SG_UNIT_ACTION_FRONT",actionURL,false,layout.action_x,layout.action_y,layout.action_size,layout.action_size,layout.front_action_lift)
+    end
+    local bandURL = unitMoraleBandURL(unitMoraleBandKey(state,config,false))
+    if bandURL ~= "" then
+        wanted.SG_UNIT_MORALE_BAND_FRONT = unitSurfaceImage(geometry,"SG_UNIT_MORALE_BAND_FRONT",bandURL,false,
+            layout.number_x,layout.morale_band_y,layout.morale_band_width,layout.morale_band_height,0)
+    end
+    -- 同时清除旧版敗走及背面底栏／数字／行动贴花，保留陣旗及第三方贴花。
+    reconcileUnitDecals(obj,UNIT_IMAGE_NAMES,UNIT_IMAGE_OWNED,wanted)
+    local uiOK,backReady,modeReady=pcall(syncUnitBackUI,obj,state,config,geometry)
+    if not uiOK then
+        local record=unitBackUIRecord(obj)
+        if record.error~=tostring(backReady) then
+            record.error=tostring(backReady)
+            print("[部隊背面 UI] "..obj.getGUID().."："..record.error)
+        end
+    end
+    syncUnitStatusButtons(obj,geometry,uiOK and backReady==true)
+    syncUnitModeButtons(obj,geometry,uiOK and backReady==true and modeReady==true)
+    -- API 成功不等于网络图片已下载；无效地址不提交空白贴花。
+    return defeatURL ~= "" and uiOK and backReady~=false, geometry
+end
+
+function clearUnitCounterVisuals(obj)
+    unitRoutObjects[obj.getGUID()] = nil
+    reconcileUnitDecals(obj,UNIT_IMAGE_NAMES,UNIT_IMAGE_OWNED,{})
+    clearUnitBackUI(obj)
+    -- 仅移除本模块按钮，不清空整个棋子的第三方按钮/右键菜单。
+    local indices = {}
+    for i, button in ipairs(obj.getButtons() or {}) do
+        local callback = button.click_function
+        if callback == "changeFrontValue" or callback == "changeBackValue" or callback == "unitDefeatFallback" or callback == "toggleUnitActed"
+            or callback == "toggleUnitEngaged" or callback == "toggleUnitOutOfCommand" or callback == "toggleUnitMode" then
+            table.insert(indices,button.index or (i-1))
+        end
+    end
+    table.sort(indices,function(a,b) return a>b end)
+    for _, index in ipairs(indices) do obj.removeButton(index) end
+end
+
+function unitDefeatFallback() end
+
+local function unitDefeatButton(obj, geometry, faceDown, text)
+    obj.createButton({
+        label=text, click_function="unitDefeatFallback", function_owner=Global,
+        position={-geometry.cx,faceDown and geometry.bottom or geometry.top,geometry.cz},
+        rotation=faceDown and {0,0,180} or {0,0,0},
+        scale={geometry.width/4,geometry.depth/4,geometry.depth/4},
+        width=0,height=0,font_size=650,
+        font_color={0.60,0.06,0.04,1},tooltip=""
+    })
+end
+
+function createCounter(obj, config)
+    obj.clearButtons()
+    local geometry = unitCounterGeometry(obj)
+    -- 0/1：正背士気；2/3：背正敗走文字后备；4/5：正背未／済。
+    unitCounterButton(obj,geometry,false,UNIT_COUNTER_LAYOUT.morale_y,"changeFrontValue",true)
+    unitCounterButton(obj,geometry,true,UNIT_COUNTER_LAYOUT.morale_y,"changeBackValue",true)
+    unitDefeatButton(obj,geometry,true,"")
+    unitDefeatButton(obj,geometry,false,"")
+    obj.createButton(unitActionButtonParameters(geometry,false))
+    obj.createButton(unitActionButtonParameters(geometry,true))
+    updateDefeatText(obj)
+end
+
+-- 显式供销毁事件清理。
+function forgetUnitCounter(guid)
+    unitRoutObjects[guid] = nil
+    unitDecalErrors[guid] = nil
+    unitSetupPending[guid] = nil
+    unitFlipPending[guid] = nil
+    unitBackUIRecords[guid] = nil
+end
+
+
+-- =========================
+-- 士気按钮逻辑
+-- =========================
+local function changeUnitMorale(obj, back, alt_click, quick)
+    -- 翻面动画中正反面都忽略连点，防止正面耗尽后立刻误清空第二阶段。
+    if unitFlipPending[obj.getGUID()] then return end
+    local state, config = getStateAndConfig(obj)
+    if not state or unitFlipPending[obj.getGUID()] then return end
+    local field = back and "back_value" or "front_value"
+    local maximum = unitMoraleMaximum(state,config,back)
+    local before, previousBack, previousDefeat = state[field], state.back_value, state.manual_defeat_visible
+    local previousPending = state.back_threshold_pending
+    if back then state.back_threshold_pending = false end
+    if quick then
+        state[field] = alt_click and MIN_VALUE or maximum
+    else
+        state[field] = math.max(MIN_VALUE,math.min(maximum,before+(alt_click and -1 or 1)))
+    end
+    if not alt_click then
+        if quick then
+            state.manual_defeat_visible = false
+            -- 敗走棋子若被手动翻回正面，补满仍须解除由背面 0 触发的敗走。
+            -- 仅修复已耗尽的背面储备；另一面尚有士气时保留原值。
+            if state.back_value == 0 then
+                state.back_value = unitMoraleMaximum(state,config,true)
+                state.back_threshold_pending = false
+            end
+        elseif back and state.back_value > 0 then
+            state.manual_defeat_visible = false
+        end
+    end
+
+    -- 只在本次减值由正数跨到 0 时转段，加载或重复点击 0 不补充背面。
+    if not back and alt_click and before > 0 and state.front_value == 0 then
+        disruptUnit(obj,state,config)
+    end
+
+    -- 到达上限或下限后继续点击，不重复写贴花和按钮。
+    if state[field]~=before or state.back_value~=previousBack or state.manual_defeat_visible~=previousDefeat
+        or state.back_threshold_pending~=previousPending then
+        updateDefeatText(obj)
+    end
+end
+
+function changeFrontValue(obj, player_color, alt_click)
+    changeUnitMorale(obj,false,alt_click,unitMoraleQuickPlayers[player_color] == true)
+end
+
+function changeBackValue(obj, player_color, alt_click)
+    changeUnitMorale(obj,true,alt_click,unitMoraleQuickPlayers[player_color] == true)
+end
+
+-- 行動和部隊正反面是两个独立状态；所有玩家点击同一枚棋子的同一个记录。
+function toggleUnitActed(obj, _player_color, _alt_click)
+    local state = getStateAndConfig(obj)
+    if not state then return end
+    state.acted = not state.acted
+    updateDefeatText(obj)
+end
+
+-- 仅手动记录：不自动判断接敌／指挥路径，不联动士気、行动或翻面。
+-- 右键不切换，避免习惯性右键操作意外改状态；不限制玩家颜色。
+local function toggleUnitStatus(obj,kind,alt_click)
+    if alt_click then return end
+    local state=getStateAndConfig(obj)
+    if not state then return end
+    state[kind]=not state[kind]
+    updateDefeatText(obj)
+end
+
+function toggleUnitEngaged(obj,_player_color,alt_click)
+    toggleUnitStatus(obj,"engaged",alt_click)
+end
+
+function toggleUnitOutOfCommand(obj,_player_color,alt_click)
+    toggleUnitStatus(obj,"out_of_command",alt_click)
+end
+
+-- 射击状态仍是手动标记；近战换阵消耗行动并保留两面各自已受损伤。
+function toggleUnitMode(obj,player_color,alt_click)
+    if alt_click or unitFlipPending[obj.getGUID()] then return end
+    local state,config=getStateAndConfig(obj)
+    if not state or unitFlipPending[obj.getGUID()] then return end
+    local pair=unitModePair(config)
+    if not pair then return end
+    if config.marker_mode == "formation" then
+        local reason
+        if getDefeatText(state) ~= "" then reason="敗走中，不能變陣。"
+        elseif obj.is_face_down or state.front_value == 0 then reason="減弱中，不能變陣。"
+        elseif state.engaged then reason="交戦中，不能變陣。"
+        elseif state.acted then reason="已行動；新命令時先將「済」切回「未」。" end
+        if reason then
+            if type(broadcastToColor)=="function" and player_color then
+                broadcastToColor("[部隊] "..reason,player_color,{1,0.8,0.4})
+            else print("[部隊] "..reason) end
+            return
+        end
+        local frontMax,backMax = unitMoraleMaximum(state,config,false),unitMoraleMaximum(state,config,true)
+        state.open_order = not state.open_order
+        state.front_value = state.front_value + unitMoraleMaximum(state,config,false)-frontMax
+        state.back_value = state.back_value + unitMoraleMaximum(state,config,true)-backMax
+        state.back_threshold_pending = state.back_value == 0
+        state.acted = true
+        if state.front_value <= 0 then
+            state.front_value = MIN_VALUE
+            disruptUnit(obj,state,config)
+        end
+        updateDefeatText(obj)
+        return
+    end
+    state[pair.field]=not state[pair.field]
+    updateDefeatText(obj)
+end
+
+-- =========================
+-- 敗走文字逻辑
+-- =========================
+function toggleDefeatText(obj)
+    local state, _config = getStateAndConfig(obj)
+
+    if state == nil then
+        return
+    end
+
+    state.manual_defeat_visible = not state.manual_defeat_visible
+
+    updateDefeatText(obj)
+end
+
+function getDefeatText(state)
+    if (state.back_value == 0 and not state.back_threshold_pending) or state.manual_defeat_visible then
+        return "敗走"
+    else
+        return ""
+    end
+end
+
+-- 仅有待决背面阈值时响应物理翻面；不新增全场扫描。
+function updateUnitFormationFace(obj)
+    local guid = obj.getGUID()
+    if not unit_state[guid] or not unit_state[guid].back_threshold_pending then return end
+    Wait.time(function()
+        local live = getObjectFromGUID(guid)
+        if live and live.is_face_down and unit_state[guid] and unit_state[guid].back_threshold_pending then
+            updateDefeatText(live)
+        end
+    end,0.35)
+end
+
+-- =========================
+-- 更新按钮
+-- =========================
+function updateFrontButton(obj)
+    updateDefeatText(obj)
+end
+
+function updateBackButton(obj)
+    updateDefeatText(obj)
+end
+
+function updateDefeatText(obj)
+    local state, config = getStateAndConfig(obj)
+
+    if state == nil then
+        return
+    end
+
+    local ok, imageMode, geometry = pcall(syncUnitImages, obj, state, config)
+    if not ok then
+        local guid = obj.getGUID()
+        if unitDecalErrors[guid] ~= tostring(imageMode) then
+            unitDecalErrors[guid] = tostring(imageMode)
+            print("[部隊贴图] " .. guid .. " 设置失败：" .. tostring(imageMode))
+        end
+        imageMode = false
+    else
+        unitDecalErrors[obj.getGUID()] = nil
+    end
+    for index,back in ipairs({false,true}) do
+        local button = {label=""}
+        if geometry then
+            -- 跟随此次数字的坐标与尺寸更新，避免改值/刷新后点击面仍停在旧位置。
+            button = unitCounterButtonParameters(geometry,back,UNIT_COUNTER_LAYOUT.morale_y,
+                back and "changeBackValue" or "changeFrontValue",true)
+        end
+        button.tooltip = unitMoraleTooltip(state,config,back)
+        button.index = index-1
+        obj.editButton(button)
+    end
+    if geometry then
+        for index,back in ipairs({false,true}) do
+            local button = unitActionButtonParameters(geometry,back)
+            button.index = index+3
+            obj.editButton(button)
+        end
+    end
+    local text = imageMode and "" or getDefeatText(state)
+
+    obj.editButton({
+        index = 2,
+        label = text
+    })
+
+    obj.editButton({
+        index = 3,
+        label = text
+    })
+end
+
+function updateCountLabel(obj)
+    updateDefeatText(obj)
+end
+
+function resetUnit(obj)
+    local state, config = getStateAndConfig(obj)
+
+    if state == nil then
+        return
+    end
+
+    state.front_value = config.max_front
+    state.back_value = config.max_back
+    state.manual_defeat_visible = false
+    state.acted = false
+    state.engaged = false
+    state.out_of_command = false
+    state.open_order = false
+    state.reloading = false
+    state.back_threshold_pending = false
+    unitFlipPending[obj.getGUID()] = nil
+
+    updateDefeatText(obj)
+end
+
+function null()
+end
+
+
+
+-- ===== 備隊面板 v2 =====
+-- 備隊武将面板 v2.18.0：敗走大圖・武將疊放避讓
+-- 更新日：2026-10-23
+-- 画像・生年・統率は各武将令牌の Description に入力可能。
+-- team=ota_honjin / role=main,deputy1,deputy2 / name=太田資正
+-- birth=1522 / command=5 / image=https://... / status=無傷
+-- 主将に formation=太田家 本陣 / order=防御 / flag_image=陣旗URL を設定。
+-- 普通部队添加所属标签 ota_honjin / iwatsuke_shu / edo_shu / matsuyama_shu 即可。
+-- 自编队标签 sg_team_<team ID>；仍兼容 Description 的 team / role=unit。
+-- 全武将统一使用下方行動印URL，不必逐枚填写 acted_image。
+-- 詳細・12名のテンプレート：令牌資料填写指南.md
+-- このファイルは Global UI を置換する。既存の兵種スクリプトには合并版を使用。
+local CURRENT_YEAR = 1563
+local ACTED_IMAGE_URL = "https://steamusercontent-a.akamaihd.net/ugc/16127482967476073358/AB4E3857AE6ECD0830ECE8C32682AE244709D8B5/"
+-- 背面貼花：一般平面令牌取局部 -Y 面；旋转是依据官方地面例子反向推算，须在 TTS 内确认。
+local BACK_STAMP_NAME = "SG_済_背面"
+local BACK_STAMP_RATIO = 1 -- 印章直径占令牌较短一边的比例；当前令牌实测值
+local BACK_STAMP_GAP = -0.099 -- 背面貼花局部偏移；2026-10-13 用户实测值
+local BACK_STAMP_ROTATION = {270, 0, 0}
+
+-- 初期資料。Description の有効な入力値を優先する。
+local FORMATIONS = {
+    ["ota_honjin"] = {
+        title = "太田家 本陣",
+        main = {
+            tokenName = "太田資正",
+            roleLabel = "備大将",
+            name = "太田資正",
+            birthYear = 1522,
+            command = 5,
+            image = "", -- 完全な Cloud URL を貼付
+            defaultStatus = "健康"
+        },
+        deputies = {
+            {
+                tokenName = "三戸興義",
+                roleLabel = "副将",
+                name = "三戸興義",
+                birthYear = 1525,
+                command = 2,
+                image = "",
+                defaultStatus = "健康"
+            },
+            {
+                tokenName = "太田御前",
+                roleLabel = "副将",
+                name = "太田御前",
+                birthYear = 1544,
+                command = 2,
+                image = "",
+                defaultStatus = "健康"
+            }
+        }
+    },
+    ["iwatsuke_shu"] = {
+        title = "太田家 岩付衆",
+        main = {
+            tokenName = "太田資房",
+            roleLabel = "備大将",
+            name = "太田資房",
+            birthYear = 1542,
+            command = 2,
+            image = "",
+            defaultStatus = "健康"
+        },
+        deputies = {
+            {
+                tokenName = "小宮山忠孝",
+                roleLabel = "副将",
+                name = "小宮山忠孝",
+                birthYear = 1533,
+                command = 2,
+                image = "",
+                defaultStatus = "健康"
+            },
+            {
+                tokenName = "高築道叶",
+                roleLabel = "副将",
+                name = "高築道叶",
+                birthYear = 1523,
+                command = 2,
+                image = "",
+                defaultStatus = "健康"
+            }
+        }
+    },
+    ["edo_shu"] = {
+        title = "太田家 江戸衆",
+        main = {
+            tokenName = "太田康資",
+            roleLabel = "備大将",
+            name = "太田康資",
+            birthYear = 1531,
+            command = 3,
+            image = "",
+            defaultStatus = "健康"
+        },
+        deputies = {
+            {
+                tokenName = "宮城政業",
+                roleLabel = "副将",
+                name = "宮城政業",
+                birthYear = 1495,
+                command = 2,
+                image = "",
+                defaultStatus = "健康"
+            },
+            {
+                tokenName = "舎人重長",
+                roleLabel = "副将",
+                name = "舎人重長",
+                birthYear = 1532,
+                command = 2,
+                image = "",
+                defaultStatus = "健康"
+            }
+        }
+    },
+    ["matsuyama_shu"] = {
+        title = "太田家 松山衆",
+        main = {
+            tokenName = "梶原政景",
+            roleLabel = "備大将",
+            name = "梶原政景",
+            birthYear = 1548,
+            command = 4,
+            image = "",
+            defaultStatus = "健康"
+        },
+        deputies = {
+            {
+                tokenName = "広沢信秀",
+                roleLabel = "副将",
+                name = "広沢信秀",
+                birthYear = 1543,
+                command = 2,
+                image = "",
+                defaultStatus = "健康"
+            },
+            {
+                tokenName = "比企政員",
+                roleLabel = "副将",
+                name = "比企政員",
+                birthYear = 1538,
+                command = 2,
+                image = "",
+                defaultStatus = "健康"
+            }
+        }
+    }
+}
+
+-- 主将画像 260、副将画像 200。副将は左右並列。
+local PANEL_XML = [=[
+<Panel id="sg_panel" visibility="PLAYER_COLOR" active="true" rectAlignment="MiddleRight" offsetXY="-20 0" width="600" height="1000" scale="1 1 1" color="#1B211DF8" raycastTarget="true">
+    <Text id="sg_formation" rectAlignment="UpperCenter" offsetXY="0 -10" width="558" height="36" fontSize="26" color="#E4D3A3" raycastTarget="false" >請指向武將令牌</Text>
+<Panel id="sg_main_card" rectAlignment="UpperCenter" offsetXY="0 -62" width="568" height="438" color="#292D28" raycastTarget="true">
+    <Text id="sg_main_role" rectAlignment="UpperCenter" offsetXY="0 -8" width="266" height="24" fontSize="16" color="#C5AD75" raycastTarget="false" resizeTextForBestFit="true" resizeTextMinSize="12" resizeTextMaxSize="16">備大将</Text>
+    <Panel id="sg_main_visual_group" rectAlignment="UpperCenter" offsetXY="0 -37" width="266" height="266" color="#FFFFFF00" raycastTarget="false">
+        <Panel id="sg_main_portrait_frame" rectAlignment="UpperCenter" offsetXY="0 0" width="266" height="266" color="#5E604F" raycastTarget="false" />
+        <Panel rectAlignment="UpperCenter" offsetXY="0 -3" width="260" height="260" color="#1C211D" raycastTarget="false" />
+        <Text id="sg_main_no_image" rectAlignment="UpperCenter" offsetXY="0 -3" width="260" height="260" fontSize="16" color="#8D9688" raycastTarget="false" >画像未登録</Text>
+        <Image id="sg_main_portrait" active="false" rectAlignment="UpperCenter" offsetXY="0 -3" width="260" height="260" preserveAspect="true" raycastTarget="false" />
+        <!-- 独立层：画像の暗色化は行動印・負傷表示に影響しない。 -->
+        <Image id="sg_main_acted_stamp" active="false" rectAlignment="UpperCenter" offsetXY="70 -147" width="112" height="112" preserveAspect="true" color="#FFFFFFE6" raycastTarget="false" />
+        <Text id="sg_main_acted_fallback" active="false" rectAlignment="UpperCenter" offsetXY="70 -147" width="112" height="112" fontSize="64" fontStyle="Bold" color="#E43B36DF" raycastTarget="false">済</Text>
+        <Panel id="sg_main_injury_badge" active="false" rectAlignment="UpperCenter" offsetXY="-86 -9" width="72" height="28" color="#6F2432" raycastTarget="false">
+            <Text id="sg_main_injury_label" fontSize="17" color="#FFFFFF" raycastTarget="false">深手</Text>
+        </Panel>
+    </Panel>
+    <Image id="sg_flag" active="false" rectAlignment="UpperCenter" offsetXY="140 -50" width="90" height="240" preserveAspect="true" color="#FFFFFF" raycastTarget="false" />
+    <Text id="sg_main_name" rectAlignment="UpperCenter" offsetXY="0 -308" width="548" height="38" fontSize="26" color="#F2EAD9" raycastTarget="true" resizeTextForBestFit="true" resizeTextMinSize="20" resizeTextMaxSize="26">姓名　年齢 —</Text>
+    <Panel id="sg_main_command_row" rectAlignment="UpperCenter" offsetXY="0 -353" width="276" height="40" color="#FFFFFF00" raycastTarget="false">
+        <Text id="sg_main_command_label" rectAlignment="MiddleCenter" offsetXY="-118 0" width="40" height="36" fontSize="16" alignment="MiddleCenter" color="#BDBAA9" raycastTarget="false">統率</Text>
+        <Panel id="sg_main_command_box" rectAlignment="MiddleCenter" offsetXY="-67 0" width="38" height="36" color="#20271F" raycastTarget="false" />
+        <Text id="sg_main_command" rectAlignment="MiddleCenter" offsetXY="-67 0" width="38" height="36" fontSize="24" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false" fontStyle="Bold">—</Text>
+        <Panel id="sg_main_command_bar" rectAlignment="MiddleCenter" offsetXY="54 0" width="168" height="40" color="#FFFFFF00" raycastTarget="false">
+            <Text id="sg_main_command_slot1" rectAlignment="MiddleCenter" offsetXY="-70 2" width="28" height="36" fontSize="30" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_main_command_slot2" rectAlignment="MiddleCenter" offsetXY="-42 2" width="28" height="36" fontSize="30" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_main_command_slot3" rectAlignment="MiddleCenter" offsetXY="-14 2" width="28" height="36" fontSize="30" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_main_command_slot4" rectAlignment="MiddleCenter" offsetXY="14 2" width="28" height="36" fontSize="30" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_main_command_slot5" rectAlignment="MiddleCenter" offsetXY="42 2" width="28" height="36" fontSize="30" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_main_command_slot6" rectAlignment="MiddleCenter" offsetXY="70 2" width="28" height="36" fontSize="30" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+        </Panel>
+    </Panel>
+    <Text id="sg_main_mobility" rectAlignment="UpperCenter" offsetXY="-171 -394" width="148" height="26" fontSize="18" color="#ECE6D8" raycastTarget="false" >機動 —</Text>
+    <Text id="sg_main_status_label" rectAlignment="UpperCenter" offsetXY="-45 -394" width="52" height="30" fontSize="18" color="#BDBAA9" raycastTarget="false">状態</Text>
+    <Button id="sg_main_status" rectAlignment="UpperCenter" offsetXY="28 -394" width="86" height="30" onClick="sgSetStatus" raycastTarget="true" text="" colors="#3C684D|#548363|#2A4937|#30362D" />
+    <Text id="sg_main_status_text" rectAlignment="UpperCenter" offsetXY="28 -394" width="86" height="30" fontSize="18" color="#86C48B" raycastTarget="false">無傷</Text>
+    <Text id="sg_main_action" rectAlignment="UpperCenter" offsetXY="171 -394" width="148" height="26" fontSize="18" color="#C9C6BA" raycastTarget="false" >行動 未</Text>
+</Panel>
+<Panel id="sg_deputy1_card" rectAlignment="UpperCenter" offsetXY="-146 -514" width="280" height="352" color="#292D28" raycastTarget="true">
+    <Text id="sg_deputy1_role" rectAlignment="UpperCenter" offsetXY="0 -8" width="260" height="24" fontSize="15" color="#C5AD75" raycastTarget="false" >副将</Text>
+    <Panel id="sg_deputy1_portrait_frame" rectAlignment="UpperCenter" offsetXY="0 -35" width="206" height="206" color="#5E604F" raycastTarget="false" />
+    <Panel rectAlignment="UpperCenter" offsetXY="0 -38" width="200" height="200" color="#1C211D" raycastTarget="false" />
+    <Text id="sg_deputy1_no_image" rectAlignment="UpperCenter" offsetXY="0 -38" width="200" height="200" fontSize="16" color="#8D9688" raycastTarget="false" >画像未登録</Text>
+    <Image id="sg_deputy1_portrait" active="false" rectAlignment="UpperCenter" offsetXY="0 -38" width="200" height="200" preserveAspect="true" raycastTarget="false" />
+    <!-- 独立层：画像の暗色化は行動印・負傷表示に影響しない。 -->
+    <Image id="sg_deputy1_acted_stamp" active="false" rectAlignment="UpperCenter" offsetXY="54 -148" width="86" height="86" preserveAspect="true" color="#FFFFFFE6" raycastTarget="false" />
+    <Text id="sg_deputy1_acted_fallback" active="false" rectAlignment="UpperCenter" offsetXY="54 -148" width="86" height="86" fontSize="50" fontStyle="Bold" color="#E43B36DF" raycastTarget="false">済</Text>
+    <Panel id="sg_deputy1_injury_badge" active="false" rectAlignment="UpperCenter" offsetXY="-61 -44" width="66" height="24" color="#6F2432" raycastTarget="false">
+        <Text id="sg_deputy1_injury_label" fontSize="15" color="#FFFFFF" raycastTarget="false">深手</Text>
+    </Panel>
+    <Text id="sg_deputy1_name" rectAlignment="UpperCenter" offsetXY="0 -246" width="260" height="30" fontSize="20" color="#F2EAD9" raycastTarget="true" resizeTextForBestFit="true" resizeTextMinSize="16" resizeTextMaxSize="20">姓名　年齢 —</Text>
+    <Panel id="sg_deputy1_command_row" rectAlignment="UpperCenter" offsetXY="0 -281" width="235" height="38" color="#FFFFFF00" raycastTarget="false">
+        <Text id="sg_deputy1_command_label" rectAlignment="MiddleCenter" offsetXY="-96.5 0" width="42" height="34" fontSize="16" alignment="MiddleCenter" color="#BDBAA9" raycastTarget="false">統率</Text>
+        <Panel id="sg_deputy1_command_box" rectAlignment="MiddleCenter" offsetXY="-53.5 0" width="30" height="34" color="#20271F" raycastTarget="false" />
+        <Text id="sg_deputy1_command" rectAlignment="MiddleCenter" offsetXY="-53.5 0" width="30" height="34" fontSize="22" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false" fontStyle="Bold">—</Text>
+        <Panel id="sg_deputy1_command_bar" rectAlignment="MiddleCenter" offsetXY="45.5 0" width="144" height="38" color="#FFFFFF00" raycastTarget="false">
+            <Text id="sg_deputy1_command_slot1" rectAlignment="MiddleCenter" offsetXY="-60 1" width="24" height="34" fontSize="24" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_deputy1_command_slot2" rectAlignment="MiddleCenter" offsetXY="-36 1" width="24" height="34" fontSize="24" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_deputy1_command_slot3" rectAlignment="MiddleCenter" offsetXY="-12 1" width="24" height="34" fontSize="24" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_deputy1_command_slot4" rectAlignment="MiddleCenter" offsetXY="12 1" width="24" height="34" fontSize="24" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_deputy1_command_slot5" rectAlignment="MiddleCenter" offsetXY="36 1" width="24" height="34" fontSize="24" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_deputy1_command_slot6" rectAlignment="MiddleCenter" offsetXY="60 1" width="24" height="34" fontSize="24" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+        </Panel>
+    </Panel>
+    <Text id="sg_deputy1_mobility" rectAlignment="UpperCenter" offsetXY="-88 -322" width="80" height="26" fontSize="14" color="#ECE6D8" raycastTarget="false" >機動 —</Text>
+    <Text id="sg_deputy1_status_label" rectAlignment="UpperCenter" offsetXY="-25 -322" width="34" height="28" fontSize="14" color="#BDBAA9" raycastTarget="false">状態</Text>
+    <Button id="sg_deputy1_status" rectAlignment="UpperCenter" offsetXY="20 -322" width="50" height="28" onClick="sgSetStatus" raycastTarget="true" text="" colors="#3C684D|#548363|#2A4937|#30362D" />
+    <Text id="sg_deputy1_status_text" rectAlignment="UpperCenter" offsetXY="20 -322" width="50" height="28" fontSize="14" resizeTextForBestFit="true" resizeTextMinSize="10" resizeTextMaxSize="14" color="#86C48B" raycastTarget="false">無傷</Text>
+    <Text id="sg_deputy1_action" rectAlignment="UpperCenter" offsetXY="88 -322" width="80" height="26" fontSize="14" color="#C9C6BA" raycastTarget="false" >行動 未</Text>
+</Panel>
+<Panel id="sg_deputy2_card" rectAlignment="UpperCenter" offsetXY="146 -514" width="280" height="352" color="#292D28" raycastTarget="true">
+    <Text id="sg_deputy2_role" rectAlignment="UpperCenter" offsetXY="0 -8" width="260" height="24" fontSize="15" color="#C5AD75" raycastTarget="false" >副将</Text>
+    <Panel id="sg_deputy2_portrait_frame" rectAlignment="UpperCenter" offsetXY="0 -35" width="206" height="206" color="#5E604F" raycastTarget="false" />
+    <Panel rectAlignment="UpperCenter" offsetXY="0 -38" width="200" height="200" color="#1C211D" raycastTarget="false" />
+    <Text id="sg_deputy2_no_image" rectAlignment="UpperCenter" offsetXY="0 -38" width="200" height="200" fontSize="16" color="#8D9688" raycastTarget="false" >画像未登録</Text>
+    <Image id="sg_deputy2_portrait" active="false" rectAlignment="UpperCenter" offsetXY="0 -38" width="200" height="200" preserveAspect="true" raycastTarget="false" />
+    <!-- 独立层：画像の暗色化は行動印・負傷表示に影響しない。 -->
+    <Image id="sg_deputy2_acted_stamp" active="false" rectAlignment="UpperCenter" offsetXY="54 -148" width="86" height="86" preserveAspect="true" color="#FFFFFFE6" raycastTarget="false" />
+    <Text id="sg_deputy2_acted_fallback" active="false" rectAlignment="UpperCenter" offsetXY="54 -148" width="86" height="86" fontSize="50" fontStyle="Bold" color="#E43B36DF" raycastTarget="false">済</Text>
+    <Panel id="sg_deputy2_injury_badge" active="false" rectAlignment="UpperCenter" offsetXY="-61 -44" width="66" height="24" color="#6F2432" raycastTarget="false">
+        <Text id="sg_deputy2_injury_label" fontSize="15" color="#FFFFFF" raycastTarget="false">深手</Text>
+    </Panel>
+    <Text id="sg_deputy2_name" rectAlignment="UpperCenter" offsetXY="0 -246" width="260" height="30" fontSize="20" color="#F2EAD9" raycastTarget="true" resizeTextForBestFit="true" resizeTextMinSize="16" resizeTextMaxSize="20">姓名　年齢 —</Text>
+    <Panel id="sg_deputy2_command_row" rectAlignment="UpperCenter" offsetXY="0 -281" width="235" height="38" color="#FFFFFF00" raycastTarget="false">
+        <Text id="sg_deputy2_command_label" rectAlignment="MiddleCenter" offsetXY="-96.5 0" width="42" height="34" fontSize="16" alignment="MiddleCenter" color="#BDBAA9" raycastTarget="false">統率</Text>
+        <Panel id="sg_deputy2_command_box" rectAlignment="MiddleCenter" offsetXY="-53.5 0" width="30" height="34" color="#20271F" raycastTarget="false" />
+        <Text id="sg_deputy2_command" rectAlignment="MiddleCenter" offsetXY="-53.5 0" width="30" height="34" fontSize="22" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false" fontStyle="Bold">—</Text>
+        <Panel id="sg_deputy2_command_bar" rectAlignment="MiddleCenter" offsetXY="45.5 0" width="144" height="38" color="#FFFFFF00" raycastTarget="false">
+            <Text id="sg_deputy2_command_slot1" rectAlignment="MiddleCenter" offsetXY="-60 1" width="24" height="34" fontSize="24" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_deputy2_command_slot2" rectAlignment="MiddleCenter" offsetXY="-36 1" width="24" height="34" fontSize="24" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_deputy2_command_slot3" rectAlignment="MiddleCenter" offsetXY="-12 1" width="24" height="34" fontSize="24" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_deputy2_command_slot4" rectAlignment="MiddleCenter" offsetXY="12 1" width="24" height="34" fontSize="24" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_deputy2_command_slot5" rectAlignment="MiddleCenter" offsetXY="36 1" width="24" height="34" fontSize="24" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+            <Text id="sg_deputy2_command_slot6" rectAlignment="MiddleCenter" offsetXY="60 1" width="24" height="34" fontSize="24" alignment="MiddleCenter" color="#82C6B0" raycastTarget="false">○</Text>
+        </Panel>
+    </Panel>
+    <Text id="sg_deputy2_mobility" rectAlignment="UpperCenter" offsetXY="-88 -322" width="80" height="26" fontSize="14" color="#ECE6D8" raycastTarget="false" >機動 —</Text>
+    <Text id="sg_deputy2_status_label" rectAlignment="UpperCenter" offsetXY="-25 -322" width="34" height="28" fontSize="14" color="#BDBAA9" raycastTarget="false">状態</Text>
+    <Button id="sg_deputy2_status" rectAlignment="UpperCenter" offsetXY="20 -322" width="50" height="28" onClick="sgSetStatus" raycastTarget="true" text="" colors="#3C684D|#548363|#2A4937|#30362D" />
+    <Text id="sg_deputy2_status_text" rectAlignment="UpperCenter" offsetXY="20 -322" width="50" height="28" fontSize="14" resizeTextForBestFit="true" resizeTextMinSize="10" resizeTextMaxSize="14" color="#86C48B" raycastTarget="false">無傷</Text>
+    <Text id="sg_deputy2_action" rectAlignment="UpperCenter" offsetXY="88 -322" width="80" height="26" fontSize="14" color="#C9C6BA" raycastTarget="false" >行動 未</Text>
+</Panel>
+    <Text id="sg_order" rectAlignment="UpperCenter" offsetXY="0 -875" width="560" height="28" fontSize="19" color="#DEC78E" raycastTarget="false" >現在命令：—</Text>
+<Button id="sg_attack" rectAlignment="UpperCenter" offsetXY="-180 -909" width="108" height="30" fontSize="15" onClick="sgSetOrder" colors="#424D3E|#657059|#2C352A|#30362D" textColor="#EAE2CC">攻撃</Button>
+<Button id="sg_defend" rectAlignment="UpperCenter" offsetXY="-60 -909" width="108" height="30" fontSize="15" onClick="sgSetOrder" colors="#424D3E|#657059|#2C352A|#30362D" textColor="#EAE2CC">防御</Button>
+<Button id="sg_move" rectAlignment="UpperCenter" offsetXY="60 -909" width="108" height="30" fontSize="15" onClick="sgSetOrder" colors="#424D3E|#657059|#2C352A|#30362D" textColor="#EAE2CC">機動</Button>
+<Button id="sg_regroup" rectAlignment="UpperCenter" offsetXY="180 -909" width="108" height="30" fontSize="15" onClick="sgSetOrder" colors="#424D3E|#657059|#2C352A|#30362D" textColor="#EAE2CC">再編</Button>
+<Button id="sg_mapflags" rectAlignment="UpperCenter" offsetXY="-220 -952" width="132" height="30" fontSize="14" onClick="sgToggleMapFlags" interactable="false" colors="#424D3E|#657059|#2C352A|#30362D" textColor="#EAE2CC">本隊陣旗：無</Button>
+<Button id="sg_pin" rectAlignment="UpperCenter" offsetXY="-107 -952" width="82" height="30" fontSize="15" onClick="sgPin" colors="#424D3E|#657059|#2C352A|#30362D" textColor="#EAE2CC">固定：無</Button>
+<Button id="sg_refresh" rectAlignment="UpperCenter" offsetXY="-19 -952" width="82" height="30" fontSize="15" onClick="sgRefresh" colors="#424D3E|#657059|#2C352A|#30362D" textColor="#EAE2CC">更新</Button>
+<Button id="sg_smaller" rectAlignment="UpperCenter" offsetXY="69 -952" width="82" height="30" fontSize="15" onClick="sgResize" colors="#424D3E|#657059|#2C352A|#30362D" textColor="#EAE2CC">縮小</Button>
+<Button id="sg_larger" rectAlignment="UpperCenter" offsetXY="157 -952" width="82" height="30" fontSize="15" onClick="sgResize" colors="#424D3E|#657059|#2C352A|#30362D" textColor="#EAE2CC">拡大</Button>
+<Button id="sg_close" rectAlignment="UpperCenter" offsetXY="245 -952" width="82" height="30" fontSize="15" onClick="sgClose" colors="#424D3E|#657059|#2C352A|#30362D" textColor="#EAE2CC">關閉</Button>
+</Panel>
+]=]
+
+local ROLES = {"main", "deputy1", "deputy2"}
+local ORDER_BY_BUTTON = {
+    sg_attack = "攻撃", sg_defend = "防御", sg_move = "機動", sg_regroup = "再編"
+}
+local ORDER_LABELS = {
+    ["进攻"] = "攻撃", ["進攻"] = "攻撃", ["攻撃"] = "攻撃",
+    ["防御"] = "防御", ["机动"] = "機動", ["機動"] = "機動",
+    ["重整"] = "再編", ["再編"] = "再編"
+}
+local STATUS_LABELS = {
+    ["健康"] = "健康", ["健在"] = "健康", ["無傷"] = "健康", ["无伤"] = "健康",
+    ["轻伤"] = "軽傷", ["軽傷"] = "軽傷", ["浅手"] = "軽傷", ["淺手"] = "軽傷",
+    ["重伤"] = "重傷", ["重傷"] = "重傷", ["深手"] = "重傷",
+    ["阵亡"] = "陣没", ["陣亡"] = "陣没", ["阵没"] = "陣没", ["陣没"] = "陣没", ["战死"] = "陣没", ["戦死"] = "陣没",
+    ["逃亡"] = "陣没", ["討死"] = "陣没", ["讨死"] = "陣没"
+}
+-- 既有 Description 的 status 值仍可读取；此表控制面板的显示称呼。
+local STATUS_TEXT = { ["健康"] = "無傷", ["軽傷"] = "浅手", ["重傷"] = "深手", ["陣没"] = "討死" }
+local STATUS_COLORS = {
+    ["健康"] = "#86C48B", ["軽傷"] = "#F0AAAA",
+    ["重傷"] = "#D15C68", ["陣没"] = "#A3A7A4",
+    ["未配置"] = "#A7AB9F"
+}
+local STATUS_BUTTON_COLORS = {
+    ["健康"] = "#3C684D|#548363|#2A4937|#30362D",
+    ["軽傷"] = "#86454B|#A96066|#623238|#30362D",
+    ["重傷"] = "#772C3A|#994050|#5C202E|#30362D",
+    ["陣没"] = "#4F5352|#6B706E|#373A39|#30362D",
+    ["未配置"] = "#424D3E|#657059|#2C352A|#30362D"
+}
+local COMMAND_COLORS = {
+    "#D9817A", "#E2A56C", "#DAC677", "#B2CA80", "#7BC4B5", "#8EACE2"
+}
+local FIELD_ALIASES = {
+    ["部隊"] = "team", ["役割"] = "role", ["姓名"] = "name",
+    ["生年"] = "birth", ["birthYear"] = "birth",
+    ["統率"] = "command", ["画像"] = "image", ["状態"] = "status",
+    ["行動印"] = "acted_image", ["陣旗"] = "flag_image",
+    ["命令"] = "order", ["部隊名"] = "formation", ["役職"] = "title"
+}
+local ROLE_ALIASES = {
+    ["備大将"] = "main", ["主将"] = "main",
+    ["副将一"] = "deputy1", ["副将二"] = "deputy2", ["部隊"] = "unit"
+}
+local STATUS_CYCLE = {"健康", "軽傷", "重傷", "陣没"}
+local STATUS_ROLE_BY_BUTTON = {
+    sg_main_status = "main", sg_deputy1_status = "deputy1", sg_deputy2_status = "deputy2"
+}
+local PLAYER_COLORS = {"White", "Brown", "Red", "Orange", "Yellow", "Green", "Teal", "Blue", "Purple", "Pink", "Grey", "Black"}
+local playerViews = {}
+local ready, assetBusy, refreshTimer = false, false, nil
+local tokenNames, parsedTokens, memberships, teamIndex = {}, {}, {}, {}
+local teamMembers, tagWarnings, highlighted = {}, {}, {}
+local uiValues, uiAttributes, portraitAssets = {}, {}, {}
+local foreignAssets = {}
+local pendingBackStamps, backStampRoles = {}, {}
+-- 12 个座席最多同时需要 48 张画像/陣旗，加 1 张共通行動印。
+-- 额外保留最近使用的资源；其他脚本的资源不计入此上限。
+local ASSET_CACHE_LIMIT = 64
+local assetLastUsed, assetUseGeneration = {}, 0
+local renderAllViews
+local pendingPanelRender
+
+-- 同一批物件事件只排一次刷新；执行时读取最新状态，不保留旧视图。
+local function requestPanelRender()
+    if pendingPanelRender then return end
+    local request = {}
+    pendingPanelRender = request
+    Wait.frames(function()
+        if pendingPanelRender ~= request then return end
+        pendingPanelRender = nil
+        renderAllViews()
+    end, 1)
+end
+
+local function playerID(color, id)
+    return "sg_" .. color .. "_" .. id:sub(4)
+end
+
+local function buildPlayerXML()
+    local panels = {}
+    for _, color in ipairs(PLAYER_COLORS) do
+        local xml = PANEL_XML:gsub('visibility="PLAYER_COLOR"', 'visibility="' .. color .. '"')
+        xml = xml:gsub('id="(sg_[A-Za-z0-9_]+)"', function(id)
+            return 'id="' .. playerID(color, id) .. '"'
+        end)
+        table.insert(panels, xml)
+    end
+    return table.concat(panels, "\n")
+end
+
+-- 用回调实际传入的玩家颜色选取座席，避免另一人悬停导致操作错队。
+local function viewFor(player, id)
+    local color = player and player.color
+    local view = color and playerViews[color]
+    if not view then return nil, nil end
+    if id ~= nil then
+        local prefix = "sg_" .. color .. "_"
+        if id:sub(1, #prefix) ~= prefix then return nil, nil end
+        return view, "sg_" .. id:sub(#prefix + 1)
+    end
+    return view, nil
+end
+
+-- 不用 (.-) 匹配长地址。按行找到第一个等号，其后的 URL 原样保留。
+local function trim(value)
+    local text = tostring(value or "")
+    local first, last = 1, #text
+    local function blank(char)
+        return char == " " or char == "\t" or char == "\r" or char == "\n"
+            or char == "\v" or char == "\f" or char == "　" or char == " "
+    end
+    -- MoonSharp 的 %s 会把部分汉字（如“三”）误作空白，逐字符精确判断。
+    while first <= last and blank(text:sub(first, first)) do first = first + 1 end
+    while last >= first and blank(text:sub(last, last)) do last = last - 1 end
+    return text:sub(first, last)
+end
+
+local function splitField(line)
+    local at = line:find("=", 1, true)
+    if not at then return nil, nil end
+    local key = trim(line:sub(1, at - 1))
+    return FIELD_ALIASES[key] or key, trim(line:sub(at + 1))
+end
+
+local function fieldsFor(object)
+    if not object then return {} end
+    local guid = object.getGUID()
+    local raw, name = object.getDescription() or "", trim(object.getName())
+    local cached = parsedTokens[guid]
+    if cached and cached.raw == raw and cached.name == name then return cached.fields end
+    local fields = {}
+    for line in raw:gmatch("[^\r\n]+") do
+        local key, value = splitField(line)
+        if key and fields[key] == nil then fields[key] = value end
+    end
+    parsedTokens[guid] = {raw = raw, name = name, fields = fields}
+    return fields
+end
+
+local function nonempty(value)
+    if value ~= nil and value ~= "" then return value end
+    return nil
+end
+
+local function baseProfile(teamId, role)
+    local team = FORMATIONS[teamId]
+    if not team then return {} end
+    if role == "main" then return team.main end
+    if role == "deputy1" then return team.deputies[1] end
+    if role == "deputy2" then return team.deputies[2] end
+    return {}
+end
+
+local function identifyToken(object)
+    if not object then return nil, nil end
+    local fields = fieldsFor(object)
+    local fallback = tokenNames[trim(object.getName())]
+    local tagTeam
+    for _, tag in ipairs(object.getTags and object.getTags() or {}) do
+        local candidate = FORMATIONS[tag] and tag or nil
+        if type(tag) == "string" and tag:sub(1, 8) == "sg_team_" then
+            local suffix = tag:sub(9)
+            if suffix:match("^[A-Za-z0-9_%-]+$") then candidate = suffix end
+        end
+        if candidate then
+            if tagTeam and tagTeam ~= candidate then return nil, nil, "所属标签重复" end
+            tagTeam = candidate
+        end
+    end
+    local teamId = tagTeam or nonempty(fields.team)
+    if teamId then
+        -- 所属标签优先；未打标签时，继续兼容 Description 和旧姓名绑定。
+        if not teamId:match("^[A-Za-z0-9_%-]+$") then return nil, nil end
+        local role = nonempty(fields.role)
+        role = ROLE_ALIASES[role] or role
+        if not role and fallback and fallback.team == teamId then role = fallback.role end
+        return teamId, role or "unit"
+    end
+    if fallback then return fallback.team, fallback.role end
+    return nil, nil
+end
+
+local function component(vector, key, index, default)
+    if type(vector) == "number" then return vector end
+    if not vector then return default end
+    return tonumber(vector[key] or vector[index]) or default
+end
+
+local function sameVector(left, right, rotation)
+    for index, key in ipairs({"x", "y", "z"}) do
+        local a = component(left, key, index, nil)
+        local b = component(right, key, index, nil)
+        if a == nil or b == nil then return false end
+        local delta = a - b
+        if rotation then delta = (delta + 180) % 360 - 180 end
+        if math.abs(delta) > 0.0005 then return false end
+    end
+    return true
+end
+
+local function syncBackStamp(object, role)
+    if not object or not object.getDecals or not object.setDecals then return end
+    local guid = object.getGUID()
+    local isLeader = role == "main" or role == "deputy1" or role == "deputy2"
+    if object.spawning or object.loading_custom then
+        pendingBackStamps[guid] = true
+        return
+    end
+    local wanted
+    if isLeader then
+        local bounds = object.getVisualBoundsNormalized and object.getVisualBoundsNormalized()
+            or (object.getBoundsNormalized and object.getBoundsNormalized())
+        local scale = object.getScale and object.getScale()
+        local sx, sy, sz = math.abs(component(scale, "x", 1, 1)), math.abs(component(scale, "y", 2, 1)), math.abs(component(scale, "z", 3, 1))
+        local width, depth = component(bounds and bounds.size, "x", 1, 0), component(bounds and bounds.size, "z", 3, 0)
+        if width <= 0 or depth <= 0 or sx <= 0 or sy <= 0 or sz <= 0 then
+            pendingBackStamps[guid] = true
+            return
+        end
+        local offset, height = bounds.offset, component(bounds.size, "y", 2, 0)
+        local diameter = math.min(width, depth) * BACK_STAMP_RATIO
+        wanted = {
+            name = BACK_STAMP_NAME, url = ACTED_IMAGE_URL,
+            position = {
+                component(offset, "x", 1, 0) / sx,
+                (component(offset, "y", 2, 0) - height / 2) / sy - BACK_STAMP_GAP,
+                component(offset, "z", 3, 0) / sz
+            },
+            rotation = BACK_STAMP_ROTATION,
+            scale = {diameter / sx, diameter / sz, 0.1}
+        }
+    end
+    local retained, managed, matches = {}, 0, false
+    for _, decal in ipairs(object.getDecals() or {}) do
+        if decal.name == BACK_STAMP_NAME then
+            managed = managed + 1
+            if wanted and decal.url == wanted.url and sameVector(decal.position, wanted.position)
+                and sameVector(decal.rotation, wanted.rotation, true) and sameVector(decal.scale, wanted.scale) then
+                matches = true
+            end
+        else
+            table.insert(retained, decal)
+        end
+    end
+    pendingBackStamps[guid] = nil
+    if (wanted and managed == 1 and matches) or (not wanted and managed == 0) then return end
+    if wanted then table.insert(retained, wanted) end
+    -- setDecals 会替换整个列表；必须把其它贴花原样保留。
+    object.setDecals(retained)
+end
+
+local function retryBackStamps()
+    local guids = {}
+    for guid in pairs(pendingBackStamps) do table.insert(guids, guid) end
+    for _, guid in ipairs(guids) do
+        local object = getObjectFromGUID(guid)
+        if object then
+            local _, role = identifyToken(object)
+            syncBackStamp(object, role)
+        else
+            pendingBackStamps[guid] = nil
+            backStampRoles[guid] = nil
+        end
+    end
+end
+
+local function removeMembership(guid)
+    local old = memberships[guid]
+    if old and teamIndex[old.team] and teamIndex[old.team][old.role] then
+        teamIndex[old.team][old.role][guid] = nil
+    end
+    if old and teamMembers[old.team] then
+        teamMembers[old.team][guid] = nil
+        if next(teamMembers[old.team]) == nil then teamMembers[old.team] = nil end
+    end
+    memberships[guid] = nil
+end
+
+local function registerObject(object, forceStamp)
+    if not object then return end
+    local guid = object.getGUID()
+    local teamId, role, issue = identifyToken(object)
+    if issue and tagWarnings[guid] ~= issue then
+        print("[備隊] " .. object.getName() .. "：" .. issue .. "。请只保留一个所属标签。")
+    end
+    tagWarnings[guid] = issue
+    local stampRole = (role == "main" or role == "deputy1" or role == "deputy2") and role or false
+    if backStampRoles[guid] ~= stampRole or (forceStamp and stampRole) then
+        backStampRoles[guid] = stampRole
+        syncBackStamp(object, role)
+    end
+    local old = memberships[guid]
+    if old and old.team == teamId and old.role == role then return end
+    removeMembership(guid)
+    if teamId then
+        if role == "main" or role == "deputy1" or role == "deputy2" then
+            teamIndex[teamId] = teamIndex[teamId] or {}
+            teamIndex[teamId][role] = teamIndex[teamId][role] or {}
+            teamIndex[teamId][role][guid] = true
+        end
+        teamMembers[teamId] = teamMembers[teamId] or {}
+        teamMembers[teamId][guid] = true
+        memberships[guid] = {team = teamId, role = role}
+    end
+end
+
+local function rebuildIndex()
+    teamIndex, memberships, parsedTokens = {}, {}, {}
+    teamMembers = {}
+    backStampRoles, pendingBackStamps = {}, {}
+    for _, object in ipairs(getAllObjects()) do registerObject(object) end
+end
+
+-- 普通刷新只查本队三个位置；缺员也不反复扫描全桌。
+local function locateTeam(teamId)
+    local objects, conflicts = {}, {}
+    for _, role in ipairs(ROLES) do
+        local candidates = teamIndex[teamId] and teamIndex[teamId][role] or {}
+        local guids = {}
+        for guid in pairs(candidates) do table.insert(guids, guid) end
+        table.sort(guids)
+        local count = 0
+        for _, guid in ipairs(guids) do
+            local object = getObjectFromGUID(guid)
+            if object then
+                registerObject(object)
+                local current = memberships[guid]
+                if current and current.team == teamId and current.role == role then
+                    count = count + 1
+                    objects[role] = object
+                end
+            else
+                removeMembership(guid)
+                parsedTokens[guid] = nil
+                backStampRoles[guid], pendingBackStamps[guid] = nil, nil
+            end
+        end
+        if count > 1 then objects[role], conflicts[role] = nil, true end
+    end
+    return objects, conflicts
+end
+
+local function validInteger(value, low, high)
+    local number = tonumber(value)
+    if number and number == math.floor(number) and number >= low and number <= high then return number end
+    return nil
+end
+
+local function resolveProfile(teamId, role, object)
+    local defaults, fields = baseProfile(teamId, role), fieldsFor(object)
+    local command = validInteger(fields.command, 1, 6)
+    local birth = validInteger(fields.birth, 1, CURRENT_YEAR)
+    local issues = {}
+    if nonempty(fields.command) and not command then table.insert(issues, "統率：1～6") end
+    if nonempty(fields.birth) and not birth then table.insert(issues, "生年確認") end
+    local image = nonempty(fields.image) or defaults.image or ""
+    if image == "-" then image = "" end
+    image = trim(image)
+    local validURL = image:lower():match("^https?://") ~= nil
+    if image ~= "" and not validURL then
+        table.insert(issues, "画像URL確認")
+        image = ""
+    end
+    local flagImage = role == "main" and trim(fields.flag_image) or ""
+    if flagImage == "-" then flagImage = "" end
+    if flagImage ~= "" and not flagImage:lower():match("^https?://") then
+        table.insert(issues, "陣旗URL確認")
+        flagImage = ""
+    end
+    -- 用户指定所有武将使用同一张印章；旧 Description 的 acted_image 不再覆盖。
+    local actedImage = ACTED_IMAGE_URL
+    local name = nonempty(fields.name) or defaults.name
+        or (object and nonempty(trim(object.getName()))) or "未登録"
+    local status = STATUS_LABELS[fields.status]
+    if not status and nonempty(fields.status) then table.insert(issues, "状態確認") end
+    status = status or defaults.defaultStatus or "健康"
+    return {
+        name = name, birthYear = birth or defaults.birthYear,
+        command = command or defaults.command,
+        roleLabel = nonempty(fields.title) or defaults.roleLabel or (role == "main" and "備大将" or "副将"),
+        image = image, asset = "sgp_" .. teamId .. "_" .. role,
+        flagImage = flagImage, flagAsset = "sgp_" .. teamId .. "_flag",
+        actedImage = actedImage, actedAsset = "sgp_common_acted",
+        status = object and status or "未配置",
+        issues = table.concat(issues, "・")
+    }
+end
+
+local function setValue(id, value)
+    value = tostring(value)
+    if uiValues[id] ~= value then
+        uiValues[id] = value
+        UI.setValue(id, value)
+    end
+end
+
+local function setAttribute(id, key, value)
+    value = tostring(value)
+    uiAttributes[id] = uiAttributes[id] or {}
+    if uiAttributes[id][key] ~= value then
+        uiAttributes[id][key] = value
+        UI.setAttribute(id, key, value)
+    end
+end
+
+-- 状态文字使用独立 Text，显式更新 text 属性，避免按钮保留初始标签。
+local function setText(id, value)
+    setValue(id, value)
+    setAttribute(id, "text", value)
+end
+
+local function statText(value)
+    return value ~= nil and tostring(value) or "—"
+end
+
+local function waitForUI(callback)
+    Wait.frames(function()
+        Wait.condition(callback, function() return not UI.loading end, 30, function()
+            -- 超时之后轮询仍可在 UI.loading 恢复时正常继续。
+            assetBusy = false
+            ready = true
+            print("[備隊面板] 画像讀取中。請檢查 URL。")
+        end)
+    end, 1)
+end
+
+local function refreshForeignAssets()
+    foreignAssets = {}
+    for _, asset in ipairs(UI.getCustomAssets() or {}) do
+        if type(asset.name) ~= "string" or asset.name:sub(1, 4) ~= "sgp_" then
+            table.insert(foreignAssets, asset)
+        end
+    end
+end
+
+local function allAssets()
+    local assets, names = {}, {}
+    for _, asset in ipairs(foreignAssets) do table.insert(assets, asset) end
+    for name in pairs(portraitAssets) do table.insert(names, name) end
+    table.sort(names)
+    for _, name in ipairs(names) do
+        table.insert(assets, {name = name, url = portraitAssets[name]})
+    end
+    return assets
+end
+
+local function ensurePortraits(profileLists)
+    local changed = false
+    assetUseGeneration = assetUseGeneration + 1
+    local active = {sgp_common_acted = true}
+    local function remember(name, url)
+        local wanted = nonempty(url)
+        if portraitAssets[name] ~= wanted then
+            portraitAssets[name] = wanted
+            changed = true
+        end
+        if wanted then
+            active[name] = true
+            assetLastUsed[name] = assetUseGeneration
+        else
+            assetLastUsed[name] = nil
+        end
+    end
+    for _, profiles in ipairs(profileLists) do
+        for _, role in ipairs(ROLES) do
+            local profile = profiles[role]
+            -- 共通行動印只登记一份资源；翻面时只切换可见性。
+            remember(profile.asset, profile.image)
+            remember(profile.actedAsset, profile.actedImage)
+            if role == "main" then
+                remember(profile.flagAsset, profile.flagImage)
+            end
+        end
+    end
+    local count, inactive = 0, {}
+    for name in pairs(portraitAssets) do
+        count = count + 1
+        if not active[name] then table.insert(inactive, name) end
+    end
+    if count > ASSET_CACHE_LIMIT then
+        table.sort(inactive, function(a, b)
+            local aTime, bTime = assetLastUsed[a] or 0, assetLastUsed[b] or 0
+            return aTime < bTime or (aTime == bTime and a < b)
+        end)
+        for _, name in ipairs(inactive) do
+            if count <= ASSET_CACHE_LIMIT then break end
+            portraitAssets[name], assetLastUsed[name] = nil, nil
+            count, changed = count - 1, true
+        end
+    end
+    if not changed then return true end
+    -- 其他脚本可能在初始化后新增资源；只在确需提交资源时重读实时列表。
+    refreshForeignAssets()
+    assetBusy = true
+    -- setCustomAssets 替换整个列表，保留当前及近期画像、其他脚本的资源。
+    UI.setCustomAssets(allAssets())
+    uiValues, uiAttributes = {}, {}
+    waitForUI(function()
+        assetBusy = false
+        -- 此处不捕获旧队伍，加载期间换队或关窗后也不会跳回去。
+        renderAllViews()
+    end)
+    return false
+end
+
+-- 統率六格分别绘制，避免连写符号因字体宽度而偏移；深手失效格直接显示 X。
+local function commandBar(value, status)
+    local level = type(value) == "number" and math.max(1, math.min(6, math.floor(value))) or 0
+    local chars = {}
+    for i = 1, 6 do
+        if status == "陣没" then
+            chars[i] = "X"
+        elseif i <= level then
+            chars[i] = (status == "重傷" and i == level) and "X" or "●"
+        else
+            chars[i] = "○"
+        end
+    end
+    return chars
+end
+
+local function setPersonUI(prefix, profile, object, conflict)
+    local status = conflict and "配置重複" or profile.status
+    local age = profile.birthYear and tostring(CURRENT_YEAR - profile.birthYear) or "—"
+    local command = profile.command
+    local dots = commandBar(command, status)
+    local injured = status == "軽傷" or status == "重傷"
+    local inactive = status == "陣没"
+    local currentCommand = command
+    if status == "重傷" and command then currentCommand = math.max(0, command - 1) end
+    local color = inactive and "#666B65" or COMMAND_COLORS[currentCommand]
+        or (currentCommand == 0 and "#D9817A") or "#A7AB9F"
+    local dotColor = inactive and "#666B65" or COMMAND_COLORS[command] or "#A7AB9F"
+    local displayStatus = STATUS_TEXT[status] or status
+    local movement = object and (inactive and "—" or injured and "4" or "9") or "—"
+    local acted = object and (object.is_face_down and "済" or "未") or "—"
+    setValue(prefix .. "_role", profile.roleLabel)
+    setValue(prefix .. "_name", profile.name .. "　年齢 " .. age)
+    setValue(prefix .. "_command", inactive and "X" or statText(currentCommand))
+    local main = prefix:sub(-5) == "_main"
+    local slotWidth, circleSize, crossSize, circleRise = main and 28 or 24, main and 30 or 24, main and 24 or 20, main and 2 or 1
+    for index, symbol in ipairs(dots) do
+        local slotID = prefix .. "_command_slot" .. index
+        local cross = symbol == "X"
+        setValue(slotID, symbol)
+        setAttribute(slotID, "color", dotColor)
+        setAttribute(slotID, "fontSize", cross and crossSize or circleSize)
+        setAttribute(slotID, "offsetXY", string.format("%g %g", -5 * slotWidth / 2 + (index - 1) * slotWidth, cross and 0 or circleRise))
+    end
+    setValue(prefix .. "_mobility", "機動 " .. movement)
+    setText(prefix .. "_status_text", displayStatus)
+    setValue(prefix .. "_action", "行動 " .. acted)
+    setAttribute(prefix .. "_command", "color", color)
+    setAttribute(prefix .. "_status_text", "color", inactive and "#848A84" or STATUS_COLORS[status] or "#D7A978")
+    setAttribute(prefix .. "_card", "color", inactive and "#1B1F1B" or "#292D28")
+    setAttribute(prefix .. "_role", "color", inactive and "#73776B" or "#C5AD75")
+    setAttribute(prefix .. "_name", "color", inactive and "#797D75" or "#F2EAD9")
+    setAttribute(prefix .. "_command_label", "color", inactive and "#6F746B" or "#BDBAA9")
+    setAttribute(prefix .. "_status_label", "color", inactive and "#6F746B" or "#BDBAA9")
+    setAttribute(prefix .. "_mobility", "color", inactive and "#6F746B" or "#ECE6D8")
+    setAttribute(prefix .. "_action", "color", inactive and "#6F746B" or acted == "済" and "#8E968B" or "#DED9CB")
+    setAttribute(prefix .. "_name", "tooltip", profile.issues)
+    local available = profile.image ~= "" and not conflict
+    setAttribute(prefix .. "_portrait", "active", available and "true" or "false")
+    setAttribute(prefix .. "_no_image", "active", available and "false" or "true")
+    setValue(prefix .. "_no_image", conflict and "配置重複" or "画像未登録")
+    -- 直接写入完整 URL。Steam Cloud URL 没有文件扩展名时，部分 TTS 版本
+    -- 通过自定义资源名称会显示白块；Image.image 直接 URL 可正常读取。
+    if available then setAttribute(prefix .. "_portrait", "image", profile.image) end
+
+    -- 负伤与行动分别控制，重傷画像仍可同时盖「済」。
+    local showInjury = object ~= nil and not conflict and (injured or inactive)
+    local heavy = showInjury and status == "重傷"
+    setAttribute(prefix .. "_portrait_frame", "color", showInjury and STATUS_COLORS[status] or "#5E604F")
+    -- TTS の Image.color は中性灰の着色までなので、陣没は輪郭を残す灰暗色で示す。
+    setAttribute(prefix .. "_portrait", "color", inactive and "#3F3F3F" or heavy and "#BDBDBD" or "#FFFFFF")
+    setAttribute(prefix .. "_injury_badge", "active", showInjury and "true" or "false")
+    setAttribute(prefix .. "_injury_badge", "color", inactive and "#555A58" or heavy and "#772C3A" or "#AF5960")
+    setValue(prefix .. "_injury_label", displayStatus)
+    setAttribute(prefix .. "_status", "colors", STATUS_BUTTON_COLORS[status] or STATUS_BUTTON_COLORS["未配置"])
+    setAttribute(prefix .. "_status", "interactable", object ~= nil and not conflict and "true" or "false")
+    setAttribute(prefix .. "_status", "tooltip", "")
+    setAttribute(prefix .. "_status_text", "tooltip", "")
+    setAttribute(prefix .. "_status_label", "tooltip", "")
+
+    local showActed = object ~= nil and not conflict and object.is_face_down == true
+    local hasStamp = profile.actedImage ~= ""
+    setAttribute(prefix .. "_acted_stamp", "active", showActed and hasStamp and "true" or "false")
+    setAttribute(prefix .. "_acted_fallback", "active", showActed and not hasStamp and "true" or "false")
+    setAttribute(prefix .. "_acted_stamp", "color", inactive and "#FFFFFF55" or "#FFFFFFE6")
+    setAttribute(prefix .. "_acted_fallback", "color", inactive and "#81474388" or "#E43B36DF")
+    if hasStamp then setAttribute(prefix .. "_acted_stamp", "image", profile.actedImage) end
+end
+
+-- 地图只使用已登记对象；添加/更改标签后由悬停、放下或「更新」重新登记。
+local function renderMapEffects()
+    local urls, snapshot, teamIds = {}, {}, {}
+    for teamId in pairs(teamMembers) do table.insert(teamIds, teamId) end
+    for _, teamId in ipairs(teamIds) do
+        local objects, conflicts = locateTeam(teamId)
+        urls[teamId] = objects.main and not conflicts.main
+            and resolveProfile(teamId, "main", objects.main).flagImage or ""
+    end
+    local stale = {}
+    for guid, member in pairs(memberships) do
+        local object = getObjectFromGUID(guid)
+        if object then
+            snapshot[guid] = {object = object, team = member.team, role = member.role, url = urls[member.team] or ""}
+        else
+            table.insert(stale, guid)
+        end
+    end
+    for _, guid in ipairs(stale) do
+        removeMembership(guid)
+        parsedTokens[guid], backStampRoles[guid], pendingBackStamps[guid], tagWarnings[guid] = nil, nil, nil, nil
+    end
+    local hoverTeams = {}
+    for _, view in pairs(playerViews) do
+        local current = view.hoverGUID and snapshot[view.hoverGUID]
+        view.hoverTeam = current and current.team or nil
+        if not current then view.hoverGUID = nil end
+        if view.hoverTeam then hoverTeams[view.hoverTeam] = true end
+        if view.flagTeam and (urls[view.flagTeam] or "") == "" then view.flagTeam = nil end
+    end
+    -- TTS 物件轮廓是桌面共享的；取所有座席悬停队伍的并集，避免互相清除。
+    local wanted = {}
+    for guid, entry in pairs(snapshot) do
+        if hoverTeams[entry.team] and entry.object.highlightOn then
+            wanted[guid] = true
+            entry.object.highlightOn({0.84, 0.72, 0.38}, 1.5)
+        end
+    end
+    for guid in pairs(highlighted) do
+        if not wanted[guid] then
+            local object = getObjectFromGUID(guid)
+            if object and object.highlightOff then object.highlightOff() end
+        end
+    end
+    highlighted = wanted
+    sgMapUpdate(snapshot, playerViews)
+    if type(setUnitRoutSnapshot)=="function" then setUnitRoutSnapshot(snapshot) end
+end
+
+renderAllViews = function()
+    pendingPanelRender = nil
+    -- 地图清理不受屏幕画像资源加载阻塞。
+    renderMapEffects()
+    if not ready or UI.loading or assetBusy then return end
+    local teams, profileLists = {}, {}
+    for _, color in ipairs(PLAYER_COLORS) do
+        local view = playerViews[color]
+        local teamId = view.selectedTeamId
+        if view.visible and teamId and not teams[teamId] then
+            local objects, conflicts = locateTeam(teamId)
+            local fields, profiles = fieldsFor(objects.main), {}
+            for _, role in ipairs(ROLES) do
+                profiles[role] = resolveProfile(teamId, role, objects[role])
+            end
+            teams[teamId] = {objects = objects, conflicts = conflicts, fields = fields, profiles = profiles}
+            table.insert(profileLists, profiles)
+        end
+    end
+    if not ensurePortraits(profileLists) then return end
+    for _, color in ipairs(PLAYER_COLORS) do
+        local view = playerViews[color]
+        setAttribute(playerID(color, "sg_panel"), "active", view.visible and "true" or "false")
+        setText(playerID(color, "sg_mapflags"), view.flagTeam and view.flagTeam == view.selectedTeamId and "本隊陣旗：有" or "本隊陣旗：無")
+        local data = view.visible and view.selectedTeamId and teams[view.selectedTeamId]
+        local showFlag = false
+        if data then
+            local objects, conflicts, fields, profiles = data.objects, data.conflicts, data.fields, data.profiles
+            local defaults = FORMATIONS[view.selectedTeamId]
+            local title = nonempty(fields.formation) or (defaults and defaults.title) or view.selectedTeamId
+            local size = string.format("%.1f", view.scale)
+            setAttribute(playerID(color, "sg_panel"), "scale", size .. " " .. size .. " 1")
+            setText(playerID(color, "sg_pin"), view.pinned and "固定：有" or "固定：無")
+            setValue(playerID(color, "sg_formation"), title)
+            for _, role in ipairs(ROLES) do
+                setPersonUI(playerID(color, "sg_" .. role), profiles[role], objects[role], conflicts[role])
+            end
+            showFlag = objects.main ~= nil and not conflicts.main and profiles.main.flagImage ~= ""
+            local flagID = playerID(color, "sg_flag")
+            setAttribute(flagID, "image", showFlag and profiles.main.flagImage or "")
+            setAttribute(flagID, "active", showFlag and "true" or "false")
+            setAttribute(flagID, "color", "#FFFFFF")
+            setAttribute(flagID, "tooltip", "")
+            -- 260 画像 + 20 留白 + 90 陣旗，组合宽 370；无旗时画像与役職回中。
+            setAttribute(playerID(color, "sg_main_visual_group"), "offsetXY", showFlag and "-55 -37" or "0 -37")
+            setAttribute(playerID(color, "sg_main_role"), "offsetXY", showFlag and "-55 -8" or "0 -8")
+            local order = nonempty(fields.order) or "未設定"
+            order = ORDER_LABELS[order] or order
+            if not objects.main then order = conflicts.main and "備大将配置重複" or "備大将未配置" end
+            setValue(playerID(color, "sg_order"), "現在命令：" .. order)
+            for id, value in pairs(ORDER_BY_BUTTON) do
+                setAttribute(playerID(color, id), "colors", order == value
+                    and "#79663D|#968151|#5D4E2C|#30362D"
+                    or "#424D3E|#657059|#2C352A|#30362D")
+            end
+        end
+        setAttribute(playerID(color, "sg_mapflags"), "interactable", showFlag and "true" or "false")
+    end
+end
+
+local function writeField(object, wanted, value)
+    local description = (object.getDescription() or ""):gsub("\r\n", "\n"):gsub("\r", "\n")
+    local result, replaced = {}, false
+    if description ~= "" then
+        for line in (description .. "\n"):gmatch("([^\n]*)\n") do
+            local key = splitField(line)
+            if key == wanted then
+                if not replaced then table.insert(result, wanted .. "=" .. value) end
+                replaced = true
+            else
+                table.insert(result, line)
+            end
+        end
+    end
+    if not replaced then table.insert(result, wanted .. "=" .. value) end
+    object.setDescription(table.concat(result, "\n"))
+end
+
+-- 面板状态按钮：不必进入 Description，点击一次推进到下一个状态。
+function sgSetStatus(player, value, id)
+    local view, button = viewFor(player, id)
+    if not view or not ready or UI.loading or assetBusy or not view.selectedTeamId or not view.visible then return end
+    local role = STATUS_ROLE_BY_BUTTON[button]
+    if not role then return end
+    local objects, conflicts = locateTeam(view.selectedTeamId)
+    local object = objects[role]
+    if not object or conflicts[role] then return end
+    local current = resolveProfile(view.selectedTeamId, role, object).status
+    local nextStatus = STATUS_CYCLE[1]
+    for index, status in ipairs(STATUS_CYCLE) do
+        if status == current then
+            nextStatus = STATUS_CYCLE[index % #STATUS_CYCLE + 1]
+            break
+        end
+    end
+    writeField(object, "status", STATUS_TEXT[nextStatus] or nextStatus)
+    renderAllViews()
+end
+
+-- 合并版只从既有 onLoad 调用本函数；不会覆盖兵种存档逻辑。
+function initTeamPanel()
+    pendingPanelRender = nil
+    for guid in pairs(highlighted) do
+        local object = getObjectFromGUID(guid)
+        if object and object.highlightOff then object.highlightOff() end
+    end
+    highlighted, tagWarnings, teamMembers = {}, {}, {}
+    sgMapInit()
+    ready, assetBusy = false, false
+    playerViews = {}
+    for _, color in ipairs(PLAYER_COLORS) do
+        playerViews[color] = {selectedTeamId = nil, visible = true, pinned = false, scale = 1,
+            hoverGUID = nil, hoverTeam = nil, flagTeam = nil}
+    end
+    tokenNames, parsedTokens, memberships, teamIndex = {}, {}, {}, {}
+    pendingBackStamps, backStampRoles = {}, {}
+    assetLastUsed, assetUseGeneration = {}, 0
+    uiValues, uiAttributes, portraitAssets, foreignAssets = {}, {}, {}, {}
+    portraitAssets.sgp_common_acted = ACTED_IMAGE_URL
+    for teamId in pairs(FORMATIONS) do
+        for _, role in ipairs(ROLES) do
+            local profile = baseProfile(teamId, role)
+            tokenNames[profile.tokenName] = {team = teamId, role = role}
+        end
+    end
+    refreshForeignAssets()
+    rebuildIndex()
+    renderMapEffects()
+    UI.setXml(buildPlayerXML(), allAssets())
+    waitForUI(function()
+        ready = true
+        renderAllViews()
+    end)
+    if refreshTimer then Wait.stop(refreshTimer) end
+    refreshTimer = Wait.time(function()
+        retryBackStamps()
+        renderAllViews()
+        if type(refreshUnitRoutOverlays)=="function" then refreshUnitRoutOverlays() end
+    end, 0.75, -1)
+end
+
+function sgPanelObjectSpawn(object)
+    if not object then return end
+    local guid = object.getGUID()
+    Wait.frames(function()
+        local live = getObjectFromGUID(guid)
+        if live then registerObject(live, true) end
+        requestPanelRender()
+    end, 2)
+end
+
+function sgPanelObjectDestroy(object)
+    if not object then return end
+    local guid = object.getGUID()
+    removeMembership(guid)
+    pendingBackStamps[guid] = nil
+    backStampRoles[guid] = nil
+    parsedTokens[guid] = nil
+    tagWarnings[guid] = nil
+    if highlighted[guid] and object.highlightOff then object.highlightOff() end
+    highlighted[guid] = nil
+    sgMapForget(guid)
+    requestPanelRender()
+end
+
+function onObjectHover(player_color, object)
+    local view = playerViews[player_color]
+    if not view then return end
+    if object then registerObject(object, true) end
+    local teamId = object and identifyToken(object)
+    view.hoverGUID, view.hoverTeam = teamId and object.getGUID() or nil, teamId
+    if not teamId or (view.pinned and view.selectedTeamId and teamId ~= view.selectedTeamId) then
+        renderMapEffects()
+        return
+    end
+    if view.selectedTeamId ~= teamId then view.flagTeam = nil end
+    view.selectedTeamId, view.visible = teamId, true
+    renderAllViews()
+end
+
+function onObjectRotate(object, spin, flip, player_color, old_spin, old_flip)
+    if not object then return end
+    if type(updateUnitFormationFace)=="function" then updateUnitFormationFace(object) end
+    local teamId = identifyToken(object)
+    if teamId then
+        -- 等翻面动画推进后读取正反面；定时检查也会捕捉物理翻转。
+        Wait.time(requestPanelRender, 0.35)
+    end
+end
+
+function onObjectDrop(player_color, object)
+    if object and type(updateUnitFormationFace)=="function" then updateUnitFormationFace(object) end
+    if object then registerObject(object, true) end
+    requestPanelRender()
+end
+
+function onObjectEnterContainer(container, object)
+    sgPanelObjectDestroy(object)
+end
+
+function onObjectLeaveContainer(container, object)
+    sgPanelObjectSpawn(object)
+end
+
+function onObjectStateChange(object, old_state_guid)
+    removeMembership(old_state_guid)
+    parsedTokens[old_state_guid], pendingBackStamps[old_state_guid], backStampRoles[old_state_guid] = nil, nil, nil
+    tagWarnings[old_state_guid] = nil
+    sgMapForget(old_state_guid)
+    for _, view in pairs(playerViews) do
+        if view.hoverGUID == old_state_guid then view.hoverGUID, view.hoverTeam = nil, nil end
+    end
+    sgPanelObjectSpawn(object)
+end
+
+function onPlayerChangeColor(player_color)
+    if type(clearUnitMoraleQuickKeys) == "function" then clearUnitMoraleQuickKeys() end
+    -- 换座不继承上位玩家的临时地图状态；清除已空座位，避免残留全桌高亮。
+    local changed = playerViews[player_color]
+    if changed then changed.hoverGUID, changed.hoverTeam, changed.flagTeam = nil, nil, nil end
+    if Player and Player.getPlayers then
+        local occupied = {}
+        for _, player in ipairs(Player.getPlayers()) do occupied[player.color] = true end
+        for color, view in pairs(playerViews) do
+            if not occupied[color] then view.hoverGUID, view.hoverTeam, view.flagTeam = nil, nil, nil end
+        end
+    end
+    renderAllViews()
+end
+
+function onPlayerDisconnect(player)
+    onPlayerChangeColor(player and player.color)
+end
+
+function sgToggleMapFlags(player, value, id)
+    local view, button = viewFor(player, id)
+    if not view or button ~= "sg_mapflags" or not view.visible or not view.selectedTeamId then return end
+    local objects, conflicts = locateTeam(view.selectedTeamId)
+    if not objects.main or conflicts.main or resolveProfile(view.selectedTeamId, "main", objects.main).flagImage == "" then
+        view.flagTeam = nil
+    else
+        if view.flagTeam == view.selectedTeamId then
+            view.flagTeam = nil
+        else
+            view.flagTeam = view.selectedTeamId
+        end
+    end
+    renderAllViews()
+end
+
+function sgSetOrder(player, value, id)
+    local view, button = viewFor(player, id)
+    if not view or not ready or UI.loading or assetBusy or not view.selectedTeamId or not view.visible then return end
+    local order = ORDER_BY_BUTTON[button]
+    if not order then return end
+    local objects = locateTeam(view.selectedTeamId)
+    if not objects.main then renderAllViews() return end
+    writeField(objects.main, "order", order)
+    renderAllViews()
+end
+
+function sgRefresh(player, value, id)
+    local view = viewFor(player, id)
+    if not view then return end
+    rebuildIndex()
+    renderAllViews()
+end
+
+function sgPin(player, value, id)
+    local view = viewFor(player, id)
+    if not view or not view.selectedTeamId or UI.loading then return end
+    view.pinned = not view.pinned
+    setText(playerID(player.color, "sg_pin"), view.pinned and "固定：有" or "固定：無")
+end
+
+function sgResize(player, value, id)
+    local view, button = viewFor(player, id)
+    if not view or not ready or UI.loading then return end
+    if button ~= "sg_smaller" and button ~= "sg_larger" then return end
+    view.scale = math.max(0.6, math.min(1.2, view.scale + (button == "sg_smaller" and -0.1 or 0.1)))
+    local size = string.format("%.1f", view.scale)
+    setAttribute(playerID(player.color, "sg_panel"), "scale", size .. " " .. size .. " 1")
+end
+
+function sgClose(player, value, id)
+    local view = viewFor(player, id)
+    if not view then return end
+    view.visible, view.pinned = false, false
+    view.hoverGUID, view.hoverTeam, view.flagTeam = nil, nil, nil
+    -- 窗口关闭状态独立于画像异步加载。
+    setAttribute(playerID(player.color, "sg_panel"), "active", "false")
+    setText(playerID(player.color, "sg_pin"), "固定：無")
+    setText(playerID(player.color, "sg_mapflags"), "本隊陣旗：無")
+    renderMapEffects()
+end
+
+-- 独立版入口；合并版构建时移除此段，调用上面的面板 hooks。
+-- BEGIN MAP FLAGS MODULE
+-- 地图陣旗：部队用双面常显贴花；主副将沿用各玩家独立的 Object.UI。
+-- 不生成物件、不占碰撞体、不拦截鼠标；只维护自己的 UI/贴花。
+-- 接口：sgMapInit(); sgMapUpdate(byGUID, views); sgMapForget(guid)
+-- byGUID[guid] = {object=物件, team=隊ID, role=main/unit/..., url=主将flag_image}
+-- views[color] = {hoverGUID=guid, hoverTeam=隊ID, flagTeam=手动展开的隊ID}
+-- XML/assets 仅在首次挂载/卸载时合并；之后差量修改 sgmf_ 自有节点。
+-- 官方 API：https://api.tabletopsimulator.com/ui/ /ui/attributes/ /object/
+-- Object.UI 的像素换算与默认平面轴向需要实机校准；下列常数集中调整。
+local MAP_FLAG_BIG_HEIGHT = 0.80 -- 大旗高 / 棋子短边
+local MAP_FLAG_SMALL_HEIGHT = 0.45 -- 全队小旗高 / 棋子短边
+-- 部队棋面内旗：右边缘与数值栏分隔线留 24px；武将叠放时允许遮挡。
+-- 部队旗固定 270×720px（1200 方形底图），不会随悬停或展开改变大小。
+local MAP_FLAG_UNIT_HEIGHT = 720 / 1200
+local MAP_FLAG_UNIT_RIGHT_EDGE = 976 / 1200
+local MAP_FLAG_UNIT_CENTER_Y = 700 / 1200
+local MAP_FLAG_ASPECT = 3 / 8
+local MAP_FLAG_SIDE_GAP = 0.04 -- 旗与棋子右侧的间隙 / 棋子短边
+local MAP_FLAG_LIFT = 0.03 -- 离棋子上表面的世界单位距离
+local MAP_FLAG_UI_UNITS = 100 -- Object.UI 像素 / 物件局部单位
+local MAP_FLAG_ROOT = "sgmf_root"
+local MAP_FLAG_ASSET = "sgmf_flag"
+local MAP_FLAG_FRONT_DECAL = "SG_UNIT_FLAG_FRONT"
+local MAP_FLAG_BACK_DECAL = "SG_UNIT_FLAG_BACK"
+local MAP_FLAG_COLORS = {
+    "White", "Brown", "Red", "Orange", "Yellow", "Green",
+    "Teal", "Blue", "Purple", "Pink", "Grey", "Black"
+}
+local mapFlagRecords = {}
+
+local function sgMFNum(value, fallback)
+    local n = tonumber(value)
+    if n == nil or n ~= n or n == math.huge or n == -math.huge then return fallback end
+    return n
+end
+
+local function sgMFCoord(vector, key, index, fallback)
+    if vector == nil then return fallback end
+    return sgMFNum(vector[key] or vector[index], fallback)
+end
+
+local function sgMFString(n)
+    if math.abs(n) < 0.0005 then n = 0 end
+    return string.format("%.3f", n)
+end
+
+local function sgMFPosition(x, y, z)
+    return sgMFString(x) .. " " .. sgMFString(y) .. " " .. sgMFString(z)
+end
+
+local function sgMFOwnID(id)
+    return type(id) == "string" and id:sub(1, 5) == "sgmf_"
+end
+
+-- getXmlTable() 返回当前运行时内容；不把启动时的旧副本写回第三方 UI。
+local function sgMFStripOwned(nodes)
+    local result, removed = {}, false
+    for _, node in ipairs(nodes or {}) do
+        if sgMFOwnID(node.attributes and node.attributes.id) then
+            removed = true
+        else
+            if type(node.children) == "table" then
+                local children, changed = sgMFStripOwned(node.children)
+                if changed then node.children = children; removed = true end
+            end
+            table.insert(result, node)
+        end
+    end
+    return result, removed
+end
+
+local function sgMFAssets(ui, url)
+    local current = ui.getCustomAssets() or {}
+    local result, matching, ownCount, changed = {}, false, 0, false
+    for _, asset in ipairs(current) do
+        if sgMFOwnID(asset.name) then
+            ownCount = ownCount + 1
+            if asset.name == MAP_FLAG_ASSET and asset.url == url then matching = true end
+        else
+            table.insert(result, asset)
+        end
+    end
+    if url and url ~= "" then
+        table.insert(result, {name=MAP_FLAG_ASSET, url=url})
+        changed = ownCount ~= 1 or not matching
+    else
+        changed = ownCount ~= 0
+    end
+    return result, changed
+end
+
+local function sgMFObjectReady(object, requireUI)
+    if object == nil then return false, true end
+    if object.isDestroyed and object.isDestroyed() then return false, true end
+    if object.spawning or object.loading_custom then return false, false end
+    if requireUI ~= false and (object.UI == nil or object.UI.loading) then return false, false end
+    return true, false
+end
+
+local function sgMFScale(object)
+    local scale = object.getScale()
+    local x = math.abs(sgMFCoord(scale, "x", 1, 1))
+    local y = math.abs(sgMFCoord(scale, "y", 2, 1))
+    local z = math.abs(sgMFCoord(scale, "z", 3, 1))
+    if x < 0.0001 or y < 0.0001 or z < 0.0001 then return nil end
+    return {x=x,y=y,z=z}, sgMFPosition(x,y,z)
+end
+
+local function sgMFGeometry(record, object, refreshSurface)
+    local scale, signature = sgMFScale(object)
+    if not scale then return nil end
+    if not refreshSurface and record.geometry and signature == record.scaleSignature then return record.geometry end
+    local bounds
+    -- 碰撞体不包含 Object.UI 或贴花，避免旧显示层污染宽高与表面高度。
+    if object.getBoundsNormalized then
+        local ok, value = pcall(function() return object.getBoundsNormalized() end)
+        if ok then bounds = value end
+    end
+    if (type(bounds) ~= "table" or bounds.size == nil) and object.getVisualBoundsNormalized then
+        local ok, value = pcall(function() return object.getVisualBoundsNormalized() end)
+        if ok then bounds = value end
+    end
+    if type(bounds) ~= "table" or bounds.size == nil then return nil end
+    local size = bounds.size
+    local sx = sgMFCoord(size, "x", 1, 0)
+    local sy = sgMFCoord(size, "y", 2, 0)
+    local sz = sgMFCoord(size, "z", 3, 0)
+    if sx <= 0 or sy < 0 or sz <= 0 then return nil end
+    local offset = bounds.offset
+    local geometry = {
+        sizeX=sx, sizeY=sy, sizeZ=sz, short=math.min(sx,sz), scale=scale,
+        offsetX=sgMFCoord(offset,"x",1,0),
+        offsetY=sgMFCoord(offset,"y",2,0),
+        offsetZ=sgMFCoord(offset,"z",3,0)
+    }
+    record.geometry, record.scaleSignature = geometry, signature
+    return geometry
+end
+
+local function sgMFOwnDecal(name)
+    return name == MAP_FLAG_FRONT_DECAL or name == MAP_FLAG_BACK_DECAL
+end
+
+local function sgMFSameDecal(left, right)
+    if left.name ~= right.name or left.url ~= right.url then return false end
+    for _, field in ipairs({"position", "rotation", "scale"}) do
+        for index, axis in ipairs({"x", "y", "z"}) do
+            local difference = sgMFCoord(left[field],axis,index,-99999)
+                - sgMFCoord(right[field],axis,index,99999)
+            if field == "rotation" then difference = (difference + 180) % 360 - 180 end
+            if math.abs(difference) > 0.0005 then return false end
+        end
+    end
+    return true
+end
+
+local function sgMFSyncDecals(object, wanted)
+    if not object.getDecals or not object.setDecals then return end
+    local retained, seen, changed = {}, {}, false
+    -- 每次从实时列表合并：保留数字、敗走、済印以及玩家添加的其他贴花。
+    for _, decal in ipairs(object.getDecals() or {}) do
+        if sgMFOwnDecal(decal.name) then
+            if seen[decal.name] or not wanted[decal.name]
+                or not sgMFSameDecal(decal,wanted[decal.name]) then changed = true end
+            seen[decal.name] = true
+        else
+            table.insert(retained,decal)
+        end
+    end
+    for _, name in ipairs({MAP_FLAG_FRONT_DECAL,MAP_FLAG_BACK_DECAL}) do
+        if wanted[name] then
+            table.insert(retained,wanted[name])
+            if not seen[name] then changed = true end
+        end
+    end
+    if changed then object.setDecals(retained) end
+end
+
+local function sgMFUnitDecals(geometry, url)
+    local wanted, scale = {}, geometry.scale
+    -- getBoundsNormalized 返回消除旋转但保留缩放的尺寸；贴花参数需要局部坐标。
+    local width, depth = geometry.sizeX / scale.x, geometry.sizeZ / scale.z
+    local cx, cy, cz = geometry.offsetX / scale.x, geometry.offsetY / scale.y, geometry.offsetZ / scale.z
+    local halfHeight = geometry.sizeY / scale.y / 2
+    local flagHeight = depth * MAP_FLAG_UNIT_HEIGHT
+    local flagWidth = width * MAP_FLAG_UNIT_HEIGHT * MAP_FLAG_ASPECT
+    for _, back in ipairs({false,true}) do
+        local name = back and MAP_FLAG_BACK_DECAL or MAP_FLAG_FRONT_DECAL
+        local direction = back and -1 or 1
+        -- 与数字/敗走共用两项校准值；独立武将脚本也有相同默认值。
+        local gap = back and sgMFNum(UNIT_DEFEAT_BACK_GAP,-0.09)
+            or sgMFNum(UNIT_DEFEAT_FRONT_GAP,-0.01)
+        wanted[name] = {
+            name=name,url=url,
+            position={cx - direction * (width * (MAP_FLAG_UNIT_RIGHT_EDGE - 0.5) - flagWidth / 2),
+                cy + direction * (halfHeight + gap + math.max(0,sgMFNum(UNIT_SURFACE_CLEARANCE,0.01))),
+                cz + depth * (MAP_FLAG_UNIT_CENTER_Y - 0.5)},
+            rotation=back and {270,0,0} or {90,180,0},
+            scale={flagWidth,flagHeight,0.1}
+        }
+    end
+    return wanted
+end
+
+local function sgMFVisibility(entry, guid, views)
+    if entry.role == "main" then return true, "", false, "" end
+    local big, small = {}, {}
+    for _, color in ipairs(MAP_FLAG_COLORS) do
+        local view = views[color]
+        if view then
+            if view.hoverGUID == guid then
+                table.insert(big, color)
+            elseif view.flagTeam ~= nil and view.flagTeam == entry.team then
+                table.insert(small, color)
+            end
+        end
+    end
+    return #big > 0, table.concat(big,"|"), #small > 0, table.concat(small,"|")
+end
+
+local function sgMFImageAttributes(geometry, faceDown, ratio, active, visibility, imageURL)
+    local height = geometry.short * ratio
+    local width = height * MAP_FLAG_ASPECT
+    local direction = faceDown and -1 or 1
+    -- 以物件正前方作为读图方向。翻面时反转局部 X 与法线，补偿背面镜像。
+    local x = geometry.offsetX + direction * (geometry.sizeX / 2
+        + geometry.short * MAP_FLAG_SIDE_GAP + width / 2)
+    local y = geometry.offsetY + direction * (geometry.sizeY / 2 + MAP_FLAG_LIFT)
+    local z = geometry.offsetZ - geometry.sizeZ / 2 + height / 2
+    local u, scale = MAP_FLAG_UI_UNITS, geometry.scale
+    return {
+        active=active and "true" or "false", visibility=visibility,
+        -- 与已正常显示的 Global 侧栏一致，直接引用完整 URL。
+        -- sgmf_flag 仍登记为资源，但不依赖同名资源在重载后自动绑定到 Image。
+        image=imageURL, preserveAspect="true", color="#FFFFFF",
+        raycastTarget="false", tooltip="", rectAlignment="MiddleCenter",
+        width=sgMFString(width / scale.x * u),
+        height=sgMFString(height / scale.z * u),
+        position=sgMFPosition(x / scale.x * u, z / scale.z * u, -y / scale.y * u),
+        rotation=faceDown and "0 180 0" or "0 0 0", scale="1 1 1"
+    }
+end
+
+local function sgMFCreateRoot(big, small)
+    big.id, small.id = "sgmf_big", "sgmf_small"
+    return {
+        tag="Panel",
+        attributes={id=MAP_FLAG_ROOT,width="1",height="1",position="0 0 0",
+            rotation="0 0 0",scale="1 1 1",rectAlignment="MiddleCenter",
+            color="#FFFFFF00",raycastTarget="false",active="true",tooltip=""},
+        children={{tag="Image",attributes=big},{tag="Image",attributes=small}}
+    }
+end
+
+local function sgMFApplyAttributes(ui, id, wanted, old)
+    local changed = {}
+    for name, value in pairs(wanted) do
+        if name ~= "id" and (old == nil or old[name] ~= value) then changed[name] = value end
+    end
+    if next(changed) ~= nil then ui.setAttributes(id, changed) end
+    return wanted
+end
+
+local function sgMFCleanupUI(record)
+    if record.object and record.object.UI == nil then return true end
+    local ready, destroyed = sgMFObjectReady(record.object)
+    if destroyed then return true end
+    if not ready then return false end
+    local ui = record.object.UI
+    local xml, removed = sgMFStripOwned(ui.getXmlTable() or {})
+    local assets, changed = sgMFAssets(ui, nil)
+    if changed then
+        ui.setCustomAssets(assets)
+        return false
+    end
+    if removed then
+        -- 资源与 XML 分步更新，兼容不处理第二参数的安装版。
+        if #xml==0 then ui.setXml("") else ui.setXmlTable(xml) end
+    end
+    return true
+end
+
+local function sgMFCleanup(record)
+    local ready, destroyed = sgMFObjectReady(record.object,false)
+    if destroyed then return true end
+    if not ready then return false end
+    sgMFSyncDecals(record.object,{})
+    record.unitDecals = false
+    return sgMFCleanupUI(record)
+end
+
+local function sgMFUpdateRecord(record, guid, entry, views)
+    local ready, destroyed = sgMFObjectReady(record.object,false)
+    if destroyed then return true end
+    if not ready then return false end
+    if entry == nil then
+        return sgMFCleanup(record)
+    end
+    if type(entry.url) ~= "string" or entry.url == "" then
+        if record.mounted or record.unitDecals or not record.inspected then
+            if not sgMFCleanup(record) then return false end
+            record.mounted,record.inspected,record.assetURL = false,true,nil
+            record.big,record.small = nil,nil
+        end
+        return false
+    end
+    if entry.role == "unit" then
+        -- 升级时移除旧 sgmf_ 悬浮节点；其余 UI 与资源保持原样。
+        if record.mounted or not record.inspected then
+            if sgMFCleanupUI(record) then
+                record.mounted,record.inspected,record.assetURL = false,true,nil
+                record.big,record.small = nil,nil
+            end
+        end
+        -- 部队旗不依赖 Object.UI 加载；旧 UI 尚在加载时，下轮再清理它。
+        -- Custom Tile 加载后仍会更新碰撞边界；缩放不变并不代表表面高度不变。
+        -- 部队旗与数字使用当前边界计算正背面，不能永久沿用首次读到的高度。
+        local geometry = sgMFGeometry(record,record.object,true)
+        if geometry then
+            sgMFSyncDecals(record.object,sgMFUnitDecals(geometry,entry.url))
+            record.unitDecals = true
+        end
+        return false
+    end
+    -- 标签/描述把部队改为将领时，同时清掉读档遗留的双面部队旗。
+    if record.unitDecals or not record.inspected then
+        sgMFSyncDecals(record.object,{})
+        record.unitDecals = false
+    end
+    if not sgMFObjectReady(record.object) then return false end
+    local ui = record.object.UI
+    if record.mounted then
+        -- 物件自己的脚本可能重建 XML；从当前界面重新合并，不写回旧快照。
+        for _, id in ipairs({MAP_FLAG_ROOT, "sgmf_big", "sgmf_small"}) do
+            local ok, value = pcall(function() return ui.getAttribute(id, "active") end)
+            if not ok or value == nil or value == "" then
+                record.mounted, record.big, record.small = false, nil, nil
+                break
+            end
+        end
+    end
+    local bigActive,bigVisibility,smallActive,smallVisibility = sgMFVisibility(entry,guid,views)
+    -- 未展开的普通棋子不建立 UI；若存档已有旧节点，第一次检查时清掉。
+    if not record.mounted and not bigActive and not smallActive then
+        if not record.inspected then
+            if not sgMFCleanup(record) then return false end
+            record.inspected = true
+        end
+        return false
+    end
+    local geometry = sgMFGeometry(record, record.object)
+    if geometry == nil then return false end
+    local faceDown = record.object.is_face_down == true
+    local big = sgMFImageAttributes(geometry,faceDown,MAP_FLAG_BIG_HEIGHT,bigActive,bigVisibility,entry.url)
+    local small = sgMFImageAttributes(geometry,faceDown,MAP_FLAG_SMALL_HEIGHT,smallActive,smallVisibility,entry.url)
+    if not record.mounted then
+        local xml = sgMFStripOwned(ui.getXmlTable() or {})
+        table.insert(xml, sgMFCreateRoot(big,small))
+        local assets, changed = sgMFAssets(ui,entry.url)
+        if changed then
+            ui.setCustomAssets(assets)
+            return false
+        end
+        ui.setXmlTable(xml)
+        record.mounted, record.inspected, record.assetURL = true,true,entry.url
+        -- setXmlTable 异步生效；提交 XML 不代表图片已经绑定。
+        -- 下次 Object.UI.loading 为 false 后，按届时最新视图重写一次自有属性。
+        record.big,record.small = nil,nil
+        return false
+    end
+    if record.assetURL ~= entry.url then
+        local assets, changed = sgMFAssets(ui,entry.url)
+        if changed then ui.setCustomAssets(assets) end
+        record.assetURL = entry.url
+        record.big,record.small = nil,nil
+        -- 新画像资源加载期间不写节点；下一次更新使用最新视图，不排队旧视图。
+        if ui.loading then return false end
+    end
+    record.big = sgMFApplyAttributes(ui,"sgmf_big",big,record.big)
+    record.small = sgMFApplyAttributes(ui,"sgmf_small",small,record.small)
+    return false
+end
+
+function sgMapInit()
+    mapFlagRecords = {}
+    -- 兼容读档后标签已删、URL已清的旧挂载节点；只检查一次，不覆盖第三方 UI。
+    for _, object in ipairs(getAllObjects()) do
+        local ok,guid = pcall(function() return object.getGUID() end)
+        if ok and guid then mapFlagRecords[guid] = {object=object} end
+    end
+end
+
+function sgMapUpdate(snapshot, views)
+    snapshot, views = snapshot or {}, views or {}
+    for guid, entry in pairs(snapshot) do
+        if entry.object ~= nil then
+            local record = mapFlagRecords[guid]
+            if record == nil or record.object ~= entry.object then
+                record = {object=entry.object}
+                mapFlagRecords[guid] = record
+            end
+        end
+    end
+    local completed = {}
+    for guid, record in pairs(mapFlagRecords) do
+        local ok, remove = pcall(function()
+            return sgMFUpdateRecord(record,guid,snapshot[guid],views)
+        end)
+        if ok and remove then table.insert(completed,guid) end
+        if not ok and record.lastError ~= tostring(remove) then
+            record.lastError = tostring(remove)
+            print("[地図陣旗] " .. guid .. "：" .. record.lastError .. "；可在资源加载后点击更新。")
+        elseif ok then
+            record.lastError = nil
+        end
+        -- 失败留到下次，不能中断全局面板；相同错误只报告一次。
+    end
+    for _,guid in ipairs(completed) do mapFlagRecords[guid] = nil end
+end
+
+function sgMapForget(guid)
+    local record = mapFlagRecords[guid]
+    if record == nil then return end
+    local ok,done = pcall(function() return sgMFCleanup(record) end)
+    if ok and done then mapFlagRecords[guid] = nil end
+    -- 正在 loading 的物件下次 sgMapUpdate 无 snapshot 时会完成清理。
+end
+-- END MAP FLAGS MODULE
+

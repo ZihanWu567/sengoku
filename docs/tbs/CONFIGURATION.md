@@ -102,3 +102,7 @@ URL 推荐直接从 TTS Cloud Manager 复制，使用完整 `https://...` 纯直
 - 背面数字和旗需要加载图片；缺数字／行动图片时透明按钮仍工作但不显示文字回退。
 - 修改姓名／状态可等待面板刷新；换 team、role、Tags 后点「更新」重建索引，必要时 Save & Play。
 - 保存完整 TTS 游戏才能一起保留 Global 状态、Description、Tags、底图和物件朝向。单独复制 Lua 不包含每枚令牌的数据。
+
+## 敗走大图
+
+`UNIT_DEFEAT_IMAGE_URL`已替换为用户新图，`UNIT_DEFEAT_IMAGE_ASPECT=1.5`。位置、宽度和高度间距集中在`UNIT_ROUT_LAYOUT`；只调整这组，不改已校准的数字／陣旗偏移。完整说明见[ROUT_OVERLAY.md](ROUT_OVERLAY.md)。
