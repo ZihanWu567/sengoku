@@ -260,60 +260,60 @@
       "id": "formation_close",
       "label_ja": "密集",
       "status": "draft",
-      "description": "Pale ivory aged-paper horizontal plaque with a dark-brown border and exactly six same-scale black jingasa troop markers viewed from above, arranged in two close-packed rows of three. Revision 11 makes the plaque taller within the unchanged 2:1 canvas. The pair shares the same marker scale and matching regular outer alpha boundary with narrow antialiasing. No dark vermilion.",
+      "description": "Revision 26 removes the ivory paper background and dark-brown plaque frame, leaving exactly six isolated dark jingasa troop markers viewed from above, arranged in two close-packed aligned rows of three. The same transparent jingasa cutout is repeated at a matched scale across both formation icons; the tight and loose arrangements are retained within the unchanged 2:1 canvas. Spaces around and between the markers are transparent. The complete alpha shape and padding differ between the two formations. The arrangement is rebuilt from the shared transparent cutout.",
       "path": "formation_close.png",
       "pixel_size": {
         "width": 512,
         "height": 256
       },
-      "alpha": "straight RGBA; solid aged-paper plaque, transparent outside a regular outer boundary with narrow antialiasing",
+      "alpha": "straight RGBA; six isolated jingasa motifs, with transparency around and between them and antialiased motif edges; no paper background or plaque frame",
       "content_bbox_px": {
-        "x": 6,
-        "y": 18,
-        "width": 501,
-        "height": 220
+        "x": 145,
+        "y": 55,
+        "width": 222,
+        "height": 142
       },
       "transparent_padding_px": {
-        "left": 6,
-        "top": 18,
-        "right": 5,
-        "bottom": 18
+        "left": 145,
+        "top": 55,
+        "right": 145,
+        "bottom": 59
       },
       "alpha_bbox_threshold": 0,
       "content_bbox_at_alpha_128_px": {
-        "x": 6,
-        "y": 18,
-        "width": 500,
-        "height": 220
+        "x": 146,
+        "y": 56,
+        "width": 220,
+        "height": 141
       },
-      "sha256": "3fae8c7186882658bbc4300f20630ae7fd7f50f94e97c83cad14792f1d65c348",
+      "sha256": "5fda6ccf408260d11c51443ccd3e43eb4245c15c075e919270ce99c25db385cd",
       "source_export": {
         "path": "源图/formation_close-1024x512.png",
         "pixel_size": {
           "width": 1024,
           "height": 512
         },
-        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside a regular outer boundary with narrow antialiasing",
+        "alpha": "straight RGBA; six isolated jingasa motifs, with transparency around and between them and antialiased motif edges; no paper background or plaque frame",
         "content_bbox_px": {
-          "x": 12,
-          "y": 37,
-          "width": 1001,
-          "height": 439
+          "x": 291,
+          "y": 110,
+          "width": 442,
+          "height": 284
         },
         "transparent_padding_px": {
-          "left": 12,
-          "top": 37,
-          "right": 11,
-          "bottom": 36
+          "left": 291,
+          "top": 110,
+          "right": 291,
+          "bottom": 118
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 12,
-          "y": 37,
-          "width": 1000,
-          "height": 438
+          "x": 291,
+          "y": 111,
+          "width": 442,
+          "height": 282
         },
-        "sha256": "35b4b7023b529ddd13a021a99d93ba806105184bee2cc34919111fb59e611757"
+        "sha256": "f2eebe89ec97c074dbb227c8696ca0b6eddd8586f19958ac7c458717519c4865"
       },
       "display_export": {
         "path": "formation_close-240x120.png",
@@ -321,27 +321,27 @@
           "width": 240,
           "height": 120
         },
-        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside a regular outer boundary with narrow antialiasing",
+        "alpha": "straight RGBA; six isolated jingasa motifs, with transparency around and between them and antialiased motif edges; no paper background or plaque frame",
         "content_bbox_px": {
-          "x": 2,
-          "y": 8,
-          "width": 236,
-          "height": 104
+          "x": 68,
+          "y": 25,
+          "width": 104,
+          "height": 68
         },
         "transparent_padding_px": {
-          "left": 2,
-          "top": 8,
-          "right": 2,
-          "bottom": 8
+          "left": 68,
+          "top": 25,
+          "right": 68,
+          "bottom": 27
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 3,
-          "y": 9,
-          "width": 234,
-          "height": 102
+          "x": 68,
+          "y": 26,
+          "width": 104,
+          "height": 66
         },
-        "sha256": "2bb121a7a20dbcace95aa50ac0028edeedad347958cc726dac33101261f7d749"
+        "sha256": "0a0d79dfed3c05bc0a1809d53a31c4d775f962e9109b14bd70a98e23642d5679"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -373,60 +373,60 @@
       "id": "formation_open",
       "label_ja": "散開",
       "status": "draft",
-      "description": "Pale ivory aged-paper horizontal plaque with a dark-brown border and exactly six same-scale black jingasa troop markers viewed from above, arranged in two loose, staggered rows of three. Revision 11 makes the plaque taller within the unchanged 2:1 canvas and increases the vertical spacing between the two rows. The pair shares the same marker scale and matching regular outer alpha boundary with narrow antialiasing. No dark vermilion.",
+      "description": "Revision 26 removes the ivory paper background and dark-brown plaque frame, leaving exactly six isolated dark jingasa troop markers viewed from above, arranged in two loose, staggered rows of three. The same transparent jingasa cutout is repeated at a matched scale across both formation icons; the tight and loose arrangements are retained within the unchanged 2:1 canvas. Spaces around and between the markers are transparent. The complete alpha shape and padding differ between the two formations. The arrangement is rebuilt from the shared transparent cutout.",
       "path": "formation_open.png",
       "pixel_size": {
         "width": 512,
         "height": 256
       },
-      "alpha": "straight RGBA; solid aged-paper plaque, transparent outside a regular outer boundary with narrow antialiasing",
+      "alpha": "straight RGBA; six isolated jingasa motifs, with transparency around and between them and antialiased motif edges; no paper background or plaque frame",
       "content_bbox_px": {
-        "x": 6,
-        "y": 18,
-        "width": 501,
-        "height": 220
+        "x": 63,
+        "y": 55,
+        "width": 397,
+        "height": 160
       },
       "transparent_padding_px": {
-        "left": 6,
-        "top": 18,
-        "right": 5,
-        "bottom": 18
+        "left": 63,
+        "top": 55,
+        "right": 52,
+        "bottom": 41
       },
       "alpha_bbox_threshold": 0,
       "content_bbox_at_alpha_128_px": {
-        "x": 6,
-        "y": 18,
-        "width": 500,
-        "height": 220
+        "x": 63,
+        "y": 56,
+        "width": 397,
+        "height": 159
       },
-      "sha256": "686a1ad9446d2c8f27f1fe2aa6cb34d0802987563ed7ec632f6ffe206da18702",
+      "sha256": "17f8b11ade6678a004b5cedd7835727f6bc529274d4926a027d44d46b0894510",
       "source_export": {
         "path": "源图/formation_open-1024x512.png",
         "pixel_size": {
           "width": 1024,
           "height": 512
         },
-        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside a regular outer boundary with narrow antialiasing",
+        "alpha": "straight RGBA; six isolated jingasa motifs, with transparency around and between them and antialiased motif edges; no paper background or plaque frame",
         "content_bbox_px": {
-          "x": 12,
-          "y": 37,
-          "width": 1001,
-          "height": 439
+          "x": 126,
+          "y": 110,
+          "width": 794,
+          "height": 320
         },
         "transparent_padding_px": {
-          "left": 12,
-          "top": 37,
-          "right": 11,
-          "bottom": 36
+          "left": 126,
+          "top": 110,
+          "right": 104,
+          "bottom": 82
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 12,
-          "y": 37,
-          "width": 1000,
-          "height": 438
+          "x": 126,
+          "y": 111,
+          "width": 794,
+          "height": 318
         },
-        "sha256": "45784ca22d09e6abe229dc2c29b10bfb637bb7cebdd8b398954fd94d372928ba"
+        "sha256": "242ea64607ea90c1d2a9e90d538ffe2ea9eea94f6f1ffb06c591e0840c9c2b80"
       },
       "display_export": {
         "path": "formation_open-240x120.png",
@@ -434,27 +434,27 @@
           "width": 240,
           "height": 120
         },
-        "alpha": "straight RGBA; solid aged-paper plaque, transparent outside a regular outer boundary with narrow antialiasing",
+        "alpha": "straight RGBA; six isolated jingasa motifs, with transparency around and between them and antialiased motif edges; no paper background or plaque frame",
         "content_bbox_px": {
-          "x": 2,
-          "y": 8,
-          "width": 236,
-          "height": 104
+          "x": 29,
+          "y": 25,
+          "width": 187,
+          "height": 76
         },
         "transparent_padding_px": {
-          "left": 2,
-          "top": 8,
-          "right": 2,
-          "bottom": 8
+          "left": 29,
+          "top": 25,
+          "right": 24,
+          "bottom": 19
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 3,
-          "y": 9,
-          "width": 234,
-          "height": 102
+          "x": 30,
+          "y": 26,
+          "width": 186,
+          "height": 75
         },
-        "sha256": "26f8049890617bb0ddae366c14224af620e6d9ab8520420115bbb974ad74da88"
+        "sha256": "b47ff3c232b52dbd1397df54e28a89a0916d8887e0b099b1b1e82ecab5b85406"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -812,35 +812,36 @@
     }
   ],
   "not_yet_produced": [],
-  "overview": "engaged.png",
+  "overview": "formation_close.png",
   "additional_previews": [],
-  "runtime_integration": "Artwork handoff only. Revision 25 replaces only the three engaged exports with naturally colored crossed katana: cool-gray/silver steel blades, dark cord-wrapped handles, dark-iron guards and muted old-brass/bronze fittings. Replace only the hosted engaged.png runtime texture (320x512) and refresh its cache. Display sizes, filenames and positions are unchanged from revision 24: engaged uses the full 100x160 canvas at (20,26), center (70,106); out_of_command remains at (892,26), center (942,106). Preserve the 5:8 aspect ratio and transparent padding. The other six asset objects and eighteen PNGs, and the six archived circular exports, are unchanged. When migrating from pre-revision-24 square artwork, update UI height 100 to 160 and top-left y 56 to 26; replace the artwork rather than stretching it. The two header states remain independent and may appear simultaneously. All seven cloud_url fields remain empty. Title clearance remains valid for the unchanged full canvases; TTS runtime appearance is unverified.",
+  "runtime_integration": "Artwork handoff only. Revision 26 replaces only the six formation_close and formation_open exports, removing their ivory paper backgrounds and dark-brown plaque frames. Use formation_close.png and formation_open.png (512x256) as runtime textures, the -240x120.png files as display-size exports, and the 1024x512 sources. Keep the entire 2:1 canvas at 240x120, with the existing shared candidate top-left (734,1042), center (854,1102); the pair remains mutually exclusive. Do not crop transparent padding or enlarge the compact group to match the loose group. Replace only the two hosted formation textures and refresh their caches. The other five asset objects and fifteen PNGs, and all six archived circular exports, are unchanged. All icon display sizes and placement guidance remain unchanged. All seven cloud_url fields remain empty. Candidate formation placement has only been checked against frame coordinates and one existing 槍足軽隊 front card; all-troop overlap and TTS runtime rendering remain unverified.",
   "notes": [
-    "Revision 25 changes only engaged: ivory blades and light guard accents are replaced by muted cool-gray/silver steel with broad shading and brighter cutting edges, dark-brown/charcoal cord-wrapped handles, dark-iron guards and subdued aged-brass/bronze fittings. The tall crossed-katana composition, dark-brown outlines, transparent 5:8 canvas and display placement remain.",
-    "Use engaged.png and out_of_command.png (320x512) as the preferred runtime textures at 100x160 UI size. The -100x160.png files are display-size convenience exports, and the sources are 640x1024. Preserve the full 5:8 canvas and transparent padding. Revision 25 requires replacing only the hosted engaged texture and refreshing its cache; out_of_command is unchanged. For an integration still using pre-revision-24 square artwork, migrate UI height 100 to 160 and top-left y 56 to 26 and replace the square artwork rather than stretching it.",
-    "Revision 25 remeasured all three engaged exports for RGBA mode, pixel dimensions, alpha>0 and alpha>=128 bounds, transparent padding and SHA-256. The current alpha bounds and padding are measured anew. The two header motifs still have different alpha shapes and padding. Exports preserve aspect ratio and use centered transparent padding and Box area downsampling. No new preview or overview image was generated; overview points to standalone engaged.png. TTS runtime, front/back rendering, distance, angle and operation-area overlap remain unverified.",
+    "Revision 26 changes only formation_close and formation_open: the paper plaques and dark-brown frames are removed, leaving six isolated dark jingasa markers per icon. One transparent jingasa cutout is repeated six times in each established tight or loose/staggered arrangement, keeping the marker scale matched. Spaces around and between the motifs are transparent; the two complete alpha masks and outer padding intentionally differ.",
+    "Use formation_close.png and formation_open.png (512x256) as preferred runtime textures, with 240x120 display exports and 1024x512 sources. Keep the full 2:1 canvas at 240x120 at the existing shared candidate top-left (734,1042), center (854,1102). The states remain mutually exclusive. Do not crop transparent margins or enlarge the close-packed cluster to fill its canvas; that would change the shared marker scale and placement. Replace only the two hosted formation textures and refresh caches for revision 26.",
+    "Revision 26 remeasured all six formation exports for RGBA mode, pixel dimensions, alpha>0 and alpha>=128 bounds, transparent padding and SHA-256. Generation alpha was normalized over 6.25%-93.75% to remove faint background residue and exports use Box area downsampling. No new preview or overview image was generated; overview points to standalone formation_close.png. TTS runtime, front/back rendering, distance, angle, all-troop occlusion and operation-area overlap remain unverified.",
+    "Revision 26 source-image component check at alpha>=128: exactly six disconnected jingasa components occur in each 1024x512 source, each with a 146x140 bounding box and 15906 pixels. The same transparent cutout gives matched scale across both arrangements. The artwork was reconstructed with approximately 1-2px scale normalization, not preserved pixel-for-pixel from the former plaques.",
+    "The other five asset objects and their fifteen PNG bytes match pre-revision-26 commit 58f7c37, as do all six archived circular exports. Display sizes, positions and remaining placement questions are unchanged for every icon. No new state triggers, reset rules or code changes are introduced.",
+    "Historical revision 25 changed only engaged to natural cool-gray/silver steel blades, dark cord-wrapped handles, dark-iron guards and subdued old-brass/bronze fittings. Its transparent 5:8 canvas, 100x160 display and placement remain current; engaged is unchanged in revision 26.",
+    "Header textures engaged.png and out_of_command.png remain 320x512, displayed using their complete 100x160 canvases with transparent padding. Their current files and integration guidance are unchanged in revision 26. Integrations still using pre-revision-24 square artwork require UI height 100 to 160 and top-left y 56 to 26; replace the old square artwork rather than stretching it.",
     "Historical revision 24 replaced engaged and out_of_command circular badges with transparent motif-only artwork. Its engaged had ivory blades and light guard accents, superseded by the natural material colors in revision 25. The revision-24 charcoal gunbai with a thick black hollow prohibition circle and slash, narrow ivory outlines and a handle below the ring remains unchanged. Revision 24 also established the 5:8 canvases and 100x160 header placements retained by revision 25.",
     "The engaged motif uses a 100x160 canvas at (20,26), centered at (70,106). The out_of_command motif uses a separate 100x160 canvas at (892,26), centered at (942,106). Both can appear simultaneously; do not reuse one mutually exclusive display slot.",
     "The title-bar interior is x=[14,998), y=[14,198). All 12 saved title alpha bounds and placement metadata were checked. The tightest titles, 鉄砲足軽隊 and 鉄砲僧兵隊, occupy x=[128,885). Full-canvas clearance is 8px to the left motif, 7px to the right motif, 6px to each corresponding side frame, and 12px above and below both canvases. No title needs to move or shrink; the existing 96 cards are unchanged.",
     "Historical circular exports are archived only in 历史/圆章-revision23/: engaged.png, engaged-100.png, engaged-1024.png, out_of_command.png, out_of_command-100.png and out_of_command-1024.png. They are not current runtime textures. Old source and display-size paths must be migrated to the new rectangular-canvas exports.",
     "Historical revision 10 cleaned the circular alpha boundary and added matching dark outer lines and matte pale-gold bands. Historical revision 12 changed the gunbai slash to ivory with a dark-brown outline. Those circle styles, their 512x512 runtime textures, 100x100 placement and uniform circular padding are superseded by revision 24; archived images document them only.",
-    "The other six asset objects and their eighteen PNG bytes match pre-revision-25 commit c0450b9, as do all six archived circular exports. Display sizes, positions and remaining placement questions are unchanged for every icon. No new state triggers, reset rules or code changes are introduced.",
     "fire_ready.png and fire_loading.png are the preferred 512x256 runtime textures; the corresponding -240x120.png files are display-size convenience exports; both sources are 1024x512. Use the full canvases at 240x120 without trimming transparent padding. The pair shares one mutually exclusive shooting-status slot; no placement coordinates, new state triggers or reset rules are assigned.",
     "Historical revision 23 changes only fire_loading: an enlarged muzzle-and-light-wooden-ramrod close-up crops out the stock and breech, and one prominent ivory slash with a deep-brown outline descends opposite the barrel to make loading/unavailable to fire distinct. The muzzle-ramrod junction remains uncovered; there is no hand. Matte ivory plaque styling, all canvas dimensions and exterior alpha boundaries are retained. The other six asset objects and their eighteen PNGs are unchanged.",
     "Historical revision 22 introduced fire_ready and fire_loading as matte ivory plaques with dark-brown borders. fire_ready showed a horizontal complete Japanese tanegashima; the original fire_loading showed a raised complete musket with a lighter wooden ramrod inserted into the muzzle and no hand. Revision 23 supersedes that loading composition; fire_ready remains unchanged.",
     "Historical revision 21 repairs every interior routed cloth slit and puncture. Only perimeter tears, missing corners and restrained white fraying remain. Natural folds, the soft palisade background, single fallen white banner and frame are retained. The other four asset entries and their PNGs are unchanged; all display-size and placement guidance is unchanged.",
     "routed.png is 1200x800, routed-600x400.png is the display-size export, and the source is 1536x1024. Candidate display size is 600x400 on a 1200x1200 board; no coordinates or automatic elevation logic are assigned. The rounded alpha outline removes outside background remnants; Box area downsampling retains a narrow antialiased edge.",
     "Revision 21 generated no new preview or overview image; its overview reference pointed to standalone routed.png. Commander overlap, front/back rendering, distance and oblique-angle readability still require code-side and TTS validation; the artwork alone does not prevent occlusion.",
-    "Historical revision 11 makes both formation plaques taller and increases the vertical row spacing in formation_open. The six same-scale markers, 2:1 canvases and existing mutually exclusive 240x120 candidate placement are retained. Box area downsampling and matching regular alpha boundaries retain narrow antialiasing.",
-    "All earlier engaged, out_of_command and combined previews are historical and do not represent the current artwork. No new preview or overview was produced; overview points to standalone engaged.png.",
-    "At 240x120, both formation plaques have alpha>0 bounds (2,8)-(238,112), 104px high; their alpha>=128 visible height is 102px, increased from 88px in revision 9. Same-size alpha channels match pixel-for-pixel.",
-    "Formation marker check: each 512x256 PNG contains six comparable-scale markers; the vertical separation of row centers is approximately 70px in formation_close and 89px in formation_open.",
+    "Historical revision 11 made the ivory formation plaques taller and increased vertical row spacing in formation_open. The matching plaque alpha boundaries and 240x120 visible plaque heights belonged to that former background. Revision 26 removes the plaques and frames while retaining six markers, the 2:1 canvases and the existing mutually exclusive candidate placement.",
+    "All earlier engaged, out_of_command and combined previews are historical and do not represent the current artwork. No new preview or overview was produced; overview points to standalone formation_close.png.",
     "Cloud URLs intentionally empty; no runtime-hosting URLs have been provided.",
     "At a 300px-wide board each 100x160 header placement becomes approximately 25x40px; the rectangular canvas fit does not establish TTS edge clarity or readability. Final appearance requires TTS distance and angle testing.",
     "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
     "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 25,
+  "revision": 26,
   "additional_overviews": [],
   "combined_previews": [],
   "previous_revision_previews": [
