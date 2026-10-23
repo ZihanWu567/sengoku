@@ -15,7 +15,7 @@
       "id": "engaged",
       "label_ja": "交戦",
       "status": "draft",
-      "description": "Revision 24 replaces the dark-vermilion circular badge with two tall crossed Japanese katana on a transparent 5:8 canvas. Ivory blades and guard accents, dark-brown outlines and dark handles retain the crossed-sword motif. There is no red fill, enclosing badge or decorative frame. The artwork is scaled proportionally and centered with transparent padding.",
+      "description": "Revision 25 gives the crossed Japanese katana natural material colors: muted cool-gray and silver steel blades with broad subtle shading and brighter cutting edges, dark-brown and charcoal cord-wrapped handles, dark-iron guards and restrained aged-brass or bronze fittings. The tall crossed-sword composition, dark-brown outlines and transparent 5:8 canvas remain. There is no red fill, enclosing badge or decorative frame. The artwork is scaled proportionally and centered with transparent padding; the current alpha bounds and padding are measured anew.",
       "path": "engaged.png",
       "pixel_size": {
         "width": 320,
@@ -24,18 +24,18 @@
       "alpha": "straight RGBA; transparent around and between the motifs, with antialiased motif edges; no filled badge background or decorative frame",
       "content_bbox_px": {
         "x": 8,
-        "y": 13,
+        "y": 17,
         "width": 304,
-        "height": 485
+        "height": 478
       },
       "transparent_padding_px": {
         "left": 8,
-        "top": 13,
+        "top": 17,
         "right": 8,
-        "bottom": 14
+        "bottom": 17
       },
       "alpha_bbox_threshold": 0,
-      "sha256": "d71816f6b06144c7dc293e754c3bba5f31640edeeb114c9dca5c9d0d893ff48d",
+      "sha256": "03b6bcd9ad02b53db2de73b9b2fd796fed6e2d08fad7bb9fee0dc71a10ac3e52",
       "source_export": {
         "path": "源图/engaged-640x1024.png",
         "pixel_size": {
@@ -45,24 +45,24 @@
         "alpha": "straight RGBA; transparent around and between the motifs, with antialiased motif edges; no filled badge background or decorative frame",
         "content_bbox_px": {
           "x": 16,
-          "y": 27,
+          "y": 35,
           "width": 608,
-          "height": 969
+          "height": 954
         },
         "transparent_padding_px": {
           "left": 16,
-          "top": 27,
+          "top": 35,
           "right": 16,
-          "bottom": 28
+          "bottom": 35
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 16,
-          "y": 28,
-          "width": 607,
-          "height": 967
+          "x": 17,
+          "y": 36,
+          "width": 606,
+          "height": 953
         },
-        "sha256": "04b147dcf80e2e499237dd954e0014d713eab6a22c43f69db6b9ec568fd8322d"
+        "sha256": "d47af06cfc9aa2f74ce072c8174538a6ef6048a3904b9986d2b5126fa7f290fa"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -92,9 +92,9 @@
       "previews": [],
       "content_bbox_at_alpha_128_px": {
         "x": 8,
-        "y": 14,
+        "y": 18,
         "width": 304,
-        "height": 483
+        "height": 476
       },
       "display_export": {
         "path": "engaged-100x160.png",
@@ -105,24 +105,24 @@
         "alpha": "straight RGBA; transparent around and between the motifs, with antialiased motif edges; no filled badge background or decorative frame",
         "content_bbox_px": {
           "x": 2,
-          "y": 4,
+          "y": 5,
           "width": 96,
-          "height": 152
+          "height": 150
         },
         "transparent_padding_px": {
           "left": 2,
-          "top": 4,
+          "top": 5,
           "right": 2,
-          "bottom": 4
+          "bottom": 5
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
           "x": 3,
-          "y": 5,
+          "y": 6,
           "width": 94,
-          "height": 150
+          "height": 148
         },
-        "sha256": "3ba94c04fc148dac759ddd78b490e11dc2a876234a20b6654959221127c9cc2a"
+        "sha256": "a13c14212b8d8d920f79c2713877d035e5a5cd0fc6502d2341895e831fb0e2a9"
       },
       "recommended_runtime_texture": {
         "path": "engaged.png",
@@ -814,16 +814,17 @@
   "not_yet_produced": [],
   "overview": "engaged.png",
   "additional_previews": [],
-  "runtime_integration": "Artwork handoff only. Revision 24 replaces only engaged and out_of_command with transparent motif-only 320x512 runtime textures. Display each full canvas at 100x160: engaged at (20,26), out_of_command at (892,26), with unchanged centers (70,106) and (942,106). Change UI height from 100 to 160 and top-left y from 56 to 26, preserve transparent padding and the 5:8 aspect ratio, and replace the old square artwork rather than stretching it. The two states remain independent and may appear simultaneously. New display exports are -100x160.png and sources are -640x1024.png; revision-23 circular exports are historical only. The other five asset objects and fifteen PNGs, including their display-size and placement guidance, are unchanged. Hosted URLs, cache refresh and runtime integration belong to the code side; all seven cloud_url fields remain empty. Title clearance is verified from all 12 saved title bounds; TTS runtime appearance is unverified.",
+  "runtime_integration": "Artwork handoff only. Revision 25 replaces only the three engaged exports with naturally colored crossed katana: cool-gray/silver steel blades, dark cord-wrapped handles, dark-iron guards and muted old-brass/bronze fittings. Replace only the hosted engaged.png runtime texture (320x512) and refresh its cache. Display sizes, filenames and positions are unchanged from revision 24: engaged uses the full 100x160 canvas at (20,26), center (70,106); out_of_command remains at (892,26), center (942,106). Preserve the 5:8 aspect ratio and transparent padding. The other six asset objects and eighteen PNGs, and the six archived circular exports, are unchanged. When migrating from pre-revision-24 square artwork, update UI height 100 to 160 and top-left y 56 to 26; replace the artwork rather than stretching it. The two header states remain independent and may appear simultaneously. All seven cloud_url fields remain empty. Title clearance remains valid for the unchanged full canvases; TTS runtime appearance is unverified.",
   "notes": [
-    "Revision 24 changes only engaged and out_of_command: transparent motif-only vertical artwork replaces the dark-vermilion circular badges. engaged retains ivory crossed katana with dark-brown outlines and dark handles. out_of_command has a charcoal rustic gunbai behind a thick black hollow prohibition circle and black slash with narrow ivory outlines; its handle extends below the ring. Neither icon has a red fill or a decorative enclosing frame.",
-    "Use engaged.png and out_of_command.png (320x512) as the preferred runtime textures at 100x160 UI size. The -100x160.png files are display-size convenience exports, and the sources are 640x1024. Preserve the full 5:8 canvas and transparent padding. Migrate UI height 100 to 160 and top-left y 56 to 26; do not stretch the old square artwork. Replace hosted texture URLs and refresh caches even where runtime filenames are reused.",
-    "Revision 24 remeasured all six header exports for RGBA mode, pixel dimensions, alpha>0 and alpha>=128 bounds, transparent padding and SHA-256. The two motifs intentionally have different alpha shapes and padding. Generation alpha was normalized over 6.25%-93.75% to remove faint background residue; exports preserve aspect ratio, use centered transparent padding and Box area downsampling. No new preview or overview image was generated; overview points to standalone engaged.png. TTS runtime, front/back rendering, distance, angle and operation-area overlap remain unverified.",
+    "Revision 25 changes only engaged: ivory blades and light guard accents are replaced by muted cool-gray/silver steel with broad shading and brighter cutting edges, dark-brown/charcoal cord-wrapped handles, dark-iron guards and subdued aged-brass/bronze fittings. The tall crossed-katana composition, dark-brown outlines, transparent 5:8 canvas and display placement remain.",
+    "Use engaged.png and out_of_command.png (320x512) as the preferred runtime textures at 100x160 UI size. The -100x160.png files are display-size convenience exports, and the sources are 640x1024. Preserve the full 5:8 canvas and transparent padding. Revision 25 requires replacing only the hosted engaged texture and refreshing its cache; out_of_command is unchanged. For an integration still using pre-revision-24 square artwork, migrate UI height 100 to 160 and top-left y 56 to 26 and replace the square artwork rather than stretching it.",
+    "Revision 25 remeasured all three engaged exports for RGBA mode, pixel dimensions, alpha>0 and alpha>=128 bounds, transparent padding and SHA-256. The current alpha bounds and padding are measured anew. The two header motifs still have different alpha shapes and padding. Exports preserve aspect ratio and use centered transparent padding and Box area downsampling. No new preview or overview image was generated; overview points to standalone engaged.png. TTS runtime, front/back rendering, distance, angle and operation-area overlap remain unverified.",
+    "Historical revision 24 replaced engaged and out_of_command circular badges with transparent motif-only artwork. Its engaged had ivory blades and light guard accents, superseded by the natural material colors in revision 25. The revision-24 charcoal gunbai with a thick black hollow prohibition circle and slash, narrow ivory outlines and a handle below the ring remains unchanged. Revision 24 also established the 5:8 canvases and 100x160 header placements retained by revision 25.",
     "The engaged motif uses a 100x160 canvas at (20,26), centered at (70,106). The out_of_command motif uses a separate 100x160 canvas at (892,26), centered at (942,106). Both can appear simultaneously; do not reuse one mutually exclusive display slot.",
     "The title-bar interior is x=[14,998), y=[14,198). All 12 saved title alpha bounds and placement metadata were checked. The tightest titles, 鉄砲足軽隊 and 鉄砲僧兵隊, occupy x=[128,885). Full-canvas clearance is 8px to the left motif, 7px to the right motif, 6px to each corresponding side frame, and 12px above and below both canvases. No title needs to move or shrink; the existing 96 cards are unchanged.",
     "Historical circular exports are archived only in 历史/圆章-revision23/: engaged.png, engaged-100.png, engaged-1024.png, out_of_command.png, out_of_command-100.png and out_of_command-1024.png. They are not current runtime textures. Old source and display-size paths must be migrated to the new rectangular-canvas exports.",
     "Historical revision 10 cleaned the circular alpha boundary and added matching dark outer lines and matte pale-gold bands. Historical revision 12 changed the gunbai slash to ivory with a dark-brown outline. Those circle styles, their 512x512 runtime textures, 100x100 placement and uniform circular padding are superseded by revision 24; archived images document them only.",
-    "The other five asset objects and their fifteen PNG bytes match the pre-revision-24 HEAD. Existing formation, routed and shooting-status display-size and placement guidance is unchanged; no new coordinates are assigned to those five assets. No new state triggers, reset rules or code changes are introduced.",
+    "The other six asset objects and their eighteen PNG bytes match pre-revision-25 commit c0450b9, as do all six archived circular exports. Display sizes, positions and remaining placement questions are unchanged for every icon. No new state triggers, reset rules or code changes are introduced.",
     "fire_ready.png and fire_loading.png are the preferred 512x256 runtime textures; the corresponding -240x120.png files are display-size convenience exports; both sources are 1024x512. Use the full canvases at 240x120 without trimming transparent padding. The pair shares one mutually exclusive shooting-status slot; no placement coordinates, new state triggers or reset rules are assigned.",
     "Historical revision 23 changes only fire_loading: an enlarged muzzle-and-light-wooden-ramrod close-up crops out the stock and breech, and one prominent ivory slash with a deep-brown outline descends opposite the barrel to make loading/unavailable to fire distinct. The muzzle-ramrod junction remains uncovered; there is no hand. Matte ivory plaque styling, all canvas dimensions and exterior alpha boundaries are retained. The other six asset objects and their eighteen PNGs are unchanged.",
     "Historical revision 22 introduced fire_ready and fire_loading as matte ivory plaques with dark-brown borders. fire_ready showed a horizontal complete Japanese tanegashima; the original fire_loading showed a raised complete musket with a lighter wooden ramrod inserted into the muzzle and no hand. Revision 23 supersedes that loading composition; fire_ready remains unchanged.",
@@ -839,7 +840,7 @@
     "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
     "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 24,
+  "revision": 25,
   "additional_overviews": [],
   "combined_previews": [],
   "previous_revision_previews": [
