@@ -1,4 +1,4 @@
--- 兵種＋備隊面板 v2.15.0：交戦・指揮外手動標記対応（2026-10-21）
+-- 兵種＋備隊面板 v2.17.0：陣形TQ修正・行動連動・士氣上限表示（2026-10-23）
 MIN_VALUE = 0
 
 -- 全军共用的敗走贴图。上传后只在这里填一次完整图片直链。
@@ -56,12 +56,28 @@ UNIT_MORALE_BAND_IMAGES = {
 
 -- 手动状态图标：每项一张透明 PNG，正反面共用；关闭时由 UI 淡显。
 -- 未填直链时不显示、不生成点击区；不会用文字占位。美术定稿后仅替换这里。
-UNIT_STATUS_IMAGES = {engaged = "", out_of_command = ""}
+UNIT_STATUS_IMAGES = {
+    engaged = "https://steamusercontent-a.akamaihd.net/ugc/16621351352612699552/ECB71F566524A55352FD18E8815F79A99CED62FF/",
+    out_of_command = "https://steamusercontent-a.akamaihd.net/ugc/11196356357107166222/939374A167DBCDD7CA034F3E28D1593926D50C8E/"
+}
 UNIT_STATUS_LAYOUT = {
-    engaged_x = 70, out_of_command_x = 930, y = 100,
-    size = 100, hit_size = 120, -- 1200 棋面：标题两端留出 X10～130、870～990。
+    engaged_x = 77, out_of_command_x = 935, y = 110, -- 用户实测校准（2026-10-23）。
+    size = 100, hit_size = 120, -- 1200 棋面：点击范围 X17～137、875～995，Y50～170。
     front_ui_clearance = 0.001, -- 新图标为 UI，不沿用正面投影贴花的负 GAP。
-    active_color = "#FFFFFFFF", inactive_color = "#FFFFFF50"
+    active_color = "#FFFFFFFF", inactive_color = "#FFFFFF20"
+}
+
+-- 底部同一位置：近战切换密集／散開，远程切换射撃準備／装填中。
+-- 每组必须填齐两张不同图片直链；未填齐不显示，也不留不可见按钮。
+UNIT_MODE_IMAGES = {
+    closed = "https://steamusercontent-a.akamaihd.net/ugc/11515895100246543386/C63536BA44742C27108483536A4C088FFD1F5B06/",
+    open = "https://steamusercontent-a.akamaihd.net/ugc/11025487001876169960/A2E57E3E6BE1CC1A9388C1F6965B78A632FF6156/",
+    ready = "", reloading = ""
+}
+UNIT_MODE_LAYOUT = {
+    x = 820, y = 1125, width = 320, height = 130,
+    hit_width = 340, hit_height = 140,
+    front_ui_clearance = 0.001
 }
 
 -- =========================
@@ -70,60 +86,70 @@ UNIT_STATUS_LAYOUT = {
 UNIT_CONFIGS = {
     {
         tag = "unit_nagaye_ashigaru",
+        marker_mode = "formation",
         name = "長柄足軽",
         max_front = 6, max_back = 5,
         front_move = 4, back_move = 3
     },
     {
         tag = "unit_kiba_samurai",
+        marker_mode = "formation",
         name = "騎馬武士",
         max_front = 8, max_back = 7,
         front_move = 6, back_move = 5
     },
     {
         tag = "unit_kachi_samurai",
+        marker_mode = "formation",
         name = "徒歩武士",
         max_front = 8, max_back = 7,
         front_move = 4, back_move = 3
     },
     {
         tag = "unit_yari_ashigaru",
+        marker_mode = "formation",
         name = "槍足軽",
         max_front = 5, max_back = 4,
         front_move = 4, back_move = 3
     },
     {
         tag = "unit_yumi_ashigaru",
+        marker_mode = "fire",
         name = "弓足軽",
         max_front = 4, max_back = 3,
         front_move = 5, back_move = 4
     },
     {
         tag = "unit_yumi_sohei",
+        marker_mode = "fire",
         name = "弓僧兵",
         max_front = 4, max_back = 4,
         front_move = 5, back_move = 4
     },
     {
         tag = "unit_teppo_ashigaru",
+        marker_mode = "fire",
         name = "鉄砲足軽",
         max_front = 3, max_back = 2,
         front_move = 4, back_move = 3
     },
     {
         tag = "unit_teppo_sohei",
+        marker_mode = "fire",
         name = "鉄砲僧兵",
         max_front = 3, max_back = 3,
         front_move = 4, back_move = 3
     },
     {
         tag = "unit_akazonae_kiba",
+        marker_mode = "formation",
         name = "赤備騎馬",
         max_front = 8, max_back = 8,
         front_move = 6, back_move = 6
     },
     {
         tag = "unit_nanban_ozutsu",
+        marker_mode = "fire",
         name = "南蛮大筒",
         max_front = 2, max_back = 1,
         front_move = 2, back_move = 1
@@ -276,8 +302,39 @@ function copyConfig(source)
     return result
 end
 
--- 旧存档缺字段或数据异常时，只修复对应棋子的计数，不阻断面板加载。
-local function normalizeUnitState(guid, config_tag, config)
+local function unitMoraleMaximum(state, config, back)
+    local printed = back and config.max_back or config.max_front
+    return math.max(MIN_VALUE, printed - (config.marker_mode == "formation" and state.open_order and 1 or 0))
+end
+
+local function unitMoraleTooltip(state, config, back)
+    local printed = back and config.max_back or config.max_front
+    local maximum = unitMoraleMaximum(state, config, back)
+    return "基礎士氣上限："..printed.."\n實際士氣上限："..maximum..(maximum < printed and "（散開 −1）" or "")
+end
+
+-- 正面耗尽和换阵越过阈值共用同一转段；前阶段损伤不重复带到背面。
+local function disruptUnit(obj, state, config)
+    state.back_value = unitMoraleMaximum(state, config, true)
+    state.back_threshold_pending = false
+    state.manual_defeat_visible = false
+    if obj.is_face_down then return end
+    local guid, transition = obj.getGUID(), {}
+    unitFlipPending[guid] = transition
+    local ok, failure = pcall(function() obj.flip() end)
+    if not ok then
+        unitFlipPending[guid] = nil
+        print("[部隊] 自动翻面失败，请手动按 F；背面士气已就绪："..tostring(failure))
+    else
+        Wait.time(function()
+            if unitFlipPending[guid] == transition then unitFlipPending[guid] = nil end
+        end,0.5)
+    end
+end
+
+-- 旧存档的散開仅是图片标记；第一次升级扣除一次TQ修正，之后不重复扣。
+local function normalizeUnitState(obj, config_tag, config)
+    local guid = obj.getGUID()
     local state = unit_state[guid]
     -- 新记录从满士气开始；已有记录的 0 值仍照原存档保留。
     if type(state) ~= "table" then state = {front_value=config.max_front,back_value=config.max_back} end
@@ -292,6 +349,22 @@ local function normalizeUnitState(guid, config_tag, config)
     state.acted = state.acted == true
     state.engaged = state.engaged == true
     state.out_of_command = state.out_of_command == true
+    state.open_order = state.open_order == true
+    state.reloading = state.reloading == true
+    state.back_threshold_pending = state.back_threshold_pending == true
+    local before, previousBack = state.front_value, state.back_value
+    if state.formation_tq_version ~= 1 and config.marker_mode == "formation" and state.open_order then
+        state.front_value = math.max(MIN_VALUE,state.front_value-1)
+        state.back_value = math.max(MIN_VALUE,state.back_value-1)
+        -- 手动修改过的未使用背面储备，不应让尚在正面的部队提前敗走。
+        state.back_threshold_pending = previousBack > 0 and state.back_value == 0 and not obj.is_face_down
+        if before > 0 and state.front_value == 0 and not obj.is_face_down
+            and previousBack > 0 and not state.manual_defeat_visible then disruptUnit(obj,state,config) end
+    end
+    state.formation_tq_version = 1
+    state.front_value = bounded(state.front_value,unitMoraleMaximum(state,config,false))
+    state.back_value = bounded(state.back_value,unitMoraleMaximum(state,config,true))
+    if obj.is_face_down or state.back_value > 0 or state.front_value == 0 then state.back_threshold_pending = false end
     state.config_tag = config_tag
     unit_state[guid] = state
     return state
@@ -317,19 +390,18 @@ function setupUnit(obj, config_tag, config)
         end)
         return
     end
-    normalizeUnitState(obj.getGUID(), config_tag, config)
+    normalizeUnitState(obj, config_tag, config)
     createCounter(obj, config)
 end
 
 function getStateAndConfig(obj)
-    local guid = obj.getGUID()
     local config_tag, config = getUnitConfig(obj)
 
     if config == nil then
         return nil, nil
     end
 
-    return normalizeUnitState(guid, config_tag, config), config
+    return normalizeUnitState(obj, config_tag, config), config
 end
 
 -- =========================
@@ -511,7 +583,7 @@ end
 local function unitMoraleBandKey(state, config, back)
     if getDefeatText(state) ~= "" then return nil end
     local value = back and state.back_value or state.front_value
-    local maximum = back and config.max_back or config.max_front
+    local maximum = unitMoraleMaximum(state,config,back)
     if value <= 0 or value >= maximum then return nil end
     return value * 2 <= maximum and "red" or "amber"
 end
@@ -573,6 +645,52 @@ local function syncUnitStatusButtons(obj,geometry,ready)
             for _,back in ipairs({false,true}) do
                 if not seen[kind..tostring(back)] then obj.createButton(unitStatusButtonParameters(geometry,back,kind)) end
             end
+        end
+    end
+end
+
+local UNIT_MODE_PAIRS = {
+    formation = {"closed", "open", field="open_order"},
+    fire = {"ready", "reloading", field="reloading"}
+}
+
+local function unitModePair(config)
+    return UNIT_MODE_PAIRS[config.marker_mode]
+end
+
+local function unitModeURL(key)
+    return unitImageURL(type(UNIT_MODE_IMAGES)=="table" and UNIT_MODE_IMAGES[key] or nil,false)
+end
+
+local function unitModeButtonParameters(geometry,back)
+    local layout=UNIT_MODE_LAYOUT
+    local parameters=unitCounterButtonParameters(geometry,back,layout.y,"toggleUnitMode",true)
+    parameters.position=unitButtonPosition(geometry,back,layout.x,layout.y,0)
+    if not back then parameters.position[2]=geometry.surfaceTop+layout.front_ui_clearance+UNIT_COUNTER_LAYOUT.hit_lift end
+    local units=4*UNIT_COUNTER_LAYOUT.button_units_per_local/UNIT_COUNTER_LAYOUT.canvas
+    parameters.width=math.max(1,math.floor(layout.hit_width*units+.5))
+    parameters.height=math.max(1,math.floor(layout.hit_height*units+.5))
+    return parameters
+end
+
+local function syncUnitModeButtons(obj,geometry,ready)
+    local seen,remove={},{}
+    for index,button in ipairs(obj.getButtons() or {}) do
+        if button.click_function=="toggleUnitMode" then
+            local back=math.abs(unitAxis(button.rotation,"z",3,0))%360>90
+            local key=tostring(back)
+            if ready and not seen[key] then
+                local parameters=unitModeButtonParameters(geometry,back)
+                parameters.index=button.index or (index-1)
+                obj.editButton(parameters); seen[key]=true
+            else remove[#remove+1]=button.index or (index-1) end
+        end
+    end
+    table.sort(remove,function(a,b) return a>b end)
+    for _,index in ipairs(remove) do obj.removeButton(index) end
+    if ready then
+        for _,back in ipairs({false,true}) do
+            if not seen[tostring(back)] then obj.createButton(unitModeButtonParameters(geometry,back)) end
         end
     end
 end
@@ -683,6 +801,8 @@ end
 -- 背面底栏和数值共用同一 Object.UI：子节点顺序决定覆盖顺序，
 -- 不再让多个透明贴花按摄像机距离互相排序。这里只管理 sgub_ 前缀。
 local unitBackUIRecords = {}
+local UNIT_UI_ROOTS = {"sgub_root","sgub_status_front","sgub_status_back","sgub_mode_front","sgub_mode_back"}
+local unitModeImageWarnings = {}
 local function unitBackUIOwned(id)
     return type(id)=="string" and id:sub(1,5)=="sgub_"
 end
@@ -780,7 +900,7 @@ local function clearUnitBackUI(obj)
     local nodes,removed=unitBackUIStrip(currentNodes)
     local assets,removedAssets=unitBackUIAssets(ui)
     if removedAssets then
-        for _,id in ipairs({"sgub_root","sgub_status_front","sgub_status_back"}) do
+        for _,id in ipairs(UNIT_UI_ROOTS) do
             if unitBackUIFind(currentNodes,id) then ui.setAttribute(id,"active","false") end
         end
         record=record or unitBackUIRecord(obj)
@@ -816,6 +936,30 @@ local function syncUnitBackUI(obj,state,config,geometry)
     asset("sgub_action_acted",unitActionURL(true,true))
     for _,kind in ipairs({"amber","red"}) do asset("sgub_band_"..kind,unitMoraleBandURL(kind)) end
     for _,kind in ipairs(UNIT_STATUS_KINDS) do asset("sgub_status_image_"..kind,unitStatusURL(kind)) end
+    local modePair=unitModePair(config)
+    local modeReady=false
+    if modePair then
+        local first,second=unitModeURL(modePair[1]),unitModeURL(modePair[2])
+        if first~="" and second~="" then
+            -- 新图组避免重复 URL 登记，防止 TTS 冷加载回调合并后一直等待。
+            -- 不改变已正常工作的旧资源登记流程；只拒绝有冲突的底部图组。
+            local conflict=first==second
+            for _,entry in ipairs(unitBackUIAssets(ui,assets)) do
+                if entry.url==first or entry.url==second then conflict=true end
+            end
+            if conflict then
+                local warning=first.."\n"..second
+                if not unitModeImageWarnings[warning] then
+                    unitModeImageWarnings[warning]=true
+                    print("[部隊底部圖標] 兩態圖片須使用不同地址，且不能重複其他UI資源；此組暫時隱藏。")
+                end
+            else
+                modeReady=true
+                asset("sgub_mode_image_"..modePair[1],first)
+                asset("sgub_mode_image_"..modePair[2],second)
+            end
+        end
+    end
     local key=table.concat(signature,"\n")
     local layout=UNIT_COUNTER_LAYOUT
     -- 安装版 XmlUIWorldCanvas：局部旋转 +90°X、缩放 .01。
@@ -882,6 +1026,28 @@ local function syncUnitBackUI(obj,state,config,geometry)
             groups[#groups+1]=group
         end
     end
+    if modeReady then
+        local modeLayout=UNIT_MODE_LAYOUT
+        local selected=modePair[state[modePair.field] and 2 or 1]
+        for _,back in ipairs({false,true}) do
+            local side=back and "back" or "front"
+            local id="sgub_mode_"..side.."_image"
+            local plane=back and (geometry.surfaceBottom-layout.back_ui_clearance)
+                or (geometry.surfaceTop+modeLayout.front_ui_clearance)
+            local modeRoot={id="sgub_mode_"..side,width=tostring(modeLayout.width),height=tostring(modeLayout.height),
+                color="#FFFFFF00",rectAlignment="MiddleCenter",raycastTarget="false",tooltip="",visibility="",active="true",
+                rotation=back and "180 0 0" or "0 0 180",
+                position=unitUIVector((geometry.cx+(back and 1 or -1)*(modeLayout.x/1200-.5)*geometry.width)*100,
+                    (geometry.cz+(modeLayout.y/1200-.5)*geometry.depth)*100,-plane*100),
+                scale=unitUIVector(geometry.width*100/1200,geometry.depth*100/1200,1)}
+            desired[id]={id=id,width=tostring(modeLayout.width),height=tostring(modeLayout.height),
+                image="sgub_mode_image_"..selected,active="true",color="#FFFFFFFF",
+                preserveAspect="true",raycastTarget="false",tooltip="",rectAlignment="MiddleCenter",
+                position="0 0 0",rotation="0 0 0",scale="1 1 1"}
+            groups[#groups+1]={root=modeRoot,ids={id}}
+            ids[#ids+1]=id
+        end
+    end
     local currentNodes=ui.getXmlTable() or {}
     local rootsPresent=true
     for _,group in ipairs(groups) do
@@ -905,7 +1071,7 @@ local function syncUnitBackUI(obj,state,config,geometry)
             for _,id in ipairs(ids) do
                 if unitBackUIFind(currentNodes,id) then ui.setAttribute(id,"active","false") end
             end
-            for _,id in ipairs({"sgub_root","sgub_status_front","sgub_status_back"}) do
+            for _,id in ipairs(UNIT_UI_ROOTS) do
                 if unitBackUIFind(currentNodes,id) then ui.setAttribute(id,"active","false") end
             end
             record.mounted,record.attributes=false,{}
@@ -941,7 +1107,7 @@ local function syncUnitBackUI(obj,state,config,geometry)
     end
     for _,id in ipairs(ids) do update(id,desired[id]) end
     for _,group in ipairs(groups) do update(group.root.id,group.root) end -- 图片先绑定，整组最后显示。
-    return true
+    return true,modeReady
 end
 
 local function syncUnitImages(obj, state, config)
@@ -985,7 +1151,7 @@ local function syncUnitImages(obj, state, config)
     end
     -- 同时清除旧版的背面底栏／数字／行动贴花，保留陣旗及第三方贴花。
     reconcileUnitDecals(obj,UNIT_IMAGE_NAMES,UNIT_IMAGE_OWNED,wanted)
-    local uiOK,backReady=pcall(syncUnitBackUI,obj,state,config,geometry)
+    local uiOK,backReady,modeReady=pcall(syncUnitBackUI,obj,state,config,geometry)
     if not uiOK then
         local record=unitBackUIRecord(obj)
         if record.error~=tostring(backReady) then
@@ -994,6 +1160,7 @@ local function syncUnitImages(obj, state, config)
         end
     end
     syncUnitStatusButtons(obj,geometry,uiOK and backReady==true)
+    syncUnitModeButtons(obj,geometry,uiOK and backReady==true and modeReady==true)
     -- API 成功不等于网络图片已下载；无效地址不提交空白贴花。
     return defeatURL ~= "", geometry
 end
@@ -1006,7 +1173,7 @@ function clearUnitCounterVisuals(obj)
     for i, button in ipairs(obj.getButtons() or {}) do
         local callback = button.click_function
         if callback == "changeFrontValue" or callback == "changeBackValue" or callback == "unitDefeatFallback" or callback == "toggleUnitActed"
-            or callback == "toggleUnitEngaged" or callback == "toggleUnitOutOfCommand" then
+            or callback == "toggleUnitEngaged" or callback == "toggleUnitOutOfCommand" or callback == "toggleUnitMode" then
             table.insert(indices,button.index or (i-1))
         end
     end
@@ -1056,10 +1223,12 @@ local function changeUnitMorale(obj, back, alt_click, quick)
     -- 翻面动画中正反面都忽略连点，防止正面耗尽后立刻误清空第二阶段。
     if unitFlipPending[obj.getGUID()] then return end
     local state, config = getStateAndConfig(obj)
-    if not state then return end
+    if not state or unitFlipPending[obj.getGUID()] then return end
     local field = back and "back_value" or "front_value"
-    local maximum = back and config.max_back or config.max_front
+    local maximum = unitMoraleMaximum(state,config,back)
     local before, previousBack, previousDefeat = state[field], state.back_value, state.manual_defeat_visible
+    local previousPending = state.back_threshold_pending
+    if back then state.back_threshold_pending = false end
     if quick then
         state[field] = alt_click and MIN_VALUE or maximum
     else
@@ -1070,7 +1239,10 @@ local function changeUnitMorale(obj, back, alt_click, quick)
             state.manual_defeat_visible = false
             -- 敗走棋子若被手动翻回正面，补满仍须解除由背面 0 触发的敗走。
             -- 仅修复已耗尽的背面储备；另一面尚有士气时保留原值。
-            if state.back_value == 0 then state.back_value = config.max_back end
+            if state.back_value == 0 then
+                state.back_value = unitMoraleMaximum(state,config,true)
+                state.back_threshold_pending = false
+            end
         elseif back and state.back_value > 0 then
             state.manual_defeat_visible = false
         end
@@ -1078,26 +1250,12 @@ local function changeUnitMorale(obj, back, alt_click, quick)
 
     -- 只在本次减值由正数跨到 0 时转段，加载或重复点击 0 不补充背面。
     if not back and alt_click and before > 0 and state.front_value == 0 then
-        state.back_value = config.max_back
-        state.manual_defeat_visible = false
-        if not obj.is_face_down then
-            local guid = obj.getGUID()
-            local transition = {}
-            unitFlipPending[guid] = transition
-            local ok, failure = pcall(function() obj.flip() end)
-            if not ok then
-                unitFlipPending[guid] = nil
-                print("[部隊] 自动翻面失败，请手动按 F；背面士气已就绪："..tostring(failure))
-            else
-                Wait.time(function()
-                    if unitFlipPending[guid] == transition then unitFlipPending[guid] = nil end
-                end,0.5)
-            end
-        end
+        disruptUnit(obj,state,config)
     end
 
     -- 到达上限或下限后继续点击，不重复写贴花和按钮。
-    if state[field]~=before or state.back_value~=previousBack or state.manual_defeat_visible~=previousDefeat then
+    if state[field]~=before or state.back_value~=previousBack or state.manual_defeat_visible~=previousDefeat
+        or state.back_threshold_pending~=previousPending then
         updateDefeatText(obj)
     end
 end
@@ -1136,6 +1294,42 @@ function toggleUnitOutOfCommand(obj,_player_color,alt_click)
     toggleUnitStatus(obj,"out_of_command",alt_click)
 end
 
+-- 射击状态仍是手动标记；近战换阵消耗行动并保留两面各自已受损伤。
+function toggleUnitMode(obj,player_color,alt_click)
+    if alt_click or unitFlipPending[obj.getGUID()] then return end
+    local state,config=getStateAndConfig(obj)
+    if not state or unitFlipPending[obj.getGUID()] then return end
+    local pair=unitModePair(config)
+    if not pair then return end
+    if config.marker_mode == "formation" then
+        local reason
+        if getDefeatText(state) ~= "" then reason="敗走中，不能變陣。"
+        elseif obj.is_face_down or state.front_value == 0 then reason="減弱中，不能變陣。"
+        elseif state.engaged then reason="交戦中，不能變陣。"
+        elseif state.acted then reason="已行動；新命令時先將「済」切回「未」。" end
+        if reason then
+            if type(broadcastToColor)=="function" and player_color then
+                broadcastToColor("[部隊] "..reason,player_color,{1,0.8,0.4})
+            else print("[部隊] "..reason) end
+            return
+        end
+        local frontMax,backMax = unitMoraleMaximum(state,config,false),unitMoraleMaximum(state,config,true)
+        state.open_order = not state.open_order
+        state.front_value = state.front_value + unitMoraleMaximum(state,config,false)-frontMax
+        state.back_value = state.back_value + unitMoraleMaximum(state,config,true)-backMax
+        state.back_threshold_pending = state.back_value == 0
+        state.acted = true
+        if state.front_value <= 0 then
+            state.front_value = MIN_VALUE
+            disruptUnit(obj,state,config)
+        end
+        updateDefeatText(obj)
+        return
+    end
+    state[pair.field]=not state[pair.field]
+    updateDefeatText(obj)
+end
+
 -- =========================
 -- 敗走文字逻辑
 -- =========================
@@ -1152,11 +1346,23 @@ function toggleDefeatText(obj)
 end
 
 function getDefeatText(state)
-    if state.back_value == 0 or state.manual_defeat_visible then
+    if (state.back_value == 0 and not state.back_threshold_pending) or state.manual_defeat_visible then
         return "敗走"
     else
         return ""
     end
+end
+
+-- 仅有待决背面阈值时响应物理翻面；不新增全场扫描。
+function updateUnitFormationFace(obj)
+    local guid = obj.getGUID()
+    if not unit_state[guid] or not unit_state[guid].back_threshold_pending then return end
+    Wait.time(function()
+        local live = getObjectFromGUID(guid)
+        if live and live.is_face_down and unit_state[guid] and unit_state[guid].back_threshold_pending then
+            updateDefeatText(live)
+        end
+    end,0.35)
 end
 
 -- =========================
@@ -1195,6 +1401,7 @@ function updateDefeatText(obj)
             button = unitCounterButtonParameters(geometry,back,UNIT_COUNTER_LAYOUT.morale_y,
                 back and "changeBackValue" or "changeFrontValue",true)
         end
+        button.tooltip = unitMoraleTooltip(state,config,back)
         button.index = index-1
         obj.editButton(button)
     end
@@ -1235,6 +1442,9 @@ function resetUnit(obj)
     state.acted = false
     state.engaged = false
     state.out_of_command = false
+    state.open_order = false
+    state.reloading = false
+    state.back_threshold_pending = false
     unitFlipPending[obj.getGUID()] = nil
 
     updateDefeatText(obj)
@@ -1246,8 +1456,8 @@ end
 
 
 -- ===== 備隊面板 v2 =====
--- 備隊武将面板 v2.15.0：交戦・指揮外手動標記対応
--- 更新日：2026-10-21
+-- 備隊武将面板 v2.17.0：陣形TQ修正・行動連動・士氣上限表示
+-- 更新日：2026-10-23
 -- 画像・生年・統率は各武将令牌の Description に入力可能。
 -- team=ota_honjin / role=main,deputy1,deputy2 / name=太田資正
 -- birth=1522 / command=5 / image=https://... / status=無傷
@@ -2338,6 +2548,7 @@ end
 
 function onObjectRotate(object, spin, flip, player_color, old_spin, old_flip)
     if not object then return end
+    if type(updateUnitFormationFace)=="function" then updateUnitFormationFace(object) end
     local teamId = identifyToken(object)
     if teamId then
         -- 等翻面动画推进后读取正反面；定时检查也会捕捉物理翻转。
@@ -2346,6 +2557,7 @@ function onObjectRotate(object, spin, flip, player_color, old_spin, old_flip)
 end
 
 function onObjectDrop(player_color, object)
+    if object and type(updateUnitFormationFace)=="function" then updateUnitFormationFace(object) end
     if object then registerObject(object, true) end
     requestPanelRender()
 end

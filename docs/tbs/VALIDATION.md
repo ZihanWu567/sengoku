@@ -1,6 +1,6 @@
 # 导入验证记录
 
-本页保留v2.14.11初始导入的验证证据。当前v2.15.0功能验证见 [STATUS_MARKERS.md](STATUS_MARKERS.md)：Global3506项＋独立面板1168项，共4674项。
+本页保留v2.14.11初始导入的验证证据。当前v2.17.0功能验证见 [UNIT_MODES.md](UNIT_MODES.md)。v2.15.0记录见 [STATUS_MARKERS.md](STATUS_MARKERS.md)。
 
 日期：2026-10-21。代码：v2.14.11。基线main：`8c7aaa731f124eb693a23800402a65033806975f`。
 

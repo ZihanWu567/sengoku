@@ -1,5 +1,5 @@
--- 備隊武将面板 v2.15.0：交戦・指揮外手動標記対応
--- 更新日：2026-10-21
+-- 備隊武将面板 v2.17.0：陣形TQ修正・行動連動・士氣上限表示
+-- 更新日：2026-10-23
 -- 画像・生年・統率は各武将令牌の Description に入力可能。
 -- team=ota_honjin / role=main,deputy1,deputy2 / name=太田資正
 -- birth=1522 / command=5 / image=https://... / status=無傷
@@ -1090,6 +1090,7 @@ end
 
 function onObjectRotate(object, spin, flip, player_color, old_spin, old_flip)
     if not object then return end
+    if type(updateUnitFormationFace)=="function" then updateUnitFormationFace(object) end
     local teamId = identifyToken(object)
     if teamId then
         -- 等翻面动画推进后读取正反面；定时检查也会捕捉物理翻转。
@@ -1098,6 +1099,7 @@ function onObjectRotate(object, spin, flip, player_color, old_spin, old_flip)
 end
 
 function onObjectDrop(player_color, object)
+    if object and type(updateUnitFormationFace)=="function" then updateUnitFormationFace(object) end
     if object then registerObject(object, true) end
     requestPanelRender()
 end
