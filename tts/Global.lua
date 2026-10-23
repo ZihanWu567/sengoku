@@ -61,10 +61,10 @@ UNIT_STATUS_IMAGES = {
     out_of_command = "https://steamusercontent-a.akamaihd.net/ugc/11196356357107166222/939374A167DBCDD7CA034F3E28D1593926D50C8E/"
 }
 UNIT_STATUS_LAYOUT = {
-    engaged_x = 70, out_of_command_x = 930, y = 100,
-    size = 100, hit_size = 120, -- 1200 棋面：标题两端留出 X10～130、870～990。
+    engaged_x = 77, out_of_command_x = 935, y = 110, -- 用户实测校准（2026-10-23）。
+    size = 100, hit_size = 120, -- 1200 棋面：点击范围 X17～137、875～995，Y50～170。
     front_ui_clearance = 0.001, -- 新图标为 UI，不沿用正面投影贴花的负 GAP。
-    active_color = "#FFFFFFFF", inactive_color = "#FFFFFF50"
+    active_color = "#FFFFFFFF", inactive_color = "#FFFFFF20"
 }
 
 -- 底部同一位置：近战切换密集／散開，远程切换射撃準備／装填中。

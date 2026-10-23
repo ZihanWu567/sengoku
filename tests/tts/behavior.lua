@@ -1977,7 +1977,7 @@ local function runUnitStatusChecks()
             eq(node.tag,"Image",message.." "..side.." image node")
             eq(node.attributes.active,"true",message.." "..side.." remains visible")
             eq(node.attributes.image,"sgub_status_image_"..kind,message.." "..side.." preloaded sprite binding")
-            eq(node.attributes.color,enabled and "#FFFFFFFF" or "#FFFFFF50",message.." "..side.." visual state")
+            eq(node.attributes.color,enabled and "#FFFFFFFF" or "#FFFFFF20",message.." "..side.." visual state")
             eq(node.attributes.raycastTarget,"false",message.." "..side.." image does not intercept clicks")
             eq(#statusButtons(obj,kind,side=="back"),1,message.." "..side.." one click target")
         end
@@ -2048,14 +2048,14 @@ local function runUnitStatusChecks()
             assert(root,"Missing status header "..side)
             eq(root.attributes.rotation,back and "180 0 0" or "0 0 180",message.." "..side.." faces outward")
             local rp,rs=vector(root.attributes.position),vector(root.attributes.scale)
-            for kind,x in pairs({engaged=70,out_of_command=930}) do
+            for kind,x in pairs({engaged=77,out_of_command=935}) do
                 local node=statusNode(obj,side,kind)
                 local child=vector(node.attributes.position)
                 local localX=rp[1]/100+(back and 1 or -1)*child[1]*rs[1]/100
                 local localY=-rp[3]/100
                 local localZ=rp[2]/100-child[2]*rs[2]/100
                 near(localX,cx+(back and 1 or -1)*(x/1200-.5)*width,message.." "..side.." "..kind.." screen X")
-                near(localZ,cz+(100/1200-.5)*depth,message.." "..side.." "..kind.." top row")
+                near(localZ,cz+(110/1200-.5)*depth,message.." "..side.." "..kind.." top row")
                 near(child[3],0,message.." "..side.." "..kind.." shares header plane")
                 near(tonumber(node.attributes.width)*rs[1]/100,100/1200*width,message.." "..side.." "..kind.." rendered width")
                 near(tonumber(node.attributes.height)*rs[2]/100,100/1200*depth,message.." "..side.." "..kind.." rendered height")
