@@ -1,4 +1,4 @@
--- 備隊武将面板 v2.17.0：陣形TQ修正・行動連動・士氣上限表示
+-- 備隊武将面板 v2.18.0：敗走大圖・武將疊放避讓
 -- 更新日：2026-10-23
 -- 画像・生年・統率は各武将令牌の Description に入力可能。
 -- team=ota_honjin / role=main,deputy1,deputy2 / name=太田資正
@@ -907,6 +907,7 @@ local function renderMapEffects()
     end
     highlighted = wanted
     sgMapUpdate(snapshot, playerViews)
+    if type(setUnitRoutSnapshot)=="function" then setUnitRoutSnapshot(snapshot) end
 end
 
 renderAllViews = function()
@@ -1046,6 +1047,7 @@ function initTeamPanel()
     refreshTimer = Wait.time(function()
         retryBackStamps()
         renderAllViews()
+        if type(refreshUnitRoutOverlays)=="function" then refreshUnitRoutOverlays() end
     end, 0.75, -1)
 end
 

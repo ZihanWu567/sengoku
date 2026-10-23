@@ -1,11 +1,11 @@
 {
   "source": "tts/Global.lua + tts/modules/commanders.lua",
-  "version": "v2.17.0",
+  "version": "v2.18.0",
   "snapshot_date": "2026-10-23",
   "runtime_loads_this_json": false,
-  "UNIT_DEFEAT_IMAGE_URL": "https://steamusercontent-a.akamaihd.net/ugc/12074515027345295373/48175076490FD0943949738C762DC72B744FB89A/",
+  "UNIT_DEFEAT_IMAGE_URL": "https://steamusercontent-a.akamaihd.net/ugc/17888454137110814569/47DFB8A61C7882C595C5F3F4C7AC1618A57C695B/",
   "UNIT_BACK_RAIL_IMAGE_URL": "https://steamusercontent-a.akamaihd.net/ugc/15004901137672824316/2126C232CB43C3C6599CF00E8AB37C00A1DF027A/",
-  "UNIT_DEFEAT_IMAGE_ASPECT": 1.0,
+  "UNIT_DEFEAT_IMAGE_ASPECT": 1.5,
   "UNIT_DEFEAT_FRONT_GAP": -0.01,
   "UNIT_DEFEAT_BACK_GAP": -0.099,
   "UNIT_SURFACE_CLEARANCE": 0.001,
@@ -51,5 +51,14 @@
     "open": "https://steamusercontent-a.akamaihd.net/ugc/11025487001876169960/A2E57E3E6BE1CC1A9388C1F6965B78A632FF6156/",
     "ready": "",
     "reloading": ""
+  },
+  "UNIT_ROUT_LAYOUT": {
+    "x": 500,
+    "y": 700,
+    "width": 600,
+    "max_height": 500,
+    "surface_clearance": 0.01,
+    "commander_clearance": 0.02,
+    "contact_tolerance": 0.08
   }
 }
