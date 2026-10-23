@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "version": "v1",
-  "scope": "engaged, out_of_command, formation_close, formation_open and routed",
+  "scope": "engaged, out_of_command, formation_close, formation_open, routed, fire_ready and fire_loading",
   "draft": true,
   "baseline": {
     "branch": "main",
@@ -583,23 +583,243 @@
         "usage": "Preferred runtime texture for the candidate 600x400 display size. Upload and configure the hosted texture on the code side; runtime placement and rendering are unverified. The 600x400 PNG is a convenience export."
       },
       "previews": []
+    },
+    {
+      "id": "fire_ready",
+      "label_ja": "射撃可",
+      "status": "draft",
+      "description": "Pale ivory matte aged-paper horizontal plaque with a dark-brown border and one horizontal Japanese tanegashima matchlock musket: a dark wooden stock, dark metal barrel and muted brass fittings. No hand, lettering, flame or smoke. Transparent outside the plaque. Revision 22 adds the fire_ready and fire_loading pair; both share the same canvas, exterior alpha boundary and visual style.",
+      "path": "fire_ready.png",
+      "pixel_size": {
+        "width": 512,
+        "height": 256
+      },
+      "alpha": "straight RGBA; solid matte ivory plaque, transparent outside a regular rounded boundary with narrow antialiasing",
+      "content_bbox_px": {
+        "x": 6,
+        "y": 18,
+        "width": 501,
+        "height": 220
+      },
+      "transparent_padding_px": {
+        "left": 6,
+        "top": 18,
+        "right": 5,
+        "bottom": 18
+      },
+      "alpha_bbox_threshold": 0,
+      "content_bbox_at_alpha_128_px": {
+        "x": 6,
+        "y": 18,
+        "width": 500,
+        "height": 220
+      },
+      "sha256": "0ab2d746023b0ae4e008bf5ad204c4b005532302c673f9f4c9d8a3bebc521f0c",
+      "source_export": {
+        "path": "源图/fire_ready-1024x512.png",
+        "pixel_size": {
+          "width": 1024,
+          "height": 512
+        },
+        "alpha": "straight RGBA; solid matte ivory plaque, transparent outside a regular rounded boundary with narrow antialiasing",
+        "content_bbox_px": {
+          "x": 12,
+          "y": 37,
+          "width": 1001,
+          "height": 439
+        },
+        "transparent_padding_px": {
+          "left": 12,
+          "top": 37,
+          "right": 11,
+          "bottom": 36
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 12,
+          "y": 37,
+          "width": 1000,
+          "height": 438
+        },
+        "sha256": "552777dfb118834dfebb4ba92ed1bb838dac9ffe24d0730b4175a6c4dda48fb8"
+      },
+      "display_export": {
+        "path": "fire_ready-240x120.png",
+        "pixel_size": {
+          "width": 240,
+          "height": 120
+        },
+        "alpha": "straight RGBA; solid matte ivory plaque, transparent outside a regular rounded boundary with narrow antialiasing",
+        "content_bbox_px": {
+          "x": 2,
+          "y": 8,
+          "width": 236,
+          "height": 104
+        },
+        "transparent_padding_px": {
+          "left": 2,
+          "top": 8,
+          "right": 2,
+          "bottom": 8
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 3,
+          "y": 9,
+          "width": 234,
+          "height": 102
+        },
+        "sha256": "6ba7868333e3ef4aef78e09435761ff5302d001ada61fb0dc681f81067f7e16e"
+      },
+      "cloud_url": "",
+      "recommended_display": {
+        "reference_board_px": {
+          "width": 1200,
+          "height": 1200
+        },
+        "width_px": 240,
+        "height_px": 120,
+        "placement": "Shared shooting-status slot, mutually exclusive with fire_loading. Display the full PNG canvas at 240x120; position remains to be determined and no coordinates are assigned here.",
+        "validation_scope": "No board preview or TTS runtime validation has been performed. The code side must confirm placement, front/back rendering and overlap handling using the agreed rules.",
+        "shared_position_group": "fire",
+        "mutually_exclusive_with": "fire_loading"
+      },
+      "recommended_runtime_texture": {
+        "path": "fire_ready.png",
+        "pixel_size": {
+          "width": 512,
+          "height": 256
+        },
+        "usage": "Preferred runtime texture for the 240x120 display size. The 240x120 PNG is a convenience export. Upload and configure the hosted texture and refresh cached assets on the code side; runtime placement and rendering are unverified."
+      },
+      "previews": []
+    },
+    {
+      "id": "fire_loading",
+      "label_ja": "装填中",
+      "status": "draft",
+      "description": "Pale ivory matte aged-paper horizontal plaque with a dark-brown border and a raised Japanese tanegashima matchlock musket. A clearly lighter wooden ramrod is visibly inserted into the muzzle along the barrel axis. The approved depiction has no hand, smoke, flame or lettering. This weapon is illustrated separately from fire_ready; the pair shares the same canvas, exterior alpha boundary and visual style.",
+      "path": "fire_loading.png",
+      "pixel_size": {
+        "width": 512,
+        "height": 256
+      },
+      "alpha": "straight RGBA; solid matte ivory plaque, transparent outside a regular rounded boundary with narrow antialiasing",
+      "content_bbox_px": {
+        "x": 6,
+        "y": 18,
+        "width": 501,
+        "height": 220
+      },
+      "transparent_padding_px": {
+        "left": 6,
+        "top": 18,
+        "right": 5,
+        "bottom": 18
+      },
+      "alpha_bbox_threshold": 0,
+      "content_bbox_at_alpha_128_px": {
+        "x": 6,
+        "y": 18,
+        "width": 500,
+        "height": 220
+      },
+      "sha256": "209549fc637ec46ebff1cd6cbe26b31394bccf71927b3b702a7b56937e60df73",
+      "source_export": {
+        "path": "源图/fire_loading-1024x512.png",
+        "pixel_size": {
+          "width": 1024,
+          "height": 512
+        },
+        "alpha": "straight RGBA; solid matte ivory plaque, transparent outside a regular rounded boundary with narrow antialiasing",
+        "content_bbox_px": {
+          "x": 12,
+          "y": 37,
+          "width": 1001,
+          "height": 439
+        },
+        "transparent_padding_px": {
+          "left": 12,
+          "top": 37,
+          "right": 11,
+          "bottom": 36
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 12,
+          "y": 37,
+          "width": 1000,
+          "height": 438
+        },
+        "sha256": "0acbab286707f2cbccf0ecf50e9bfda57404ced78115c1fb49087636ec47b824"
+      },
+      "display_export": {
+        "path": "fire_loading-240x120.png",
+        "pixel_size": {
+          "width": 240,
+          "height": 120
+        },
+        "alpha": "straight RGBA; solid matte ivory plaque, transparent outside a regular rounded boundary with narrow antialiasing",
+        "content_bbox_px": {
+          "x": 2,
+          "y": 8,
+          "width": 236,
+          "height": 104
+        },
+        "transparent_padding_px": {
+          "left": 2,
+          "top": 8,
+          "right": 2,
+          "bottom": 8
+        },
+        "alpha_bbox_threshold": 0,
+        "content_bbox_at_alpha_128_px": {
+          "x": 3,
+          "y": 9,
+          "width": 234,
+          "height": 102
+        },
+        "sha256": "baee098ec001af1e2b763ea2e6ef72b206df35b489baad6036bdd29a5da437e7"
+      },
+      "cloud_url": "",
+      "recommended_display": {
+        "reference_board_px": {
+          "width": 1200,
+          "height": 1200
+        },
+        "width_px": 240,
+        "height_px": 120,
+        "placement": "Shared shooting-status slot, mutually exclusive with fire_ready. Display the full PNG canvas at 240x120; position remains to be determined and no coordinates are assigned here.",
+        "validation_scope": "No board preview or TTS runtime validation has been performed. The code side must confirm placement, front/back rendering and overlap handling using the agreed rules.",
+        "shared_position_group": "fire",
+        "mutually_exclusive_with": "fire_ready"
+      },
+      "recommended_runtime_texture": {
+        "path": "fire_loading.png",
+        "pixel_size": {
+          "width": 512,
+          "height": 256
+        },
+        "usage": "Preferred runtime texture for the 240x120 display size. The 240x120 PNG is a convenience export. Upload and configure the hosted texture and refresh cached assets on the code side; runtime placement and rendering are unverified."
+      },
+      "previews": []
     }
   ],
-  "not_yet_produced": [
-    "fire_ready",
-    "fire_loading"
-  ],
-  "overview": "routed.png",
+  "not_yet_produced": [],
+  "overview": "fire_ready.png",
   "additional_previews": [],
-  "runtime_integration": "Artwork handoff only. Existing circular badges and formation plaques retain their sizes and placements. routed.png (1200x800) is the preferred new texture; 600x400 is a candidate display size with no assigned position. Hosted URL setup and commander-overlap handling belong to the code side; TTS runtime rendering is unverified.",
+  "runtime_integration": "Artwork handoff only. Revision 22 adds fire_ready.png and fire_loading.png (512x256 preferred runtime textures), displayed using the full canvas at 240x120 in one mutually exclusive shooting-status slot with no assigned coordinates. fire_loading uses the approved no-hand depiction with a lighter wooden ramrod visibly inserted into the muzzle of a raised Japanese matchlock. The existing five asset entries, PNGs, display sizes and placement guidance are unchanged, including the candidate routed size and unresolved position. Hosted URLs, cache refresh, agreed state behavior, placement and overlap handling belong to the code side; TTS runtime rendering is unverified.",
   "notes": [
+    "Revision 22 adds fire_ready and fire_loading as matte ivory plaques with dark-brown borders. fire_ready shows a horizontal Japanese tanegashima; fire_loading shows a raised Japanese tanegashima with a lighter wooden ramrod visibly inserted into the muzzle and no hand. The pair shares canvas dimensions, outer alpha boundaries and visual style; the weapons were separately illustrated. The original five asset objects and their fifteen PNGs are unchanged.",
+    "fire_ready.png and fire_loading.png are the preferred 512x256 runtime textures; the corresponding -240x120.png files are display-size convenience exports; both sources are 1024x512. Use the full canvases at 240x120 without trimming transparent padding. The pair shares one mutually exclusive shooting-status slot; no placement coordinates, new state triggers or reset rules are assigned.",
+    "All six shooting-status exports were measured for RGBA mode, pixel dimensions, alpha>0 and alpha>=128 bounds, transparent padding and SHA-256. The corresponding alpha channels of the pair are pixel-identical at all three sizes. No new preview or overview image was generated; overview points to standalone fire_ready.png. TTS runtime, front/back rendering, distance, angle and overlap remain unverified.",
     "Revision 21 repairs every interior routed cloth slit and puncture. Only perimeter tears, missing corners and restrained white fraying remain. Natural folds, the soft palisade background, single fallen white banner and frame are retained. The other four asset entries and their PNGs are unchanged; all display-size and placement guidance is unchanged.",
     "routed.png is 1200x800, routed-600x400.png is the display-size export, and the source is 1536x1024. Candidate display size is 600x400 on a 1200x1200 board; no coordinates or automatic elevation logic are assigned. The rounded alpha outline removes outside background remnants; Box area downsampling retains a narrow antialiased edge.",
-    "No new preview or overview image was generated. overview points to the standalone routed.png. Commander overlap, front/back rendering, distance and oblique-angle readability require code-side and TTS validation; the artwork alone does not prevent occlusion.",
+    "Revision 21 generated no new preview or overview image; its overview reference pointed to standalone routed.png. Commander overlap, front/back rendering, distance and oblique-angle readability still require code-side and TTS validation; the artwork alone does not prevent occlusion.",
     "Revision 12 changes only out_of_command: an ivory-white diagonal slash with a dark-brown outline replaces the black slash with a pale outline. The charcoal gunbai, dark vermilion background, matte finish, clean outer ring, 100x100 display size and placement are retained. The other three icons and their asset entries remain unchanged.",
     "Revision 11 makes both formation plaques taller and increases the vertical row spacing in formation_open. The six same-scale markers, 2:1 canvases and existing mutually exclusive 240x120 candidate placement are retained. Box area downsampling and matching regular alpha boundaries retain narrow antialiasing.",
     "Use engaged.png and out_of_command.png (512x512) as the preferred circular runtime textures at 100x100 UI size, and formation_close.png and formation_open.png (512x256) at 240x120. Existing placement is unchanged. The display-size files are convenience exports. Upload/replacement of hosted Steam URLs and cache refresh belong to code-side integration; no TTS runtime validation has been performed.",
-    "All earlier engaged, out_of_command and combined previews are historical and do not represent revision 21. No new preview or overview was produced; overview points to standalone routed.png.",
+    "All earlier engaged, out_of_command and combined previews are historical and do not represent the current artwork. No new preview or overview was produced; overview points to standalone fire_ready.png.",
     "Both circular badges retain the revision 10 edge cleanup: matching regular circular alpha boundaries, dark outer lines and matte pale-gold bands. Revision 12 gives the charcoal gunbai an ivory-white slash with a dark-brown outline. Same-size alpha channels are pixel-identical. Box area downsampling retains narrow antialiasing.",
     "At 240x120, both formation plaques have alpha>0 bounds (2,8)-(238,112), 104px high; their alpha>=128 visible height is 102px, increased from 88px in revision 9. Same-size alpha channels match pixel-for-pixel.",
     "Formation marker check: each 512x256 PNG contains six comparable-scale markers; the vertical separation of row centers is approximately 70px in formation_close and 89px in formation_open.",
@@ -612,7 +832,7 @@
     "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
     "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 21,
+  "revision": 22,
   "additional_overviews": [],
   "combined_previews": [],
   "previous_revision_previews": [
@@ -622,7 +842,7 @@
         "out_of_command"
       ],
       "represents_current_artwork": false,
-      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not represent the current revision 21 artwork.",
+      "note": "Historical revision 5 out_of_command and combined previews. Files are retained unchanged and do not represent the current artwork.",
       "overview": "out_of_command_总览.jpg",
       "out_of_command_previews": [
         {
@@ -730,7 +950,7 @@
         "engaged"
       ],
       "represents_current_artwork": false,
-      "note": "Pre-revision-10 engaged previews, overview and detail images retained unchanged; they show the earlier circular edge and do not represent the current revision 21 artwork.",
+      "note": "Pre-revision-10 engaged previews, overview and detail images retained unchanged; they show the earlier circular edge and do not represent the current artwork.",
       "engaged_previews": [
         {
           "path": "预览/engaged_武田红_1200.png",
