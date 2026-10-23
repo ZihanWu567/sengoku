@@ -698,7 +698,7 @@
       "id": "fire_loading",
       "label_ja": "装填中",
       "status": "draft",
-      "description": "Pale ivory matte aged-paper horizontal plaque with a dark-brown border and a raised Japanese tanegashima matchlock musket. A clearly lighter wooden ramrod is visibly inserted into the muzzle along the barrel axis. The approved depiction has no hand, smoke, flame or lettering. This weapon is illustrated separately from fire_ready; the pair shares the same canvas, exterior alpha boundary and visual style.",
+      "description": "Pale ivory matte aged-paper horizontal plaque with a dark-brown border. Revision 23 enlarges the Japanese tanegashima muzzle and light wooden ramrod into a close-up, cropping the stock and breech out of the frame. The ramrod is visibly inserted along the barrel axis. One dominant ivory diagonal slash with a deep-brown outline descends opposite the rising barrel to distinguish loading/unavailable to fire; the muzzle-ramrod junction remains uncovered. No hand, smoke, flame or lettering. The canvas, exterior alpha boundary and matte visual style match the unchanged fire_ready icon.",
       "path": "fire_loading.png",
       "pixel_size": {
         "width": 512,
@@ -724,7 +724,7 @@
         "width": 500,
         "height": 220
       },
-      "sha256": "209549fc637ec46ebff1cd6cbe26b31394bccf71927b3b702a7b56937e60df73",
+      "sha256": "1e5e0b878d339c6493b138777eb7853a478e13edf3336e89fad74d42562f027f",
       "source_export": {
         "path": "源图/fire_loading-1024x512.png",
         "pixel_size": {
@@ -751,7 +751,7 @@
           "width": 1000,
           "height": 438
         },
-        "sha256": "0acbab286707f2cbccf0ecf50e9bfda57404ced78115c1fb49087636ec47b824"
+        "sha256": "037a533cc1936c4551b9306f8ca4a99e5d0a78ea80fd90145998d186962423c7"
       },
       "display_export": {
         "path": "fire_loading-240x120.png",
@@ -779,7 +779,7 @@
           "width": 234,
           "height": 102
         },
-        "sha256": "baee098ec001af1e2b763ea2e6ef72b206df35b489baad6036bdd29a5da437e7"
+        "sha256": "62a420dc964b63b32b8b7fbe3bde259560d3bbeaf3140007e2045cf38d551ed0"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -808,11 +808,12 @@
   "not_yet_produced": [],
   "overview": "fire_ready.png",
   "additional_previews": [],
-  "runtime_integration": "Artwork handoff only. Revision 22 adds fire_ready.png and fire_loading.png (512x256 preferred runtime textures), displayed using the full canvas at 240x120 in one mutually exclusive shooting-status slot with no assigned coordinates. fire_loading uses the approved no-hand depiction with a lighter wooden ramrod visibly inserted into the muzzle of a raised Japanese matchlock. The existing five asset entries, PNGs, display sizes and placement guidance are unchanged, including the candidate routed size and unresolved position. Hosted URLs, cache refresh, agreed state behavior, placement and overlap handling belong to the code side; TTS runtime rendering is unverified.",
+  "runtime_integration": "Artwork handoff only. Revision 23 replaces only the three fire_loading exports with an enlarged muzzle-and-ramrod close-up plus one dominant ivory diagonal slash with a deep-brown outline, marking loading/unavailable to fire; no hand is shown and the insertion junction is unobscured. fire_loading.png remains the preferred 512x256 runtime texture. The unchanged fire_ready icon remains a horizontal complete matchlock. Both display using the full canvas at 240x120 in one mutually exclusive shooting-status slot with no assigned coordinates. The other six asset entries and eighteen PNGs, all display sizes and placement guidance are unchanged, including the candidate routed size and unresolved position. Hosted URLs, cache refresh, agreed state behavior, placement and overlap handling belong to the code side; TTS runtime rendering is unverified.",
   "notes": [
-    "Revision 22 adds fire_ready and fire_loading as matte ivory plaques with dark-brown borders. fire_ready shows a horizontal Japanese tanegashima; fire_loading shows a raised Japanese tanegashima with a lighter wooden ramrod visibly inserted into the muzzle and no hand. The pair shares canvas dimensions, outer alpha boundaries and visual style; the weapons were separately illustrated. The original five asset objects and their fifteen PNGs are unchanged.",
+    "Revision 23 changes only fire_loading: an enlarged muzzle-and-light-wooden-ramrod close-up crops out the stock and breech, and one prominent ivory slash with a deep-brown outline descends opposite the barrel to make loading/unavailable to fire distinct. The muzzle-ramrod junction remains uncovered; there is no hand. Matte ivory plaque styling, all canvas dimensions and exterior alpha boundaries are retained. The other six asset objects and their eighteen PNGs are unchanged.",
     "fire_ready.png and fire_loading.png are the preferred 512x256 runtime textures; the corresponding -240x120.png files are display-size convenience exports; both sources are 1024x512. Use the full canvases at 240x120 without trimming transparent padding. The pair shares one mutually exclusive shooting-status slot; no placement coordinates, new state triggers or reset rules are assigned.",
-    "All six shooting-status exports were measured for RGBA mode, pixel dimensions, alpha>0 and alpha>=128 bounds, transparent padding and SHA-256. The corresponding alpha channels of the pair are pixel-identical at all three sizes. No new preview or overview image was generated; overview points to standalone fire_ready.png. TTS runtime, front/back rendering, distance, angle and overlap remain unverified.",
+    "Revision 23 remeasured the three fire_loading exports for RGBA mode, pixel dimensions, alpha>0 and alpha>=128 bounds, transparent padding and SHA-256. The corresponding alpha channels match the unchanged fire_ready exports pixel-for-pixel at all three sizes. The other six asset objects and their eighteen PNG bytes match the pre-revision-23 HEAD. No new preview or overview image was generated; overview points to standalone fire_ready.png. TTS runtime, front/back rendering, distance, angle and overlap remain unverified.",
+    "Historical revision 22 introduced fire_ready and fire_loading as matte ivory plaques with dark-brown borders. fire_ready showed a horizontal complete Japanese tanegashima; the original fire_loading showed a raised complete musket with a lighter wooden ramrod inserted into the muzzle and no hand. Revision 23 supersedes that loading composition; fire_ready remains unchanged.",
     "Revision 21 repairs every interior routed cloth slit and puncture. Only perimeter tears, missing corners and restrained white fraying remain. Natural folds, the soft palisade background, single fallen white banner and frame are retained. The other four asset entries and their PNGs are unchanged; all display-size and placement guidance is unchanged.",
     "routed.png is 1200x800, routed-600x400.png is the display-size export, and the source is 1536x1024. Candidate display size is 600x400 on a 1200x1200 board; no coordinates or automatic elevation logic are assigned. The rounded alpha outline removes outside background remnants; Box area downsampling retains a narrow antialiased edge.",
     "Revision 21 generated no new preview or overview image; its overview reference pointed to standalone routed.png. Commander overlap, front/back rendering, distance and oblique-angle readability still require code-side and TTS validation; the artwork alone does not prevent occlusion.",
@@ -832,7 +833,7 @@
     "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
     "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 22,
+  "revision": 23,
   "additional_overviews": [],
   "combined_previews": [],
   "previous_revision_previews": [
