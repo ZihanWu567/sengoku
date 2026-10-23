@@ -15,54 +15,54 @@
       "id": "engaged",
       "label_ja": "交戦",
       "status": "draft",
-      "description": "Dark vermilion solid circular badge with broad ivory crossed Japanese katana. Revision 10 replaces the irregular outer edge with a clean, thicker regular ring: a dark outer line and a matte pale-gold band. Original pixels within radius 465px of the 1024px source center and all ivory blade and handle pixels remain unchanged. Transparent outer speckles are removed while narrow antialiasing is retained.",
+      "description": "Revision 24 replaces the dark-vermilion circular badge with two tall crossed Japanese katana on a transparent 5:8 canvas. Ivory blades and guard accents, dark-brown outlines and dark handles retain the crossed-sword motif. There is no red fill, enclosing badge or decorative frame. The artwork is scaled proportionally and centered with transparent padding.",
       "path": "engaged.png",
       "pixel_size": {
-        "width": 512,
+        "width": 320,
         "height": 512
       },
-      "alpha": "straight RGBA; solid badge, transparent outside a regular circular edge with narrow antialiasing",
+      "alpha": "straight RGBA; transparent around and between the motifs, with antialiased motif edges; no filled badge background or decorative frame",
       "content_bbox_px": {
-        "x": 7,
-        "y": 7,
-        "width": 498,
-        "height": 498
+        "x": 8,
+        "y": 13,
+        "width": 304,
+        "height": 485
       },
       "transparent_padding_px": {
-        "left": 7,
-        "top": 7,
-        "right": 7,
-        "bottom": 7
+        "left": 8,
+        "top": 13,
+        "right": 8,
+        "bottom": 14
       },
       "alpha_bbox_threshold": 0,
-      "sha256": "1533e562950b5124455dc66108114555978f98d35f4928b46872734d138f32e1",
+      "sha256": "d71816f6b06144c7dc293e754c3bba5f31640edeeb114c9dca5c9d0d893ff48d",
       "source_export": {
-        "path": "源图/engaged-1024.png",
+        "path": "源图/engaged-640x1024.png",
         "pixel_size": {
-          "width": 1024,
+          "width": 640,
           "height": 1024
         },
-        "alpha": "straight RGBA; solid badge, transparent outside a regular circular edge with narrow antialiasing",
+        "alpha": "straight RGBA; transparent around and between the motifs, with antialiased motif edges; no filled badge background or decorative frame",
         "content_bbox_px": {
-          "x": 15,
-          "y": 15,
-          "width": 994,
-          "height": 994
+          "x": 16,
+          "y": 27,
+          "width": 608,
+          "height": 969
         },
         "transparent_padding_px": {
-          "left": 15,
-          "top": 15,
-          "right": 15,
-          "bottom": 15
+          "left": 16,
+          "top": 27,
+          "right": 16,
+          "bottom": 28
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
           "x": 16,
-          "y": 16,
-          "width": 992,
-          "height": 992
+          "y": 28,
+          "width": 607,
+          "height": 967
         },
-        "sha256": "cc064783d5281ae05cb1a1312fa815ca99bd832192827d820d5c33cb94f83a25"
+        "sha256": "04b147dcf80e2e499237dd954e0014d713eab6a22c43f69db6b9ec568fd8322d"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -72,10 +72,10 @@
         },
         "coordinate_system": "pixels, top-left origin; x right, y down",
         "width_px": 100,
-        "height_px": 100,
+        "height_px": 160,
         "top_left_px": {
           "x": 20,
-          "y": 56
+          "y": 26
         },
         "center_px": {
           "x": 70,
@@ -84,138 +84,141 @@
         "placement": "left side of the existing title bar",
         "title_canvas_gap_min_px": 8,
         "left_frame_canvas_gap_px": 6,
-        "requires_title_change": false
+        "requires_title_change": false,
+        "top_frame_canvas_gap_px": 12,
+        "bottom_frame_canvas_gap_px": 12,
+        "validation_scope": "Full-canvas geometry checked against the existing title-bar interior and saved alpha bounds plus placement metadata for all 12 troop titles. No title change is required. TTS runtime rendering, distance, angle and operation-area overlap are unverified."
       },
       "previews": [],
       "content_bbox_at_alpha_128_px": {
         "x": 8,
-        "y": 8,
-        "width": 496,
-        "height": 496
+        "y": 14,
+        "width": 304,
+        "height": 483
       },
       "display_export": {
-        "path": "engaged-100.png",
+        "path": "engaged-100x160.png",
         "pixel_size": {
           "width": 100,
-          "height": 100
+          "height": 160
         },
-        "alpha": "straight RGBA; solid badge, transparent outside a regular circular edge with narrow antialiasing",
+        "alpha": "straight RGBA; transparent around and between the motifs, with antialiased motif edges; no filled badge background or decorative frame",
         "content_bbox_px": {
-          "x": 1,
-          "y": 1,
-          "width": 98,
-          "height": 98
+          "x": 2,
+          "y": 4,
+          "width": 96,
+          "height": 152
         },
         "transparent_padding_px": {
-          "left": 1,
-          "top": 1,
-          "right": 1,
-          "bottom": 1
+          "left": 2,
+          "top": 4,
+          "right": 2,
+          "bottom": 4
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 2,
-          "y": 2,
-          "width": 96,
-          "height": 96
+          "x": 3,
+          "y": 5,
+          "width": 94,
+          "height": 150
         },
-        "sha256": "f74173d179f3be0b9af1f06f593901eeefb1956ad8e58b6e8eb94acfba93f207"
+        "sha256": "3ba94c04fc148dac759ddd78b490e11dc2a876234a20b6654959221127c9cc2a"
       },
       "recommended_runtime_texture": {
         "path": "engaged.png",
         "pixel_size": {
-          "width": 512,
+          "width": 320,
           "height": 512
         },
-        "usage": "Preferred runtime texture; display the full PNG canvas at 100x100 UI size. The 100px export is a convenience export, not the preferred texture. Upload/replace the hosted Steam URL and refresh cached assets on the code side; no TTS runtime rendering has been verified."
+        "usage": "Preferred runtime texture; display the full PNG canvas at 100x160 UI size, preserving the 5:8 aspect ratio and transparent padding. Migrate UI height from 100 to 160 and top-left y from 56 to 26; keep the existing center. Replace the old square texture with this new artwork; do not stretch the old square image. The 100x160 export is a convenience export. Upload/replace the hosted Steam URL and refresh cached assets on the code side; no TTS runtime rendering has been verified."
       }
     },
     {
       "id": "out_of_command",
       "label_ja": "指揮外",
       "status": "draft",
-      "description": "A rustic matte gunbai based on the physical reference: a waisted face with rounded corners, aged wood, subdued dark-gold edging, and a long handle. Revision 12 changes the diagonal slash to ivory white with a dark-brown outline for contrast against the charcoal gunbai and dark vermilion circular background. The approximately 25-degree tilt, physical form, no-lettering treatment, and matte finish remain. The clean, thicker regular outer ring matches engaged; narrow antialiasing is retained.",
+      "description": "Revision 24 replaces the dark-vermilion circular badge with a tilted charcoal rustic wooden gunbai on a transparent 5:8 canvas. A thick black traffic-style hollow prohibition circle and black diagonal slash sit in front of the gunbai; narrow ivory outlines separate the symbol from dark artwork. The long handle extends below the ring. The ring is part of the prohibition symbol, not a filled badge or decorative frame. There is no red fill or lettering. The artwork is scaled proportionally and centered with transparent padding.",
       "path": "out_of_command.png",
       "pixel_size": {
-        "width": 512,
+        "width": 320,
         "height": 512
       },
-      "alpha": "straight RGBA; solid badge, transparent outside a regular circular edge with narrow antialiasing",
+      "alpha": "straight RGBA; transparent around and between the motifs, with antialiased motif edges; no filled badge background or decorative frame",
       "content_bbox_px": {
-        "x": 7,
-        "y": 7,
-        "width": 498,
-        "height": 498
+        "x": 8,
+        "y": 21,
+        "width": 304,
+        "height": 470
       },
       "transparent_padding_px": {
-        "left": 7,
-        "top": 7,
-        "right": 7,
-        "bottom": 7
+        "left": 8,
+        "top": 21,
+        "right": 8,
+        "bottom": 21
       },
       "alpha_bbox_threshold": 0,
       "content_bbox_at_alpha_128_px": {
         "x": 8,
-        "y": 8,
-        "width": 496,
-        "height": 496
+        "y": 22,
+        "width": 304,
+        "height": 468
       },
-      "sha256": "cb25b457234ade566345d15bd8ed11923b1d5556933505e2ec713938e5b4afed",
+      "sha256": "0c9186bcb0706e4d26b71311d93407fe683356fcf286e610210afa98fd38ba5c",
       "source_export": {
-        "path": "源图/out_of_command-1024.png",
+        "path": "源图/out_of_command-640x1024.png",
         "pixel_size": {
-          "width": 1024,
+          "width": 640,
           "height": 1024
         },
-        "alpha": "straight RGBA; solid badge, transparent outside a regular circular edge with narrow antialiasing",
+        "alpha": "straight RGBA; transparent around and between the motifs, with antialiased motif edges; no filled badge background or decorative frame",
         "content_bbox_px": {
-          "x": 15,
-          "y": 15,
-          "width": 994,
-          "height": 994
+          "x": 16,
+          "y": 43,
+          "width": 608,
+          "height": 938
         },
         "transparent_padding_px": {
-          "left": 15,
-          "top": 15,
-          "right": 15,
-          "bottom": 15
+          "left": 16,
+          "top": 43,
+          "right": 16,
+          "bottom": 43
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 16,
-          "y": 16,
-          "width": 992,
-          "height": 992
+          "x": 17,
+          "y": 44,
+          "width": 606,
+          "height": 937
         },
-        "sha256": "ad1b4c8b3794327d6aaf76d111ca2684d7236c5a64bcca44885489c619fe5883"
+        "sha256": "a82049f7a50ae91156fd5bbb17ddd5d8fdae3cf1e66cf47602aaea4c71f6097c"
       },
       "display_export": {
-        "path": "out_of_command-100.png",
+        "path": "out_of_command-100x160.png",
         "pixel_size": {
           "width": 100,
-          "height": 100
+          "height": 160
         },
-        "alpha": "straight RGBA; solid badge, transparent outside a regular circular edge with narrow antialiasing",
+        "alpha": "straight RGBA; transparent around and between the motifs, with antialiased motif edges; no filled badge background or decorative frame",
         "content_bbox_px": {
-          "x": 1,
-          "y": 1,
-          "width": 98,
-          "height": 98
+          "x": 2,
+          "y": 6,
+          "width": 96,
+          "height": 148
         },
         "transparent_padding_px": {
-          "left": 1,
-          "top": 1,
-          "right": 1,
-          "bottom": 1
+          "left": 2,
+          "top": 6,
+          "right": 2,
+          "bottom": 6
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 2,
-          "y": 2,
-          "width": 96,
-          "height": 96
+          "x": 3,
+          "y": 7,
+          "width": 94,
+          "height": 146
         },
-        "sha256": "b979dc5aaca864dec7d1c9bfbb2204f38a9da8d82f98e22f6e2839f70fe3a56a"
+        "sha256": "83f80e84baebd258ed0519aa52ec5f0f1f1411bb277c6eaf34224085d6881649"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -225,10 +228,10 @@
         },
         "coordinate_system": "pixels, top-left origin; x right, y down",
         "width_px": 100,
-        "height_px": 100,
+        "height_px": 160,
         "top_left_px": {
           "x": 892,
-          "y": 56
+          "y": 26
         },
         "center_px": {
           "x": 942,
@@ -238,16 +241,19 @@
         "title_right_edge_exclusive_px": 885,
         "title_canvas_gap_min_px": 7,
         "right_frame_canvas_gap_px": 6,
-        "requires_title_change": false
+        "requires_title_change": false,
+        "top_frame_canvas_gap_px": 12,
+        "bottom_frame_canvas_gap_px": 12,
+        "validation_scope": "Full-canvas geometry checked against the existing title-bar interior and saved alpha bounds plus placement metadata for all 12 troop titles. No title change is required. TTS runtime rendering, distance, angle and operation-area overlap are unverified."
       },
       "previews": [],
       "recommended_runtime_texture": {
         "path": "out_of_command.png",
         "pixel_size": {
-          "width": 512,
+          "width": 320,
           "height": 512
         },
-        "usage": "Preferred runtime texture; display the full PNG canvas at 100x100 UI size. The 100px export is a convenience export, not the preferred texture. Upload/replace the hosted Steam URL and refresh cached assets on the code side; no TTS runtime rendering has been verified."
+        "usage": "Preferred runtime texture; display the full PNG canvas at 100x160 UI size, preserving the 5:8 aspect ratio and transparent padding. Migrate UI height from 100 to 160 and top-left y from 56 to 26; keep the existing center. Replace the old square texture with this new artwork; do not stretch the old square image. The 100x160 export is a convenience export. Upload/replace the hosted Steam URL and refresh cached assets on the code side; no TTS runtime rendering has been verified."
       }
     },
     {
@@ -806,34 +812,34 @@
     }
   ],
   "not_yet_produced": [],
-  "overview": "fire_ready.png",
+  "overview": "engaged.png",
   "additional_previews": [],
-  "runtime_integration": "Artwork handoff only. Revision 23 replaces only the three fire_loading exports with an enlarged muzzle-and-ramrod close-up plus one dominant ivory diagonal slash with a deep-brown outline, marking loading/unavailable to fire; no hand is shown and the insertion junction is unobscured. fire_loading.png remains the preferred 512x256 runtime texture. The unchanged fire_ready icon remains a horizontal complete matchlock. Both display using the full canvas at 240x120 in one mutually exclusive shooting-status slot with no assigned coordinates. The other six asset entries and eighteen PNGs, all display sizes and placement guidance are unchanged, including the candidate routed size and unresolved position. Hosted URLs, cache refresh, agreed state behavior, placement and overlap handling belong to the code side; TTS runtime rendering is unverified.",
+  "runtime_integration": "Artwork handoff only. Revision 24 replaces only engaged and out_of_command with transparent motif-only 320x512 runtime textures. Display each full canvas at 100x160: engaged at (20,26), out_of_command at (892,26), with unchanged centers (70,106) and (942,106). Change UI height from 100 to 160 and top-left y from 56 to 26, preserve transparent padding and the 5:8 aspect ratio, and replace the old square artwork rather than stretching it. The two states remain independent and may appear simultaneously. New display exports are -100x160.png and sources are -640x1024.png; revision-23 circular exports are historical only. The other five asset objects and fifteen PNGs, including their display-size and placement guidance, are unchanged. Hosted URLs, cache refresh and runtime integration belong to the code side; all seven cloud_url fields remain empty. Title clearance is verified from all 12 saved title bounds; TTS runtime appearance is unverified.",
   "notes": [
-    "Revision 23 changes only fire_loading: an enlarged muzzle-and-light-wooden-ramrod close-up crops out the stock and breech, and one prominent ivory slash with a deep-brown outline descends opposite the barrel to make loading/unavailable to fire distinct. The muzzle-ramrod junction remains uncovered; there is no hand. Matte ivory plaque styling, all canvas dimensions and exterior alpha boundaries are retained. The other six asset objects and their eighteen PNGs are unchanged.",
+    "Revision 24 changes only engaged and out_of_command: transparent motif-only vertical artwork replaces the dark-vermilion circular badges. engaged retains ivory crossed katana with dark-brown outlines and dark handles. out_of_command has a charcoal rustic gunbai behind a thick black hollow prohibition circle and black slash with narrow ivory outlines; its handle extends below the ring. Neither icon has a red fill or a decorative enclosing frame.",
+    "Use engaged.png and out_of_command.png (320x512) as the preferred runtime textures at 100x160 UI size. The -100x160.png files are display-size convenience exports, and the sources are 640x1024. Preserve the full 5:8 canvas and transparent padding. Migrate UI height 100 to 160 and top-left y 56 to 26; do not stretch the old square artwork. Replace hosted texture URLs and refresh caches even where runtime filenames are reused.",
+    "Revision 24 remeasured all six header exports for RGBA mode, pixel dimensions, alpha>0 and alpha>=128 bounds, transparent padding and SHA-256. The two motifs intentionally have different alpha shapes and padding. Generation alpha was normalized over 6.25%-93.75% to remove faint background residue; exports preserve aspect ratio, use centered transparent padding and Box area downsampling. No new preview or overview image was generated; overview points to standalone engaged.png. TTS runtime, front/back rendering, distance, angle and operation-area overlap remain unverified.",
+    "The engaged motif uses a 100x160 canvas at (20,26), centered at (70,106). The out_of_command motif uses a separate 100x160 canvas at (892,26), centered at (942,106). Both can appear simultaneously; do not reuse one mutually exclusive display slot.",
+    "The title-bar interior is x=[14,998), y=[14,198). All 12 saved title alpha bounds and placement metadata were checked. The tightest titles, 鉄砲足軽隊 and 鉄砲僧兵隊, occupy x=[128,885). Full-canvas clearance is 8px to the left motif, 7px to the right motif, 6px to each corresponding side frame, and 12px above and below both canvases. No title needs to move or shrink; the existing 96 cards are unchanged.",
+    "Historical circular exports are archived only in 历史/圆章-revision23/: engaged.png, engaged-100.png, engaged-1024.png, out_of_command.png, out_of_command-100.png and out_of_command-1024.png. They are not current runtime textures. Old source and display-size paths must be migrated to the new rectangular-canvas exports.",
+    "Historical revision 10 cleaned the circular alpha boundary and added matching dark outer lines and matte pale-gold bands. Historical revision 12 changed the gunbai slash to ivory with a dark-brown outline. Those circle styles, their 512x512 runtime textures, 100x100 placement and uniform circular padding are superseded by revision 24; archived images document them only.",
+    "The other five asset objects and their fifteen PNG bytes match the pre-revision-24 HEAD. Existing formation, routed and shooting-status display-size and placement guidance is unchanged; no new coordinates are assigned to those five assets. No new state triggers, reset rules or code changes are introduced.",
     "fire_ready.png and fire_loading.png are the preferred 512x256 runtime textures; the corresponding -240x120.png files are display-size convenience exports; both sources are 1024x512. Use the full canvases at 240x120 without trimming transparent padding. The pair shares one mutually exclusive shooting-status slot; no placement coordinates, new state triggers or reset rules are assigned.",
-    "Revision 23 remeasured the three fire_loading exports for RGBA mode, pixel dimensions, alpha>0 and alpha>=128 bounds, transparent padding and SHA-256. The corresponding alpha channels match the unchanged fire_ready exports pixel-for-pixel at all three sizes. The other six asset objects and their eighteen PNG bytes match the pre-revision-23 HEAD. No new preview or overview image was generated; overview points to standalone fire_ready.png. TTS runtime, front/back rendering, distance, angle and overlap remain unverified.",
+    "Historical revision 23 changes only fire_loading: an enlarged muzzle-and-light-wooden-ramrod close-up crops out the stock and breech, and one prominent ivory slash with a deep-brown outline descends opposite the barrel to make loading/unavailable to fire distinct. The muzzle-ramrod junction remains uncovered; there is no hand. Matte ivory plaque styling, all canvas dimensions and exterior alpha boundaries are retained. The other six asset objects and their eighteen PNGs are unchanged.",
     "Historical revision 22 introduced fire_ready and fire_loading as matte ivory plaques with dark-brown borders. fire_ready showed a horizontal complete Japanese tanegashima; the original fire_loading showed a raised complete musket with a lighter wooden ramrod inserted into the muzzle and no hand. Revision 23 supersedes that loading composition; fire_ready remains unchanged.",
-    "Revision 21 repairs every interior routed cloth slit and puncture. Only perimeter tears, missing corners and restrained white fraying remain. Natural folds, the soft palisade background, single fallen white banner and frame are retained. The other four asset entries and their PNGs are unchanged; all display-size and placement guidance is unchanged.",
+    "Historical revision 21 repairs every interior routed cloth slit and puncture. Only perimeter tears, missing corners and restrained white fraying remain. Natural folds, the soft palisade background, single fallen white banner and frame are retained. The other four asset entries and their PNGs are unchanged; all display-size and placement guidance is unchanged.",
     "routed.png is 1200x800, routed-600x400.png is the display-size export, and the source is 1536x1024. Candidate display size is 600x400 on a 1200x1200 board; no coordinates or automatic elevation logic are assigned. The rounded alpha outline removes outside background remnants; Box area downsampling retains a narrow antialiased edge.",
     "Revision 21 generated no new preview or overview image; its overview reference pointed to standalone routed.png. Commander overlap, front/back rendering, distance and oblique-angle readability still require code-side and TTS validation; the artwork alone does not prevent occlusion.",
-    "Revision 12 changes only out_of_command: an ivory-white diagonal slash with a dark-brown outline replaces the black slash with a pale outline. The charcoal gunbai, dark vermilion background, matte finish, clean outer ring, 100x100 display size and placement are retained. The other three icons and their asset entries remain unchanged.",
-    "Revision 11 makes both formation plaques taller and increases the vertical row spacing in formation_open. The six same-scale markers, 2:1 canvases and existing mutually exclusive 240x120 candidate placement are retained. Box area downsampling and matching regular alpha boundaries retain narrow antialiasing.",
-    "Use engaged.png and out_of_command.png (512x512) as the preferred circular runtime textures at 100x100 UI size, and formation_close.png and formation_open.png (512x256) at 240x120. Existing placement is unchanged. The display-size files are convenience exports. Upload/replacement of hosted Steam URLs and cache refresh belong to code-side integration; no TTS runtime validation has been performed.",
-    "All earlier engaged, out_of_command and combined previews are historical and do not represent the current artwork. No new preview or overview was produced; overview points to standalone fire_ready.png.",
-    "Both circular badges retain the revision 10 edge cleanup: matching regular circular alpha boundaries, dark outer lines and matte pale-gold bands. Revision 12 gives the charcoal gunbai an ivory-white slash with a dark-brown outline. Same-size alpha channels are pixel-identical. Box area downsampling retains narrow antialiasing.",
+    "Historical revision 11 makes both formation plaques taller and increases the vertical row spacing in formation_open. The six same-scale markers, 2:1 canvases and existing mutually exclusive 240x120 candidate placement are retained. Box area downsampling and matching regular alpha boundaries retain narrow antialiasing.",
+    "All earlier engaged, out_of_command and combined previews are historical and do not represent the current artwork. No new preview or overview was produced; overview points to standalone engaged.png.",
     "At 240x120, both formation plaques have alpha>0 bounds (2,8)-(238,112), 104px high; their alpha>=128 visible height is 102px, increased from 88px in revision 9. Same-size alpha channels match pixel-for-pixel.",
     "Formation marker check: each 512x256 PNG contains six comparable-scale markers; the vertical separation of row centers is approximately 70px in formation_close and 89px in formation_open.",
-    "At alpha>0 the circular exports have uniform transparent margins: 15px at 1024x1024, 7px at 512x512, and 1px at 100x100. Both badges retain a narrow antialiased edge.",
-    "The engaged badge uses a 100x100 canvas at (20,56), centered at (70,106). The out_of_command badge uses a separate 100x100 canvas at (892,56), centered at (942,106). Both can appear simultaneously; do not reuse one mutually exclusive display slot.",
-    "The right badge is placed beyond the rightmost title boundary x=885 exclusive, leaving a 7px title gap and a 6px right-frame gap. No existing title needs to move or shrink.",
     "Cloud URLs intentionally empty; no runtime-hosting URLs have been provided.",
-    "Only the area outside each circular badge is transparent; both badge interiors are solid.",
-    "At a 300px-wide board each 100px placement becomes 25px; final readability requires TTS distance and angle testing.",
+    "At a 300px-wide board each 100x160 header placement becomes approximately 25x40px; the rectangular canvas fit does not establish TTS edge clarity or readability. Final appearance requires TTS distance and angle testing.",
     "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
     "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 23,
+  "revision": 24,
   "additional_overviews": [],
   "combined_previews": [],
   "previous_revision_previews": [
