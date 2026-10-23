@@ -621,7 +621,8 @@ local function runUnitLayoutChecks()
             eq(button.color[4],0,"morale hit area transparent")
             near(button.hover_color[4],0.14,"morale hover gently identifies clickable numeral")
             near(button.press_color[4],0.20,"morale press gives feedback without hiding numeral")
-            eq(button.tooltip,"","morale feedback has no obstructing tooltip")
+            local maximum=index==1 and 6 or 5
+            eq(button.tooltip,"基礎士氣上限："..maximum.."\n實際士氣上限："..maximum,"morale hover shows this face's base and effective maximum")
             eq(button.click_function,index==1 and "changeFrontValue" or "changeBackValue","morale callback retained")
         elseif index<=4 then
             eq(button.width,0,"defeat fallback width zero")
@@ -2236,28 +2237,143 @@ local function runUnitModeChecks()
             "opposite troop class images not loaded: "..config.tag)
         eq(#troop.buttons,8,"each class adds exactly two face buttons: "..config.tag)
     end
+    local function moraleTooltip(obj,back,printed,effective,open,message)
+        eq(obj.buttons[back and 2 or 1].tooltip,
+            "基礎士氣上限："..printed.."\n實際士氣上限："..effective..(open and "（散開 −1）" or ""),message)
+    end
+    unit_state.mode01.front_value=4 -- Six printed TQ, two accumulated hits.
+    unit_state.mode01.back_value=3 -- Store the inactive face's two hits as well.
+    updateDefeatText(unit)
+    moraleTooltip(unit,false,6,6,false,"closed front tooltip uses printed limit, not remaining morale")
+    moraleTooltip(unit,true,5,5,false,"closed rear tooltip uses its own printed limit")
     local unchanged=copy(unit_state.mode01)
     _G[buttons(unit,false)[1].click_function](unit,"Red",false)
     eq(unit_state.mode01.open_order,true,"nonhost front click opens formation")
     eq(unit_state.mode01.reloading,false,"formation click leaves fire state untouched")
     imageIs(unit,"open","formation click updates both faces immediately")
-    for _,key in ipairs({"front_value","back_value","acted","manual_defeat_visible","engaged","out_of_command"}) do
+    eq(unit_state.mode01.front_value,3,"open formation preserves two accumulated front hits: six minus two becomes five minus two")
+    eq(unit_state.mode01.back_value,2,"open formation preserves accumulated inactive rear hits")
+    eq(unit_state.mode01.acted,true,"successful formation change consumes the action")
+    moraleTooltip(unit,false,6,5,true,"open front tooltip distinguishes effective limit")
+    moraleTooltip(unit,true,5,4,true,"open rear tooltip distinguishes effective limit")
+    for _,key in ipairs({"manual_defeat_visible","engaged","out_of_command"}) do
         eq(unit_state.mode01[key],unchanged[key],"mode click preserves existing state: "..key)
     end
     eq(unit.is_face_down,false,"mode click does not turn unit over")
     toggleUnitMode(unit,"Blue",true)
     eq(unit_state.mode01.open_order,true,"right click ignores formation")
+    toggleUnitMode(unit,"Grey",false)
+    eq(unit_state.mode01.open_order,true,"acted troop cannot change formation again")
+    eq(unit_state.mode01.front_value,3,"declined acted change preserves accumulated damage")
+    toggleUnitActed(unit,"Grey",false)
     _G[buttons(unit,true)[1].click_function](unit,"Grey",false)
-    imageIs(unit,"closed","back click changes same shared formation record")
+    imageIs(unit,"closed","either face callback uses actual front-facing troop state")
+    eq(unit_state.mode01.front_value,4,"returning closed restores limit while retaining exactly two hits")
+    eq(unit_state.mode01.back_value,3,"returning closed preserves inactive rear damage")
+    eq(unit_state.mode01.acted,true,"returning closed consumes new order action")
+    toggleUnitActed(unit,"Black",false)
     toggleUnitMode(unit,"Black",false)
     local loads,xml=unit.UI.assetCalls,unit.UI.xmlCalls
-    for n=1,6 do toggleUnitMode(unit,"Red",false) end
+    for n=1,6 do toggleUnitActed(unit,"Red",false); toggleUnitMode(unit,"Red",false) end
     eq(unit.UI.assetCalls,loads,"mode toggles never redownload image pair")
     eq(unit.UI.xmlCalls,xml,"mode toggles do not rebuild Object.UI")
     local attrs,decals=unit.UI.attributeCalls,unit.decalWrites
     for n=1,4 do updateDefeatText(unit) end
     eq(unit.UI.attributeCalls,attrs,"unchanged mode refresh writes no UI attributes")
     eq(unit.decalWrites,decals,"mode refresh does not rewrite existing decals")
+
+    -- Crossing the lowered threshold must reuse normal first-stage exhaustion.
+    local crossing=make("mode_cross","unit_nagaye_ashigaru")
+    unit_state.mode_cross.front_value=1
+    unit_state.mode_cross.back_value=1
+    toggleUnitMode(crossing,"Blue",false)
+    eq(unit_state.mode_cross.open_order,true,"threshold crossing keeps new open formation")
+    eq(unit_state.mode_cross.front_value,0,"five hits exhaust newly lowered front maximum five")
+    eq(unit_state.mode_cross.back_value,4,"threshold crossing starts rear with no repeated front damage and effective full four")
+    eq(unit_state.mode_cross.acted,true,"threshold crossing still consumes action")
+    eq(crossing.is_face_down,true,"formation threshold crossing flips to disrupted face")
+    eq(crossing.flipCalls,1,"formation threshold crossing flips once")
+    changeBackValue(crossing,"Blue",true)
+    eq(unit_state.mode_cross.back_value,4,"formation-induced flip retains normal click debounce")
+    crossing.is_face_down=false -- Simulate a stale orientation event during the flip.
+    toggleUnitActed(crossing,"Blue",false)
+    toggleUnitMode(crossing,"Blue",false)
+    eq(unit_state.mode_cross.open_order,true,"formation click respects in-progress flip guard")
+    eq(unit_state.mode_cross.acted,false,"rejected flip-guard change does not spend another action")
+    crossing.is_face_down=true; tick()
+    toggleUnitMode(crossing,"Blue",false)
+    eq(unit_state.mode_cross.open_order,true,"disrupted back face cannot change formation")
+    eq(unit_state.mode_cross.acted,false,"disrupted rejection preserves unacted flag")
+    changeBackValue(crossing,"Blue",false)
+    eq(unit_state.mode_cross.back_value,4,"ordinary plus cannot exceed effective rear maximum")
+    changeBackValue(crossing,"Blue",true)
+    eq(unit_state.mode_cross.back_value,3,"rear loss applies below reduced maximum")
+    local shortcut=hotkeys["士気快捷調整"]
+    shortcut.callback("Blue",crossing,nil,false)
+    changeBackValue(crossing,"Blue",false)
+    eq(unit_state.mode_cross.back_value,4,"quick refill uses open rear maximum")
+    changeBackValue(crossing,"Blue",true)
+    eq(unit_state.mode_cross.back_value,0,"quick rear clear still exhausts open troop")
+    eq(getDefeatText(unit_state.mode_cross),"敗走","zero open rear enters rout")
+    changeBackValue(crossing,"Blue",false)
+    eq(unit_state.mode_cross.back_value,4,"rout refill restores effective rear maximum")
+    eq(getDefeatText(unit_state.mode_cross),"","rout refill clears defeat without closing formation")
+    shortcut.callback("Blue",crossing,nil,true)
+    eq(unit_state.mode_cross.open_order,true,"rout refill preserves formation")
+    resetUnit(crossing)
+    eq(unit_state.mode_cross.open_order,false,"full reset closes formation")
+    eq(unit_state.mode_cross.front_value,6,"full reset restores printed front maximum")
+    eq(unit_state.mode_cross.back_value,5,"full reset restores printed rear maximum")
+
+    local blocked=make("mode_blocked","unit_nagaye_ashigaru")
+    for _,cause in ipairs({"acted","engaged","manual_defeat_visible"}) do
+        unit_state.mode_blocked[cause]=true
+        local before=copy(unit_state.mode_blocked)
+        toggleUnitMode(blocked,"Red",false)
+        for _,key in ipairs({"open_order","front_value","back_value","acted",cause}) do
+            eq(unit_state.mode_blocked[key],before[key],"declined "..cause.." formation change preserves "..key)
+        end
+        unit_state.mode_blocked[cause]=false
+    end
+    blocked.is_face_down=true
+    toggleUnitMode(blocked,"Red",false)
+    eq(unit_state.mode_blocked.open_order,false,"even unacted nonrouted back face cannot change formation")
+    eq(unit_state.mode_blocked.acted,false,"back rejection does not mark acted")
+    blocked.is_face_down=false
+    toggleUnitMode(blocked,"Red",false)
+    eq(unit_state.mode_blocked.open_order,true,"legal unacted recovered front can change formation")
+    eq(unit_state.mode_blocked.front_value,5,"healthy open troop is full at effective front maximum")
+    eq(select(2,managedDecal(blocked,"SG_UNIT_MORALE_BAND_FRONT")),0,"healthy open front does not show damage band")
+    eq(findNode(blocked.UI.xmlTable,"sgub_morale_band").attributes.active,"false","healthy open rear does not show damage band")
+    shortcut.callback("Red",blocked,nil,false); changeFrontValue(blocked,"Red",true); shortcut.callback("Red",blocked,nil,true)
+    eq(unit_state.mode_blocked.back_value,4,"quick front exhaustion refills effective open rear limit")
+    tick()
+
+    -- Versioned migration applies the old visual-only formation penalty exactly once.
+    local legacy=make("mode_legacy","unit_nagaye_ashigaru")
+    unit_state.mode_legacy={front_value=4,back_value=3,open_order=true,acted=false}
+    setupUnit(legacy,getUnitConfig(legacy)); flush()
+    eq(unit_state.mode_legacy.formation_tq_version,1,"old record receives formation arithmetic version")
+    eq(unit_state.mode_legacy.front_value,3,"legacy visual-only open front keeps its two hits")
+    eq(unit_state.mode_legacy.back_value,2,"legacy visual-only open rear keeps its two hits")
+    for n=1,3 do setupUnit(legacy,getUnitConfig(legacy)); updateDefeatText(legacy) end
+    eq(unit_state.mode_legacy.front_value,3,"normalization does not repeatedly subtract migration penalty")
+    local migrationSave=onSave(); unit_state={}; onLoad(migrationSave); flush(); tick()
+    eq(unit_state.mode_legacy.front_value,3,"save/load does not apply formation penalty twice")
+    eq(unit_state.mode_legacy.back_value,2,"save/load preserves migrated rear damage")
+    eq(unit_state.mode_legacy.formation_tq_version,1,"formation migration version persists")
+    unit_state.mode_legacy={front_value=1,back_value=2,open_order=true,acted=true}
+    setupUnit(legacy,getUnitConfig(legacy)); flush()
+    eq(legacy.is_face_down,true,"legacy open front threshold also uses disruption transition")
+    eq(unit_state.mode_legacy.back_value,4,"legacy threshold starts full effective rear without duplicating hits")
+    eq(unit_state.mode_legacy.acted,true,"legacy migration preserves existing acted state")
+    tick()
+    unit_state.mode_legacy={front_value=0,back_value=0,open_order=true,acted=false}
+    local oldFlips=legacy.flipCalls
+    setupUnit(legacy,getUnitConfig(legacy)); flush()
+    eq(unit_state.mode_legacy.front_value,0,"legacy exhausted front remains zero")
+    eq(unit_state.mode_legacy.back_value,0,"legacy routed rear remains zero")
+    eq(legacy.flipCalls,oldFlips,"legacy exhausted record never triggers another disruption")
 
     local function geometryCheck(obj,message)
         local width,depth=obj.bounds.size.x/obj.scale.x,obj.bounds.size.z/obj.scale.z
@@ -2270,10 +2386,10 @@ local function runUnitModeChecks()
             local offset=vector(node.attributes.position)
             local x=p[1]/100+(back and 1 or -1)*offset[1]*s[1]/100
             local z=p[2]/100-offset[2]*s[2]/100
-            near(x,cx+(back and 1 or -1)*(850/1200-.5)*width,message.." "..side.." bottom-right X")
-            near(z,cz+(1130/1200-.5)*depth,message.." "..side.." bottom-right Y")
-            near(tonumber(node.attributes.width)*s[1]/100,240/1200*width,message.." "..side.." width")
-            near(tonumber(node.attributes.height)*s[2]/100,110/1200*depth,message.." "..side.." height")
+            near(x,cx+(back and 1 or -1)*(820/1200-.5)*width,message.." "..side.." bottom-right X")
+            near(z,cz+(1125/1200-.5)*depth,message.." "..side.." bottom-right Y")
+            near(tonumber(node.attributes.width)*s[1]/100,320/1200*width,message.." "..side.." width")
+            near(tonumber(node.attributes.height)*s[2]/100,130/1200*depth,message.." "..side.." height")
             near(offset[3],0,message.." "..side.." shares mode panel plane")
             eq(root.attributes.rotation,back and "180 0 0" or "0 0 180",message.." "..side.." outward rotation")
             local hit=buttons(obj,back)[1]
@@ -2281,8 +2397,8 @@ local function runUnitModeChecks()
             near(hp[1],x,message.." "..side.." hit X")
             near(hp[3],z,message.." "..side.." hit Z")
             near(hp[2],-p[3]/100+(back and -.004 or .004),message.." "..side.." hit above image")
-            eq(hit.width,433,message.." "..side.." 260-pixel hit width")
-            eq(hit.height,217,message.." "..side.." 130-pixel hit height")
+            eq(hit.width,567,message.." "..side.." 340-pixel hit width")
+            eq(hit.height,233,message.." "..side.." 140-pixel hit height")
             classicButtonOrientation(hit,back,message.." "..side)
         end
     end
@@ -2326,16 +2442,44 @@ local function runUnitModeChecks()
     imageIs(unit,"closed","full reset returns default image")
 
     UNIT_STATUS_IMAGES={engaged="https://example.invalid/mode-top-engaged.png",out_of_command="https://example.invalid/mode-top-ooc.png"}
+    unit.is_face_down=false -- Reset clears values/markers, not the physical face.
     updateDefeatText(unit); flush()
     eq(#unit.buttons,12,"top statuses and bottom mode coexist with original six buttons")
     toggleUnitEngaged(unit,"Blue",false); toggleUnitOutOfCommand(unit,"Red",false)
     toggleUnitMode(unit,"Grey",false)
     eq(unit_state.mode01.engaged,true,"bottom click preserves top engaged")
     eq(unit_state.mode01.out_of_command,true,"bottom click preserves top OOC")
-    imageIs(unit,"open","bottom mode remains independent with all top statuses")
+    imageIs(unit,"closed","engaged status prevents formation change")
+    toggleUnitEngaged(unit,"Blue",false); toggleUnitMode(unit,"Grey",false)
+    imageIs(unit,"open","OOC alone remains a manual marker, without new automatic movement rules")
     eq(unit.buttons[1].click_function,"changeFrontValue","mode and status additions preserve front morale index")
     eq(unit.buttons[2].click_function,"changeBackValue","mode and status additions preserve rear morale index")
     UNIT_STATUS_IMAGES={}; resetUnit(unit); flush()
+
+    -- A manually edited inactive reserve must not rout a still-active front early.
+    local reserve=make("mode_reserve","unit_nagaye_ashigaru")
+    unit_state.mode_reserve.back_value=1
+    toggleUnitMode(reserve,"Red",false)
+    eq(unit_state.mode_reserve.back_value,0,"lowered inactive reserve threshold preserves four stored hits")
+    eq(unit_state.mode_reserve.back_threshold_pending,true,"inactive threshold waits for the back face")
+    eq(getDefeatText(unit_state.mode_reserve),"","lowering hidden reserve cannot rout the full front")
+    toggleUnitActed(reserve,"Red",false); toggleUnitMode(reserve,"Red",false)
+    eq(unit_state.mode_reserve.back_value,1,"closing restores inactive limit without erasing its four hits")
+    toggleUnitActed(reserve,"Red",false); toggleUnitMode(reserve,"Red",false)
+    reserve.is_face_down=true; onObjectRotate(reserve,0,180,"Red",0,0); tick()
+    eq(unit_state.mode_reserve.back_threshold_pending,false,"revealing the exhausted back resolves pending threshold")
+    eq(getDefeatText(unit_state.mode_reserve),"敗走","actual exhausted back still routes")
+
+    local fire=make("mode_fire_rules","unit_teppo_ashigaru")
+    unit_state.mode_fire_rules.acted=true; unit_state.mode_fire_rules.engaged=true
+    unit_state.mode_fire_rules.open_order=true; fire.is_face_down=true
+    local fireBefore=copy(unit_state.mode_fire_rules)
+    toggleUnitMode(fire,"Blue",false)
+    eq(unit_state.mode_fire_rules.reloading,true,"ranged fire marker remains available on acted engaged rear")
+    eq(unit_state.mode_fire_rules.front_value,fireBefore.front_value,"ranged marker never applies open-order TQ")
+    eq(unit_state.mode_fire_rules.back_value,fireBefore.back_value,"ranged marker preserves rear morale")
+    eq(unit_state.mode_fire_rules.acted,true,"ranged marker does not toggle acted")
+    moraleTooltip(fire,true,2,2,false,"ranged tooltip has no formation penalty from retained dormant flag")
 
     local valid=copy(UNIT_MODE_IMAGES)
     for _,invalid in ipairs({"","C:/private/mode.png","[https://example.invalid/open.png](https://example.invalid/open.png)",valid.closed,UNIT_BACK_RAIL_IMAGE_URL}) do

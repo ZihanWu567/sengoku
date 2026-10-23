@@ -1,4 +1,4 @@
--- 兵種＋備隊面板 v2.16.0：散開・密集／射撃準備・装填中の切替（2026-10-21）
+-- 兵種＋備隊面板 v2.17.0：陣形TQ修正・行動連動・士氣上限表示（2026-10-23）
 MIN_VALUE = 0
 
 -- 全军共用的敗走贴图。上传后只在这里填一次完整图片直链。
@@ -69,10 +69,14 @@ UNIT_STATUS_LAYOUT = {
 
 -- 底部同一位置：近战切换密集／散開，远程切换射撃準備／装填中。
 -- 每组必须填齐两张不同图片直链；未填齐不显示，也不留不可见按钮。
-UNIT_MODE_IMAGES = {closed = "", open = "", ready = "", reloading = ""}
+UNIT_MODE_IMAGES = {
+    closed = "https://steamusercontent-a.akamaihd.net/ugc/11515895100246543386/C63536BA44742C27108483536A4C088FFD1F5B06/",
+    open = "https://steamusercontent-a.akamaihd.net/ugc/11025487001876169960/A2E57E3E6BE1CC1A9388C1F6965B78A632FF6156/",
+    ready = "", reloading = ""
+}
 UNIT_MODE_LAYOUT = {
-    x = 850, y = 1130, width = 240, height = 110,
-    hit_width = 260, hit_height = 130,
+    x = 820, y = 1125, width = 320, height = 130,
+    hit_width = 340, hit_height = 140,
     front_ui_clearance = 0.001
 }
 
@@ -298,8 +302,39 @@ function copyConfig(source)
     return result
 end
 
--- 旧存档缺字段或数据异常时，只修复对应棋子的计数，不阻断面板加载。
-local function normalizeUnitState(guid, config_tag, config)
+local function unitMoraleMaximum(state, config, back)
+    local printed = back and config.max_back or config.max_front
+    return math.max(MIN_VALUE, printed - (config.marker_mode == "formation" and state.open_order and 1 or 0))
+end
+
+local function unitMoraleTooltip(state, config, back)
+    local printed = back and config.max_back or config.max_front
+    local maximum = unitMoraleMaximum(state, config, back)
+    return "基礎士氣上限："..printed.."\n實際士氣上限："..maximum..(maximum < printed and "（散開 −1）" or "")
+end
+
+-- 正面耗尽和换阵越过阈值共用同一转段；前阶段损伤不重复带到背面。
+local function disruptUnit(obj, state, config)
+    state.back_value = unitMoraleMaximum(state, config, true)
+    state.back_threshold_pending = false
+    state.manual_defeat_visible = false
+    if obj.is_face_down then return end
+    local guid, transition = obj.getGUID(), {}
+    unitFlipPending[guid] = transition
+    local ok, failure = pcall(function() obj.flip() end)
+    if not ok then
+        unitFlipPending[guid] = nil
+        print("[部隊] 自动翻面失败，请手动按 F；背面士气已就绪："..tostring(failure))
+    else
+        Wait.time(function()
+            if unitFlipPending[guid] == transition then unitFlipPending[guid] = nil end
+        end,0.5)
+    end
+end
+
+-- 旧存档的散開仅是图片标记；第一次升级扣除一次TQ修正，之后不重复扣。
+local function normalizeUnitState(obj, config_tag, config)
+    local guid = obj.getGUID()
     local state = unit_state[guid]
     -- 新记录从满士气开始；已有记录的 0 值仍照原存档保留。
     if type(state) ~= "table" then state = {front_value=config.max_front,back_value=config.max_back} end
@@ -316,6 +351,20 @@ local function normalizeUnitState(guid, config_tag, config)
     state.out_of_command = state.out_of_command == true
     state.open_order = state.open_order == true
     state.reloading = state.reloading == true
+    state.back_threshold_pending = state.back_threshold_pending == true
+    local before, previousBack = state.front_value, state.back_value
+    if state.formation_tq_version ~= 1 and config.marker_mode == "formation" and state.open_order then
+        state.front_value = math.max(MIN_VALUE,state.front_value-1)
+        state.back_value = math.max(MIN_VALUE,state.back_value-1)
+        -- 手动修改过的未使用背面储备，不应让尚在正面的部队提前敗走。
+        state.back_threshold_pending = previousBack > 0 and state.back_value == 0 and not obj.is_face_down
+        if before > 0 and state.front_value == 0 and not obj.is_face_down
+            and previousBack > 0 and not state.manual_defeat_visible then disruptUnit(obj,state,config) end
+    end
+    state.formation_tq_version = 1
+    state.front_value = bounded(state.front_value,unitMoraleMaximum(state,config,false))
+    state.back_value = bounded(state.back_value,unitMoraleMaximum(state,config,true))
+    if obj.is_face_down or state.back_value > 0 or state.front_value == 0 then state.back_threshold_pending = false end
     state.config_tag = config_tag
     unit_state[guid] = state
     return state
@@ -341,19 +390,18 @@ function setupUnit(obj, config_tag, config)
         end)
         return
     end
-    normalizeUnitState(obj.getGUID(), config_tag, config)
+    normalizeUnitState(obj, config_tag, config)
     createCounter(obj, config)
 end
 
 function getStateAndConfig(obj)
-    local guid = obj.getGUID()
     local config_tag, config = getUnitConfig(obj)
 
     if config == nil then
         return nil, nil
     end
 
-    return normalizeUnitState(guid, config_tag, config), config
+    return normalizeUnitState(obj, config_tag, config), config
 end
 
 -- =========================
@@ -535,7 +583,7 @@ end
 local function unitMoraleBandKey(state, config, back)
     if getDefeatText(state) ~= "" then return nil end
     local value = back and state.back_value or state.front_value
-    local maximum = back and config.max_back or config.max_front
+    local maximum = unitMoraleMaximum(state,config,back)
     if value <= 0 or value >= maximum then return nil end
     return value * 2 <= maximum and "red" or "amber"
 end
@@ -1175,10 +1223,12 @@ local function changeUnitMorale(obj, back, alt_click, quick)
     -- 翻面动画中正反面都忽略连点，防止正面耗尽后立刻误清空第二阶段。
     if unitFlipPending[obj.getGUID()] then return end
     local state, config = getStateAndConfig(obj)
-    if not state then return end
+    if not state or unitFlipPending[obj.getGUID()] then return end
     local field = back and "back_value" or "front_value"
-    local maximum = back and config.max_back or config.max_front
+    local maximum = unitMoraleMaximum(state,config,back)
     local before, previousBack, previousDefeat = state[field], state.back_value, state.manual_defeat_visible
+    local previousPending = state.back_threshold_pending
+    if back then state.back_threshold_pending = false end
     if quick then
         state[field] = alt_click and MIN_VALUE or maximum
     else
@@ -1189,7 +1239,10 @@ local function changeUnitMorale(obj, back, alt_click, quick)
             state.manual_defeat_visible = false
             -- 敗走棋子若被手动翻回正面，补满仍须解除由背面 0 触发的敗走。
             -- 仅修复已耗尽的背面储备；另一面尚有士气时保留原值。
-            if state.back_value == 0 then state.back_value = config.max_back end
+            if state.back_value == 0 then
+                state.back_value = unitMoraleMaximum(state,config,true)
+                state.back_threshold_pending = false
+            end
         elseif back and state.back_value > 0 then
             state.manual_defeat_visible = false
         end
@@ -1197,26 +1250,12 @@ local function changeUnitMorale(obj, back, alt_click, quick)
 
     -- 只在本次减值由正数跨到 0 时转段，加载或重复点击 0 不补充背面。
     if not back and alt_click and before > 0 and state.front_value == 0 then
-        state.back_value = config.max_back
-        state.manual_defeat_visible = false
-        if not obj.is_face_down then
-            local guid = obj.getGUID()
-            local transition = {}
-            unitFlipPending[guid] = transition
-            local ok, failure = pcall(function() obj.flip() end)
-            if not ok then
-                unitFlipPending[guid] = nil
-                print("[部隊] 自动翻面失败，请手动按 F；背面士气已就绪："..tostring(failure))
-            else
-                Wait.time(function()
-                    if unitFlipPending[guid] == transition then unitFlipPending[guid] = nil end
-                end,0.5)
-            end
-        end
+        disruptUnit(obj,state,config)
     end
 
     -- 到达上限或下限后继续点击，不重复写贴花和按钮。
-    if state[field]~=before or state.back_value~=previousBack or state.manual_defeat_visible~=previousDefeat then
+    if state[field]~=before or state.back_value~=previousBack or state.manual_defeat_visible~=previousDefeat
+        or state.back_threshold_pending~=previousPending then
         updateDefeatText(obj)
     end
 end
@@ -1255,13 +1294,38 @@ function toggleUnitOutOfCommand(obj,_player_color,alt_click)
     toggleUnitStatus(obj,"out_of_command",alt_click)
 end
 
--- 阵形／射击仅手动记录；未／済、翻面、士气恢复都不联动这两个字段。
-function toggleUnitMode(obj,_player_color,alt_click)
-    if alt_click then return end
+-- 射击状态仍是手动标记；近战换阵消耗行动并保留两面各自已受损伤。
+function toggleUnitMode(obj,player_color,alt_click)
+    if alt_click or unitFlipPending[obj.getGUID()] then return end
     local state,config=getStateAndConfig(obj)
-    if not state then return end
+    if not state or unitFlipPending[obj.getGUID()] then return end
     local pair=unitModePair(config)
     if not pair then return end
+    if config.marker_mode == "formation" then
+        local reason
+        if getDefeatText(state) ~= "" then reason="敗走中，不能變陣。"
+        elseif obj.is_face_down or state.front_value == 0 then reason="減弱中，不能變陣。"
+        elseif state.engaged then reason="交戦中，不能變陣。"
+        elseif state.acted then reason="已行動；新命令時先將「済」切回「未」。" end
+        if reason then
+            if type(broadcastToColor)=="function" and player_color then
+                broadcastToColor("[部隊] "..reason,player_color,{1,0.8,0.4})
+            else print("[部隊] "..reason) end
+            return
+        end
+        local frontMax,backMax = unitMoraleMaximum(state,config,false),unitMoraleMaximum(state,config,true)
+        state.open_order = not state.open_order
+        state.front_value = state.front_value + unitMoraleMaximum(state,config,false)-frontMax
+        state.back_value = state.back_value + unitMoraleMaximum(state,config,true)-backMax
+        state.back_threshold_pending = state.back_value == 0
+        state.acted = true
+        if state.front_value <= 0 then
+            state.front_value = MIN_VALUE
+            disruptUnit(obj,state,config)
+        end
+        updateDefeatText(obj)
+        return
+    end
     state[pair.field]=not state[pair.field]
     updateDefeatText(obj)
 end
@@ -1282,11 +1346,23 @@ function toggleDefeatText(obj)
 end
 
 function getDefeatText(state)
-    if state.back_value == 0 or state.manual_defeat_visible then
+    if (state.back_value == 0 and not state.back_threshold_pending) or state.manual_defeat_visible then
         return "敗走"
     else
         return ""
     end
+end
+
+-- 仅有待决背面阈值时响应物理翻面；不新增全场扫描。
+function updateUnitFormationFace(obj)
+    local guid = obj.getGUID()
+    if not unit_state[guid] or not unit_state[guid].back_threshold_pending then return end
+    Wait.time(function()
+        local live = getObjectFromGUID(guid)
+        if live and live.is_face_down and unit_state[guid] and unit_state[guid].back_threshold_pending then
+            updateDefeatText(live)
+        end
+    end,0.35)
 end
 
 -- =========================
@@ -1325,6 +1401,7 @@ function updateDefeatText(obj)
             button = unitCounterButtonParameters(geometry,back,UNIT_COUNTER_LAYOUT.morale_y,
                 back and "changeBackValue" or "changeFrontValue",true)
         end
+        button.tooltip = unitMoraleTooltip(state,config,back)
         button.index = index-1
         obj.editButton(button)
     end
@@ -1367,6 +1444,7 @@ function resetUnit(obj)
     state.out_of_command = false
     state.open_order = false
     state.reloading = false
+    state.back_threshold_pending = false
     unitFlipPending[obj.getGUID()] = nil
 
     updateDefeatText(obj)
@@ -1378,8 +1456,8 @@ end
 
 
 -- ===== 備隊面板 v2 =====
--- 備隊武将面板 v2.16.0：散開・密集／射撃準備・装填中の切替
--- 更新日：2026-10-21
+-- 備隊武将面板 v2.17.0：陣形TQ修正・行動連動・士氣上限表示
+-- 更新日：2026-10-23
 -- 画像・生年・統率は各武将令牌の Description に入力可能。
 -- team=ota_honjin / role=main,deputy1,deputy2 / name=太田資正
 -- birth=1522 / command=5 / image=https://... / status=無傷
@@ -2470,6 +2548,7 @@ end
 
 function onObjectRotate(object, spin, flip, player_color, old_spin, old_flip)
     if not object then return end
+    if type(updateUnitFormationFace)=="function" then updateUnitFormationFace(object) end
     local teamId = identifyToken(object)
     if teamId then
         -- 等翻面动画推进后读取正反面；定时检查也会捕捉物理翻转。
@@ -2478,6 +2557,7 @@ function onObjectRotate(object, spin, flip, player_color, old_spin, old_flip)
 end
 
 function onObjectDrop(player_color, object)
+    if object and type(updateUnitFormationFace)=="function" then updateUnitFormationFace(object) end
     if object then registerObject(object, true) end
     requestPanelRender()
 end
