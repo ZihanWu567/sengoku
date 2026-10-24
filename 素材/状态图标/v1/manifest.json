@@ -15,27 +15,27 @@
       "id": "engaged",
       "label_ja": "交戦",
       "status": "draft",
-      "description": "Revision 28 replaces the crossed-sword plaque with a black silhouette of one Sengoku-period warrior wearing a jingasa, shown as a complete figure. The warrior faces right and leans forward with knees bent, holding a long spear diagonally forward in both hands in a ready-to-fight pose. The background and negative spaces are transparent. There is no plaque, cloud pattern, border or former crossed-katana motif. The complete 5:8 canvas retains measured transparent padding.",
+      "description": "Revision 29 redraws engaged as a black silhouette of one armored warrior with a kabuto helmet, paired horn-shaped maedate crest, layered shikoro neck guard, broad sode shoulder armor, cuirass and kusazuri skirt plates. The warrior takes a bent-knee staggered stance and holds one upright straight-shafted su-yari with a simple spearhead in two separated hands aligned along the same shaft. The armor outline replaces the former jingasa figure. The background and broad negative spaces are transparent, with no plaque, pattern or frame. The complete 5:8 canvas retains measured transparent padding.",
       "path": "engaged.png",
       "pixel_size": {
         "width": 320,
         "height": 512
       },
-      "alpha": "straight RGBA; black silhouette artwork on a transparent background, with antialiased silhouette edges; no plaque background, decorative pattern or frame; measured alpha range 0-255",
+      "alpha": "straight RGBA; black silhouette artwork on a transparent background, with antialiased silhouette edges; no plaque background, decorative pattern or frame; measured alpha range 0-254",
       "content_bbox_px": {
-        "x": 16,
-        "y": 25,
-        "width": 293,
-        "height": 456
+        "x": 35,
+        "y": 29,
+        "width": 269,
+        "height": 455
       },
       "transparent_padding_px": {
-        "left": 16,
-        "top": 25,
-        "right": 11,
-        "bottom": 31
+        "left": 35,
+        "top": 29,
+        "right": 16,
+        "bottom": 28
       },
       "alpha_bbox_threshold": 0,
-      "sha256": "878ba3fd8dea442c8d893145161536376201d1dec744adcc43a7d64876011283",
+      "sha256": "32065bd280c747fb163b1e0d986f9a2007da1ba2a45b0ee294f19929a6ed9032",
       "source_export": {
         "path": "源图/engaged-640x1024.png",
         "pixel_size": {
@@ -44,25 +44,25 @@
         },
         "alpha": "straight RGBA; black silhouette artwork on a transparent background, with antialiased silhouette edges; no plaque background, decorative pattern or frame; measured alpha range 0-255",
         "content_bbox_px": {
-          "x": 31,
-          "y": 49,
-          "width": 586,
-          "height": 914
+          "x": 59,
+          "y": 57,
+          "width": 549,
+          "height": 910
         },
         "transparent_padding_px": {
-          "left": 31,
-          "top": 49,
-          "right": 23,
-          "bottom": 61
+          "left": 59,
+          "top": 57,
+          "right": 32,
+          "bottom": 57
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 34,
-          "y": 51,
-          "width": 581,
-          "height": 909
+          "x": 73,
+          "y": 60,
+          "width": 533,
+          "height": 906
         },
-        "sha256": "55cc35fc13572269d139e9f34f558eadef7baf3b9ad3c7758d5b699f329669ad"
+        "sha256": "45af98f5095b9073f6d083d30d064fce7789b59cea98130871b066873bc34e6b"
       },
       "cloud_url": "",
       "recommended_display": {
@@ -91,10 +91,10 @@
       },
       "previews": [],
       "content_bbox_at_alpha_128_px": {
-        "x": 17,
-        "y": 26,
-        "width": 290,
-        "height": 454
+        "x": 37,
+        "y": 30,
+        "width": 266,
+        "height": 453
       },
       "display_export": {
         "path": "engaged-100x160.png",
@@ -104,25 +104,25 @@
         },
         "alpha": "straight RGBA; black silhouette artwork on a transparent background, with antialiased silhouette edges; no plaque background, decorative pattern or frame; measured alpha range 0-254",
         "content_bbox_px": {
-          "x": 5,
-          "y": 8,
-          "width": 92,
-          "height": 143
+          "x": 11,
+          "y": 9,
+          "width": 84,
+          "height": 142
         },
         "transparent_padding_px": {
-          "left": 5,
-          "top": 8,
-          "right": 3,
+          "left": 11,
+          "top": 9,
+          "right": 5,
           "bottom": 9
         },
         "alpha_bbox_threshold": 0,
         "content_bbox_at_alpha_128_px": {
-          "x": 5,
-          "y": 8,
-          "width": 91,
-          "height": 142
+          "x": 12,
+          "y": 10,
+          "width": 83,
+          "height": 141
         },
-        "sha256": "25f2ecf1d979873d98bf6ada970525b97f279db8de377b244ba39c49a90c09fc"
+        "sha256": "7a5d8014a5cf7c13e65596376268f78dc4e159f14b710761f825b84fedfe6387"
       },
       "recommended_runtime_texture": {
         "path": "engaged.png",
@@ -130,7 +130,7 @@
           "width": 320,
           "height": 512
         },
-        "usage": "Preferred runtime texture; display the complete PNG canvas at 100x160 UI size, preserving its 5:8 aspect ratio and transparent padding. Retain the existing center and top-left y=26; do not crop to the silhouette bounds. Integrations still using pre-revision-24 square artwork must migrate UI height from 100 to 160 and top-left y from 56 to 26, replacing the old square texture with the current artwork. The 100x160 export is a convenience export. Replace the hosted header texture and refresh cached assets for revision 28; no TTS runtime rendering has been verified."
+        "usage": "Preferred runtime texture; display the complete PNG canvas at 100x160 UI size, preserving its 5:8 aspect ratio and transparent padding. Retain top-left (20,26) and center (70,106); do not crop to the silhouette bounds. Integrations still using pre-revision-24 square artwork must migrate UI height from 100 to 160 and top-left y from 56 to 26, replacing the old square texture with the current artwork. The 100x160 export is a convenience export. Replace only the hosted engaged texture and refresh its cached asset for revision 29. The approved out_of_command messenger remains unchanged; no TTS runtime rendering has been verified."
       }
     },
     {
@@ -814,15 +814,18 @@
   "not_yet_produced": [],
   "overview": "formation_close.png",
   "additional_previews": [],
-  "runtime_integration": "Artwork handoff only. Revision 28 replaces only the six engaged and out_of_command exports with black Sengoku-period figure silhouettes on transparent backgrounds: one forward-leaning warrior holding a long spear in both hands for engaged, and one paused messenger looking back with a bold question mark beside the head for out_of_command. The former crossed swords, gunbai and prohibition symbol, ivory plaques, cloud patterns and frames are removed. Use engaged.png and out_of_command.png (320x512) as runtime textures, the -100x160.png files as display-size exports, and the 640x1024 sources. Keep the complete 5:8 canvases and transparent padding at 100x160: engaged top-left (20,26), center (70,106); out_of_command top-left (892,26), center (942,106). The two states can appear simultaneously. Replace only the two hosted header textures and refresh their caches. The formation pair remains the transparent revision-26 artwork at its existing mutually exclusive candidate placement. The other five asset objects and fifteen PNGs, and all six archived circular exports, are unchanged. All icon display sizes, placement guidance and unresolved placement questions remain unchanged. All seven cloud_url fields remain empty. Existing full-canvas title-bar clearances are retained; TTS runtime rendering, front/back display, distance, angle and operation-area overlap remain unverified.",
+  "runtime_integration": "Artwork handoff only. Revision 29 replaces only the three engaged exports with a revised black armored-warrior silhouette on a transparent background: a kabuto helmet with a paired horn-shaped crest, layered shikoro neck guard, broad sode shoulder armor, cuirass and kusazuri, with one upright straight-shafted su-yari held in two separated hands along the same shaft. Use engaged.png (320x512) as the runtime texture, engaged-100x160.png as the display-size export and the 640x1024 source. Preserve the complete 5:8 canvas and transparent padding at 100x160, top-left (20,26), center (70,106). Replace only the hosted engaged texture and refresh its cache. The approved revision-28 out_of_command messenger is unchanged at 100x160, top-left (892,26), center (942,106); both header states can appear simultaneously. All other six asset objects and eighteen PNGs, and all six archived circular exports, are unchanged. The formation pair remains the transparent revision-26 artwork at its existing mutually exclusive candidate placement. All icon display sizes, placement guidance and unresolved placement questions remain unchanged. All seven cloud_url fields remain empty. Existing full-canvas title-bar clearances are retained; TTS runtime rendering, front/back display, distance, angle and operation-area overlap remain unverified.",
   "notes": [
-    "Revision 28 changes only engaged and out_of_command to black Sengoku-period figure silhouettes with transparent backgrounds. Engaged shows one complete jingasa-wearing warrior facing right, leaning forward with knees bent and holding a long spear diagonally forward in both hands. Out_of_command shows one complete paused messenger looking back to the left, extending the right hand to search and carrying a rolled message at the waist; one large bold question mark with a separate dot appears to the right of the head. The former crossed swords, gunbai and prohibition symbol, ivory plaques, cloud patterns and frames are superseded.",
-    "All six revision-28 header PNGs were remeasured for RGBA mode, pixel dimensions, alpha>0 and alpha>=128 bounds, transparent padding and SHA-256. Each export includes fully transparent pixels and partial alpha at antialiased edges; measured maximum alpha is 254 or 255 depending on the export. The silhouettes have transparent backgrounds and measured padding; the two assets are not required to share identical alpha masks or padding. Measured alpha range and visible-pixel RGB ranges (minimum to maximum, in R/G/B order): engaged.png alpha [0, 255], RGB [0, 0, 0] to [3, 2, 2]; 源图/engaged-640x1024.png alpha [0, 255], RGB [0, 0, 0] to [4, 3, 3]; engaged-100x160.png alpha [0, 254], RGB [0, 0, 0] to [1, 1, 1]; out_of_command.png alpha [0, 254], RGB [0, 0, 0] to [5, 3, 1]; 源图/out_of_command-640x1024.png alpha [0, 255], RGB [0, 0, 0] to [6, 4, 3]; out_of_command-100x160.png alpha [0, 254], RGB [0, 0, 0] to [1, 1, 1].",
-    "Header runtime textures remain engaged.png and out_of_command.png at 320x512; display-size exports remain 100x160 and sources remain 640x1024 at their existing paths. Preserve the complete 5:8 canvas and its transparent padding at 100x160; do not crop to the visible silhouette bounds. Replace only these two hosted header textures and refresh their caches for revision 28. Integrations still using pre-revision-24 square artwork require UI height 100 to 160 and top-left y 56 to 26, keeping the existing centers; replace the old square artwork with the current files. Generated silhouettes were scaled proportionally with Box area downsampling to fit within 608x960, centered on transparent 640x1024 source canvases, then exported at 320x512 and 100x160. Alpha was not normalized.",
-    "The other five asset objects (formation_close, formation_open, routed, fire_ready and fire_loading) and their fifteen PNG bytes match revision-27 commit 7395662, as do all six archived circular exports. Display sizes, positions and remaining placement questions are unchanged for every icon. No new state triggers, reset rules or code changes are introduced.",
+    "Revision 29 changes only engaged: the former jingasa spear figure is replaced by a black armored-warrior silhouette with a kabuto helmet, paired horn-shaped maedate crest, layered shikoro neck guard, broad sode shoulder armor, cuirass and kusazuri. The warrior takes a bent-knee staggered stance. One upright straight-shafted su-yari is held in two separated hands aligned along the same shaft. The transparent background and complete 5:8 canvas are retained. The approved revision-28 out_of_command messenger, including its question mark, remains unchanged.",
+    "All three revision-29 engaged PNGs were remeasured for RGBA mode, pixel dimensions, alpha>0 and alpha>=128 bounds, transparent padding and SHA-256. Alpha and visible-pixel RGB values are recorded from each export; the former revision-28 measurements are superseded for engaged. Measured alpha range and visible RGB minimum to maximum in R/G/B order: engaged.png alpha [0, 254], RGB [0, 0, 0] to [3, 3, 2]; 源图/engaged-640x1024.png alpha [0, 255], RGB [0, 0, 0] to [4, 3, 3]; engaged-100x160.png alpha [0, 254], RGB [0, 0, 0] to [1, 2, 1]. The generated figure was scaled proportionally with Box area downsampling to fit within 608x960, centered on a transparent 640x1024 source canvas, then exported at 320x512 and 100x160. Alpha was not normalized.",
+    "Header runtime textures remain engaged.png and out_of_command.png at 320x512; display-size exports remain 100x160 and sources remain 640x1024 at their existing paths. Preserve each complete 5:8 canvas and transparent padding at 100x160; do not crop to the visible silhouette bounds. Replace only the hosted engaged texture and refresh its cache for revision 29; keep the approved messenger texture. Integrations still using pre-revision-24 square artwork require UI height 100 to 160 and top-left y 56 to 26, keeping the existing centers; replace the old square artwork with the current files.",
+    "The other six asset objects (out_of_command, formation_close, formation_open, routed, fire_ready and fire_loading) and their eighteen PNG bytes match revision-28 commit cd2a3f90b46ed7fb7223899d625f402e1caf9592, as do all six archived circular exports. Display sizes, positions and remaining placement questions are unchanged for every icon. No new state triggers, reset rules or code changes are introduced.",
+    "Attempts to verify new museum/object-image references at The Met, British Museum and Wikimedia Commons were blocked by HTTP CONNECT 403. No reference object images were downloaded for this revision, and this drawing does not claim a verified historical reconstruction.",
+    "Historical revision 28 replaced both header plaques with black figure silhouettes. Its engaged used a jingasa-wearing spear figure; revision 29 supersedes that figure with an armored warrior and a straight shaft. The revision-28 paused messenger looking back to the left, outward-reaching right hand, rolled message at the waist and bold question mark remain the approved out_of_command artwork.",
+    "Historical revision 28 measured all six then-current header exports and used proportional Box area downsampling to fit silhouettes within 608x960 before centering on transparent 640x1024 source canvases; alpha was not normalized. Those historical engaged files and measurements are superseded in revision 29. The messenger files and their metadata remain unchanged.",
     "Historical revision 27 placed the natural steel crossed swords and the charcoal gunbai with its black prohibition circle and slash on warm-ivory opaque rectangular plaques. Those plaques had thick dark-brown straight-corner frames, narrow muted-gold inner lines and restrained pale-gold Japanese cloud motifs in the corners and along the sides. Revision 28 removes the plaques and replaces both motifs with black figure silhouettes.",
-    "Historical revision 27 header exports were fully opaque RGBA with alpha 255 throughout each canvas, full-canvas bounds at both alpha thresholds and zero transparent padding. Those alpha measurements belong to the former plaque files; current revision-28 silhouette bounds, padding and hashes are recorded in the two asset objects.",
-    "Historical revision 26 removed the formation_close and formation_open paper plaques and dark-brown frames, leaving six isolated dark jingasa markers per icon. One transparent jingasa cutout was repeated six times in each established tight or loose/staggered arrangement at a matched marker scale. This transparent formation artwork remains current and is unchanged in revision 28; the two complete alpha masks and outer padding differ.",
+    "Historical revision 27 header exports were fully opaque RGBA with alpha 255 throughout each canvas, full-canvas bounds at both alpha thresholds and zero transparent padding. Those alpha measurements belong to the former plaque files; current silhouette bounds, padding and hashes are recorded in the two asset objects.",
+    "Historical revision 26 removed the formation_close and formation_open paper plaques and dark-brown frames, leaving six isolated dark jingasa markers per icon. One transparent jingasa cutout was repeated six times in each established tight or loose/staggered arrangement at a matched marker scale. This transparent formation artwork remains current and is unchanged in revision 29; the two complete alpha masks and outer padding differ.",
     "Use formation_close.png and formation_open.png (512x256) as preferred runtime textures, with 240x120 display exports and 1024x512 sources. Keep the full 2:1 canvas at 240x120 at the existing shared candidate top-left (734,1042), center (854,1102). The states remain mutually exclusive. Do not crop transparent margins or enlarge the close-packed cluster to fill its canvas; that would change the shared marker scale and placement.",
     "Historical revision 26 remeasured all six formation exports for RGBA mode, pixel dimensions, alpha>0 and alpha>=128 bounds, transparent padding and SHA-256. Generation alpha was normalized over 6.25%-93.75% to remove faint background residue and exports used Box area downsampling.",
     "Historical revision 26 source-image component check at alpha>=128 found exactly six disconnected jingasa components in each 1024x512 source, each with a 146x140 bounding box and 15906 pixels. The same transparent cutout gives matched scale across both arrangements. The artwork was reconstructed with approximately 1-2px scale normalization, not preserved pixel-for-pixel from the former plaques.",
@@ -839,13 +842,13 @@
     "routed.png is 1200x800, routed-600x400.png is the display-size export, and the source is 1536x1024. Candidate display size is 600x400 on a 1200x1200 board; no coordinates or automatic elevation logic are assigned. The rounded alpha outline removes outside background remnants; Box area downsampling retains a narrow antialiased edge.",
     "Revision 21 generated no new preview or overview image; its overview reference pointed to standalone routed.png. Commander overlap, front/back rendering, distance and oblique-angle readability still require code-side and TTS validation; the artwork alone does not prevent occlusion.",
     "Historical revision 11 made the ivory formation plaques taller and increased vertical row spacing in formation_open. The matching plaque alpha boundaries and 240x120 visible plaque heights belonged to that former background. Revision 26 removes the plaques and frames while retaining six markers, the 2:1 canvases and the existing mutually exclusive candidate placement.",
-    "All earlier engaged, out_of_command and combined previews are historical and do not represent the current artwork. Revision 28 generated no new preview or overview image; overview remains the existing standalone formation_close.png. TTS runtime, front/back rendering, distance, angle, all-troop occlusion and operation-area overlap remain unverified.",
+    "All earlier engaged, out_of_command and combined previews are historical and do not represent the current artwork. Revision 29 generated no new preview or overview image; overview remains the existing standalone formation_close.png. TTS runtime, front/back rendering, distance, angle, all-troop occlusion and operation-area overlap remain unverified.",
     "Cloud URLs intentionally empty; no runtime-hosting URLs have been provided.",
     "At a 300px-wide board each 100x160 header placement becomes approximately 25x40px; the rectangular canvas fit does not establish TTS edge clarity or readability. Final appearance requires TTS distance and angle testing.",
     "Back previews are charcoal contrast/layout illustrations, not captured or reconstructed TTS backs.",
     "This handoff defines artwork and placement only, not automatic state detection, timing, persistence, or reset rules."
   ],
-  "revision": 28,
+  "revision": 29,
   "additional_overviews": [],
   "combined_previews": [],
   "previous_revision_previews": [
