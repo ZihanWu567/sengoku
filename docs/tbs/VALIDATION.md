@@ -1,6 +1,12 @@
-# 导入验证记录
+# 验证记录
 
-本页保留v2.14.11初始导入的验证证据。当前v2.18.0功能验证见 [ROUT_OVERLAY.md](ROUT_OVERLAY.md)；v2.17.0见 [UNIT_MODES.md](UNIT_MODES.md)，v2.15.0见 [STATUS_MARKERS.md](STATUS_MARKERS.md)。
+## 当前版本：v2.18.3（2026-10-25）
+
+本次相对v2.18.2将交戦只上移5，指揮外上移5且右移5；底部仍为420×210。保留图片直链及现有状态逻辑。运行 `tools/tts/test.ps1`：完整Global 4750项、独立面板1168项，共5918项MoonSharp行为检查通过，生成XML、按钮、回调和事件检查通过。`tools/tts/validate.py`通过，包含源码同步、发布TXT字节一致和静态配置检查。
+
+更新既有几何检查，覆盖正反面图片与点击范围、指揮外独立宽高及Y坐标、非等比缩放与图片原比例。未在TTS实机运行斜视角、武将叠放和多人联机验收。详见 [UNIT_MODES.md](UNIT_MODES.md)、[STATUS_MARKERS.md](STATUS_MARKERS.md)；此前敗走功能见 [ROUT_OVERLAY.md](ROUT_OVERLAY.md)。
+
+## 历史记录：v2.14.11初始导入
 
 日期：2026-10-21。代码：v2.14.11。基线main：`8c7aaa731f124eb693a23800402a65033806975f`。
 
