@@ -1,4 +1,4 @@
--- 兵種＋備隊面板 v2.18.1：底部狀態與指揮外圖標放大（2026-10-25）
+-- 兵種＋備隊面板 v2.18.2：底部狀態再放大・頂欄圖標下移（2026-10-25）
 MIN_VALUE = 0
 
 -- 全军共用的敗走贴图。上传后只在这里填一次完整图片直链。
@@ -67,10 +67,10 @@ UNIT_STATUS_IMAGES = {
     out_of_command = "https://steamusercontent-a.akamaihd.net/ugc/15755736349166678769/BD785DF20B7E73D47BC1F7521DDD6D11E7535F6D/"
 }
 UNIT_STATUS_LAYOUT = {
-    engaged_x = 77, out_of_command_x = 935, y = 110, -- 用户实测校准（2026-10-23）。
+    engaged_x = 77, out_of_command_x = 935, y = 120, -- 2026-10-25：顶栏两图均下移 10。
     size = 100, hit_size = 120, -- 交戦沿用原尺寸；单项配置可覆盖共享尺寸与 Y。
     -- 指揮外为 320×512 竖图：填满顶栏高度，图框与点击区均不越过右栏 X1000。
-    out_of_command = {width=125, height=200, hit_width=125, hit_height=200, y=100},
+    out_of_command = {width=125, height=200, hit_width=125, hit_height=200, y=110},
     front_ui_clearance = 0.001, -- 新图标为 UI，不沿用正面投影贴花的负 GAP。
     active_color = "#FFFFFFFF", inactive_color = "#FFFFFF20"
 }
@@ -84,9 +84,9 @@ UNIT_MODE_IMAGES = {
     reloading = "https://steamusercontent-a.akamaihd.net/ugc/13310129222375833444/F4ABFA439629D4EAE03AE278B5A38AFD2B1883B1/"
 }
 UNIT_MODE_LAYOUT = {
-    -- 武将下沿 Y1000 到棋面底部 Y1200；允许覆盖原阵旗，不挤入右栏。
-    x = 800, y = 1100, width = 380, height = 190,
-    hit_width = 400, hit_height = 200,
+    -- 利用 PNG 透明边再放大约 10%；允许覆盖原阵旗，不挤入右栏。
+    x = 780, y = 1097, width = 420, height = 210,
+    hit_width = 440, hit_height = 200,
     front_ui_clearance = 0.001
 }
 
@@ -1628,7 +1628,7 @@ end
 
 
 -- ===== 備隊面板 v2 =====
--- 備隊武将面板 v2.18.1：底部狀態與指揮外圖標放大
+-- 備隊武将面板 v2.18.2：底部狀態再放大・頂欄圖標下移
 -- 更新日：2026-10-25
 -- 画像・生年・統率は各武将令牌の Description に入力可能。
 -- team=ota_honjin / role=main,deputy1,deputy2 / name=太田資正

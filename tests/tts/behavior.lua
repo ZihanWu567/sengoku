@@ -2113,8 +2113,8 @@ local function runUnitStatusChecks()
             eq(root.attributes.rotation,back and "180 0 0" or "0 0 180",message.." "..side.." faces outward")
             local rp,rs=vector(root.attributes.position),vector(root.attributes.scale)
             local expected={
-                engaged={x=77,y=110,width=100,height=100,hit_width=200,hit_height=200},
-                out_of_command={x=935,y=100,width=125,height=200,hit_width=208,hit_height=333}
+                engaged={x=77,y=120,width=100,height=100,hit_width=200,hit_height=200},
+                out_of_command={x=935,y=110,width=125,height=200,hit_width=208,hit_height=333}
             }
             for kind,layout in pairs(expected) do
                 local node=statusNode(obj,side,kind)
@@ -2456,10 +2456,10 @@ local function runUnitModeChecks()
             local offset=vector(node.attributes.position)
             local x=p[1]/100+(back and 1 or -1)*offset[1]*s[1]/100
             local z=p[2]/100-offset[2]*s[2]/100
-            near(x,cx+(back and 1 or -1)*(800/1200-.5)*width,message.." "..side.." bottom-right X")
-            near(z,cz+(1100/1200-.5)*depth,message.." "..side.." bottom-right Y")
-            near(tonumber(node.attributes.width)*s[1]/100,380/1200*width,message.." "..side.." width")
-            near(tonumber(node.attributes.height)*s[2]/100,190/1200*depth,message.." "..side.." height")
+            near(x,cx+(back and 1 or -1)*(780/1200-.5)*width,message.." "..side.." bottom-right X")
+            near(z,cz+(1097/1200-.5)*depth,message.." "..side.." bottom-right Y")
+            near(tonumber(node.attributes.width)*s[1]/100,420/1200*width,message.." "..side.." width")
+            near(tonumber(node.attributes.height)*s[2]/100,210/1200*depth,message.." "..side.." height")
             eq(node.attributes.preserveAspect,"true",message.." "..side.." preserves source aspect")
             near(offset[3],0,message.." "..side.." shares mode panel plane")
             eq(root.attributes.rotation,back and "180 0 0" or "0 0 180",message.." "..side.." outward rotation")
@@ -2468,7 +2468,7 @@ local function runUnitModeChecks()
             near(hp[1],x,message.." "..side.." hit X")
             near(hp[3],z,message.." "..side.." hit Z")
             near(hp[2],-p[3]/100+(back and -.004 or .004),message.." "..side.." hit above image")
-            eq(hit.width,667,message.." "..side.." 400-pixel hit width")
+            eq(hit.width,733,message.." "..side.." 440-pixel hit width")
             eq(hit.height,333,message.." "..side.." 200-pixel hit height")
             classicButtonOrientation(hit,back,message.." "..side)
         end
