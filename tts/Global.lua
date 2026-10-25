@@ -1,4 +1,4 @@
--- 兵種＋備隊面板 v2.18.0：敗走大圖・武將疊放避讓（2026-10-23）
+-- 兵種＋備隊面板 v2.18.1：底部狀態與指揮外圖標放大（2026-10-25）
 MIN_VALUE = 0
 
 -- 全军共用的敗走贴图。上传后只在这里填一次完整图片直链。
@@ -64,11 +64,13 @@ UNIT_MORALE_BAND_IMAGES = {
 -- 未填直链时不显示、不生成点击区；不会用文字占位。美术定稿后仅替换这里。
 UNIT_STATUS_IMAGES = {
     engaged = "https://steamusercontent-a.akamaihd.net/ugc/16621351352612699552/ECB71F566524A55352FD18E8815F79A99CED62FF/",
-    out_of_command = "https://steamusercontent-a.akamaihd.net/ugc/11196356357107166222/939374A167DBCDD7CA034F3E28D1593926D50C8E/"
+    out_of_command = "https://steamusercontent-a.akamaihd.net/ugc/15755736349166678769/BD785DF20B7E73D47BC1F7521DDD6D11E7535F6D/"
 }
 UNIT_STATUS_LAYOUT = {
     engaged_x = 77, out_of_command_x = 935, y = 110, -- 用户实测校准（2026-10-23）。
-    size = 100, hit_size = 120, -- 1200 棋面：点击范围 X17～137、875～995，Y50～170。
+    size = 100, hit_size = 120, -- 交戦沿用原尺寸；单项配置可覆盖共享尺寸与 Y。
+    -- 指揮外为 320×512 竖图：填满顶栏高度，图框与点击区均不越过右栏 X1000。
+    out_of_command = {width=125, height=200, hit_width=125, hit_height=200, y=100},
     front_ui_clearance = 0.001, -- 新图标为 UI，不沿用正面投影贴花的负 GAP。
     active_color = "#FFFFFFFF", inactive_color = "#FFFFFF20"
 }
@@ -78,11 +80,13 @@ UNIT_STATUS_LAYOUT = {
 UNIT_MODE_IMAGES = {
     closed = "https://steamusercontent-a.akamaihd.net/ugc/11515895100246543386/C63536BA44742C27108483536A4C088FFD1F5B06/",
     open = "https://steamusercontent-a.akamaihd.net/ugc/11025487001876169960/A2E57E3E6BE1CC1A9388C1F6965B78A632FF6156/",
-    ready = "", reloading = ""
+    ready = "https://steamusercontent-a.akamaihd.net/ugc/12579039567139653421/8E8514B28F46CB0BD9B59F704CB7BB33C3A2C64A/",
+    reloading = "https://steamusercontent-a.akamaihd.net/ugc/13310129222375833444/F4ABFA439629D4EAE03AE278B5A38AFD2B1883B1/"
 }
 UNIT_MODE_LAYOUT = {
-    x = 820, y = 1125, width = 320, height = 130,
-    hit_width = 340, hit_height = 140,
+    -- 武将下沿 Y1000 到棋面底部 Y1200；允许覆盖原阵旗，不挤入右栏。
+    x = 800, y = 1100, width = 380, height = 190,
+    hit_width = 400, hit_height = 200,
     front_ui_clearance = 0.001
 }
 
@@ -611,15 +615,25 @@ local function unitStatusURL(kind)
     return unitImageURL(type(UNIT_STATUS_IMAGES)=="table" and UNIT_STATUS_IMAGES[kind] or nil,false)
 end
 
+local function unitStatusDimensions(kind)
+    local layout=UNIT_STATUS_LAYOUT
+    local marker=layout[kind] or {}
+    return marker.width or layout.size, marker.height or layout.size,
+        marker.hit_width or layout.hit_size, marker.hit_height or layout.hit_size,
+        marker.y or layout.y
+end
+
 local function unitStatusButtonParameters(geometry,back,kind)
     local layout=UNIT_STATUS_LAYOUT
-    local parameters=unitCounterButtonParameters(geometry,back,layout.y,UNIT_STATUS_CALLBACKS[kind],true)
-    parameters.position=unitButtonPosition(geometry,back,layout[kind.."_x"],layout.y,0)
+    local _,_,hitWidth,hitHeight,y=unitStatusDimensions(kind)
+    local parameters=unitCounterButtonParameters(geometry,back,y,UNIT_STATUS_CALLBACKS[kind],true)
+    parameters.position=unitButtonPosition(geometry,back,layout[kind.."_x"],y,0)
     if not back then
         parameters.position[2]=geometry.surfaceTop+layout.front_ui_clearance+UNIT_COUNTER_LAYOUT.hit_lift
     end
-    local size=math.max(1,math.floor(layout.hit_size*4*UNIT_COUNTER_LAYOUT.button_units_per_local/UNIT_COUNTER_LAYOUT.canvas+.5))
-    parameters.width,parameters.height=size,size
+    local units=4*UNIT_COUNTER_LAYOUT.button_units_per_local/UNIT_COUNTER_LAYOUT.canvas
+    parameters.width=math.max(1,math.floor(hitWidth*units+.5))
+    parameters.height=math.max(1,math.floor(hitHeight*units+.5))
     return parameters
 end
 
@@ -1164,11 +1178,12 @@ local function syncUnitBackUI(obj,state,config,geometry)
                 local id="sgub_status_"..side.."_"..kind
                 local name="sgub_status_image_"..kind
                 local exists=urls[name]~=""
-                desired[id]={id=id,width=tostring(statusLayout.size),height=tostring(statusLayout.size),
+                local width,height,_,_,y=unitStatusDimensions(kind)
+                desired[id]={id=id,width=tostring(width),height=tostring(height),
                     image=exists and name or "",active=exists and "true" or "false",
                     color=state[kind] and statusLayout.active_color or statusLayout.inactive_color,
                     preserveAspect="true",raycastTarget="false",tooltip="",rectAlignment="MiddleCenter",
-                    position=unitUIVector(statusLayout[kind.."_x"]-500,100-statusLayout.y,0),
+                    position=unitUIVector(statusLayout[kind.."_x"]-500,100-y,0),
                     rotation="0 0 0",scale="1 1 1"}
                 group.ids[#group.ids+1]=id
                 ids[#ids+1]=id
@@ -1613,8 +1628,8 @@ end
 
 
 -- ===== 備隊面板 v2 =====
--- 備隊武将面板 v2.18.0：敗走大圖・武將疊放避讓
--- 更新日：2026-10-23
+-- 備隊武将面板 v2.18.1：底部狀態與指揮外圖標放大
+-- 更新日：2026-10-25
 -- 画像・生年・統率は各武将令牌の Description に入力可能。
 -- team=ota_honjin / role=main,deputy1,deputy2 / name=太田資正
 -- birth=1522 / command=5 / image=https://... / status=無傷

@@ -1,5 +1,5 @@
--- 備隊武将面板 v2.18.0：敗走大圖・武將疊放避讓
--- 更新日：2026-10-23
+-- 備隊武将面板 v2.18.1：底部狀態與指揮外圖標放大
+-- 更新日：2026-10-25
 -- 画像・生年・統率は各武将令牌の Description に入力可能。
 -- team=ota_honjin / role=main,deputy1,deputy2 / name=太田資正
 -- birth=1522 / command=5 / image=https://... / status=無傷

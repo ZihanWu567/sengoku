@@ -1,7 +1,7 @@
 {
   "source": "tts/Global.lua + tts/modules/commanders.lua",
-  "version": "v2.18.0",
-  "snapshot_date": "2026-10-23",
+  "version": "v2.18.1",
+  "snapshot_date": "2026-10-25",
   "runtime_loads_this_json": false,
   "UNIT_DEFEAT_IMAGE_URL": "https://steamusercontent-a.akamaihd.net/ugc/17888454137110814569/47DFB8A61C7882C595C5F3F4C7AC1618A57C695B/",
   "UNIT_BACK_RAIL_IMAGE_URL": "https://steamusercontent-a.akamaihd.net/ugc/15004901137672824316/2126C232CB43C3C6599CF00E8AB37C00A1DF027A/",
@@ -44,13 +44,13 @@
   "ACTED_IMAGE_URL": "https://steamusercontent-a.akamaihd.net/ugc/16127482967476073358/AB4E3857AE6ECD0830ECE8C32682AE244709D8B5/",
   "UNIT_STATUS_IMAGES": {
     "engaged": "https://steamusercontent-a.akamaihd.net/ugc/16621351352612699552/ECB71F566524A55352FD18E8815F79A99CED62FF/",
-    "out_of_command": "https://steamusercontent-a.akamaihd.net/ugc/11196356357107166222/939374A167DBCDD7CA034F3E28D1593926D50C8E/"
+    "out_of_command": "https://steamusercontent-a.akamaihd.net/ugc/15755736349166678769/BD785DF20B7E73D47BC1F7521DDD6D11E7535F6D/"
   },
   "UNIT_MODE_IMAGES": {
     "closed": "https://steamusercontent-a.akamaihd.net/ugc/11515895100246543386/C63536BA44742C27108483536A4C088FFD1F5B06/",
     "open": "https://steamusercontent-a.akamaihd.net/ugc/11025487001876169960/A2E57E3E6BE1CC1A9388C1F6965B78A632FF6156/",
-    "ready": "",
-    "reloading": ""
+    "ready": "https://steamusercontent-a.akamaihd.net/ugc/12579039567139653421/8E8514B28F46CB0BD9B59F704CB7BB33C3A2C64A/",
+    "reloading": "https://steamusercontent-a.akamaihd.net/ugc/13310129222375833444/F4ABFA439629D4EAE03AE278B5A38AFD2B1883B1/"
   },
   "UNIT_ROUT_LAYOUT": {
     "x": 500,
