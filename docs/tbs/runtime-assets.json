@@ -1,6 +1,6 @@
 {
   "source": "tts/Global.lua + tts/modules/commanders.lua",
-  "version": "v2.18.2",
+  "version": "v2.18.3",
   "snapshot_date": "2026-10-25",
   "runtime_loads_this_json": false,
   "UNIT_DEFEAT_IMAGE_URL": "https://steamusercontent-a.akamaihd.net/ugc/17888454137110814569/47DFB8A61C7882C595C5F3F4C7AC1618A57C695B/",

@@ -2,7 +2,7 @@
 
 日本战国题材的 **Tabletop Simulator（TTS）** 棋子脚本、武将／備隊面板和美术素材项目。对话中也曾简称 TBS；实际运行平台是 TTS。
 
-当前版本为 **v2.18.2（2026-10-25）**，进一步扩大武将下方的阵形／射击图框，上方交戦／指揮外各下移10个棋面像素，并保留用户当前存档的新图片直链。已有交戦／指揮外、散開TQ−1、换阵未／済联动、士气上限提示和敗走叠放避让。它提供棋子操作和状态显示，**不是完整的 RAN 规则或自动回合引擎**。
+当前版本为 **v2.18.3（2026-10-25）**，进一步扩大武将下方的阵形／射击图框，顶栏交戦位于X77/Y115、指揮外位于X940/Y105，并保留用户当前存档的新图片直链。已有交戦／指揮外、散開TQ−1、换阵未／済联动、士气上限提示和敗走叠放避让。它提供棋子操作和状态显示，**不是完整的 RAN 规则或自动回合引擎**。
 
 另一位 Codex 开始工作前，请先阅读 [AGENTS.md](AGENTS.md) 和 [docs/HANDOFF.md](docs/HANDOFF.md)。
 
@@ -12,7 +12,7 @@
 | --- | --- |
 | [tts/Global.lua](tts/Global.lua) | 完整可运行的 Global Lua；部队逻辑在前半段，武将面板与地图旗在后半段 |
 | [tts/modules](tts/modules/) | 武将面板源文件、地图旗模块；已有源码的同步关系保留 |
-| [tts/releases/Global_v2.18.2.txt](tts/releases/Global_v2.18.2.txt) | 可直接全选复制的完整替换版，与 Global.lua 字节一致；旧版 TXT 仅供回溯 |
+| [tts/releases/Global_v2.18.3.txt](tts/releases/Global_v2.18.3.txt) | 可直接全选复制的完整替换版，与 Global.lua 字节一致；旧版 TXT 仅供回溯 |
 | [tools/tts](tools/tts/) / [tests/tts](tests/tts/) | 源码同步工具、MoonSharp 行为与 XML 检查 |
 | [docs/tbs](docs/tbs/) | 当前使用说明、配置、规则差异、设计待办、导入来源与历史资料 |
 | [素材/底图](素材/底图/) | 现有八色 1200×1200 底图 |

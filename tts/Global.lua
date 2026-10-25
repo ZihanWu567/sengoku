@@ -1,4 +1,4 @@
--- 兵種＋備隊面板 v2.18.2：底部狀態再放大・頂欄圖標下移（2026-10-25）
+-- 兵種＋備隊面板 v2.18.3：頂欄交戦・指揮外位置微調（2026-10-25）
 MIN_VALUE = 0
 
 -- 全军共用的敗走贴图。上传后只在这里填一次完整图片直链。
@@ -67,10 +67,10 @@ UNIT_STATUS_IMAGES = {
     out_of_command = "https://steamusercontent-a.akamaihd.net/ugc/15755736349166678769/BD785DF20B7E73D47BC1F7521DDD6D11E7535F6D/"
 }
 UNIT_STATUS_LAYOUT = {
-    engaged_x = 77, out_of_command_x = 935, y = 120, -- 2026-10-25：顶栏两图均下移 10。
+    engaged_x = 77, out_of_command_x = 940, y = 115, -- 2026-10-25：两图上移 5，仅指揮外右移 5。
     size = 100, hit_size = 120, -- 交戦沿用原尺寸；单项配置可覆盖共享尺寸与 Y。
-    -- 指揮外为 320×512 竖图：填满顶栏高度，图框与点击区均不越过右栏 X1000。
-    out_of_command = {width=125, height=200, hit_width=125, hit_height=200, y=110},
+    -- 指揮外为 320×512 竖图：保留尺寸；右移后图框含透明边，可见内容仍在 X1000 内。
+    out_of_command = {width=125, height=200, hit_width=125, hit_height=200, y=105},
     front_ui_clearance = 0.001, -- 新图标为 UI，不沿用正面投影贴花的负 GAP。
     active_color = "#FFFFFFFF", inactive_color = "#FFFFFF20"
 }
@@ -1628,7 +1628,7 @@ end
 
 
 -- ===== 備隊面板 v2 =====
--- 備隊武将面板 v2.18.2：底部狀態再放大・頂欄圖標下移
+-- 備隊武将面板 v2.18.3：頂欄交戦・指揮外位置微調
 -- 更新日：2026-10-25
 -- 画像・生年・統率は各武将令牌の Description に入力可能。
 -- team=ota_honjin / role=main,deputy1,deputy2 / name=太田資正

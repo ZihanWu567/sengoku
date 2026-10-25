@@ -2113,8 +2113,8 @@ local function runUnitStatusChecks()
             eq(root.attributes.rotation,back and "180 0 0" or "0 0 180",message.." "..side.." faces outward")
             local rp,rs=vector(root.attributes.position),vector(root.attributes.scale)
             local expected={
-                engaged={x=77,y=120,width=100,height=100,hit_width=200,hit_height=200},
-                out_of_command={x=935,y=110,width=125,height=200,hit_width=208,hit_height=333}
+                engaged={x=77,y=115,width=100,height=100,hit_width=200,hit_height=200},
+                out_of_command={x=940,y=105,width=125,height=200,hit_width=208,hit_height=333}
             }
             for kind,layout in pairs(expected) do
                 local node=statusNode(obj,side,kind)
